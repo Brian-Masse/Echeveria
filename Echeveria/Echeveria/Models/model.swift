@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import SwiftUI
 
 class TestObject: Object {
     
@@ -14,7 +15,7 @@ class TestObject: Object {
     @Persisted var firstName: String = ""
     @Persisted var lastName: String = ""
     @Persisted var ownerID: String = ""
-//
+    
     convenience init( firstName: String, lastName: String, ownerID: String ) {
         self.init()
         self.firstName = firstName
@@ -28,25 +29,35 @@ class TestObject: Object {
     }
 }
 
-class Model {
+//MARK: Model
+class Model: ObservableObject {
     
     var realm: Realm!
     var app = RealmSwift.App(id: "application-0-qufwt")
     
     var user: User?
-    var signedIn: Bool { user != nil }
+    @Published var signedIn: Bool = false
     
     var objects: Results<TestObject>!
-    
     var notificationToken: NotificationToken?
     
+    //MARK: Initialization Functions
     init() {
-        
         self.setConfiguration()
-        self.openRealm()
-        
+        //the rest of initialization needs to be handled after the user signs in, and will be called from the LoginModel
+    }
+    
+    func postAuthenticationInit() {
+        self.retreiveObject()
+        self.setupNotificationTokens()
+        self.signedIn = true
+    }
+    
+    private func retreiveObject() {
         self.objects = realm.objects(TestObject.self)
-
+    }
+    
+    private func setupNotificationTokens() {
 //      Take action from an observed change, more than simple UI refresh
         notificationToken = self.objects.observe { (changes) in
             switch changes {
@@ -62,16 +73,11 @@ class Model {
         }
     }
     
-    func openRealm() {
-        do { self.realm = try Realm() }
-        catch { print(error.localizedDescription) }
-    }
     
-    func authUser(email: String, password: String) async {
-        do {
-            
-//            self.user = try await app.login(credentials: Credentials.anonymous)
-            self.user = try await app.login(credentials: Credentials.emailPassword(email: email, password: password))
+    //MARK: Authentication Functions
+    func authUser(credentials: Credentials) async {
+        do {    
+            self.user = try await app.login(credentials: credentials)
             await openSyncedRealm(user: user!)
         } catch { print("error logging in: \(error.localizedDescription)") }
     }
@@ -82,7 +88,7 @@ class Model {
             var config = user.flexibleSyncConfiguration()
             
             config.objectTypes = [TestObject.self]
-            let realm = try await Realm(configuration: config, downloadBeforeOpen: .always)
+            self.realm = try await Realm(configuration: config, downloadBeforeOpen: .always)
             
             let subscriptions = realm.subscriptions
             try await subscriptions.update {
@@ -99,6 +105,7 @@ class Model {
         
     }
     
+    //MARK: Convience Functions
     func writeToRealm(_ block: () -> Void ) {
         do { try realm.write {
             block()
@@ -115,7 +122,7 @@ class Model {
     }
     
     private func setConfiguration() {
-        var configuration = Realm.Configuration(
+        let configuration = Realm.Configuration(
             schemaVersion: 1,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {

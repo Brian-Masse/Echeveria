@@ -8,6 +8,7 @@
 import SwiftUI
 
 let model = Model()
+let loginModel = LoginModel()
 
 @main
 struct EcheveriaApp: App {

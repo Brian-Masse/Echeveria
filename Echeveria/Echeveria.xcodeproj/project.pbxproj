@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93A2A396C6500C48C6A /* LoginView.swift */; };
+		C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93D2A396E5800C48C6A /* LoginModel.swift */; };
+		C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9402A3972EC00C48C6A /* UI Universals.swift */; };
+		C976A9432A39750F00C48C6A /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9422A39750F00C48C6A /* EmailView.swift */; };
+		C976A9462A39776C00C48C6A /* APIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9452A39776C00C48C6A /* APIView.swift */; };
 		C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140A2A3902CA00090429 /* EcheveriaApp.swift */; };
 		C997140D2A3902CA00090429 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140C2A3902CA00090429 /* ContentView.swift */; };
 		C997140F2A3902CC00090429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C997140E2A3902CC00090429 /* Assets.xcassets */; };
@@ -37,6 +42,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C976A93A2A396C6500C48C6A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C976A93D2A396E5800C48C6A /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		C976A9402A3972EC00C48C6A /* UI Universals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI Universals.swift"; sourceTree = "<group>"; };
+		C976A9422A39750F00C48C6A /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
+		C976A9452A39776C00C48C6A /* APIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIView.swift; sourceTree = "<group>"; };
 		C99714072A3902CA00090429 /* Echeveria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echeveria.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C997140A2A3902CA00090429 /* EcheveriaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaApp.swift; sourceTree = "<group>"; };
 		C997140C2A3902CA00090429 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,6 +88,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C976A93C2A396C6A00C48C6A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C976A9442A39751500C48C6A /* Authentication */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C976A93F2A396E5C00C48C6A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C976A93D2A396E5800C48C6A /* LoginModel.swift */,
+				C99714352A3902DE00090429 /* model.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C976A9442A39751500C48C6A /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				C976A93A2A396C6500C48C6A /* LoginView.swift */,
+				C976A9452A39776C00C48C6A /* APIView.swift */,
+				C976A9422A39750F00C48C6A /* EmailView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		C99713FE2A3902CA00090429 = {
 			isa = PBXGroup;
 			children = (
@@ -103,7 +140,9 @@
 			children = (
 				C997140A2A3902CA00090429 /* EcheveriaApp.swift */,
 				C997140C2A3902CA00090429 /* ContentView.swift */,
-				C99714352A3902DE00090429 /* model.swift */,
+				C976A9402A3972EC00C48C6A /* UI Universals.swift */,
+				C976A93F2A396E5C00C48C6A /* Models */,
+				C976A93C2A396C6A00C48C6A /* Views */,
 				C997140E2A3902CC00090429 /* Assets.xcassets */,
 				C99714102A3902CC00090429 /* Echeveria.entitlements */,
 				C99714112A3902CC00090429 /* Preview Content */,
@@ -273,8 +312,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */,
+				C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */,
 				C997140D2A3902CA00090429 /* ContentView.swift in Sources */,
+				C976A9432A39750F00C48C6A /* EmailView.swift in Sources */,
 				C99714362A3902DE00090429 /* model.swift in Sources */,
+				C976A9462A39776C00C48C6A /* APIView.swift in Sources */,
+				C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */,
 				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
