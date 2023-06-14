@@ -10,6 +10,7 @@
 		C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6DF2A3A51D1008C6906 /* MainView.swift */; };
 		C939B6E32A3A69DE008C6906 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C939B6E22A3A69DE008C6906 /* Realm */; };
 		C939B6E52A3A69DE008C6906 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C939B6E42A3A69DE008C6906 /* RealmSwift */; };
+		C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E62A3A7547008C6906 /* RealmManager.swift */; };
 		C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93A2A396C6500C48C6A /* LoginView.swift */; };
 		C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93D2A396E5800C48C6A /* LoginModel.swift */; };
 		C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9402A3972EC00C48C6A /* UI Universals.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		C939B6DF2A3A51D1008C6906 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		C939B6E62A3A7547008C6906 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C976A93A2A396C6500C48C6A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C976A93D2A396E5800C48C6A /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		C976A9402A3972EC00C48C6A /* UI Universals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI Universals.swift"; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				C976A93D2A396E5800C48C6A /* LoginModel.swift */,
+				C939B6E62A3A7547008C6906 /* RealmManager.swift */,
 				C9C90EEE2A3A1B120057846A /* Views */,
 			);
 			path = Authentication;
@@ -322,6 +325,7 @@
 				C976A9432A39750F00C48C6A /* EmailView.swift in Sources */,
 				C99714362A3902DE00090429 /* EcheveriaModel.swift in Sources */,
 				C976A9462A39776C00C48C6A /* APIView.swift in Sources */,
+				C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */,
 				C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */,
 				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,
 			);

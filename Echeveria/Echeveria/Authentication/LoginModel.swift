@@ -39,7 +39,7 @@ class LoginModel: ObservableObject {
     }
     
     func authenticateUser() async {
-        await echeveriaModel.authUser(credentials: self.credentials)
+        await EcheveriaModel.shared.realmManager.authUser(credentials: self.credentials)
     }
     
 }

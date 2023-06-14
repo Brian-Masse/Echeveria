@@ -10,21 +10,20 @@ import RealmSwift
 
 struct ContentView: View {
     
-    @ObservedObject var model: EcheveriaModel
-    @ObservedObject var app: RealmSwift.App = echeveriaModel.app
+    @ObservedObject var realmManager: RealmManager = EcheveriaModel.shared.realmManager
     
     var body: some View {
         
-        if !model.signedIn {
+        if !realmManager.signedIn {
             LoginView(loginModel: loginModel)
         
-        } else if !model.realmLoaded {
+        } else if !realmManager.realmLoaded {
             OpenFlexibleSyncRealmView()
-                .environment(\.realmConfiguration, echeveriaModel.configuration)
+                .environment(\.realmConfiguration, realmManager.configuration)
         } else {
             
             TestStruct()
-                .environment(\.realmConfiguration, echeveriaModel.configuration)
+                .environment(\.realmConfiguration, realmManager.configuration)
         }
     }
 }
@@ -60,7 +59,6 @@ struct OpenFlexibleSyncRealmView: View {
     
     @AsyncOpen(appId: "application-0-qufwt", timeout: 4000) var asyncOpen
     
-    
     var body: some View {
         
         switch asyncOpen {
@@ -75,7 +73,7 @@ struct OpenFlexibleSyncRealmView: View {
             
         case .open(let realm):
             NamedButton(text: "Success!", icon: "checkmark.circle")
-                .task { await echeveriaModel.authRealm(realm: realm) }
+                .task { await EcheveriaModel.shared.realmManager.authRealm(realm: realm) }
         
         case .progress(let progress):
             VStack {
