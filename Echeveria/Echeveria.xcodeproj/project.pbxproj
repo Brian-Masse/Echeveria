@@ -11,13 +11,14 @@
 		C939B6E32A3A69DE008C6906 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C939B6E22A3A69DE008C6906 /* Realm */; };
 		C939B6E52A3A69DE008C6906 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C939B6E42A3A69DE008C6906 /* RealmSwift */; };
 		C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E62A3A7547008C6906 /* RealmManager.swift */; };
+		C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */; };
 		C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93A2A396C6500C48C6A /* LoginView.swift */; };
 		C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93D2A396E5800C48C6A /* LoginModel.swift */; };
 		C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9402A3972EC00C48C6A /* UI Universals.swift */; };
 		C976A9432A39750F00C48C6A /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9422A39750F00C48C6A /* EmailView.swift */; };
 		C976A9462A39776C00C48C6A /* APIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9452A39776C00C48C6A /* APIView.swift */; };
 		C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140A2A3902CA00090429 /* EcheveriaApp.swift */; };
-		C997140D2A3902CA00090429 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140C2A3902CA00090429 /* ContentView.swift */; };
+		C997140D2A3902CA00090429 /* EcheveriaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140C2A3902CA00090429 /* EcheveriaView.swift */; };
 		C997140F2A3902CC00090429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C997140E2A3902CC00090429 /* Assets.xcassets */; };
 		C99714132A3902CC00090429 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C99714122A3902CC00090429 /* Preview Assets.xcassets */; };
 		C997141D2A3902CC00090429 /* EcheveriaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997141C2A3902CC00090429 /* EcheveriaTests.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		C939B6DF2A3A51D1008C6906 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C939B6E62A3A7547008C6906 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFlexibleSyncRealmView.swift; sourceTree = "<group>"; };
 		C976A93A2A396C6500C48C6A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C976A93D2A396E5800C48C6A /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		C976A9402A3972EC00C48C6A /* UI Universals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI Universals.swift"; sourceTree = "<group>"; };
@@ -53,7 +55,7 @@
 		C976A9452A39776C00C48C6A /* APIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIView.swift; sourceTree = "<group>"; };
 		C99714072A3902CA00090429 /* Echeveria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echeveria.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C997140A2A3902CA00090429 /* EcheveriaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaApp.swift; sourceTree = "<group>"; };
-		C997140C2A3902CA00090429 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C997140C2A3902CA00090429 /* EcheveriaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaView.swift; sourceTree = "<group>"; };
 		C997140E2A3902CC00090429 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C99714102A3902CC00090429 /* Echeveria.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Echeveria.entitlements; sourceTree = "<group>"; };
 		C99714122A3902CC00090429 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -135,7 +137,7 @@
 		C99714092A3902CA00090429 /* Echeveria */ = {
 			isa = PBXGroup;
 			children = (
-				C997140C2A3902CA00090429 /* ContentView.swift */,
+				C997140C2A3902CA00090429 /* EcheveriaView.swift */,
 				C976A9402A3972EC00C48C6A /* UI Universals.swift */,
 				C976A9442A39751500C48C6A /* Authentication */,
 				C976A93F2A396E5C00C48C6A /* Main */,
@@ -177,6 +179,7 @@
 				C976A93A2A396C6500C48C6A /* LoginView.swift */,
 				C976A9452A39776C00C48C6A /* APIView.swift */,
 				C976A9422A39750F00C48C6A /* EmailView.swift */,
+				C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -321,11 +324,12 @@
 				C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */,
 				C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */,
 				C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */,
-				C997140D2A3902CA00090429 /* ContentView.swift in Sources */,
+				C997140D2A3902CA00090429 /* EcheveriaView.swift in Sources */,
 				C976A9432A39750F00C48C6A /* EmailView.swift in Sources */,
 				C99714362A3902DE00090429 /* EcheveriaModel.swift in Sources */,
 				C976A9462A39776C00C48C6A /* APIView.swift in Sources */,
 				C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */,
+				C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */,
 				C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */,
 				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,
 			);

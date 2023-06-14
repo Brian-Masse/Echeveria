@@ -46,12 +46,15 @@ class EcheveriaModel {
         catch { print(error.localizedDescription) }
     }
     
-    static func writeObject( _ object: TestObject ) {
+    static func addObject( _ object: TestObject ) {
         self.writeToRealm { EcheveriaModel.shared.realmManager.realm.add(object) }
     }
     
     static func deleteObject( _ object: TestObject ) {
-        self.writeToRealm { EcheveriaModel.shared.realmManager.realm.delete(object) }
+        
+        let sourceObject = EcheveriaModel.shared.realmManager.realm.objects(TestObject.self).filter { obj in obj._id == object._id }
+    
+        self.writeToRealm { EcheveriaModel.shared.realmManager.realm.delete(sourceObject) }
     }
 
     

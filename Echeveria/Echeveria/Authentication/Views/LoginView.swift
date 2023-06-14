@@ -41,7 +41,7 @@ struct LoginView: View {
         }
         .environmentObject(loginModel)
         .padding()
-        .background(Color(red: 0.95, green: 0.95, blue: 0.95))
+        .background(Colors.lightGrey)
     }
 }
 

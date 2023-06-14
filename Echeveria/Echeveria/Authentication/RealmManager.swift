@@ -61,6 +61,10 @@ import RealmSwift
         }
         
         private func setupNotificationTokens() {
+            
+            for item in self.realm.objects( TestObject.self ) {
+                print(item)
+            }
 //            Take action from an observed change, more than simple UI refresh
 //            See the quickStart docs for implementation: https://www.mongodb.com/docs/realm/sdk/swift/quick-start/
         }

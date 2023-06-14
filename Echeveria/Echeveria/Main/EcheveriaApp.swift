@@ -14,7 +14,7 @@ let loginModel = LoginModel()
 struct EcheveriaApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            EcheveriaView()
         }
     }
 }

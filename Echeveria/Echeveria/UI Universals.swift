@@ -8,6 +8,11 @@
 import Foundation
 import SwiftUI
 
+class Colors {
+    static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
+    
+}
+
 struct NamedButton: View {
     
     enum Orientation {
