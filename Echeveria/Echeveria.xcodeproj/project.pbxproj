@@ -1,0 +1,656 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140A2A3902CA00090429 /* EcheveriaApp.swift */; };
+		C997140D2A3902CA00090429 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140C2A3902CA00090429 /* ContentView.swift */; };
+		C997140F2A3902CC00090429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C997140E2A3902CC00090429 /* Assets.xcassets */; };
+		C99714132A3902CC00090429 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C99714122A3902CC00090429 /* Preview Assets.xcassets */; };
+		C997141D2A3902CC00090429 /* EcheveriaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997141C2A3902CC00090429 /* EcheveriaTests.swift */; };
+		C99714272A3902CC00090429 /* EcheveriaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714262A3902CC00090429 /* EcheveriaUITests.swift */; };
+		C99714292A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714282A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift */; };
+		C99714362A3902DE00090429 /* model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714352A3902DE00090429 /* model.swift */; };
+		C99714392A39034700090429 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C99714382A39034700090429 /* Realm */; };
+		C997143B2A39034700090429 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C997143A2A39034700090429 /* RealmSwift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C99714192A3902CC00090429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C99713FF2A3902CA00090429 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C99714062A3902CA00090429;
+			remoteInfo = Echeveria;
+		};
+		C99714232A3902CC00090429 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C99713FF2A3902CA00090429 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C99714062A3902CA00090429;
+			remoteInfo = Echeveria;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C99714072A3902CA00090429 /* Echeveria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echeveria.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C997140A2A3902CA00090429 /* EcheveriaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaApp.swift; sourceTree = "<group>"; };
+		C997140C2A3902CA00090429 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C997140E2A3902CC00090429 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C99714102A3902CC00090429 /* Echeveria.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Echeveria.entitlements; sourceTree = "<group>"; };
+		C99714122A3902CC00090429 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C99714182A3902CC00090429 /* EcheveriaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcheveriaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C997141C2A3902CC00090429 /* EcheveriaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaTests.swift; sourceTree = "<group>"; };
+		C99714222A3902CC00090429 /* EcheveriaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcheveriaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C99714262A3902CC00090429 /* EcheveriaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaUITests.swift; sourceTree = "<group>"; };
+		C99714282A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C99714352A3902DE00090429 /* model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = model.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C99714042A3902CA00090429 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C997143B2A39034700090429 /* RealmSwift in Frameworks */,
+				C99714392A39034700090429 /* Realm in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C99714152A3902CC00090429 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C997141F2A3902CC00090429 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C99713FE2A3902CA00090429 = {
+			isa = PBXGroup;
+			children = (
+				C99714092A3902CA00090429 /* Echeveria */,
+				C997141B2A3902CC00090429 /* EcheveriaTests */,
+				C99714252A3902CC00090429 /* EcheveriaUITests */,
+				C99714082A3902CA00090429 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C99714082A3902CA00090429 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C99714072A3902CA00090429 /* Echeveria.app */,
+				C99714182A3902CC00090429 /* EcheveriaTests.xctest */,
+				C99714222A3902CC00090429 /* EcheveriaUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C99714092A3902CA00090429 /* Echeveria */ = {
+			isa = PBXGroup;
+			children = (
+				C997140A2A3902CA00090429 /* EcheveriaApp.swift */,
+				C997140C2A3902CA00090429 /* ContentView.swift */,
+				C99714352A3902DE00090429 /* model.swift */,
+				C997140E2A3902CC00090429 /* Assets.xcassets */,
+				C99714102A3902CC00090429 /* Echeveria.entitlements */,
+				C99714112A3902CC00090429 /* Preview Content */,
+			);
+			path = Echeveria;
+			sourceTree = "<group>";
+		};
+		C99714112A3902CC00090429 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				C99714122A3902CC00090429 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C997141B2A3902CC00090429 /* EcheveriaTests */ = {
+			isa = PBXGroup;
+			children = (
+				C997141C2A3902CC00090429 /* EcheveriaTests.swift */,
+			);
+			path = EcheveriaTests;
+			sourceTree = "<group>";
+		};
+		C99714252A3902CC00090429 /* EcheveriaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C99714262A3902CC00090429 /* EcheveriaUITests.swift */,
+				C99714282A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift */,
+			);
+			path = EcheveriaUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C99714062A3902CA00090429 /* Echeveria */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C997142C2A3902CC00090429 /* Build configuration list for PBXNativeTarget "Echeveria" */;
+			buildPhases = (
+				C99714032A3902CA00090429 /* Sources */,
+				C99714042A3902CA00090429 /* Frameworks */,
+				C99714052A3902CA00090429 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Echeveria;
+			packageProductDependencies = (
+				C99714382A39034700090429 /* Realm */,
+				C997143A2A39034700090429 /* RealmSwift */,
+			);
+			productName = Echeveria;
+			productReference = C99714072A3902CA00090429 /* Echeveria.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C99714172A3902CC00090429 /* EcheveriaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C997142F2A3902CC00090429 /* Build configuration list for PBXNativeTarget "EcheveriaTests" */;
+			buildPhases = (
+				C99714142A3902CC00090429 /* Sources */,
+				C99714152A3902CC00090429 /* Frameworks */,
+				C99714162A3902CC00090429 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C997141A2A3902CC00090429 /* PBXTargetDependency */,
+			);
+			name = EcheveriaTests;
+			productName = EcheveriaTests;
+			productReference = C99714182A3902CC00090429 /* EcheveriaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C99714212A3902CC00090429 /* EcheveriaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C99714322A3902CC00090429 /* Build configuration list for PBXNativeTarget "EcheveriaUITests" */;
+			buildPhases = (
+				C997141E2A3902CC00090429 /* Sources */,
+				C997141F2A3902CC00090429 /* Frameworks */,
+				C99714202A3902CC00090429 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C99714242A3902CC00090429 /* PBXTargetDependency */,
+			);
+			name = EcheveriaUITests;
+			productName = EcheveriaUITests;
+			productReference = C99714222A3902CC00090429 /* EcheveriaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C99713FF2A3902CA00090429 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					C99714062A3902CA00090429 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					C99714172A3902CC00090429 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = C99714062A3902CA00090429;
+					};
+					C99714212A3902CC00090429 = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = C99714062A3902CA00090429;
+					};
+				};
+			};
+			buildConfigurationList = C99714022A3902CA00090429 /* Build configuration list for PBXProject "Echeveria" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C99713FE2A3902CA00090429;
+			packageReferences = (
+				C99714372A39034700090429 /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
+			productRefGroup = C99714082A3902CA00090429 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C99714062A3902CA00090429 /* Echeveria */,
+				C99714172A3902CC00090429 /* EcheveriaTests */,
+				C99714212A3902CC00090429 /* EcheveriaUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C99714052A3902CA00090429 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C99714132A3902CC00090429 /* Preview Assets.xcassets in Resources */,
+				C997140F2A3902CC00090429 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C99714162A3902CC00090429 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C99714202A3902CC00090429 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C99714032A3902CA00090429 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C997140D2A3902CA00090429 /* ContentView.swift in Sources */,
+				C99714362A3902DE00090429 /* model.swift in Sources */,
+				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C99714142A3902CC00090429 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C997141D2A3902CC00090429 /* EcheveriaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C997141E2A3902CC00090429 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C99714272A3902CC00090429 /* EcheveriaUITests.swift in Sources */,
+				C99714292A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C997141A2A3902CC00090429 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C99714062A3902CA00090429 /* Echeveria */;
+			targetProxy = C99714192A3902CC00090429 /* PBXContainerItemProxy */;
+		};
+		C99714242A3902CC00090429 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C99714062A3902CA00090429 /* Echeveria */;
+			targetProxy = C99714232A3902CC00090429 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C997142A2A3902CC00090429 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C997142B2A3902CC00090429 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		C997142D2A3902CC00090429 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Echeveria/Echeveria.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Echeveria/Preview Content\"";
+				DEVELOPMENT_TEAM = LN4JU8GNV7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Masse-Brian.Echeveria";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C997142E2A3902CC00090429 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Echeveria/Echeveria.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Echeveria/Preview Content\"";
+				DEVELOPMENT_TEAM = LN4JU8GNV7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Masse-Brian.Echeveria";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C99714302A3902CC00090429 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LN4JU8GNV7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Masse-Brian.EcheveriaTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Echeveria.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Echeveria";
+			};
+			name = Debug;
+		};
+		C99714312A3902CC00090429 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LN4JU8GNV7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Masse-Brian.EcheveriaTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Echeveria.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Echeveria";
+			};
+			name = Release;
+		};
+		C99714332A3902CC00090429 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LN4JU8GNV7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Masse-Brian.EcheveriaUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Echeveria;
+			};
+			name = Debug;
+		};
+		C99714342A3902CC00090429 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LN4JU8GNV7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Masse-Brian.EcheveriaUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Echeveria;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C99714022A3902CA00090429 /* Build configuration list for PBXProject "Echeveria" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C997142A2A3902CC00090429 /* Debug */,
+				C997142B2A3902CC00090429 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C997142C2A3902CC00090429 /* Build configuration list for PBXNativeTarget "Echeveria" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C997142D2A3902CC00090429 /* Debug */,
+				C997142E2A3902CC00090429 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C997142F2A3902CC00090429 /* Build configuration list for PBXNativeTarget "EcheveriaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C99714302A3902CC00090429 /* Debug */,
+				C99714312A3902CC00090429 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C99714322A3902CC00090429 /* Build configuration list for PBXNativeTarget "EcheveriaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C99714332A3902CC00090429 /* Debug */,
+				C99714342A3902CC00090429 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C99714372A39034700090429 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C99714382A39034700090429 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C99714372A39034700090429 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		C997143A2A39034700090429 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C99714372A39034700090429 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = C99713FF2A3902CA00090429 /* Project object */;
+}
