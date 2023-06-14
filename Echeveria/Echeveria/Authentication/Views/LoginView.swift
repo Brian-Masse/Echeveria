@@ -31,10 +31,10 @@ struct LoginView: View {
                     }.pickerStyle(.segmented)
                     Spacer()
                     switch signinMethod {
-                    case .API:      APIView()
-                    case .email:    EmailView()
-                    default:
-                        Text("Hi")
+                    case .API:          APIView()
+                    case .email:        EmailView()
+                    case .Apple:        Text("Apple")
+                    case .Anonymous:    NamedButton(text: "Login", icon: "checkmark.seal") { loginModel.AnonymousSignIn() }
                     }
                 }
             }

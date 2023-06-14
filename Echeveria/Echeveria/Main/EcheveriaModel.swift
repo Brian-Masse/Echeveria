@@ -58,11 +58,15 @@ class EcheveriaModel: ObservableObject {
     
 //    MARK: Realm-Loaded Functions
 //    Called once the realm is loaded in OpenSyncedRealmView
-    func authRealm(realm: Realm) {
+    func authRealm(realm: Realm) async {
         self.realm = realm
-        self.retreiveObject()
-        self.setupNotificationTokens()
-        self.realmLoaded = true
+        await self.addSubcriptions()
+        
+        DispatchQueue.main.sync {
+            self.retreiveObject()
+            self.setupNotificationTokens()
+            self.realmLoaded = true
+        }
     }
     
     private func retreiveObject() {
@@ -75,14 +79,31 @@ class EcheveriaModel: ObservableObject {
             switch changes {
             case .initial: break
             case .update(_, let deletions, let insertions, let modifications):
-                print("deleted ", deletions)
-                print("inserted ", insertions)
-                print("mods ", modifications)
+                break
+//                print("deleted ", deletions)
+//                print("inserted ", insertions)
+//                print("mods ", modifications)
                 
             case .error(let error):
                 fatalError("\(error)")
             }
         }
+    }
+    
+    private func addSubcriptions() async {
+        
+        let subscriptions = self.realm.subscriptions
+        let foundSubscriptions = subscriptions.first(named: "testObject")
+        if foundSubscriptions != nil {return}
+        
+        do {
+            try await subscriptions.update {
+                subscriptions.append(QuerySubscription<TestObject>(name: "testObject") {
+                    $0.ownerID == self.user!.id
+                })
+            }
+        } catch { print("error adding subcription: \(error)") }
+    
     }
     
 //    MARK: Authentication Functions
@@ -91,33 +112,20 @@ class EcheveriaModel: ObservableObject {
 //        Once the user is signed in, the LoginView loads the realm using the config generated in self.post-authentication()
         do {    
             self.user = try await app.login(credentials: credentials)
-            await postAuthenticationInit()
+            self.postAuthenticationInit()
+            
         } catch { print("error logging in: \(error.localizedDescription)") }
     }
     
-    private func postAuthenticationInit() async {
-        await self.setConfiguration()
+    private func postAuthenticationInit() {
+        self.setConfiguration()
         DispatchQueue.main.sync { self.signedIn = true }
     }
-    
-    private func setConfiguration() async {
-//        you add subscriptions at the initialization of this configuration, because the configuration is created before realm is initialized
-        
-    
-        self.configuration = user!.flexibleSyncConfiguration { subs in
-            let tempSubExists = subs.first(named: "testObject")
-            
-//                If there is a matching subscriber that alread exists
-//                this likley will never be run—this configuration will probably just be set at the start of the app instance
-            if tempSubExists != nil { return }
-//                add queries for the objects that you want to use in this app
-            
-            subs.append(QuerySubscription<TestObject>(name: "testObject") {
-                $0.ownerID == self.user!.id
-            })
-        }
-        
+
+    private func setConfiguration() {
+        self.configuration = user!.flexibleSyncConfiguration()
         self.configuration.schemaVersion = 1
+        
         Realm.Configuration.defaultConfiguration = self.configuration
     }
     
@@ -138,19 +146,19 @@ class EcheveriaModel: ObservableObject {
     }
     
 //    This is only when migrating and should not be used for now...
-    private func setConfiguration() {
-        self.configuration = Realm.Configuration(
-            schemaVersion: 1,
-            migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
-                    migration.enumerateObjects(ofType: TestObject.className()) { oldObject, newObject in
-                        newObject!["ownerID"] = "defaultID"
-                    }
-                }
-            }
-        )
-        Realm.Configuration.defaultConfiguration = configuration
-    }
+//    private func setConfiguration() {
+//        self.configuration = Realm.Configuration(
+//            schemaVersion: 1,
+//            migrationBlock: { migration, oldSchemaVersion in
+//                if oldSchemaVersion < 1 {
+//                    migration.enumerateObjects(ofType: TestObject.className()) { oldObject, newObject in
+//                        newObject!["ownerID"] = "defaultID"
+//                    }
+//                }
+//            }
+//        )
+//        Realm.Configuration.defaultConfiguration = configuration
+//    }
     
     
 }

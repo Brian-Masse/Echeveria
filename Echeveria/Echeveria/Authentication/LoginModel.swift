@@ -20,6 +20,7 @@ class LoginModel: ObservableObject {
         case API = "API"
         case email = "email"
         case Apple = "Apple"
+        case Anonymous = "Anonymous"
         
         var id: Self { self }
     }
@@ -29,6 +30,11 @@ class LoginModel: ObservableObject {
     
     func APISignIn( _ token: String ) {
         self.credentials = Credentials.userAPIKey(token)
+        self.signingIn = true
+    }
+    
+    func AnonymousSignIn() {
+        self.credentials = Credentials.anonymous
         self.signingIn = true
     }
     
