@@ -20,7 +20,7 @@ struct NamedButton: View {
     let icon: String
     let action: () -> Void
     
-    init( text: String, icon: String, orientation: Orientation = .horizontal,  action: @escaping ()->Void ) {
+    init( text: String, icon: String, orientation: Orientation = .horizontal,  action: @escaping ()->Void = {} ) {
         self.orientation = orientation
         self.text = text
         self.icon = icon

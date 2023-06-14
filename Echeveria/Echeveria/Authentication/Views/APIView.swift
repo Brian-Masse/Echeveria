@@ -11,7 +11,7 @@ import SwiftUI
 struct APIView: View {
     
     @EnvironmentObject var loginModel: LoginModel
-    @State var APIToken: String = ""
+    @State var APIToken: String = "XlT89XaRYXqoWEuvO15uZLYkfx7ztwb1otSz1zr5CmiE9DG3Rnx12l0XBy1IKsIf"
     
     var body: some View {
         
