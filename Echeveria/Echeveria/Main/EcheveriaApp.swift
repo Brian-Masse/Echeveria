@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-let model = Model()
+let echeveriaModel = EcheveriaModel()
 let loginModel = LoginModel()
 
 @main
 struct EcheveriaApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(model: model)
+            ContentView(model: echeveriaModel)
         }
     }
 }

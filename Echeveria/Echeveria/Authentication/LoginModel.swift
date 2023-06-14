@@ -31,8 +31,8 @@ class LoginModel: ObservableObject {
     }
     
     func authenticateUser() async {
-        await model.authUser(credentials: self.credentials)
-        model.postAuthenticationInit()
+        await echeveriaModel.authUser(credentials: self.credentials)
+        echeveriaModel.postAuthenticationInit()
     }
     
 }

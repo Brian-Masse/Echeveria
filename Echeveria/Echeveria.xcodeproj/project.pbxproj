@@ -19,7 +19,7 @@
 		C997141D2A3902CC00090429 /* EcheveriaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997141C2A3902CC00090429 /* EcheveriaTests.swift */; };
 		C99714272A3902CC00090429 /* EcheveriaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714262A3902CC00090429 /* EcheveriaUITests.swift */; };
 		C99714292A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714282A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift */; };
-		C99714362A3902DE00090429 /* model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714352A3902DE00090429 /* model.swift */; };
+		C99714362A3902DE00090429 /* EcheveriaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714352A3902DE00090429 /* EcheveriaModel.swift */; };
 		C99714392A39034700090429 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C99714382A39034700090429 /* Realm */; };
 		C997143B2A39034700090429 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C997143A2A39034700090429 /* RealmSwift */; };
 /* End PBXBuildFile section */
@@ -58,7 +58,7 @@
 		C99714222A3902CC00090429 /* EcheveriaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcheveriaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99714262A3902CC00090429 /* EcheveriaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaUITests.swift; sourceTree = "<group>"; };
 		C99714282A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		C99714352A3902DE00090429 /* model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = model.swift; sourceTree = "<group>"; };
+		C99714352A3902DE00090429 /* EcheveriaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,29 +88,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C976A93C2A396C6A00C48C6A /* Views */ = {
+		C976A93F2A396E5C00C48C6A /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				C976A9442A39751500C48C6A /* Authentication */,
+				C997140A2A3902CA00090429 /* EcheveriaApp.swift */,
+				C99714352A3902DE00090429 /* EcheveriaModel.swift */,
 			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		C976A93F2A396E5C00C48C6A /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				C976A93D2A396E5800C48C6A /* LoginModel.swift */,
-				C99714352A3902DE00090429 /* model.swift */,
-			);
-			path = Models;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		C976A9442A39751500C48C6A /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				C976A93A2A396C6500C48C6A /* LoginView.swift */,
-				C976A9452A39776C00C48C6A /* APIView.swift */,
-				C976A9422A39750F00C48C6A /* EmailView.swift */,
+				C976A93D2A396E5800C48C6A /* LoginModel.swift */,
+				C9C90EEE2A3A1B120057846A /* Views */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -138,11 +129,10 @@
 		C99714092A3902CA00090429 /* Echeveria */ = {
 			isa = PBXGroup;
 			children = (
-				C997140A2A3902CA00090429 /* EcheveriaApp.swift */,
 				C997140C2A3902CA00090429 /* ContentView.swift */,
 				C976A9402A3972EC00C48C6A /* UI Universals.swift */,
-				C976A93F2A396E5C00C48C6A /* Models */,
-				C976A93C2A396C6A00C48C6A /* Views */,
+				C976A9442A39751500C48C6A /* Authentication */,
+				C976A93F2A396E5C00C48C6A /* Main */,
 				C997140E2A3902CC00090429 /* Assets.xcassets */,
 				C99714102A3902CC00090429 /* Echeveria.entitlements */,
 				C99714112A3902CC00090429 /* Preview Content */,
@@ -173,6 +163,16 @@
 				C99714282A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift */,
 			);
 			path = EcheveriaUITests;
+			sourceTree = "<group>";
+		};
+		C9C90EEE2A3A1B120057846A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C976A93A2A396C6500C48C6A /* LoginView.swift */,
+				C976A9452A39776C00C48C6A /* APIView.swift */,
+				C976A9422A39750F00C48C6A /* EmailView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,7 +316,7 @@
 				C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */,
 				C997140D2A3902CA00090429 /* ContentView.swift in Sources */,
 				C976A9432A39750F00C48C6A /* EmailView.swift in Sources */,
-				C99714362A3902DE00090429 /* model.swift in Sources */,
+				C99714362A3902DE00090429 /* EcheveriaModel.swift in Sources */,
 				C976A9462A39776C00C48C6A /* APIView.swift in Sources */,
 				C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */,
 				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,

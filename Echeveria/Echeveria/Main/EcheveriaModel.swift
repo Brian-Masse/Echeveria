@@ -24,13 +24,12 @@ class TestObject: Object {
     }
     
     func updateName(to name: String) {
-        print("tapped")
-        model.writeToRealm { self.firstName = name }
+        echeveriaModel.writeToRealm { self.firstName = name }
     }
 }
 
 //MARK: Model
-class Model: ObservableObject {
+class EcheveriaModel: ObservableObject {
     
     var realm: Realm!
     var app = RealmSwift.App(id: "application-0-qufwt")

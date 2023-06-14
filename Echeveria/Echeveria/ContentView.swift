@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @ObservedObject var model: Model
+    @ObservedObject var model: EcheveriaModel
     
     var body: some View {
         
