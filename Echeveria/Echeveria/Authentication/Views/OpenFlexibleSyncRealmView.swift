@@ -27,7 +27,11 @@ struct OpenFlexibleSyncRealmView: View {
             
         case .open(let realm):
             NamedButton(text: "Success!", icon: "checkmark.circle")
-                .task { await EcheveriaModel.shared.realmManager.authRealm(realm: realm) }
+                .task {
+                    await EcheveriaModel.shared.realmManager.authRealm(realm: realm)
+                    await EcheveriaModel.shared.realmManager.checkAccount()
+                }
+            
         
         case .progress(let progress):
             VStack {

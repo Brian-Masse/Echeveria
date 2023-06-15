@@ -9,30 +9,6 @@ import Foundation
 import RealmSwift
 import SwiftUI
 
-class TestObject: Object, Identifiable {
-    
-    @Persisted(primaryKey: true) var _id: ObjectId
-    @Persisted var firstName: String = ""
-    @Persisted var lastName: String = ""
-    @Persisted var ownerID: String = ""
-    
-    convenience init( firstName: String, lastName: String, ownerID: String ) {
-        self.init()
-        self.firstName = firstName
-        self.lastName = lastName
-        self.ownerID = ownerID
-    }
-    
-    func updateName(to name: String) {
-        EcheveriaModel.writeToRealm {
-            guard let thawedSelf = self.thaw() else {
-                print("failed to thaw object: \(self.ownerID), \(self)")
-                return
-            }
-            thawedSelf.firstName = name
-        }
-    }
-}
 
 //MARK: Model
 class EcheveriaModel {
@@ -46,7 +22,7 @@ class EcheveriaModel {
         catch { print(error.localizedDescription) }
     }
     
-    static func addObject( _ object: TestObject ) {
+    static func addObject<T:Object>( _ object: T ) {
         self.writeToRealm { EcheveriaModel.shared.realmManager.realm.add(object) }
     }
     

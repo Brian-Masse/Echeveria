@@ -56,3 +56,27 @@ struct NamedButton: View {
         .onTapGesture { self.action() }
     }
 }
+
+struct RoundedButton: View {
+    
+    let label:  String
+    let icon:   String
+    let action: ()->Void
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            Image(systemName: icon)
+            Text(label)
+            Spacer()
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 5)
+        .onTapGesture { action() }
+        .background(
+            Rectangle()
+                .foregroundColor(.blue)
+                .cornerRadius(50)
+        )
+    }
+}

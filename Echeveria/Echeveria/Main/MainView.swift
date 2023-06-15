@@ -17,7 +17,7 @@ struct MainView: View {
     var body: some View {
         VStack {
             
-            CardView.Button(label: "Add", icon: "plus.circle") {
+            RoundedButton(label: "Add", icon: "plus.circle") {
                 let object = TestObject(firstName: "Brian", lastName: "Masse",
                                         ownerID: EcheveriaModel.shared.realmManager.user!.id)
                 EcheveriaModel.addObject( object )
@@ -56,11 +56,11 @@ struct CardView: View {
             }.padding()
             
             HStack {
-                Button(label: "Delete", icon: "delete.backward", action: {
+                RoundedButton(label: "Delete", icon: "delete.backward", action: {
                     print(item)
                     EcheveriaModel.deleteObject(item)
                 })
-                Button(label: "Edit", icon: "pencil.circle", action: { item.updateName(to: "Updated!") })
+                RoundedButton(label: "Edit", icon: "pencil.circle", action: { item.updateName(to: "Updated!") })
             }
             .padding([.horizontal, .bottom])
         }
@@ -70,29 +70,5 @@ struct CardView: View {
                 .foregroundColor(.white)
                 .cornerRadius(20)
         )
-    }
-    
-    struct Button: View {
-        
-        let label:  String
-        let icon:   String
-        let action: ()->Void
-        
-        var body: some View {
-            HStack {
-                Spacer()
-                Image(systemName: icon)
-                Text(label)
-                Spacer()
-            }
-            .padding(.horizontal)
-            .padding(.vertical, 5)
-            .onTapGesture { action() }
-            .background(
-                Rectangle()
-                    .foregroundColor(.blue)
-                    .cornerRadius(50)
-            )
-        }
     }
 }
