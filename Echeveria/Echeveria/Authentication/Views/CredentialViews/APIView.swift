@@ -13,6 +13,8 @@ struct APIView: View {
     @EnvironmentObject var loginModel: LoginModel
     @State var APIToken: String = "XlT89XaRYXqoWEuvO15uZLYkfx7ztwb1otSz1zr5CmiE9DG3Rnx12l0XBy1IKsIf"
     
+    @Binding var signingIn: Bool
+    
     var body: some View {
         
         Form {
@@ -23,6 +25,8 @@ struct APIView: View {
         
         NamedButton(text: "Submit", icon: "checkmark.seal") {
             loginModel.APISignIn(APIToken)
+            signingIn = true
+            
         }
         
     }

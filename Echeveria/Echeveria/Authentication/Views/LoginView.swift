@@ -14,11 +14,12 @@ struct LoginView: View {
     @ObservedObject var loginModel: LoginModel
     
     @State var signinMethod: LoginModel.LoginMethod = .email
+    @State var signingIn: Bool = false
     
     var body: some View {
     
         ZStack {
-            if loginModel.signingIn {
+            if signingIn {
                 ProgressView()
                     .task { await loginModel.authenticateUser() }
             }else {
@@ -31,10 +32,10 @@ struct LoginView: View {
                     }.pickerStyle(.segmented)
                     Spacer()
                     switch signinMethod {
-                    case .API:          APIView()
+                    case .API:          APIView(signingIn: $signingIn)
                     case .email:        EmailView()
                     case .Apple:        Text("Apple")
-                    case .Anonymous:    NamedButton(text: "Login", icon: "checkmark.seal") { loginModel.AnonymousSignIn() }
+                    case .Anonymous:    NamedButton(text: "Login", icon: "checkmark.seal") { self.signingIn = true; loginModel.AnonymousSignIn() }
                     }
                 }
             }

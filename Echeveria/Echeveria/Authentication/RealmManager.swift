@@ -77,6 +77,18 @@ class RealmManager: ObservableObject {
             self.postAuthenticationInit()
         } catch { print("error logging in: \(error.localizedDescription)") }
     }
+    
+    func logoutUser() {
+        self.user!.logOut { error in
+            if let error = error { print("error logging out: \(error.localizedDescription)") }
+            
+            DispatchQueue.main.sync {
+                self.signedIn = false
+                self.hasAccount = false
+                self.realmLoaded = false
+            }
+        }
+    }
         
     private func postAuthenticationInit(loggingin: Bool = false) {
         self.setConfiguration()

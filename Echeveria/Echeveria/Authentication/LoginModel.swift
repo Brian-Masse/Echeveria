@@ -26,16 +26,13 @@ class LoginModel: ObservableObject {
     }
     
     var credentials: Credentials!
-    @Published var signingIn: Bool = false
     
     func APISignIn( _ token: String ) {
         self.credentials = Credentials.userAPIKey(token)
-        self.signingIn = true
     }
     
     func AnonymousSignIn() {
         self.credentials = Credentials.anonymous
-        self.signingIn = true
     }
     
     func authenticateUser() async {

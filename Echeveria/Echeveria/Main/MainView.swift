@@ -22,6 +22,9 @@ struct MainView: View {
                                         ownerID: EcheveriaModel.shared.realmManager.user!.id)
                 EcheveriaModel.addObject( object )
             }
+            RoundedButton(label: "Signout", icon: "shippingbox.and.arrow.backward") {
+                EcheveriaModel.shared.realmManager.logoutUser()
+            }
             
             ScrollView(.vertical) {
                 ForEach( objs, id: \._id ) { obj in
