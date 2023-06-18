@@ -32,6 +32,15 @@ class RealmManager: ObservableObject {
         self.checkLogin()
     }
     
+    private func setConfiguration() {
+        self.configuration = user!.flexibleSyncConfiguration()
+        self.configuration.schemaVersion = 1
+        
+        Realm.Configuration.defaultConfiguration = self.configuration
+    }
+    
+//    MARK: Authentication Functions
+//    If there is a user already signed in,skip the user authentication system
     func checkLogin() {
         if let user = app.currentUser {
             self.user = user
@@ -39,32 +48,51 @@ class RealmManager: ObservableObject {
         }
     }
     
+//    Called by the LoginModel once credentials are provided
+    func authUser(credentials: Credentials) async {
+//        this simply logs the profile in and returns any status errors
+//        Once the user is signed in, the LoginView loads the realm using the config generated in self.post-authentication()
+        do {
+            self.user = try await app.login(credentials: credentials)
+            self.postAuthenticationInit()
+        } catch { print("error logging in: \(error.localizedDescription)") }
+    }
+    
+    private func postAuthenticationInit(loggingin: Bool = false) {
+        self.setConfiguration()
+        if !loggingin { DispatchQueue.main.sync { self.signedIn = true } }
+        else { self.signedIn = true }
+    }
+    
+    func logoutUser() {
+        self.user!.logOut { error in
+            if let error = error { print("error logging out: \(error.localizedDescription)") }
+            
+            DispatchQueue.main.sync {
+                self.signedIn = false
+                self.hasProfile = false
+                self.realmLoaded = false
+            }
+        }
+    }
+    
+//    MARK: Profile Functions
 //    if the profile has a profile, then skip past the create profile UI
     func checkProfile() async {
-//        downloads it, if it exists
-        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: "AccountCheck") { queryObject in
-            queryObject.ownerID == self.user!.id
+//     the only place the subscription is added is when they create a profile
+        if self.checkSubscription(name: "Account") {
+            DispatchQueue.main.sync {
+                let profile = realm.objects(EcheveriaProfile.self).where { queryObject in
+                    queryObject.ownerID == self.user!.id
+                }.first
+                if profile != nil { registerProfileLocally(profile!) }
+            }
         }
-        
-//        Checks the downloads
-        DispatchQueue.main.sync {
-            let profile = retrieveUserProfile()
-            if profile != nil { registerProfileLocally(profile!) }
-        } 
-        
-        await self.removeSubscription(name: "AccountCheck")
     }
     
-//    convenience function only being used in the above profile checker
-    private func retrieveUserProfile() -> EcheveriaProfile? {
-        let results = realm.objects(EcheveriaProfile.self).where { queryObject in
-            queryObject.ownerID == self.user!.id
-        }
-        return results.first
-    }
-    
-    
+//    If they dont, this function is called to create one. It is sent in from the CreateProfileView
     func addProfile( profile: EcheveriaProfile ) async {
+//        Add Subscription to donwload your profile
         let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: "Account") { query in
             query.ownerID == self.user!.id
         }
@@ -84,40 +112,6 @@ class RealmManager: ObservableObject {
         EcheveriaModel.shared.setProfile(with: profile)
     }
     
-    //    MARK: Authentication Functions
-    func authUser(credentials: Credentials) async {
-//        this simply logs the profile in and returns any status errors
-//        Once the profile is signed in, the LoginView loads the realm using the config generated in self.post-authentication()
-        do {
-            self.user = try await app.login(credentials: credentials)
-            self.postAuthenticationInit()
-        } catch { print("error logging in: \(error.localizedDescription)") }
-    }
-    
-    func logoutUser() {
-        self.user!.logOut { error in
-            if let error = error { print("error logging out: \(error.localizedDescription)") }
-            
-            DispatchQueue.main.sync {
-                self.signedIn = false
-                self.hasProfile = false
-                self.realmLoaded = false
-            }
-        }
-    }
-        
-    private func postAuthenticationInit(loggingin: Bool = false) {
-        self.setConfiguration()
-        if !loggingin { DispatchQueue.main.sync { self.signedIn = true } }
-        else { self.signedIn = true }
-    }
-
-    private func setConfiguration() {
-        self.configuration = user!.flexibleSyncConfiguration()
-        self.configuration.schemaVersion = 1
-        
-        Realm.Configuration.defaultConfiguration = self.configuration
-    }
 
 //    MARK: Realm-Loaded Functions
 //    Called once the realm is loaded in OpenSyncedRealmView
@@ -138,21 +132,29 @@ class RealmManager: ObservableObject {
     
     private func addSubcriptions() async {
 //            This is a clunky way of doing this
-//            Effectivley, the order is login -> auth (setup dud configuration) -> create synced realm (with responsive UI)
+//            Effectivley, the order is login -> authenticate user (setup dud realm configuration) -> create synced realm (with responsive UI)
 //             ->add the subscriptions (which downloads the data from the cloud) -> enter into the app with proper config and realm
 //            Instead, when creating the configuration, use initalSubscriptions to provide the subs before creating the relam
 //            This wasn't working before, but possibly if there is an instance of Realm in existence it might work?
         
+        await self.removeSubscription(name: "AccountCheck")
+        
         let _:TestObject? = await self.addGenericSubcriptions(name: "testObject") { query in
             query.ownerID == self.user!.id
         }
+        
+//        Add subscriptions to donwload any groups that youre a part of
+        let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: "Groups") { query in
+            return query.members.contains( self.user!.id )
+        }
+            
     }
     
+//    MARK: Helper Functions
     func addGenericSubcriptions<T>(name: String, query: @escaping (Query<T>) -> Query<Bool> ) async -> T? where T:RealmSwiftObject  {
             
+        if checkSubscription(name: name) { return nil }
         let subscriptions = self.realm.subscriptions
-        let foundSubscriptions = subscriptions.first(named: name)
-        if foundSubscriptions != nil {return nil}
         
         do {
             try await subscriptions.update{
@@ -176,20 +178,9 @@ class RealmManager: ObservableObject {
         } catch { print("error adding subcription: \(error)") }
     }
     
-    //    This is only when migrating and should not be used for now...
-    //    private func setConfiguration() {
-    //        self.configuration = Realm.Configuration(
-    //            schemaVersion: 1,
-    //            migrationBlock: { migration, oldSchemaVersion in
-    //                if oldSchemaVersion < 1 {
-    //                    migration.enumerateObjects(ofType: TestObject.className()) { oldObject, newObject in
-    //                        newObject!["ownerID"] = "defaultID"
-    //                    }
-    //                }
-    //            }
-    //        )
-    //        Realm.Configuration.defaultConfiguration = configuration
-    //    }
-        
-    
+    private func checkSubscription(name: String) -> Bool {
+        let subscriptions = self.realm.subscriptions
+        let foundSubscriptions = subscriptions.first(named: name)
+        return foundSubscriptions != nil
+    }
 }

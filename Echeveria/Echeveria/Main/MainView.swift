@@ -12,33 +12,50 @@ import RealmSwift
 
 struct MainView: View {
     
+    enum MainViewPage {
+        case main
+        case group
+        case profile
+    }
+    
     @ObservedResults(TestObject.self) var objs
     
-    @State var presentingProfile: Bool = false
+    @State var page: MainViewPage = .main
     
     var body: some View {
+        
         VStack {
             
-            RoundedButton(label: "Profile", icon: "person.crop.square") { presentingProfile = true }
-            
-            RoundedButton(label: "Add", icon: "plus.circle") {
-                let object = TestObject(firstName: "Brian", lastName: "Masse",
-                                        ownerID: EcheveriaModel.shared.realmManager.user!.id)
-                EcheveriaModel.addObject( object )
-            }
-            RoundedButton(label: "Signout", icon: "shippingbox.and.arrow.backward") {
-                EcheveriaModel.shared.realmManager.logoutUser()
-            }
-            
-            ScrollView(.vertical) {
-                ForEach( objs, id: \._id ) { obj in
-                    CardView(item: obj)
+            switch page {
+            case .profile: ProfileView(profile: EcheveriaModel.shared.profile)
+            case .group: GroupPageView()
+            case .main:
+                RoundedButton(label: "Add", icon: "plus.circle") {
+                    let object = TestObject(firstName: "Brian", lastName: "Masse",
+                                            ownerID: EcheveriaModel.shared.realmManager.user!.id)
+                    EcheveriaModel.addObject( object )
+                }
+                RoundedButton(label: "Signout", icon: "shippingbox.and.arrow.backward") {
+                    EcheveriaModel.shared.realmManager.logoutUser()
+                }
+                
+                ScrollView(.vertical) {
+                    ForEach( objs, id: \._id ) { obj in
+                        CardView(item: obj)
+                    }
                 }
             }
+            Spacer()
+            HStack {
+                NamedButton("Home", and: "house.lodge", oriented: .vertical).onTapGesture { page = .main }
+                Spacer()
+                NamedButton("Group", and: "rectangle.3.group", oriented: .vertical).onTapGesture { page = .group }
+                Spacer()
+                NamedButton("Profile", and: "person.crop.square", oriented: .vertical).onTapGesture { page = .profile }
+            }.padding([.top, .horizontal])
         }
         .padding()
         .background(Colors.lightGrey)
-        .sheet(isPresented: $presentingProfile) { ProfileView(profile: EcheveriaModel.shared.profile) }
     }
 }
 

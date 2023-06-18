@@ -35,7 +35,7 @@ struct LoginView: View {
                     case .API:          APIView(signingIn: $signingIn)
                     case .email:        EmailView()
                     case .Apple:        Text("Apple")
-                    case .Anonymous:    NamedButton(text: "Login", icon: "checkmark.seal") { self.signingIn = true; loginModel.AnonymousSignIn() }
+                    case .Anonymous:    RoundedButton(label: "Login", icon: "checkmark.seal") { self.signingIn = true; loginModel.AnonymousSignIn() }
                     }
                 }
             }

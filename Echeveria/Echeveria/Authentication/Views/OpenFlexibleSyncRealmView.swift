@@ -19,14 +19,14 @@ struct OpenFlexibleSyncRealmView: View {
             
         case .connecting:
             VStack {
-                NamedButton(text: "Connecting to Realm", icon: "externaldrive.connected.to.line.below")
+                NamedButton("Connecting to Realm", and: "externaldrive.connected.to.line.below", oriented: .vertical)
                 ProgressView()
             }
         case .waitingForUser:
             Text("Failed to Login")
             
         case .open(let realm):
-            NamedButton(text: "Success!", icon: "checkmark.circle")
+            NamedButton("Success!", and: "checkmark.circle", oriented: .vertical)
                 .task {
                     await EcheveriaModel.shared.realmManager.authRealm(realm: realm)
                     await EcheveriaModel.shared.realmManager.checkProfile()
@@ -35,12 +35,12 @@ struct OpenFlexibleSyncRealmView: View {
         
         case .progress(let progress):
             VStack {
-                NamedButton(text: "Downloading Realm from Server", icon: "server.rack")
+                NamedButton("Downloading Realm from Server", and: "server.rack", oriented: .vertical)
                 ProgressView(progress)
             }
         
         case .error(let error):
-            NamedButton(text: "Error Connecting to Realm: \(error)", icon: "xmark.seal")
+            NamedButton("Error Connecting to Realm: \(error)", and: "xmark.seal", oriented: .vertical)
         }
     }
 }

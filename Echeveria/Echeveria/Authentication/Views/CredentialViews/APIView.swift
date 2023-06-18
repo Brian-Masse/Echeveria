@@ -23,11 +23,9 @@ struct APIView: View {
             }
         }
         
-        NamedButton(text: "Submit", icon: "checkmark.seal") {
+        RoundedButton(label: "Submit", icon: "checkmark.seal") {
             loginModel.APISignIn(APIToken)
             signingIn = true
-            
         }
-        
     }
 }

@@ -34,11 +34,6 @@ struct EmailView: View {
             }
             .scrollContentBackground(.hidden)
             
-            Text("submit!")
-            
-            NamedButton(text: "Submit", icon: "checkmark.seal") { print("hello!") }
-            
-            
         }
         
     }

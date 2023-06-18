@@ -14,46 +14,41 @@ class Colors {
 }
 
 struct NamedButton: View {
-    
-    enum Orientation {
+    enum Direction {
         case horizontal
         case vertical
     }
     
-    let orientation: Orientation
+    let alignment: Direction
     let text: String
-    let icon: String
-    let action: () -> Void
+    let systemImage: String
+    let reversed: Bool
     
-    init( text: String, icon: String, orientation: Orientation = .horizontal,  action: @escaping ()->Void = {} ) {
-        self.orientation = orientation
+    init( _ text: String, and systemImage: String, oriented alignment: Direction, reversed: Bool = false ) {
         self.text = text
-        self.icon = icon
-        self.action = action
+        self.systemImage = systemImage
+        self.alignment = alignment
+        self.reversed = reversed
     }
-
+    
     var body: some View {
         ZStack {
-            if orientation == .vertical {
+            if alignment == .vertical {
                 VStack {
-                    Text(text)
-                    Image(systemName: icon)
+                    if reversed { Text(text) }
+                    Image(systemName: systemImage)
+                    if !reversed { Text(text) }
                 }
-            }
-            if orientation == .horizontal {
+            }else {
                 HStack {
-                    Image(systemName: icon)
+                    if reversed { Image(systemName: systemImage) }
                     Text(text)
+                    if !reversed { Image(systemName: systemImage) }
                 }
             }
         }
-        .padding()
-        .background(
-            Rectangle()
-                .foregroundColor(.clear)
-                .cornerRadius(10)
-        )
-        .onTapGesture { self.action() }
+        .padding(5)
+        .background(RoundedRectangle(cornerRadius: 5).stroke())
     }
 }
 
@@ -92,6 +87,6 @@ struct LabeledHeader: View {
             Image(systemName: icon)
             Text(title)
             Spacer()
-        }.padding(.bottom)
+        }.padding(.horizontal)
     }
 }
