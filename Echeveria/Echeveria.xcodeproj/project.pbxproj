@@ -12,7 +12,7 @@
 		C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */; };
 		C939B6EB2A3A8644008C6906 /* EcheveriaGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6EA2A3A8644008C6906 /* EcheveriaGroup.swift */; };
 		C939B6ED2A3A8951008C6906 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6EC2A3A8951008C6906 /* User.swift */; };
-		C939B6F12A3AC40B008C6906 /* UserCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6F02A3AC40B008C6906 /* UserCreationView.swift */; };
+		C939B6F12A3AC40B008C6906 /* ProfileCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */; };
 		C939B6F42A3C1745008C6906 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C939B6F32A3C1745008C6906 /* Realm */; };
 		C939B6F62A3C1745008C6906 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C939B6F52A3C1745008C6906 /* RealmSwift */; };
 		C939B6F92A3EB21F008C6906 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6F82A3EB21F008C6906 /* ProfileView.swift */; };
@@ -54,7 +54,7 @@
 		C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFlexibleSyncRealmView.swift; sourceTree = "<group>"; };
 		C939B6EA2A3A8644008C6906 /* EcheveriaGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaGroup.swift; sourceTree = "<group>"; };
 		C939B6EC2A3A8951008C6906 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		C939B6F02A3AC40B008C6906 /* UserCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCreationView.swift; sourceTree = "<group>"; };
+		C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCreationView.swift; sourceTree = "<group>"; };
 		C939B6F82A3EB21F008C6906 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C976A93A2A396C6500C48C6A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C976A93D2A396E5800C48C6A /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -125,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				C939B6F82A3EB21F008C6906 /* ProfileView.swift */,
+				C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -213,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				C976A93A2A396C6500C48C6A /* LoginView.swift */,
-				C939B6F02A3AC40B008C6906 /* UserCreationView.swift */,
 				C939B6EF2A3AC3E9008C6906 /* CredentialViews */,
 				C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */,
 			);
@@ -370,7 +370,7 @@
 				C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */,
 				C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */,
 				C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */,
-				C939B6F12A3AC40B008C6906 /* UserCreationView.swift in Sources */,
+				C939B6F12A3AC40B008C6906 /* ProfileCreationView.swift in Sources */,
 				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

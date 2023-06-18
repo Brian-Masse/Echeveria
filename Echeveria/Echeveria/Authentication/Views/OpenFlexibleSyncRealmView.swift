@@ -29,7 +29,7 @@ struct OpenFlexibleSyncRealmView: View {
             NamedButton(text: "Success!", icon: "checkmark.circle")
                 .task {
                     await EcheveriaModel.shared.realmManager.authRealm(realm: realm)
-                    await EcheveriaModel.shared.realmManager.checkAccount()
+                    await EcheveriaModel.shared.realmManager.checkProfile()
                 }
             
         

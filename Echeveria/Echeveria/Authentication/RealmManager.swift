@@ -13,17 +13,17 @@ import Realm
 //this handles logging in, and opening the right realm with the right credentials
 class RealmManager: ObservableObject {
     
-//    This realm will be generated once the user has authenticated themselves (handled in LoginModel)
+//    This realm will be generated once the profile has authenticated themselves (handled in LoginModel)
 //    and the AsyncOpen call in LoginView has completed
     var realm: Realm!
     var app = RealmSwift.App(id: "application-0-qufwt")
     var configuration: Realm.Configuration!
     
-//    This is the realm user that signed into the app
+//    This is the realm profile that signed into the app
     var user: User?
     
     @Published var signedIn: Bool = false
-    @Published var hasAccount: Bool = false
+    @Published var hasProfile: Bool = false
     @Published var realmLoaded: Bool = false
     
     var notificationToken: NotificationToken?
@@ -39,49 +39,55 @@ class RealmManager: ObservableObject {
         }
     }
     
-    func checkAccount() async {
+//    if the profile has a profile, then skip past the create profile UI
+    func checkProfile() async {
 //        downloads it, if it exists
-        let _:EcheveriaUser? = await self.addGenericSubcriptions(name: "AccountCheck") { queryObject in
+        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: "AccountCheck") { queryObject in
             queryObject.ownerID == self.user!.id
         }
         
 //        Checks the downloads
         DispatchQueue.main.sync {
-            
-            let user = retrieveUserProfile()
-            if user != nil {
-                hasAccount = true
-                EcheveriaModel.shared.setUesr(with: user!)
-            }
+            let profile = retrieveUserProfile()
+            if profile != nil { registerProfileLocally(profile!) }
         } 
         
         await self.removeSubscription(name: "AccountCheck")
     }
     
-    func retrieveUserProfile() -> EcheveriaUser? {
-        let results = realm.objects(EcheveriaUser.self).where { queryObject in
+//    convenience function only being used in the above profile checker
+    private func retrieveUserProfile() -> EcheveriaProfile? {
+        let results = realm.objects(EcheveriaProfile.self).where { queryObject in
             queryObject.ownerID == self.user!.id
         }
-        
         return results.first
     }
     
-    func addAccount( account: EcheveriaUser ) async {
-        let _:EcheveriaUser? = await self.addGenericSubcriptions(name: "Account") { query in
+    
+    func addProfile( profile: EcheveriaProfile ) async {
+        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: "Account") { query in
             query.ownerID == self.user!.id
         }
         
         DispatchQueue.main.sync {
-            account.ownerID = user!.id
-            EcheveriaModel.addObject( account )
-            hasAccount = true
+            profile.ownerID = user!.id
+            EcheveriaModel.addObject(profile)
+            registerProfileLocally(profile)
         }
+    }
+    
+//    whether you're loading the profile from the databae or creating at startup, it should go throught this function to
+//    let the model know that the profile now has a profile and send that profile object to the model
+//    TODO: Im not sure if the model should store a copy of the profile. It might be better to pull directyl from the DB, but for now this works
+    private func registerProfileLocally( _ profile: EcheveriaProfile ) {
+        hasProfile = true
+        EcheveriaModel.shared.setProfile(with: profile)
     }
     
     //    MARK: Authentication Functions
     func authUser(credentials: Credentials) async {
-//        this simply logs the user in and returns any status errors
-//        Once the user is signed in, the LoginView loads the realm using the config generated in self.post-authentication()
+//        this simply logs the profile in and returns any status errors
+//        Once the profile is signed in, the LoginView loads the realm using the config generated in self.post-authentication()
         do {
             self.user = try await app.login(credentials: credentials)
             self.postAuthenticationInit()
@@ -94,7 +100,7 @@ class RealmManager: ObservableObject {
             
             DispatchQueue.main.sync {
                 self.signedIn = false
-                self.hasAccount = false
+                self.hasProfile = false
                 self.realmLoaded = false
             }
         }

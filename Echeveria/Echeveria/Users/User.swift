@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 
-class EcheveriaUser: Object, Identifiable {
+class EcheveriaProfile: Object, Identifiable {
     
     @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var ownerID: String = ""
@@ -29,13 +29,16 @@ class EcheveriaUser: Object, Identifiable {
     }
     
     func getNumCards() -> Int {
-        
-        let cards: Results<TestObject> = EcheveriaModel.retrieveObject { query in
-            query.ownerID == self.ownerID
-        }
-        
+        let cards: Results<TestObject> = EcheveriaModel.retrieveObject { query in query.ownerID == self.ownerID }
         return cards.count
-        
+    }
+    
+    func updateInformation( firstName: String, lastName: String, userName: String ) {
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.firstName = firstName
+            thawed.lastName = lastName
+            thawed.userName = userName
+        }
     }
     
     
@@ -56,13 +59,7 @@ class TestObject: Object, Identifiable {
     }
     
     func updateName(to name: String) {
-        EcheveriaModel.writeToRealm {
-            guard let thawedSelf = self.thaw() else {
-                print("failed to thaw object: \(self.ownerID), \(self)")
-                return
-            }
-            thawedSelf.firstName = name
-        }
+        EcheveriaModel.updateObject(self) { thawed in thawed.firstName = name }
     }
 }
 

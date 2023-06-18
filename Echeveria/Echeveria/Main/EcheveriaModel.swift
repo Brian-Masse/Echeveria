@@ -16,16 +16,27 @@ class EcheveriaModel {
     static let shared = EcheveriaModel()
     let realmManager = RealmManager()
     
-    private(set) var user: EcheveriaUser!
+    private(set) var profile: EcheveriaProfile!
     
-    func setUesr(with user: EcheveriaUser) {
-        self.user = user
+    func setProfile(with profile: EcheveriaProfile) {
+        self.profile = profile
     }
     
     //MARK: Convience Functions
     static func writeToRealm(_ block: () -> Void ) {
         do { try EcheveriaModel.shared.realmManager.realm.write { block() }}
         catch { print(error.localizedDescription) }
+    }
+    
+    static func updateObject<T: Object>(_ object: T, _ block: (T) -> Void, needsThawing: Bool = true) {
+        EcheveriaModel.writeToRealm {
+            guard let thawed = object.thaw() else {
+                print("failed to thaw object: \(object)")
+                return
+            }
+            block(thawed)
+        }
+        
     }
     
     static func addObject<T:Object>( _ object: T ) {

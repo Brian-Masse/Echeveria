@@ -38,7 +38,7 @@ struct MainView: View {
         }
         .padding()
         .background(Colors.lightGrey)
-        .sheet(isPresented: $presentingProfile) { ProfileView(profile: EcheveriaModel.shared.user) }
+        .sheet(isPresented: $presentingProfile) { ProfileView(profile: EcheveriaModel.shared.profile) }
     }
 }
 

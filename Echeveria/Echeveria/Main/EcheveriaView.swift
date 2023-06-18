@@ -21,8 +21,8 @@ struct EcheveriaView: View {
             OpenFlexibleSyncRealmView()
                 .environment(\.realmConfiguration, realmManager.configuration)
             
-        } else if !realmManager.hasAccount {
-            AccountCreator()
+        } else if !realmManager.hasProfile {
+            ProfileCreationView()
                 .environment(\.realmConfiguration, realmManager.configuration)
         }
         else {

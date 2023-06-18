@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 
-struct AccountCreator: View {
+struct ProfileCreationView: View {
     
     @State var username: String = "Brian"
     @State var firstName: String = "Masse"
@@ -32,9 +32,9 @@ struct AccountCreator: View {
             if loading {
                 ProgressView()
                     .task {
-                        //need to checks that all fields are filled in and that they are a minimum length
-                        let account = EcheveriaUser(ownerID: "", firstName: firstName, lastName: lastName, userName: username)
-                        await EcheveriaModel.shared.realmManager.addAccount(account: account)
+                        //TODO: need to checks that all fields are filled in and that they are a minimum length
+                        let profile = EcheveriaProfile(ownerID: "", firstName: firstName, lastName: lastName, userName: username)
+                        await EcheveriaModel.shared.realmManager.addProfile(profile: profile)
                     }
             }
         }
