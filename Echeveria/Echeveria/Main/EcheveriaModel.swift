@@ -16,6 +16,12 @@ class EcheveriaModel {
     static let shared = EcheveriaModel()
     let realmManager = RealmManager()
     
+    private(set) var user: EcheveriaUser!
+    
+    func setUesr(with user: EcheveriaUser) {
+        self.user = user
+    }
+    
     //MARK: Convience Functions
     static func writeToRealm(_ block: () -> Void ) {
         do { try EcheveriaModel.shared.realmManager.realm.write { block() }}
@@ -24,6 +30,10 @@ class EcheveriaModel {
     
     static func addObject<T:Object>( _ object: T ) {
         self.writeToRealm { EcheveriaModel.shared.realmManager.realm.add(object) }
+    }
+    
+    static func retrieveObject<T:Object>( where query: ( (Query<T>) -> Query<Bool> ) ) -> Results<T> {
+        return EcheveriaModel.shared.realmManager.realm.objects(T.self).where(query)
     }
     
     static func deleteObject( _ object: TestObject ) {

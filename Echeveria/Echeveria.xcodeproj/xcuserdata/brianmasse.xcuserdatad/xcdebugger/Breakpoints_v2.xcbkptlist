@@ -30,8 +30,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "authRealm(realm:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "authRealm(realm:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
             landmarkName = "addAccount(account:)"
             landmarkType = "7">
             <Locations>
@@ -140,8 +140,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "addAccount(account:)"
             landmarkType = "7">
             <Locations>
@@ -359,8 +359,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "logoutUser()"
             landmarkType = "7">
             <Locations>
@@ -437,42 +437,10 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "authUser(credentials:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8B03B08C-063B-413E-84BA-EC94ED3EB9BE - f95ce9836a4f9cd5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Echeveria.RealmManager.authUser(credentials: RealmSwift.Credentials) async -&gt; ()"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Authentication/RealmManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
-                  offsetFromSymbolStart = "80">
-               </Location>
-               <Location
-                  uuid = "8B03B08C-063B-413E-84BA-EC94ED3EB9BE - a4b08bc3129f5ba2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for Echeveria.RealmManager.authUser(credentials: RealmSwift.Credentials) async -&gt; ()"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Authentication/RealmManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
-                  offsetFromSymbolStart = "42">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

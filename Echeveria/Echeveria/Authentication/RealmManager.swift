@@ -47,13 +47,23 @@ class RealmManager: ObservableObject {
         
 //        Checks the downloads
         DispatchQueue.main.sync {
-            let results = realm.objects(EcheveriaUser.self).where { queryObject in
-                queryObject.ownerID == self.user!.id
+            
+            let user = retrieveUserProfile()
+            if user != nil {
+                hasAccount = true
+                EcheveriaModel.shared.setUesr(with: user!)
             }
-            if !results.isEmpty { hasAccount = true }
         } 
         
         await self.removeSubscription(name: "AccountCheck")
+    }
+    
+    func retrieveUserProfile() -> EcheveriaUser? {
+        let results = realm.objects(EcheveriaUser.self).where { queryObject in
+            queryObject.ownerID == self.user!.id
+        }
+        
+        return results.first
     }
     
     func addAccount( account: EcheveriaUser ) async {

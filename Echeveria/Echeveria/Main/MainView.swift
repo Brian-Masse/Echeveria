@@ -14,8 +14,12 @@ struct MainView: View {
     
     @ObservedResults(TestObject.self) var objs
     
+    @State var presentingProfile: Bool = false
+    
     var body: some View {
         VStack {
+            
+            RoundedButton(label: "Profile", icon: "person.crop.square") { presentingProfile = true }
             
             RoundedButton(label: "Add", icon: "plus.circle") {
                 let object = TestObject(firstName: "Brian", lastName: "Masse",
@@ -34,6 +38,7 @@ struct MainView: View {
         }
         .padding()
         .background(Colors.lightGrey)
+        .sheet(isPresented: $presentingProfile) { ProfileView(profile: EcheveriaModel.shared.user) }
     }
 }
 

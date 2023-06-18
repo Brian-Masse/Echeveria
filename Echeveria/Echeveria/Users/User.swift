@@ -27,6 +27,18 @@ class EcheveriaUser: Object, Identifiable {
         self.lastName = lastName
         self.userName = userName
     }
+    
+    func getNumCards() -> Int {
+        
+        let cards: Results<TestObject> = EcheveriaModel.retrieveObject { query in
+            query.ownerID == self.ownerID
+        }
+        
+        return cards.count
+        
+    }
+    
+    
 }
 
 class TestObject: Object, Identifiable {
