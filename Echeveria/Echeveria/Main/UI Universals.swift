@@ -10,6 +10,7 @@ import SwiftUI
 
 class Colors {
     static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
+    static let darkGrey = Color(red: 0.05, green: 0.05, blue: 0.05)
 }
 
 class UIUniversals {

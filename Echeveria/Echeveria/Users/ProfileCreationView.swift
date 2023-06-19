@@ -11,6 +11,8 @@ import SwiftUI
 
 struct ProfileCreationView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @State var username: String = "Brian"
     @State var firstName: String = "Masse"
     @State var lastName: String = "bmasse23"
@@ -25,7 +27,8 @@ struct ProfileCreationView: View {
                     TextField("First Name", text: $firstName)
                     TextField("Last Name", text: $lastName)
                     TextField("UserName", text: $username)
-                }
+                }.scrollContentBackground(.hidden)
+                
                 RoundedButton(label: "Done", icon: "checkmark.seal") { loading = true }
             }
             
@@ -39,7 +42,7 @@ struct ProfileCreationView: View {
             }
         }
         .padding()
-        .background(Colors.lightGrey)
+        .background(colorScheme == .light ? Colors.lightGrey : .black)
         
     }
     

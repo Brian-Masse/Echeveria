@@ -21,7 +21,7 @@ struct APIView: View {
             Section("API Token") {
                 TextField("Token", text: $APIToken)
             }
-        }
+        }.scrollContentBackground(.hidden)
         
         RoundedButton(label: "Submit", icon: "checkmark.seal") {
             loginModel.APISignIn(APIToken)

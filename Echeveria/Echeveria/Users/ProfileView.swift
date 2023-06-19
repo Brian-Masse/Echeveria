@@ -13,6 +13,8 @@ struct ProfileView: View {
     @ObservedObject var profile: EcheveriaProfile
     @State var editing: Bool = false
     
+    var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
+    
     var body: some View {
         
 
@@ -20,7 +22,9 @@ struct ProfileView: View {
             
             LabeledHeader(icon: "person.crop.square", title: "Profile")
             
-            RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
+            if mainUser {
+                RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
+            }
             
             HStack {
                 Image(systemName: "globe.americas")
@@ -48,17 +52,19 @@ struct ProfileView: View {
     
     struct EditingProfileView: View {
         
+        @Environment(\.presentationMode) var presentationMode
+        @Environment(\.colorScheme) var colorScheme
+        
         @EnvironmentObject var profile: EcheveriaProfile
         
         @State var firstName: String = ""
         @State var lastName: String = ""
         @State var userName: String = ""
         
-        @Environment(\.presentationMode) var presentationMode
-        
         var body: some View {
             
             VStack {
+                
                 LabeledHeader(icon: "pencil.line", title: "Edit Profile")
                 
                 Form {
@@ -68,6 +74,7 @@ struct ProfileView: View {
                         TextField( "User Name", text: $userName )
                     }
                 }
+                .scrollContentBackground(.hidden)
                 .onAppear {
                     firstName = profile.firstName
                     lastName = profile.lastName
@@ -80,7 +87,7 @@ struct ProfileView: View {
                 
             }
             .padding()
-            .background(Colors.lightGrey)
+            .background(colorScheme == .light ? Colors.lightGrey : .black)
         }
     }
 }

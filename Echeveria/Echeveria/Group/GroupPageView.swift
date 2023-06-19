@@ -70,6 +70,7 @@ struct GroupListView: View {
 }
 
 struct GroupPreviewView: View {
+    @Environment(\.colorScheme) var colorScheme
     
     @ObservedRealmObject var group: EcheveriaGroup
     let memberID = EcheveriaModel.shared.profile!.ownerID
@@ -101,7 +102,7 @@ struct GroupPreviewView: View {
         .padding(10)
         .background(Rectangle()
             .cornerRadius(15)
-            .foregroundColor(.white)
+            .foregroundColor(colorScheme == .light ? .white : Colors.darkGrey)
             .onTapGesture { showingGroup = true }
             .sheet(isPresented: $showingGroup) { GroupView(group: group) }
         )
@@ -110,10 +111,11 @@ struct GroupPreviewView: View {
 
 struct GroupCreationView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.presentationMode) var presentaitonMode
+    
     @State var name: String = ""
     @State var icon: String = "square.on.square.squareshape.controlhandles"
-    
-    @Environment(\.presentationMode) var presentaitonMode
     
     var body: some View {
         
@@ -123,7 +125,7 @@ struct GroupCreationView: View {
                     TextField("Group Name", text: $name)
                     TextField("Icon", text: $icon)
                 }
-            }
+            }.scrollContentBackground(.hidden)
             
             RoundedButton(label: "Submit", icon: "checkmark.seal") {
                 let group = EcheveriaGroup(name: name, icon: icon)
@@ -132,6 +134,6 @@ struct GroupCreationView: View {
             }
         }
         .padding()
-        .background(Colors.lightGrey)
+        .background(colorScheme == .light ? Colors.lightGrey : .black)
     }
 }

@@ -33,7 +33,6 @@ struct EmailView: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            
         }
         
     }

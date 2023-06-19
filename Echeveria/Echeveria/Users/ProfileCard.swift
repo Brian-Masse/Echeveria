@@ -13,12 +13,13 @@ struct ProfileCard: View {
 
     let profile: EcheveriaProfile
     
+    @State var showingProfile: Bool = false
+    
     init( profileID: String ) {
         self.profile = EcheveriaModel.retrieveObject(where: { query in
             query.ownerID == profileID
         }).first!
     }
-    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,9 +33,11 @@ struct ProfileCard: View {
             
         }
         .padding()
+        .sheet(isPresented: $showingProfile) { ProfileView(profile: profile) }
         .background(Rectangle()
             .foregroundColor(.white)
             .cornerRadius(15)
+            .onTapGesture { showingProfile = true }
         )
     }
     

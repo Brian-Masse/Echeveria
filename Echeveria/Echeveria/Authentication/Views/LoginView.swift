@@ -11,6 +11,8 @@ import RealmSwift
 
 struct LoginView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+    
     @ObservedObject var loginModel: LoginModel
     
     @State var signinMethod: LoginModel.LoginMethod = .email
@@ -42,7 +44,7 @@ struct LoginView: View {
         }
         .environmentObject(loginModel)
         .padding()
-        .background(Colors.lightGrey)
+        .background(colorScheme == .light ? Colors.lightGrey : .black)
     }
 }
 

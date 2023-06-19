@@ -18,6 +18,7 @@ struct MainView: View {
         case profile
     }
     
+    @Environment(\.colorScheme) var colorScheme
     @ObservedResults(TestObject.self) var objs
     
     @State var page: MainViewPage = .main
@@ -56,11 +57,12 @@ struct MainView: View {
             }.padding([.top, .horizontal])
         }
         .padding()
-        .background(Colors.lightGrey)
+        .background( colorScheme == .light ? Colors.lightGrey : .black)
     }
 }
 
 struct CardView: View {
+    @Environment(\.colorScheme) var colorScheme
     
     @ObservedRealmObject var item: TestObject
     
@@ -93,7 +95,7 @@ struct CardView: View {
     
         .background(
             Rectangle()
-                .foregroundColor(.white)
+                .foregroundColor(colorScheme == .light ? .white : Colors.darkGrey)
                 .cornerRadius(20)
         )
     }
