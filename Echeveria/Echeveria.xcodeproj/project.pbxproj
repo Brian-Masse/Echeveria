@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C900BAA02A3FE11800388B37 /* ProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BA9F2A3FE11800388B37 /* ProfileCard.swift */; };
+		C900BAA32A4024BB00388B37 /* GameTrackerCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA22A4024BB00388B37 /* GameTrackerCard.swift */; };
+		C900BAA52A40269600388B37 /* GameLoggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA42A40269600388B37 /* GameLoggerView.swift */; };
+		C900BAA72A40EEDB00388B37 /* GameTrackerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA62A40EEDB00388B37 /* GameTrackerCardView.swift */; };
 		C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6DF2A3A51D1008C6906 /* MainView.swift */; };
 		C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E62A3A7547008C6906 /* RealmManager.swift */; };
 		C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */; };
@@ -53,6 +56,9 @@
 
 /* Begin PBXFileReference section */
 		C900BA9F2A3FE11800388B37 /* ProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCard.swift; sourceTree = "<group>"; };
+		C900BAA22A4024BB00388B37 /* GameTrackerCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTrackerCard.swift; sourceTree = "<group>"; };
+		C900BAA42A40269600388B37 /* GameLoggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoggerView.swift; sourceTree = "<group>"; };
+		C900BAA62A40EEDB00388B37 /* GameTrackerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTrackerCardView.swift; sourceTree = "<group>"; };
 		C939B6DF2A3A51D1008C6906 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C939B6E62A3A7547008C6906 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFlexibleSyncRealmView.swift; sourceTree = "<group>"; };
@@ -108,6 +114,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C900BAA12A4024A400388B37 /* GameTracker */ = {
+			isa = PBXGroup;
+			children = (
+				C900BAA22A4024BB00388B37 /* GameTrackerCard.swift */,
+				C900BAA62A40EEDB00388B37 /* GameTrackerCardView.swift */,
+				C900BAA42A40269600388B37 /* GameLoggerView.swift */,
+			);
+			path = GameTracker;
+			sourceTree = "<group>";
+		};
 		C939B6EE2A3A895A008C6906 /* Users */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +203,7 @@
 				C939B6EE2A3A895A008C6906 /* Users */,
 				C939B6FD2A3FC4E2008C6906 /* Group */,
 				C976A9442A39751500C48C6A /* Authentication */,
+				C900BAA12A4024A400388B37 /* GameTracker */,
 				C997140E2A3902CC00090429 /* Assets.xcassets */,
 				C99714102A3902CC00090429 /* Echeveria.entitlements */,
 				C99714112A3902CC00090429 /* Preview Content */,
@@ -369,10 +386,12 @@
 				C939B6ED2A3A8951008C6906 /* User.swift in Sources */,
 				C967C8A52A3FDD8D00217ECB /* GroupView.swift in Sources */,
 				C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */,
+				C900BAA32A4024BB00388B37 /* GameTrackerCard.swift in Sources */,
 				C939B6FB2A3FBB1A008C6906 /* GroupPageView.swift in Sources */,
 				C939B6EB2A3A8644008C6906 /* EcheveriaGroup.swift in Sources */,
 				C900BAA02A3FE11800388B37 /* ProfileCard.swift in Sources */,
 				C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */,
+				C900BAA52A40269600388B37 /* GameLoggerView.swift in Sources */,
 				C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */,
 				C997140D2A3902CA00090429 /* EcheveriaView.swift in Sources */,
 				C976A9432A39750F00C48C6A /* EmailView.swift in Sources */,
@@ -384,6 +403,7 @@
 				C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */,
 				C939B6F12A3AC40B008C6906 /* ProfileCreationView.swift in Sources */,
 				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,
+				C900BAA72A40EEDB00388B37 /* GameTrackerCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

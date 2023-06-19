@@ -27,6 +27,8 @@ class LoginModel: ObservableObject {
     
     var credentials: Credentials!
     
+    static let shared = LoginModel()
+    
     func APISignIn( _ token: String ) {
         self.credentials = Credentials.userAPIKey(token)
     }

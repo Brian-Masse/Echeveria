@@ -15,7 +15,7 @@ struct EcheveriaView: View {
     var body: some View {
         
         if !realmManager.signedIn {
-            LoginView(loginModel: loginModel)
+            LoginView()
         
         } else if !realmManager.realmLoaded {
             OpenFlexibleSyncRealmView()

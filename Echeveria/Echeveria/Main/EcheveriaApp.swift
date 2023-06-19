@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-let echeveriaModel = EcheveriaModel()
-let loginModel = LoginModel()
-
 @main
 struct EcheveriaApp: App {
     var body: some Scene {

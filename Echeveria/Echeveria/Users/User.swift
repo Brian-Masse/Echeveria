@@ -19,6 +19,7 @@ class EcheveriaProfile: Object, Identifiable {
     @Persisted var userName: String = ""
     
     @Persisted var groups: List<EcheveriaGroup> = List()
+//    @Persisted var games: List<EcheveriaGame> = List()
     
     convenience init(ownerID: String, firstName: String, lastName: String, userName: String) {
         self.init()
@@ -26,6 +27,14 @@ class EcheveriaProfile: Object, Identifiable {
         self.firstName = firstName
         self.lastName = lastName
         self.userName = userName
+    }
+    
+    static func getProfileObject(from ownerID: String) -> EcheveriaProfile? {
+        let results: Results<EcheveriaProfile> = EcheveriaModel.retrieveObject { query in
+            query.ownerID == ownerID
+        }
+        guard let profile = results.first else { print( "No profile exists with the given id: \(ownerID)" ); return nil }
+        return profile   
     }
     
     func getNumCards() -> Int {
@@ -41,7 +50,47 @@ class EcheveriaProfile: Object, Identifiable {
         }
     }
     
+    func addGame(_ gameID: String) {
+//        guard let game = EcheveriaGame.getGameObject(from: gameID) else {return}
+//        EcheveriaModel.updateObject(self) { thawed in
+//            thawed.games.append(game)
+//        }
+    }
     
+    func joinGroup(_ groupID: ObjectId) {
+        guard let group = EcheveriaGroup.getGroupObject(from: groupID) else { return }
+        EcheveriaModel.updateObject(self) { thawed in
+            if thawed.groups.contains(group) { return }
+            thawed.groups.append(group)
+        }
+    }
+    
+    func leaveGroup(_ group: EcheveriaGroup) {
+        EcheveriaModel.updateObject(self) { thawed in
+            if let index = thawed.groups.firstIndex(of: group) {
+                thawed.groups.remove(at: index)
+            }
+        }
+    }
+    
+//    TODO: This should be better but I am tired and don't care
+    func provideLocalUserFullAccess() async {
+        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
+
+            var users: [String] = []
+            for group in self.groups {
+                users.append(contentsOf: group.members)
+            }
+
+            return query.ownerID.in(users)
+        })
+    }
+    
+    func disallowLocalUserFullAccess() async {
+        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
+            query.ownerID == self.ownerID
+        })
+    }
 }
 
 class TestObject: Object, Identifiable {

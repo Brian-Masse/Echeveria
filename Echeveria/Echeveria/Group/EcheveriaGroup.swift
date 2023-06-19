@@ -21,13 +21,29 @@ class EcheveriaGroup: Object, Identifiable {
     @Persisted var name: String = ""
     @Persisted var icon: String = ""
     
+//    @Persisted var games: List<EcheveriaGame> = List()
+    
+    var id: String { self._id.stringValue }
     
     convenience init( name: String, icon: String ) {
-        
         self.init()
         self.name = name
         self.icon = icon
-        
+    }
+    
+    static func getGroupObject(from _id: ObjectId) -> EcheveriaGroup? {
+        let results: Results<EcheveriaGroup> = EcheveriaModel.retrieveObject { query in
+            query._id == _id
+        }
+        guard let group = results.first else { print( "No group exists with the given id: \(_id)" ); return nil }
+        return group
+    }
+    
+    func addGame(_ gameID: String) {
+//        guard let game = EcheveriaGame.getGameObject(from: gameID) else {return}
+//        EcheveriaModel.updateObject(self) { thawed in
+//            thawed.games.append(game)
+//        }
     }
     
     func addToRealm() {
@@ -55,6 +71,8 @@ class EcheveriaGroup: Object, Identifiable {
         EcheveriaModel.updateObject(self) { thawed in
             thawed.members.append(memberID)
         }
+        if let profile = EcheveriaProfile.getProfileObject(from: memberID) { profile.joinGroup(self._id) }
+        
     }
     
     func removeMember(_ memberID: String) {
@@ -62,6 +80,7 @@ class EcheveriaGroup: Object, Identifiable {
             guard let int = thawed.members.firstIndex(of: memberID) else { print("Target user is not a member of this group and cannot be deleted"); return }
             thawed.members.remove(at: int)
         }
+        if let profile = EcheveriaProfile.getProfileObject(from: memberID) { profile.leaveGroup(self) }
     }
     
 //    When a user is viewing a group, it needs to be able to temporarily pull their information

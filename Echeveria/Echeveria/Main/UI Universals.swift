@@ -40,6 +40,13 @@ struct UniversalForeground: ViewModifier {
     }
 }
 
+struct UniversalText: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    func body(content: Content) -> some View {
+        content.foregroundColor(colorScheme == .light ? .black : .white)
+    }
+}
+
 struct UniversalForm: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
@@ -64,6 +71,10 @@ extension View {
     
     func universalForeground(not reveresed: Bool = false) -> some View {
         modifier(UniversalForeground(reversed: reveresed))
+    }
+    
+    func universalText() -> some View {
+        modifier(UniversalText())
     }
     
     func universalForm() -> some View {
@@ -175,7 +186,9 @@ struct AsyncLoader: View {
                     }
             }
             if leaving { ProgressView().task { await closingTask() } }
-        }.onDisappear { leaving = true }
+        }
+        .onAppear {leaving = false; loading = true}
+        .onDisappear { leaving = true }
     }
     
 }

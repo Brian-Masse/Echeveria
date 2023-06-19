@@ -7,21 +7,23 @@
 
 import Foundation
 import SwiftUI
+import RealmSwift
 
 struct ProfileView: View {
     
     @ObservedObject var profile: EcheveriaProfile
+    
     @State var editing: Bool = false
+    @State var logging: Bool = false
+    @State var loadingPermissions: Bool = true
+    
+    @ObservedResults(EcheveriaGame.self, where: { game in game.ownerID == EcheveriaModel.shared.profile.ownerID}) var games
     
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
     var body: some View {
     
         VStack(alignment: .leading) {
-            
-            if mainUser {
-                RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
-            }
             
             HStack {
                 Image(systemName: "globe.americas")
@@ -30,20 +32,36 @@ struct ProfileView: View {
                 Text(profile.userName).font(UIUniversals.font(45))
             }
             
-            HStack {
-                Text(profile.firstName).font(UIUniversals.font(20))
-                Text(profile.lastName).font(UIUniversals.font(20))
+            ScrollView(.vertical) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(profile.firstName).font(UIUniversals.font(20))
+                        Text(profile.lastName).font(UIUniversals.font(20))
+                    }
+                    Text(profile.ownerID)
+                        .padding(.bottom)
+                    
+                    if mainUser {
+                        RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
+                        RoundedButton(label: "Log Game", icon: "signpost.and.arrowtriangle.up") { logging = true }
+                    }
+                    
+                    if !loadingPermissions {
+                        Text("Games").font(UIUniversals.font(20))
+                        ForEach( games, id: \.self ) { game in
+                            GameTrackerCardPreviewView(game: game)
+                        }
+                    }else {
+                        AsyncLoader { await profile.provideLocalUserFullAccess()
+                            loadingPermissions = false
+                        } closingTask: { await profile.disallowLocalUserFullAccess() }
+                    }
+                }
             }
-            
-            Text(profile.ownerID)
-            .padding(.bottom)
-            
-            Text("Number of Cards: ").bold(true).font(.custom("Helvetica", size: 15))
-            Text("\( profile.getNumCards() )")
-            
             Spacer()
         }
         .sheet(isPresented: $editing) { EditingProfileView().environmentObject(profile) }
+        .sheet(isPresented: $logging) { GameLoggerView() }
         .universalBackground()
     }
     

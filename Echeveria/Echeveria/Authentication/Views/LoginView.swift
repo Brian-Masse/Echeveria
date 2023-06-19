@@ -13,7 +13,7 @@ struct LoginView: View {
 
     @Environment(\.colorScheme) var colorScheme
     
-    @ObservedObject var loginModel: LoginModel
+    @ObservedObject var loginModel: LoginModel = LoginModel.shared
     
     @State var signinMethod: LoginModel.LoginMethod = .email
     @State var signingIn: Bool = false

@@ -15,6 +15,7 @@ enum QuerySubKey: String {
     case testObject = "testObject"
     case account = "Account"
     case groups = "Groups"
+    case games = "Games"
     
 }
 
@@ -51,6 +52,7 @@ class RealmManager: ObservableObject {
 //    If there is a user already signed in,skip the user authentication system
     func checkLogin() {
         if let user = app.currentUser {
+            
             self.user = user
             self.postAuthenticationInit(loggingin: true)
         }
@@ -85,25 +87,31 @@ class RealmManager: ObservableObject {
     }
     
 //    MARK: Profile Functions
+    
+    private func addProfileSubscription() async {
+        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: .account) { query in
+            query.ownerID == self.user!.id
+        }
+    }
+    
 //    if the profile has a profile, then skip past the create profile UI
+//    if not the profile objcet on EcheveriaModel will remain nil and the UI will show
     func checkProfile() async {
 //     the only place the subscription is added is when they create a profile
-        if self.checkSubscription(name: "Account") {
-            DispatchQueue.main.sync {
-                let profile = realm.objects(EcheveriaProfile.self).where { queryObject in
-                    queryObject.ownerID == self.user!.id
-                }.first
-                if profile != nil { registerProfileLocally(profile!) }
-            }
+        if !self.checkSubscription(name: .account) { await self.addProfileSubscription() }
+        
+        DispatchQueue.main.sync {
+            let profile = realm.objects(EcheveriaProfile.self).where { queryObject in
+                queryObject.ownerID == self.user!.id
+            }.first
+            if profile != nil { registerProfileLocally(profile!) }
         }
     }
     
 //    If they dont, this function is called to create one. It is sent in from the CreateProfileView
     func addProfile( profile: EcheveriaProfile ) async {
 //        Add Subscription to donwload your profile
-        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: .account) { query in
-            query.ownerID == self.user!.id
-        }
+        await addProfileSubscription()
         
         DispatchQueue.main.sync {
             profile.ownerID = user!.id
@@ -153,6 +161,10 @@ class RealmManager: ObservableObject {
         let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: .groups) { query in
             return query.members.contains( self.user!.id )
         }
+        
+        let _:EcheveriaGame? = await self.addGenericSubcriptions(name: .games, query: { query in
+            query.ownerID == self.user!.id
+        })
             
     }
     
@@ -164,8 +176,9 @@ class RealmManager: ObservableObject {
         do {
             try await subscriptions.update {
                 let querySub = QuerySubscription(name: name.rawValue) { queryObj in query(queryObj) }
-                if checkSubscription(name: name.rawValue) {
+                if checkSubscription(name: name) {
                     let foundSubscriptions = subscriptions.first(named: name.rawValue)!
+                    
                     foundSubscriptions.updateQuery(toType: T.self, where: query)
                 }
                 else { subscriptions.append(querySub)}
@@ -174,22 +187,22 @@ class RealmManager: ObservableObject {
         return nil
     }
     
-    func removeSubscription(name: String) async {
+    func removeSubscription(name: QuerySubKey) async {
             
         let subscriptions = self.realm.subscriptions
-        let foundSubscriptions = subscriptions.first(named: name)
+        let foundSubscriptions = subscriptions.first(named: name.rawValue)
         if foundSubscriptions == nil {return}
         
         do {
             try await subscriptions.update{
-                subscriptions.remove(named: name)
+                subscriptions.remove(named: name.rawValue)
             }
         } catch { print("error adding subcription: \(error)") }
     }
     
-    private func checkSubscription(name: String) -> Bool {
+    private func checkSubscription(name: QuerySubKey) -> Bool {
         let subscriptions = self.realm.subscriptions
-        let foundSubscriptions = subscriptions.first(named: name)
+        let foundSubscriptions = subscriptions.first(named: name.rawValue)
         return foundSubscriptions != nil
     }
 }
