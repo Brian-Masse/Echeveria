@@ -19,28 +19,20 @@ struct GroupPageView: View {
     @State var showingGroupSearchView: Bool = false
     @State var leaving: Bool = false
     
-    @ObservedResults(EcheveriaGroup.self) var groups
-    
     let profile = EcheveriaModel.shared.profile!
     
     var body: some View {
         
         VStack {
             RoundedButton(label: "Create Group", icon: "plus.square") { showingGroupCreationView = true }
-            
-            TextField("Search...", text: $searchQuery)
             RoundedButton(label: "Search for Group", icon: "magnifyingglass.circle") { loadingSearch = true }
+            TextField("Search...", text: $searchQuery)
             
-            Text("My Groups:").bold(true)
             
+            GroupListView(title: "My Groups:") { group in group.hasMember(profile.ownerID) }
             
-            ForEach(groups, id: \._id) { group in
-                if group.owner == profile.ownerID {
-                    Text("owner")
-                }
-                if group.members.contains(where: { id in id == profile.ownerID }) {
-                    GroupView(group: group)
-                }
+            if showingGroupSearchView {
+                GroupListView(title: "Search Results:") { group in !group.hasMember(profile.ownerID) }
             }
             
             if loadingSearch {
@@ -51,20 +43,8 @@ struct GroupPageView: View {
                         showingGroupSearchView = true
                     }
             }
-            
-            if showingGroupSearchView {
-                Text("Found Groups:").bold(true)
-                ForEach(groups, id: \._id) { group in
-                    if group.members.contains(where: { id in id != profile.ownerID }) {
-                        GroupView(group: group)
-                    }
-                }
-            }
-            
-            if leaving {
-                ProgressView()
-                    .task { await EcheveriaGroup.resetSearch(profile: profile) }
-            }
+
+            if leaving { ProgressView().task { await EcheveriaGroup.resetSearch(profile: profile) } }
         }
         .onDisappear { leaving = true }
         .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
@@ -72,21 +52,59 @@ struct GroupPageView: View {
     
 }
 
-struct GroupView: View {
+struct GroupListView: View {
     
-    @ObservedRealmObject var group: EcheveriaGroup
+    let title: String
+    let query: ((EcheveriaGroup) -> Bool)
+    
+    @ObservedResults(EcheveriaGroup.self) var groups
     
     var body: some View {
         
-        HStack {
-            Image(systemName: group.icon)
-            Text(group.name)
-                .bold(true)
-            Spacer()
+        let filtered = groups.filter(query)
+        
+        if !filtered.isEmpty {
+            Text(title).bold(true)
+            ForEach(groups, id: \._id) { group in
+                if query(group) {
+                    GroupPreviewView(group: group)
+                }
+            }
+        }
+    }
+    
+}
+
+struct GroupPreviewView: View {
+    
+    @ObservedRealmObject var group: EcheveriaGroup
+    let memberID = EcheveriaModel.shared.profile!.ownerID
+    
+    var body: some View {
+        
+        VStack(alignment: .leading) {
+            HStack {
+                Image(systemName: group.icon)
+                Text(group.name)
+                    .bold(true)
+                Spacer()
+            }
+            if group.owner == memberID  {
+                Text("owner")
+            }
+            else if !group.hasMember(memberID) {
+                RoundedButton(label: "join", icon: "plus.square") {
+                    group.addMember(memberID)
+                }
+            } else {
+                RoundedButton(label: "leave", icon: "shippingbox.and.arrow.backward") {
+                    group.removeMember(memberID)
+                }
+            }
         }
         .padding(10)
         .background(Rectangle()
-            .cornerRadius(40)
+            .cornerRadius(15)
             .foregroundColor(.white)
         )
     }

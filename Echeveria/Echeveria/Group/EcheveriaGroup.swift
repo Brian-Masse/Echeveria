@@ -38,6 +38,25 @@ class EcheveriaGroup: Object, Identifiable {
         EcheveriaModel.addObject(self)
     }
     
+    func hasMember(_ memberID: String) -> Bool {
+        return self.members.contains { id in
+            id == memberID
+        }
+    }
+    
+    func addMember(_ memberID: String) {
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.members.append(memberID)
+        }
+    }
+    
+    func removeMember(_ memberID: String) {
+        EcheveriaModel.updateObject(self) { thawed in
+            guard let int = thawed.members.firstIndex(of: memberID) else { print("Target user is not a member of this group and cannot be deleted"); return }
+            thawed.members.remove(at: int)
+        }
+    }
+    
     static func searchForGroup(_ name: String, profile: EcheveriaProfile) async {
         let _:EcheveriaGroup? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .groups) { query in
             query.name == name || query.members.contains(profile.ownerID)
