@@ -145,8 +145,6 @@ class RealmManager: ObservableObject {
 //            Instead, when creating the configuration, use initalSubscriptions to provide the subs before creating the relam
 //            This wasn't working before, but possibly if there is an instance of Realm in existence it might work?
         
-        await self.removeSubscription(name: "GroupSearch")
-        
         let _:TestObject? = await self.addGenericSubcriptions(name: .testObject) { query in
             query.ownerID == self.user!.id
         }

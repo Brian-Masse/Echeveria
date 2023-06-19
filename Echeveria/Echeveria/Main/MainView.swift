@@ -30,6 +30,7 @@ struct MainView: View {
             case .profile: ProfileView(profile: EcheveriaModel.shared.profile)
             case .group: GroupPageView()
             case .main:
+            
                 RoundedButton(label: "Add", icon: "plus.circle") {
                     let object = TestObject(firstName: "Brian", lastName: "Masse",
                                             ownerID: EcheveriaModel.shared.realmManager.user!.id)

@@ -13,11 +13,9 @@ struct GroupPageView: View {
     
     @State var showingGroupCreationView: Bool = false
     
-    
     @State var searchQuery: String = ""
     @State var loadingSearch: Bool = false
     @State var showingGroupSearchView: Bool = false
-    @State var leaving: Bool = false
     
     let profile = EcheveriaModel.shared.profile!
     
@@ -36,17 +34,14 @@ struct GroupPageView: View {
             }
             
             if loadingSearch {
-                ProgressView()
-                    .task {
-                        await EcheveriaGroup.searchForGroup(searchQuery, profile: profile)
-                        loadingSearch = false
-                        showingGroupSearchView = true
-                    }
+                AsyncLoader {
+                    await EcheveriaGroup.searchForGroup(searchQuery, profile: profile)
+                    showingGroupSearchView = true
+                } closingTask: {
+                    await EcheveriaGroup.resetSearch(profile: profile)
+                }
             }
-
-            if leaving { ProgressView().task { await EcheveriaGroup.resetSearch(profile: profile) } }
         }
-        .onDisappear { leaving = true }
         .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
     }
     
@@ -72,13 +67,14 @@ struct GroupListView: View {
             }
         }
     }
-    
 }
 
 struct GroupPreviewView: View {
     
     @ObservedRealmObject var group: EcheveriaGroup
     let memberID = EcheveriaModel.shared.profile!.ownerID
+    
+    @State var showingGroup: Bool = false
     
     var body: some View {
         
@@ -106,10 +102,11 @@ struct GroupPreviewView: View {
         .background(Rectangle()
             .cornerRadius(15)
             .foregroundColor(.white)
+            .onTapGesture { showingGroup = true }
+            .sheet(isPresented: $showingGroup) { GroupView(group: group) }
         )
     }
 }
-
 
 struct GroupCreationView: View {
     
@@ -136,7 +133,5 @@ struct GroupCreationView: View {
         }
         .padding()
         .background(Colors.lightGrey)
-        
     }
-    
 }

@@ -8,16 +8,10 @@
 import Foundation
 import SwiftUI
 
-
 struct ProfileView: View {
     
     @ObservedObject var profile: EcheveriaProfile
     @State var editing: Bool = false
-    
-    private func font( _ size: CGFloat ) -> Font {
-        return Font.custom("Helvetica", size: size).bold()
-    }
-
     
     var body: some View {
         
@@ -32,12 +26,12 @@ struct ProfileView: View {
                 Image(systemName: "globe.americas")
                     .resizable()
                     .frame(width: 60, height: 60)
-                Text(profile.userName).font(font(45))
+                Text(profile.userName).font(UIUniversals.font(45))
             }
             
             HStack {
-                Text(profile.firstName).font(font(20))
-                Text(profile.lastName).font(font(20))
+                Text(profile.firstName).font(UIUniversals.font(20))
+                Text(profile.lastName).font(UIUniversals.font(20))
             }
             
             Text(profile.ownerID)
@@ -87,12 +81,6 @@ struct ProfileView: View {
             }
             .padding()
             .background(Colors.lightGrey)
-            
-            
         }
-        
     }
 }
-
-
-

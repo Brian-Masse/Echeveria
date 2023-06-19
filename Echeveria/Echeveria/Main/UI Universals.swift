@@ -10,7 +10,13 @@ import SwiftUI
 
 class Colors {
     static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
+}
+
+class UIUniversals {
     
+    static func font( _ size: CGFloat ) -> Font {
+        return Font.custom("Helvetica", size: size).bold()
+    }
 }
 
 struct NamedButton: View {
@@ -89,4 +95,27 @@ struct LabeledHeader: View {
             Spacer()
         }.padding(.horizontal)
     }
+}
+
+struct AsyncLoader: View {
+    
+    let openningTask: () async -> Void
+    let closingTask: () async -> Void
+    
+    @State var loading: Bool = true
+    @State var leaving: Bool = false
+    
+    var body: some View {
+        VStack {
+            if loading {
+                ProgressView()
+                    .task {
+                        await openningTask()
+                        loading = false
+                    }
+            }
+            if leaving { ProgressView().task { await closingTask() } }
+        }.onDisappear { leaving = true }
+    }
+    
 }

@@ -57,6 +57,19 @@ class EcheveriaGroup: Object, Identifiable {
         }
     }
     
+//    When a user is viewing a group, it needs to be able to temporarily pull their information
+    func provideLocalUserAccess() async {
+        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
+            query.ownerID.in(self.members)
+        })
+    }
+    
+    func disallowLocalUserAccess() async {
+        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
+            query.ownerID == EcheveriaModel.shared.profile.ownerID
+        })
+    }
+    
     static func searchForGroup(_ name: String, profile: EcheveriaProfile) async {
         let _:EcheveriaGroup? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .groups) { query in
             query.name == name || query.members.contains(profile.ownerID)
