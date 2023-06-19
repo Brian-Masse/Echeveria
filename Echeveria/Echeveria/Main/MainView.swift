@@ -18,7 +18,6 @@ struct MainView: View {
         case profile
     }
     
-    @Environment(\.colorScheme) var colorScheme
     @ObservedResults(TestObject.self) var objs
     
     @State var page: MainViewPage = .main
@@ -56,14 +55,11 @@ struct MainView: View {
                 NamedButton("Profile", and: "person.crop.square", oriented: .vertical).onTapGesture { page = .profile }
             }.padding([.top, .horizontal])
         }
-        .padding()
-        .background( colorScheme == .light ? Colors.lightGrey : .black)
+        .universalBackground()
     }
 }
 
 struct CardView: View {
-    @Environment(\.colorScheme) var colorScheme
-    
     @ObservedRealmObject var item: TestObject
     
     var body: some View {
@@ -84,10 +80,7 @@ struct CardView: View {
             }.padding()
             
             HStack {
-                RoundedButton(label: "Delete", icon: "delete.backward", action: {
-                    print(item)
-                    EcheveriaModel.deleteObject(item)
-                })
+                RoundedButton(label: "Delete", icon: "delete.backward", action: { EcheveriaModel.deleteObject(item) })
                 RoundedButton(label: "Edit", icon: "pencil.circle", action: { item.updateName(to: "Updated!") })
             }
             .padding([.horizontal, .bottom])
@@ -95,7 +88,7 @@ struct CardView: View {
     
         .background(
             Rectangle()
-                .foregroundColor(colorScheme == .light ? .white : Colors.darkGrey)
+                .universalForeground()
                 .cornerRadius(20)
         )
     }

@@ -38,6 +38,13 @@ class EcheveriaGroup: Object, Identifiable {
         EcheveriaModel.addObject(self)
     }
     
+    func updateInformation(name: String, icon: String) {
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.name = name
+            thawed.icon = icon
+        }
+    }
+    
     func hasMember(_ memberID: String) -> Bool {
         return self.members.contains { id in
             id == memberID

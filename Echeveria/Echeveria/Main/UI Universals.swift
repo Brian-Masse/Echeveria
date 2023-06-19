@@ -8,18 +8,75 @@
 import Foundation
 import SwiftUI
 
+//MARK: Classes
 class Colors {
     static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
-    static let darkGrey = Color(red: 0.05, green: 0.05, blue: 0.05)
+    static let darkGrey = Color(red: 0.1, green: 0.1, blue: 0.1)
+    
+    static let tint = Color.blue
 }
 
 class UIUniversals {
-    
     static func font( _ size: CGFloat ) -> Font {
         return Font.custom("Helvetica", size: size).bold()
     }
 }
 
+
+//MARK: View Modifiers
+struct UniversalBackground: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    func body(content: Content) -> some View {
+        content.padding(5).background(colorScheme == .light ? Colors.lightGrey : .black)
+    }
+}
+
+struct UniversalForeground: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    let reversed: Bool
+    func body(content: Content) -> some View {
+        if !reversed { return content.foregroundColor(colorScheme == .light ? .white : Colors.darkGrey) }
+        return content.foregroundColor(colorScheme == .light ? Colors.darkGrey : .white )
+    }
+}
+
+struct UniversalForm: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    func body(content: Content) -> some View {
+        content
+            .ignoresSafeArea()
+            .tint(Colors.tint)
+            .scrollContentBackground(.hidden)
+    }
+}
+
+struct UniversalFormSection: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    func body(content: Content) -> some View {
+        content.listRowBackground(colorScheme == .light ? .white : Colors.darkGrey )
+    }
+}
+
+extension View {
+    func universalBackground() -> some View {
+        modifier(UniversalBackground())
+    }
+    
+    func universalForeground(not reveresed: Bool = false) -> some View {
+        modifier(UniversalForeground(reversed: reveresed))
+    }
+    
+    func universalForm() -> some View {
+        modifier(UniversalForm())
+    }
+    
+    func universalFormSection() -> some View {
+        modifier(UniversalFormSection())
+    }
+}
+
+
+//MARK: Universal Objects
 struct NamedButton: View {
     enum Direction {
         case horizontal
@@ -55,7 +112,9 @@ struct NamedButton: View {
             }
         }
         .padding(5)
-        .background(RoundedRectangle(cornerRadius: 5).stroke())
+        .background(
+            ZStack { RoundedRectangle(cornerRadius: 5).stroke() }
+        )
     }
 }
 
@@ -76,7 +135,7 @@ struct RoundedButton: View {
         .padding(.vertical, 5)
         .background(
             Rectangle()
-                .foregroundColor(.blue)
+                .foregroundColor(Colors.tint)
                 .cornerRadius(50)
                 .onTapGesture { action() }
         )

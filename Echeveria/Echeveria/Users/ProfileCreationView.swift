@@ -24,10 +24,12 @@ struct ProfileCreationView: View {
             VStack {
                 
                 Form {
-                    TextField("First Name", text: $firstName)
-                    TextField("Last Name", text: $lastName)
-                    TextField("UserName", text: $username)
-                }.scrollContentBackground(.hidden)
+                    Section("Basic Information") {
+                        TextField("First Name", text: $firstName)
+                        TextField("Last Name", text: $lastName)
+                        TextField("UserName", text: $username)
+                    }.universalFormSection()
+                }.universalForm()
                 
                 RoundedButton(label: "Done", icon: "checkmark.seal") { loading = true }
             }
@@ -41,8 +43,7 @@ struct ProfileCreationView: View {
                     }
             }
         }
-        .padding()
-        .background(colorScheme == .light ? Colors.lightGrey : .black)
+        .universalBackground()
         
     }
     

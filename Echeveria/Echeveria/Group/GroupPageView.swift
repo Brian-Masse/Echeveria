@@ -26,13 +26,14 @@ struct GroupPageView: View {
             RoundedButton(label: "Search for Group", icon: "magnifyingglass.circle") { loadingSearch = true }
             TextField("Search...", text: $searchQuery)
             
-            
-            GroupListView(title: "My Groups:") { group in group.hasMember(profile.ownerID) }
-            
-            if showingGroupSearchView {
-                GroupListView(title: "Search Results:") { group in !group.hasMember(profile.ownerID) }
+            ScrollView(.vertical) {
+                
+                GroupListView(title: "My Groups:") { group in group.hasMember(profile.ownerID) }
+                
+                if showingGroupSearchView {
+                    GroupListView(title: "Search Results:") { group in !group.hasMember(profile.ownerID) }
+                }
             }
-            
             if loadingSearch {
                 AsyncLoader {
                     await EcheveriaGroup.searchForGroup(searchQuery, profile: profile)
@@ -48,7 +49,6 @@ struct GroupPageView: View {
 }
 
 struct GroupListView: View {
-    
     let title: String
     let query: ((EcheveriaGroup) -> Bool)
     
@@ -70,12 +70,12 @@ struct GroupListView: View {
 }
 
 struct GroupPreviewView: View {
-    @Environment(\.colorScheme) var colorScheme
     
     @ObservedRealmObject var group: EcheveriaGroup
-    let memberID = EcheveriaModel.shared.profile!.ownerID
     
     @State var showingGroup: Bool = false
+    
+    let memberID = EcheveriaModel.shared.profile!.ownerID
     
     var body: some View {
         
@@ -102,7 +102,7 @@ struct GroupPreviewView: View {
         .padding(10)
         .background(Rectangle()
             .cornerRadius(15)
-            .foregroundColor(colorScheme == .light ? .white : Colors.darkGrey)
+            .universalForeground()
             .onTapGesture { showingGroup = true }
             .sheet(isPresented: $showingGroup) { GroupView(group: group) }
         )
@@ -111,7 +111,6 @@ struct GroupPreviewView: View {
 
 struct GroupCreationView: View {
     
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentaitonMode
     
     @State var name: String = ""
@@ -124,8 +123,8 @@ struct GroupCreationView: View {
                 Section("Basic Information") {
                     TextField("Group Name", text: $name)
                     TextField("Icon", text: $icon)
-                }
-            }.scrollContentBackground(.hidden)
+                }.universalFormSection()
+            }.universalForm()
             
             RoundedButton(label: "Submit", icon: "checkmark.seal") {
                 let group = EcheveriaGroup(name: name, icon: icon)
@@ -133,7 +132,6 @@ struct GroupCreationView: View {
                 presentaitonMode.wrappedValue.dismiss()
             }
         }
-        .padding()
-        .background(colorScheme == .light ? Colors.lightGrey : .black)
+        .universalBackground()
     }
 }

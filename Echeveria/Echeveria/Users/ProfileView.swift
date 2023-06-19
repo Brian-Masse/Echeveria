@@ -16,11 +16,8 @@ struct ProfileView: View {
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
     var body: some View {
-        
-
+    
         VStack(alignment: .leading) {
-            
-            LabeledHeader(icon: "person.crop.square", title: "Profile")
             
             if mainUser {
                 RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
@@ -46,14 +43,13 @@ struct ProfileView: View {
             
             Spacer()
         }
-        .padding()
         .sheet(isPresented: $editing) { EditingProfileView().environmentObject(profile) }
+        .universalBackground()
     }
     
     struct EditingProfileView: View {
         
         @Environment(\.presentationMode) var presentationMode
-        @Environment(\.colorScheme) var colorScheme
         
         @EnvironmentObject var profile: EcheveriaProfile
         
@@ -72,9 +68,9 @@ struct ProfileView: View {
                         TextField( "First Name", text: $firstName )
                         TextField( "Last Name", text: $lastName )
                         TextField( "User Name", text: $userName )
-                    }
+                    }.universalFormSection()
                 }
-                .scrollContentBackground(.hidden)
+                .universalForm()
                 .onAppear {
                     firstName = profile.firstName
                     lastName = profile.lastName
@@ -86,8 +82,7 @@ struct ProfileView: View {
                 }
                 
             }
-            .padding()
-            .background(colorScheme == .light ? Colors.lightGrey : .black)
+            .universalBackground()
         }
     }
 }

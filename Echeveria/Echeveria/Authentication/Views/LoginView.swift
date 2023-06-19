@@ -43,8 +43,7 @@ struct LoginView: View {
             }
         }
         .environmentObject(loginModel)
-        .padding()
-        .background(colorScheme == .light ? Colors.lightGrey : .black)
+        .universalBackground()
     }
 }
 

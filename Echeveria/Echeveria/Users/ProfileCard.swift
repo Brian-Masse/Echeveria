@@ -35,7 +35,7 @@ struct ProfileCard: View {
         .padding()
         .sheet(isPresented: $showingProfile) { ProfileView(profile: profile) }
         .background(Rectangle()
-            .foregroundColor(.white)
+            .universalForeground()
             .cornerRadius(15)
             .onTapGesture { showingProfile = true }
         )

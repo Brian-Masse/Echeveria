@@ -25,14 +25,14 @@ struct EmailView: View {
                     TextField("First Name", text: $firstName)
                     TextField("Last Name", text: $lastName)
                     TextField("userName", text: $userName)
-                }
+                }.universalFormSection()
                 
                 Section("Account") {
                     TextField("email", text: $email)
                     TextField("password", text: $password)
-                }
+                }.universalFormSection()
             }
-            .scrollContentBackground(.hidden)
+            .universalForm()
         }
         
     }

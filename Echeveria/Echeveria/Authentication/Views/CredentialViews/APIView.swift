@@ -20,8 +20,8 @@ struct APIView: View {
         Form {
             Section("API Token") {
                 TextField("Token", text: $APIToken)
-            }
-        }.scrollContentBackground(.hidden)
+            }.universalFormSection()
+        }.universalForm()
         
         RoundedButton(label: "Submit", icon: "checkmark.seal") {
             loginModel.APISignIn(APIToken)
