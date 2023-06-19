@@ -10,6 +10,14 @@ import SwiftUI
 import RealmSwift
 import Realm
 
+enum QuerySubKey: String {
+    
+    case testObject = "testObject"
+    case account = "Account"
+    case groups = "Groups"
+    
+}
+
 //this handles logging in, and opening the right realm with the right credentials
 class RealmManager: ObservableObject {
     
@@ -93,7 +101,7 @@ class RealmManager: ObservableObject {
 //    If they dont, this function is called to create one. It is sent in from the CreateProfileView
     func addProfile( profile: EcheveriaProfile ) async {
 //        Add Subscription to donwload your profile
-        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: "Account") { query in
+        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: .account) { query in
             query.ownerID == self.user!.id
         }
         
@@ -137,29 +145,32 @@ class RealmManager: ObservableObject {
 //            Instead, when creating the configuration, use initalSubscriptions to provide the subs before creating the relam
 //            This wasn't working before, but possibly if there is an instance of Realm in existence it might work?
         
-        await self.removeSubscription(name: "AccountCheck")
+        await self.removeSubscription(name: "GroupSearch")
         
-        let _:TestObject? = await self.addGenericSubcriptions(name: "testObject") { query in
+        let _:TestObject? = await self.addGenericSubcriptions(name: .testObject) { query in
             query.ownerID == self.user!.id
         }
         
 //        Add subscriptions to donwload any groups that youre a part of
-        let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: "Groups") { query in
+        let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: .groups) { query in
             return query.members.contains( self.user!.id )
         }
             
     }
     
 //    MARK: Helper Functions
-    func addGenericSubcriptions<T>(name: String, query: @escaping (Query<T>) -> Query<Bool> ) async -> T? where T:RealmSwiftObject  {
+    func addGenericSubcriptions<T>(name: QuerySubKey, query: @escaping (Query<T>) -> Query<Bool> ) async -> T? where T:RealmSwiftObject  {
             
-        if checkSubscription(name: name) { return nil }
         let subscriptions = self.realm.subscriptions
         
         do {
-            try await subscriptions.update{
-                let query = QuerySubscription(name: name) { queryObj in query(queryObj) }
-                subscriptions.append(query)
+            try await subscriptions.update {
+                let querySub = QuerySubscription(name: name.rawValue) { queryObj in query(queryObj) }
+                if checkSubscription(name: name.rawValue) {
+                    let foundSubscriptions = subscriptions.first(named: name.rawValue)!
+                    foundSubscriptions.updateQuery(toType: T.self, where: query)
+                }
+                else { subscriptions.append(querySub)}
             }
         } catch { print("error adding subcription: \(error)") }
         return nil

@@ -13,19 +13,61 @@ struct GroupPageView: View {
     
     @State var showingGroupCreationView: Bool = false
     
+    
+    @State var searchQuery: String = ""
+    @State var loadingSearch: Bool = false
+    @State var showingGroupSearchView: Bool = false
+    @State var leaving: Bool = false
+    
     @ObservedResults(EcheveriaGroup.self) var groups
+    
+    let profile = EcheveriaModel.shared.profile!
     
     var body: some View {
         
         VStack {
             RoundedButton(label: "Create Group", icon: "plus.square") { showingGroupCreationView = true }
             
-            ForEach(groups, id: \._id) { group in
-                GroupView(group: group)
-            }
-            .padding(.horizontal)
+            TextField("Search...", text: $searchQuery)
+            RoundedButton(label: "Search for Group", icon: "magnifyingglass.circle") { loadingSearch = true }
             
-        }.sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
+            Text("My Groups:").bold(true)
+            
+            
+            ForEach(groups, id: \._id) { group in
+                if group.owner == profile.ownerID {
+                    Text("owner")
+                }
+                if group.members.contains(where: { id in id == profile.ownerID }) {
+                    GroupView(group: group)
+                }
+            }
+            
+            if loadingSearch {
+                ProgressView()
+                    .task {
+                        await EcheveriaGroup.searchForGroup(searchQuery, profile: profile)
+                        loadingSearch = false
+                        showingGroupSearchView = true
+                    }
+            }
+            
+            if showingGroupSearchView {
+                Text("Found Groups:").bold(true)
+                ForEach(groups, id: \._id) { group in
+                    if group.members.contains(where: { id in id != profile.ownerID }) {
+                        GroupView(group: group)
+                    }
+                }
+            }
+            
+            if leaving {
+                ProgressView()
+                    .task { await EcheveriaGroup.resetSearch(profile: profile) }
+            }
+        }
+        .onDisappear { leaving = true }
+        .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
     }
     
 }
