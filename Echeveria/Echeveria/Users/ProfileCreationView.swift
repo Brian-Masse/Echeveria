@@ -13,9 +13,10 @@ struct ProfileCreationView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    @State var username: String = "Brian"
-    @State var firstName: String = "Masse"
-    @State var lastName: String = "bmasse23"
+    @State var username: String = ""
+    @State var firstName: String = ""
+    @State var lastName: String = ""
+    @State var icon: String = "globe.europe.africa"
     
     @State var loading: Bool = false
     
@@ -28,6 +29,7 @@ struct ProfileCreationView: View {
                         TextField("First Name", text: $firstName)
                         TextField("Last Name", text: $lastName)
                         TextField("UserName", text: $username)
+                        TextField("Icon", text: $icon)
                     }.universalFormSection()
                 }.universalForm()
                 
@@ -38,7 +40,7 @@ struct ProfileCreationView: View {
                 ProgressView()
                     .task {
                         //TODO: need to checks that all fields are filled in and that they are a minimum length
-                        let profile = EcheveriaProfile(ownerID: "", firstName: firstName, lastName: lastName, userName: username)
+                        let profile = EcheveriaProfile(ownerID: "", firstName: firstName, lastName: lastName, userName: username, icon: icon)
                         await EcheveriaModel.shared.realmManager.addProfile(profile: profile)
                     }
             }

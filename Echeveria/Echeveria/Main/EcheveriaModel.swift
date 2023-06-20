@@ -43,8 +43,10 @@ class EcheveriaModel {
         self.writeToRealm { EcheveriaModel.shared.realmManager.realm.add(object) }
     }
     
-    static func retrieveObject<T:Object>( where query: ( (Query<T>) -> Query<Bool> ) ) -> Results<T> {
-        return EcheveriaModel.shared.realmManager.realm.objects(T.self).where(query)
+    static func retrieveObject<T:Object>( where query: ( (Query<T>) -> Query<Bool> )? = nil ) -> Results<T> {
+        if query == nil { return EcheveriaModel.shared.realmManager.realm.objects(T.self) }
+        else { return EcheveriaModel.shared.realmManager.realm.objects(T.self).where(query!) }
+        
     }
     
     static func deleteObject( _ object: TestObject ) {

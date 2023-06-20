@@ -18,7 +18,7 @@ class Colors {
 
 class UIUniversals {
     static func font( _ size: CGFloat ) -> Font {
-        return Font.custom("Helvetica", size: size).bold()
+        return Font.custom("Helvetica", size: size)
     }
 }
 
@@ -40,7 +40,7 @@ struct UniversalForeground: ViewModifier {
     }
 }
 
-struct UniversalText: ViewModifier {
+struct UniversalTextStyle: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
         content.foregroundColor(colorScheme == .light ? .black : .white)
@@ -73,8 +73,8 @@ extension View {
         modifier(UniversalForeground(reversed: reveresed))
     }
     
-    func universalText() -> some View {
-        modifier(UniversalText())
+    func universalTextStyle() -> some View {
+        modifier(UniversalTextStyle())
     }
     
     func universalForm() -> some View {
@@ -166,6 +166,33 @@ struct LabeledHeader: View {
             Spacer()
         }.padding(.horizontal)
     }
+}
+
+struct UniversalText: View {
+ 
+    let text: String
+    let size: CGFloat
+    let bold: Bool
+    let wrap: Bool
+    
+    init(_ text: String, size: CGFloat, wrap: Bool = false, _ bold: Bool = false) {
+        self.text = text
+        self.size = size
+        self.bold = bold
+        self.wrap = wrap
+    }
+    
+    var body: some View {
+        
+        Text(text)
+            .universalTextStyle()
+            .fixedSize()
+//            .minimumScaleFactor(0.5)
+            .lineLimit(3)
+            .font(Font.custom("Helvetica", size: size) )
+            .bold(bold)
+    }
+    
 }
 
 struct AsyncLoader: View {

@@ -11,7 +11,8 @@ import RealmSwift
 
 struct GroupView: View {
     
-    @ObservedRealmObject var group: EcheveriaGroup
+    @ObservedRealmObject var group: EcheveriaGroup    
+    let games: Results<EcheveriaGame>
     
     @State var loadingPermissions: Bool = true
     @State var editing: Bool = false
@@ -20,7 +21,7 @@ struct GroupView: View {
     
     var body: some View {
         
-        ZStack {
+        GeometryReader { geo in
             VStack(alignment: .leading) {
                 if owner {
                     RoundedButton(label: "Edit Group", icon: "pencil.line") { editing = true }
@@ -28,16 +29,20 @@ struct GroupView: View {
                 
                 HStack {
                     Image(systemName: group.icon)
-                    Text(group.name)
+                    UniversalText(group.name, size: 30, true)
                     Spacer()
                 }
-                .font(UIUniversals.font(30))
                 .padding(.bottom)
                 
-                if !loadingPermissions {
-                    Text("Members:").font(UIUniversals.font(20))
-                    ForEach( group.members, id: \.self ) { memberID in
-                        ProfileCard(profileID: memberID)
+                ScrollView(.vertical) {
+                    if !loadingPermissions {
+                        UniversalText("Members:", size: 20, true)
+                        ForEach( group.members, id: \.self ) { memberID in
+                            ProfileCard(profileID: memberID)
+                        }
+                        
+                        GameScrollerView(geo: geo, games: games)
+                            
                     }
                 }
                 Spacer()

@@ -23,7 +23,7 @@ struct ProfileCard: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(profile.userName).font(UIUniversals.font(20))
+            UniversalText(profile.userName, size: 20, true)
             HStack {
                 Text(profile.firstName)
                 Text(profile.lastName)

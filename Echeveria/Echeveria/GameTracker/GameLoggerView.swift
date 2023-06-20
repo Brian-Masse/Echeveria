@@ -11,8 +11,11 @@ import RealmSwift
 
 struct GameLoggerView: View  {
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @State var gameType: EcheveriaGame.GameType? = nil
     @State var group: EcheveriaGroup? = nil
+    @State var date: Date = .now
     @State var loadingPermission: Bool = true
     
     var players: [String]? {
@@ -58,6 +61,10 @@ struct GameLoggerView: View  {
                     BasicPicker(title: "Group", noSeletion: "No Group", sources: groups, selection: $group) { group in
                         Text(group.name)
                     }
+                    DatePicker(selection: $date) {
+                        Text("Date")
+                    }
+                    
                 }.universalFormSection()
                 
                 if group != nil {
@@ -98,10 +105,12 @@ struct GameLoggerView: View  {
                 let _ = EcheveriaGame(EcheveriaModel.shared.profile.ownerID,
                                          type: gameType!,
                                          group: group!,
+                                         date: date,
                                          players: ArrayToRealmList(selectedPlayers),
                                          winners: ArrayToRealmList(selectedWinners),
                                          experience: gameExperieince!,
                                          comments: gameComments )
+                presentationMode.wrappedValue.dismiss()
             }
             
         }.universalBackground()
@@ -149,8 +158,8 @@ struct GameLoggerView: View  {
                         }
                     }
                 } label: {
-                    Text( retrieveSelectionPreview() ).universalText()
-                    Image(systemName: "chevron.up.chevron.down").universalText()
+                    Text( retrieveSelectionPreview() ).universalTextStyle()
+                    Image(systemName: "chevron.up.chevron.down").universalTextStyle()
 
                 }
                 .menuActionDismissBehavior(.disabled)
