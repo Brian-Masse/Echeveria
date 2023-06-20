@@ -89,7 +89,6 @@ class EcheveriaProfile: Object, Identifiable {
 
         if ids[0] == ids[1] { return }
         
-        
         let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in query.ownerID.in(ids) })
         
         let _:EcheveriaGame? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .games, query: { query in query.ownerID.in(ids) })

@@ -19,6 +19,53 @@ enum QuerySubKey: String {
     
 }
 
+class QueryPermission<T: Object> {
+    
+    struct WrappedQuery<O: Object> {
+        let name: String
+        let query: ((Query<O>) -> Query<Bool>)
+    }
+    
+    let baseQuery: (Query<T>) -> Query<Bool>
+    var additionalQueries: [ WrappedQuery<T> ] = []
+    
+    init( baseQuery: @escaping (Query<T>) -> Query<Bool> ) {
+        self.baseQuery = baseQuery
+    }
+    
+    private func makePredicateFromQuery( passedQuery: Query<T>, evaluatingQuery: ((Query<T>) -> Query<Bool>)) -> NSPredicate {
+        let predicateArgs = evaluatingQuery(passedQuery)._constructPredicate()
+        let predicate = NSPredicate(format: predicateArgs.0, predicateArgs.1)
+        return predicate
+    }
+    
+//    This takes all the queries, base and those stored in the list of additioanl queries, evaluates them wiht some passed values (ie. EcheveriaProfile)
+//    Then combines those with the or operator into a single NSPredicate that represents wheter any one of them evalutaed to true
+    func completeQuery( query: Query<T> ) -> NSPredicate {
+    
+        var queryList: [NSPredicate] = additionalQueries.compactMap { wrappedQuery in
+            makePredicateFromQuery(passedQuery: query, evaluatingQuery: wrappedQuery.query)
+        }
+        
+        queryList.append( makePredicateFromQuery(passedQuery: query, evaluatingQuery: baseQuery) )
+    
+        return NSCompoundPredicate(orPredicateWithSubpredicates: queryList)
+    }
+    
+    func addQuery( _ name: String, query: @escaping ((Query<T>) -> Query<Bool>) ) {
+        let wrappedQuery = WrappedQuery(name: name, query: query)
+        additionalQueries.append(wrappedQuery)
+    }
+
+    func removeQuery(_ name: String) {
+        if let index = additionalQueries.firstIndex(where: { wrappedQuery in
+            wrappedQuery.name == name
+        }) {
+            additionalQueries.remove(at: index)
+        }
+    }
+}
+
 //this handles logging in, and opening the right realm with the right credentials
 class RealmManager: ObservableObject {
     
@@ -175,6 +222,7 @@ class RealmManager: ObservableObject {
         
         do {
             try await subscriptions.update {
+                
                 let querySub = QuerySubscription(name: name.rawValue) { queryObj in query(queryObj) }
                 if checkSubscription(name: name) {
                     let foundSubscriptions = subscriptions.first(named: name.rawValue)!
