@@ -10,62 +10,6 @@ import SwiftUI
 import RealmSwift
 import Realm
 
-enum QuerySubKey: String {
-    
-    case testObject = "testObject"
-    case account = "Account"
-    case groups = "Groups"
-    case games = "Games"
-    
-}
-
-class QueryPermission<T: Object> {
-    
-    struct WrappedQuery<O: Object> {
-        let name: String
-        let query: ((Query<O>) -> Query<Bool>)
-    }
-    
-    let baseQuery: (Query<T>) -> Query<Bool>
-    var additionalQueries: [ WrappedQuery<T> ] = []
-    
-    init( baseQuery: @escaping (Query<T>) -> Query<Bool> ) {
-        self.baseQuery = baseQuery
-    }
-    
-    private func makePredicateFromQuery( passedQuery: Query<T>, evaluatingQuery: ((Query<T>) -> Query<Bool>)) -> NSPredicate {
-        let predicateArgs = evaluatingQuery(passedQuery)._constructPredicate()
-        let predicate = NSPredicate(format: predicateArgs.0, predicateArgs.1)
-        return predicate
-    }
-    
-//    This takes all the queries, base and those stored in the list of additioanl queries, evaluates them wiht some passed values (ie. EcheveriaProfile)
-//    Then combines those with the or operator into a single NSPredicate that represents wheter any one of them evalutaed to true
-    func completeQuery( query: Query<T> ) -> NSPredicate {
-    
-        var queryList: [NSPredicate] = additionalQueries.compactMap { wrappedQuery in
-            makePredicateFromQuery(passedQuery: query, evaluatingQuery: wrappedQuery.query)
-        }
-        
-        queryList.append( makePredicateFromQuery(passedQuery: query, evaluatingQuery: baseQuery) )
-    
-        return NSCompoundPredicate(orPredicateWithSubpredicates: queryList)
-    }
-    
-    func addQuery( _ name: String, query: @escaping ((Query<T>) -> Query<Bool>) ) {
-        let wrappedQuery = WrappedQuery(name: name, query: query)
-        additionalQueries.append(wrappedQuery)
-    }
-
-    func removeQuery(_ name: String) {
-        if let index = additionalQueries.firstIndex(where: { wrappedQuery in
-            wrappedQuery.name == name
-        }) {
-            additionalQueries.remove(at: index)
-        }
-    }
-}
-
 //this handles logging in, and opening the right realm with the right credentials
 class RealmManager: ObservableObject {
     
@@ -83,6 +27,11 @@ class RealmManager: ObservableObject {
     @Published var realmLoaded: Bool = false
     
     var notificationToken: NotificationToken?
+    
+//    These can add, remove, and return compounded queries. During the app lifecycle, they'll need to change based on the current view
+    lazy var profileQuery: (QueryPermission<EcheveriaProfile>)  = QueryPermission { query in query.ownerID == self.user!.id }
+    lazy var groupQuery: (QueryPermission<EcheveriaGroup>)!     = QueryPermission { query in query.members.contains(self.user!.id) }
+    lazy var gamesQuery: (QueryPermission<EcheveriaGame>)!      = QueryPermission { query in query.ownerID == self.user!.id }
         
     init() {
         self.checkLogin()
@@ -136,16 +85,14 @@ class RealmManager: ObservableObject {
 //    MARK: Profile Functions
     
     private func addProfileSubscription() async {
-        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: .account) { query in
-            query.ownerID == self.user!.id
-        }
+        let _:EcheveriaProfile? = await self.addGenericSubcriptions(name: QuerySubKey.account.rawValue, query: profileQuery.baseQuery)
     }
     
 //    if the profile has a profile, then skip past the create profile UI
 //    if not the profile objcet on EcheveriaModel will remain nil and the UI will show
     func checkProfile() async {
 //     the only place the subscription is added is when they create a profile
-        if !self.checkSubscription(name: .account) { await self.addProfileSubscription() }
+        if !self.checkSubscription(name: QuerySubKey.account.rawValue) { await self.addProfileSubscription() }
         
         DispatchQueue.main.sync {
             let profile = realm.objects(EcheveriaProfile.self).where { queryObject in
@@ -174,7 +121,6 @@ class RealmManager: ObservableObject {
         hasProfile = true
         EcheveriaModel.shared.setProfile(with: profile)
     }
-    
 
 //    MARK: Realm-Loaded Functions
 //    Called once the realm is loaded in OpenSyncedRealmView
@@ -199,34 +145,25 @@ class RealmManager: ObservableObject {
 //             ->add the subscriptions (which downloads the data from the cloud) -> enter into the app with proper config and realm
 //            Instead, when creating the configuration, use initalSubscriptions to provide the subs before creating the relam
 //            This wasn't working before, but possibly if there is an instance of Realm in existence it might work?
-        
-        let _:TestObject? = await self.addGenericSubcriptions(name: .testObject) { query in
-            query.ownerID == self.user!.id
-        }
-        
+
 //        Add subscriptions to donwload any groups that youre a part of
-        let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: .groups) { query in
-            return query.members.contains( self.user!.id )
-        }
+        let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: QuerySubKey.groups.rawValue, query: groupQuery.baseQuery)
+        let _:EcheveriaGame? = await self.addGenericSubcriptions(name: QuerySubKey.games.rawValue, query: gamesQuery.baseQuery)
         
-        let _:EcheveriaGame? = await self.addGenericSubcriptions(name: .games, query: { query in
-            query.ownerID == self.user!.id
-        })
-            
     }
     
 //    MARK: Helper Functions
-    func addGenericSubcriptions<T>(name: QuerySubKey, query: @escaping (Query<T>) -> Query<Bool> ) async -> T? where T:RealmSwiftObject  {
+    func addGenericSubcriptions<T>(name: String, query: @escaping ((Query<T>) -> Query<Bool>) ) async -> T? where T:RealmSwiftObject  {
             
         let subscriptions = self.realm.subscriptions
         
         do {
             try await subscriptions.update {
                 
-                let querySub = QuerySubscription(name: name.rawValue) { queryObj in query(queryObj) }
+                let querySub = QuerySubscription(name: name, query: query)
+
                 if checkSubscription(name: name) {
-                    let foundSubscriptions = subscriptions.first(named: name.rawValue)!
-                    
+                    let foundSubscriptions = subscriptions.first(named: name)!
                     foundSubscriptions.updateQuery(toType: T.self, where: query)
                 }
                 else { subscriptions.append(querySub)}
@@ -235,22 +172,22 @@ class RealmManager: ObservableObject {
         return nil
     }
     
-    func removeSubscription(name: QuerySubKey) async {
+    func removeSubscription(name: String) async {
             
         let subscriptions = self.realm.subscriptions
-        let foundSubscriptions = subscriptions.first(named: name.rawValue)
+        let foundSubscriptions = subscriptions.first(named: name)
         if foundSubscriptions == nil {return}
         
         do {
             try await subscriptions.update{
-                subscriptions.remove(named: name.rawValue)
+                subscriptions.remove(named: name)
             }
         } catch { print("error adding subcription: \(error)") }
     }
     
-    private func checkSubscription(name: QuerySubKey) -> Bool {
+    private func checkSubscription(name: String) -> Bool {
         let subscriptions = self.realm.subscriptions
-        let foundSubscriptions = subscriptions.first(named: name.rawValue)
+        let foundSubscriptions = subscriptions.first(named: name)
         return foundSubscriptions != nil
     }
 }

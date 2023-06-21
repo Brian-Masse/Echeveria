@@ -69,9 +69,9 @@ struct GameLoggerView: View  {
                 
                 if group != nil {
                     if loadingPermission {
-                        AsyncLoader { await group!.provideLocalUserAccess()
-                            loadingPermission = false
-                        } closingTask: { await group!.disallowLocalUserAccess() }
+//                        AsyncLoader { await group!.provideLocalUserAccess()
+//                            loadingPermission = false
+//                        } closingTask: { await group!.disallowLocalUserAccess() }
                     }
                     
                     Section("Game Information") {

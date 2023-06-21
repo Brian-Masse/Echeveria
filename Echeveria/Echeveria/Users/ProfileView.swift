@@ -9,13 +9,28 @@ import Foundation
 import SwiftUI
 import RealmSwift
 
-struct ProfileView: View {
+struct ProfileView: View, UniquePermissionsView {
     @ObservedObject var profile: EcheveriaProfile
     
     @State var editing: Bool = false
     @State var logging: Bool = false
     @State var loadingPersmissions: Bool = true
     
+    @ObservedResults(EcheveriaProfile.self) var results
+    
+    internal var baseKey: QuerySubKey = .account
+    
+    internal func updatePermissions() async {
+//        let realmManager = EcheveriaModel.shared.realmManager
+//        await realmManager.profileQuery.addQueries(baseName: baseKey.rawValue, queries: [
+//            { query in query.ownerID == profile.ownerID }
+//        ])
+    }
+    
+    internal func removePermissions() async {
+//        let realmManager = EcheveriaModel.shared.realmManager
+//        await realmManager.profileQuery.removeQueries(baseName: baseKey.rawValue)
+    }
     
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
@@ -29,6 +44,11 @@ struct ProfileView: View {
                             .frame(width: 60, height: 60)
                         UniversalText(profile.userName, size: 45, true)
                     }
+                    
+                    ForEach(results, id: \.ownerID) { result in
+                        Text(result.firstName)
+                    }
+                    
                     
                     ScrollView(.vertical) {
                         VStack(alignment: .leading) {
@@ -48,11 +68,10 @@ struct ProfileView: View {
                 }
             }else {
                 AsyncLoader {
-//                    let ids = [ profile.ownerID, EcheveriaModel.shared.profile.ownerID ]
-//                    await profile.provideLocalUserProfileAccess(ids: ids)
+                    await self.updatePermissions()
                     loadingPersmissions = false
                 } closingTask: {
-                    await profile.disallowLocalUserProfileAccess()
+                    await self.removePermissions()
                 }
 
             }
@@ -100,3 +119,9 @@ struct ProfileView: View {
         }
     }
 }
+//
+//protocol ViewWithPermissions {
+//
+//    var groupPermissions
+//
+//}

@@ -14,7 +14,7 @@ struct GroupView: View {
     @ObservedRealmObject var group: EcheveriaGroup    
     let games: Results<EcheveriaGame>
     
-    @State var loadingPermissions: Bool = true
+    @State var loadingPermissions: Bool = false
     @State var editing: Bool = false
     
     var owner: Bool { group.owner == EcheveriaModel.shared.profile.ownerID }
@@ -49,12 +49,12 @@ struct GroupView: View {
             }
 //        TODO: while the group is giving local users access to view other users profiles, show a loading view
 //        TODO: also probably shouldnt be giving local users read/write access to other users profiles!
-            AsyncLoader {
-                await group.provideLocalUserAccess()
-                loadingPermissions = false
-            } closingTask: {
-                await group.disallowLocalUserAccess()
-            }
+//            AsyncLoader {
+//                await group.provideLocalUserAccess()
+//                loadingPermissions = false
+//            } closingTask: {
+//                await group.disallowLocalUserAccess()
+//            }
         }
         .universalBackground()
         .sheet(isPresented: $editing) { EditingGroupView(group: group, name: group.name, icon: group.icon) }

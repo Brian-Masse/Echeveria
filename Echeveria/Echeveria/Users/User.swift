@@ -85,26 +85,26 @@ class EcheveriaProfile: Object, Identifiable {
 //    When another person enters your profile, give them access to the profile and all the games
 //    ids is a list of the signed in users ownerID, and the profiles owner ID
 //    it needs to be passed in to make sure realm is onyl accessed on the main thread
-    func provideLocalUserProfileAccess(ids: [String]) async {
-
-        if ids[0] == ids[1] { return }
-        
-        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in query.ownerID.in(ids) })
-        
-        let _:EcheveriaGame? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .games, query: { query in query.ownerID.in(ids) })
-        
-        let _:EcheveriaGroup? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .groups, query: { query in query.owner.in(ids) })
-    }
-    
-    func disallowLocalUserProfileAccess() async {
-        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
-            query.ownerID == EcheveriaModel.shared.profile.ownerID
-        })
-        
-        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
-            query.ownerID == EcheveriaModel.shared.profile.ownerID
-        })
-    }
+//    func provideLocalUserProfileAccess(ids: [String]) async {
+//
+//        if ids[0] == ids[1] { return }
+//
+//        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in query.ownerID.in(ids) })
+//
+//        let _:EcheveriaGame? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .games, query: { query in query.ownerID.in(ids) })
+//
+//        let _:EcheveriaGroup? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .groups, query: { query in query.owner.in(ids) })
+//    }
+//
+//    func disallowLocalUserProfileAccess() async {
+//        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
+//            query.ownerID == EcheveriaModel.shared.profile.ownerID
+//        })
+//
+//        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
+//            query.ownerID == EcheveriaModel.shared.profile.ownerID
+//        })
+//    }
 }
 
 class TestObject: Object, Identifiable {

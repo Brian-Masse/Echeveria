@@ -12,6 +12,7 @@
 		C900BAA52A40269600388B37 /* GameLoggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA42A40269600388B37 /* GameLoggerView.swift */; };
 		C900BAA72A40EEDB00388B37 /* GameTrackerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA62A40EEDB00388B37 /* GameTrackerCardView.swift */; };
 		C900BAA92A4122B300388B37 /* GameScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA82A4122B300388B37 /* GameScrollerView.swift */; };
+		C900BAAB2A43875800388B37 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAAA2A43875800388B37 /* PermissionsManager.swift */; };
 		C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6DF2A3A51D1008C6906 /* MainView.swift */; };
 		C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E62A3A7547008C6906 /* RealmManager.swift */; };
 		C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */; };
@@ -61,6 +62,7 @@
 		C900BAA42A40269600388B37 /* GameLoggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoggerView.swift; sourceTree = "<group>"; };
 		C900BAA62A40EEDB00388B37 /* GameTrackerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTrackerCardView.swift; sourceTree = "<group>"; };
 		C900BAA82A4122B300388B37 /* GameScrollerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScrollerView.swift; sourceTree = "<group>"; };
+		C900BAAA2A43875800388B37 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		C939B6DF2A3A51D1008C6906 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C939B6E62A3A7547008C6906 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFlexibleSyncRealmView.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			children = (
 				C976A93D2A396E5800C48C6A /* LoginModel.swift */,
 				C939B6E62A3A7547008C6906 /* RealmManager.swift */,
+				C900BAAA2A43875800388B37 /* PermissionsManager.swift */,
 				C9C90EEE2A3A1B120057846A /* Views */,
 			);
 			path = Authentication;
@@ -403,6 +406,7 @@
 				C99714362A3902DE00090429 /* EcheveriaModel.swift in Sources */,
 				C976A9462A39776C00C48C6A /* APIView.swift in Sources */,
 				C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */,
+				C900BAAB2A43875800388B37 /* PermissionsManager.swift in Sources */,
 				C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */,
 				C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */,
 				C939B6F12A3AC40B008C6906 /* ProfileCreationView.swift in Sources */,
