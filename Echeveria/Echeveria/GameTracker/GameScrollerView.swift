@@ -39,14 +39,14 @@ struct GameScrollerView: View {
         VStack {
             if filterable {
                 HStack {
-                    UniversalText("Games", size: 20, true)
                     Spacer()
                     Menu {
+                        Text("Filter")
                         Button("by Game") { filter = .gameType }
                         Button("by Group") { filter = .groupType }
                         Button("by Winner") { filter = .winnerType }
                     } label: {
-                        RoundedButton(label: "Filter: \(filter.rawValue)", icon: "line.3.horizontal.decrease.circle") {}
+                        CircularButton(icon: "line.3.horizontal.decrease.circle") {}
                             .universalTextStyle()
                     }
                 }

@@ -21,6 +21,13 @@ struct ProfilePageView: View {
         }
     }
     
+    private func getTextSize() -> CGFloat {
+        switch page {
+        case .main: return 45
+        default:    return 20
+        }
+    }
+    
     @ObservedObject var profile: EcheveriaProfile
     @ObservedResults(EcheveriaGroup.self) var groups
     
@@ -41,21 +48,16 @@ struct ProfilePageView: View {
                     HStack {
                         Image(systemName: profile.icon)
                             .resizable()
-                            .frame(width: 60, height: 60)
-                        UniversalText(profile.userName, size: 45, true)
+                            .frame(width: getTextSize(), height: getTextSize())
+                        UniversalText(profile.userName, size: getTextSize(), true)
                     }
                     
-                    Picker(selection: $page) {
-                        ForEach(ProfilePage.allCases, id: \.self) { content in
-                            Text(content.rawValue)
-                        }
-                    } label: { Text("View") }.pickerStyle(.segmented)
                     
-                    switch page {
-                    case .main: ProfileMainView(profile: profile, geo: geo)
-                    case .games: ProfileGameView(profile: profile, geo: geo)
-                    case .groups: EmptyView()
-                    }
+                    TabView(selection: $page) {
+                        ProfileMainView(profile: profile, geo: geo).tag( ProfilePage.main )
+                        ProfileGameView(profile: profile, geo: geo).tag( ProfilePage.games )
+                        Text("Groups").tag( ProfilePage.groups )
+                    }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 }
             }
         }

@@ -47,7 +47,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "244"
-            endingLineNumber = "244">
+            endingLineNumber = "244"
+            landmarkName = "init(block:@ViewBuilder:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -62,8 +64,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "239"
             endingLineNumber = "239"
-            landmarkName = "body"
-            landmarkType = "24">
+            landmarkName = "AsyncLoader"
+            landmarkType = "14">
             <Locations>
                <Location
                   uuid = "098C6842-FE63-4331-A463-5B65D3C6914E - b7b47eb8db6529b1"

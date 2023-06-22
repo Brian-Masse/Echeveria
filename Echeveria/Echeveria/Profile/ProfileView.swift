@@ -59,8 +59,9 @@ struct ProfileGameView: View {
                 
                 UniversalText("Recent Games", size: 30, true)    
                 GameScrollerView(filter: .none, filterable: false, geo: geo, gamesArr: recentGames )
+                    .padding(.bottom)
                 
-                
+                UniversalText("Stats", size: 30, true)
                 GameChart(profile: profile, games: games)
                 
                 let winCountData = profile.getWins(in: .now, games: Array(games))
@@ -72,8 +73,12 @@ struct ProfileGameView: View {
                     StaticGameChart(profile: profile, games: games, title: "Win Rate by Game", data: winCountData)
                         { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) }
                 }
+                .padding(.bottom)
 
-                GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID} )
+                ZStack(alignment: .topLeading) {
+                    GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID} )
+                    UniversalText("All Games", size: 30, true)
+                }
             }
             Spacer()
         }
@@ -103,8 +108,9 @@ struct ProfileGameView: View {
                         
                     }
                 }.universalChart()
-                UniversalText(title, size: 20, true)
-                    .padding(5)
+                UniversalText(title, size: 15, true)
+                    .padding(.horizontal)
+                    .padding(.vertical, 5)
             }
         }
     }
@@ -126,8 +132,18 @@ struct ProfileGameView: View {
             }
         }
         
-        @ObservedObject var profile: EcheveriaProfile
+        private func formatTitle() -> String {
+            var string = yAxisDataType.rawValue
+            
+            let start = string.startIndex
+            let range = Range(uncheckedBounds: (start, string.index(start, offsetBy: 2)) )
         
+            string.removeSubrange(range)
+            return "\(string) over time"
+        }
+        
+        @ObservedObject var profile: EcheveriaProfile
+    
         @State var yAxisDataType: AxisDataType = .type
         @State var typeAxisDataType: AxisDataType = .winning
         
@@ -160,7 +176,7 @@ struct ProfileGameView: View {
                 .universalChart()
                 
                 HStack {
-                    UniversalText("Graph 1", size: 20, true)
+                    UniversalText( formatTitle(), size: 20, true)
                     Spacer()
                     Menu {
                         EditMenu(editingAxis: $yAxisDataType, title: "Y Axis")
