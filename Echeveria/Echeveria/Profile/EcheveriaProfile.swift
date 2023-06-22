@@ -18,6 +18,8 @@ class EcheveriaProfile: Object, Identifiable {
     @Persisted var userName: String = ""
     @Persisted var icon: String = ""
     
+    @Persisted var createdDate: Date = .now
+    
     @Persisted var groups: List<EcheveriaGroup> = List()
     
     var loaded: Bool = false
@@ -46,11 +48,6 @@ class EcheveriaProfile: Object, Identifiable {
         return result.firstName
     }
     
-    func getNumCards() -> Int {
-        let cards: Results<TestObject> = EcheveriaModel.retrieveObject { query in query.ownerID == self.ownerID }
-        return cards.count
-    }
-    
     func updateInformation( firstName: String, lastName: String, userName: String, icon: String ) {
         EcheveriaModel.updateObject(self) { thawed in
             thawed.firstName = firstName
@@ -58,13 +55,6 @@ class EcheveriaProfile: Object, Identifiable {
             thawed.userName = userName
             thawed.icon = icon
         }
-    }
-    
-    func addGame(_ gameID: String) {
-//        guard let game = EcheveriaGame.getGameObject(from: gameID) else {return}
-//        EcheveriaModel.updateObject(self) { thawed in
-//            thawed.games.append(game)
-//        }
     }
     
     func joinGroup(_ groupID: ObjectId) {
@@ -83,19 +73,69 @@ class EcheveriaProfile: Object, Identifiable {
         }
     }
     
-    func updatePermissions() async {
+    func updatePermissions(groups: [EcheveriaGroup]) async {
         let realmManager = EcheveriaModel.shared.realmManager
 //        This will already have the active profile + the base profile
-
+        
+        let totalMembers: [String] = groups.reduce([]) { partialResult, group in
+            partialResult + group.members
+        }
+    
+        await realmManager.profileQuery.addQuery { query in
+            query.ownerID.in(totalMembers)
+        }
+        
 //        Add all of this user's groups
         await realmManager.groupQuery.addQuery{ query in
             query.owner == self.ownerID
         }
-        
+
         await realmManager.gamesQuery.addQuery{ query in
             query.ownerID == self.ownerID
         }
         loaded = true
+    }
+    
+//    MARK: Graphing Helper Functions
+    struct WinDataPoint {
+        let winCount: Int
+        let totalCount: Int
+        let game: EcheveriaGame.GameType
+    }
+    
+    func getWins(in date: Date, games: [EcheveriaGame]) -> [WinDataPoint] {
+        
+        var data: [ WinDataPoint ] = []
+        
+        for content in EcheveriaGame.GameType.allCases {
+            let counts = games.countAllThatSatisfy { game in game.type == content.rawValue } subQuery: { game in game.winners.contains(where: {str in str == self.ownerID }) }
+            data.append( .init(winCount: counts.1, totalCount: counts.0, game: content) )
+        }
+        return data 
+    }
+}
+
+extension Collection {
+    func countAllThatSatisfy( mainQuery: (Self.Element) -> Bool, subQuery: ((Self.Element) -> Bool)? = nil ) -> (Int,Int) {
+        var mainCounter = 0
+        var subCounter = 0
+        for element in self {
+            if mainQuery(element) {
+                mainCounter += 1
+                if subQuery != nil {
+                    if subQuery!(element) { subCounter += 1 }
+                }
+            }
+        }
+        return (mainCounter, subCounter)
+    }
+    
+    func returnFirst( _ number: Int ) -> [ Self.Element ] {
+        var returning: [Self.Element] = []
+        for i in 0...Swift.min(self.count, number) {
+            returning.append( self[i as! Self.Index] )
+        }
+        return returning
     }
 }
 

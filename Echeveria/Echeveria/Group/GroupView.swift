@@ -43,7 +43,7 @@ struct GroupView: View {
                                 ProfileCard(profileID: memberID)
                             }
                             
-                            GameScrollerView(geo: geo, games: games)
+                            GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: games)
                         }
                     }
                 }

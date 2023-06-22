@@ -64,6 +64,19 @@ struct UniversalFormSection: ViewModifier {
     }
 }
 
+struct UniversalChart: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .padding(.top, 20)
+            .background( Rectangle()
+                .cornerRadius(20)
+                .universalForeground()
+            )
+    }
+}
+
 extension View {
     func universalBackground() -> some View {
         modifier(UniversalBackground())
@@ -83,6 +96,10 @@ extension View {
     
     func universalFormSection() -> some View {
         modifier(UniversalFormSection())
+    }
+    
+    func universalChart() -> some View {
+        modifier(UniversalChart())
     }
 }
 
@@ -144,6 +161,27 @@ struct RoundedButton: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 5)
+        .background(
+            Rectangle()
+                .foregroundColor(Colors.tint)
+                .cornerRadius(50)
+                .onTapGesture { action() }
+        )
+    }
+}
+
+struct CircularButton: View {
+    
+//    let label:  String
+    let icon:   String
+    let action: ()->Void
+    
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+//            Text(label)
+        }
+        .padding(5)
         .background(
             Rectangle()
                 .foregroundColor(Colors.tint)

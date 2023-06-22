@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import RealmSwift
+import Charts
 
 //MARK: ProfileMainView
 struct ProfileMainView: View {
@@ -42,6 +43,7 @@ struct ProfileMainView: View {
 struct ProfileGameView: View {
     
     @ObservedObject var profile: EcheveriaProfile
+    
     @State var logging: Bool = false
     
     let geo: GeometryProxy
@@ -49,19 +51,143 @@ struct ProfileGameView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading) {
-            ScrollView(.vertical) {
-
-                if mainUser {
-                    RoundedButton(label: "Log Game", icon: "signpost.and.arrowtriangle.up") { logging = true }
-                }
+        let games: Results<EcheveriaGame> = EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID}
+        let recentGames = games.returnFirst(5)
+        
+        ScrollView(.vertical) {
+            VStack(alignment: .leading) {
                 
-                GameScrollerView(geo: geo, games: EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID} )
+                UniversalText("Recent Games", size: 30, true)    
+                GameScrollerView(filter: .none, filterable: false, geo: geo, gamesArr: recentGames )
+                
+                
+                GameChart(profile: profile, games: games)
+                
+                let winCountData = profile.getWins(in: .now, games: Array(games))
+                
+                HStack {
+                    StaticGameChart(profile: profile, games: games, title: "Wins by Game", data: winCountData)
+                        { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in dataPoint.winCount }
+                    
+                    StaticGameChart(profile: profile, games: games, title: "Win Rate by Game", data: winCountData)
+                        { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) }
+                }
+
+                GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID} )
             }
             Spacer()
         }
         .sheet(isPresented: $logging) { GameLoggerView() }
         .universalBackground()
+    }
+    
+    struct StaticGameChart<DataType: Collection, XAxisData, YAxisData>: View where DataType: RandomAccessCollection, XAxisData: Plottable, YAxisData: Plottable, DataType.Index: Hashable {
+        
+        @ObservedObject var profile: EcheveriaProfile
+        
+        let games: Results<EcheveriaGame>
+        
+        let title: String
+        
+        let data: DataType
+        let getXAxis: ( DataType.Element ) -> XAxisData
+        let getYAxis: ( DataType.Element ) -> YAxisData
+        
+        var body: some View {
+            ZStack(alignment: .topLeading) {
+                Chart {
+                    ForEach(data.indices, id: \.self) { i in
+                        BarMark(
+                            x: .value("X", getXAxis( data[i] ) ),
+                            y: .value("Y", getYAxis( data[i] ) ))
+                        
+                    }
+                }.universalChart()
+                UniversalText(title, size: 20, true)
+                    .padding(5)
+            }
+        }
+    }
+    
+    struct GameChart: View {
+        enum AxisDataType: String {
+            case winning = "by Winner"
+            case experience = "by Experieince"
+            case type = "by Type"
+            case group = "by Group"
+        }
+        
+        private func returnProperty(from type: AxisDataType, with game: EcheveriaGame) -> String {
+            switch type {
+            case .winning: return game.getWinners()
+            case .experience: return game.experieince
+            case .type: return game.type
+            case .group: return EcheveriaGroup.getGroupName(game.groupID)
+            }
+        }
+        
+        @ObservedObject var profile: EcheveriaProfile
+        
+        @State var yAxisDataType: AxisDataType = .type
+        @State var typeAxisDataType: AxisDataType = .winning
+        
+        let games: Results<EcheveriaGame>
+        
+        var body: some View {
+            
+            ZStack(alignment: .top) {
+                Chart {
+                    ForEach(games, id: \._id.stringValue) { game in
+                        
+                        PointMark (
+                            x: .value("Date", game.date) ,
+                            y: .value("Won?", returnProperty(from: yAxisDataType, with: game) )
+                        )
+                        .foregroundStyle(by: .value("Type", returnProperty(from: typeAxisDataType, with: game)) )
+                    }
+                }
+                .chartXScale(domain: [ profile.createdDate, Date.now.advanced(by: 3600) ])
+                .chartXAxis {
+                    AxisMarks(values: .stride(by: .day)){ value in
+                        if let date = value.as(Date.self) {
+                            AxisValueLabel( date.formatted(.dateTime)  )
+                        }
+                        
+                        AxisGridLine()
+                        AxisTick()
+                    }
+                }
+                .universalChart()
+                
+                HStack {
+                    UniversalText("Graph 1", size: 20, true)
+                    Spacer()
+                    Menu {
+                        EditMenu(editingAxis: $yAxisDataType, title: "Y Axis")
+                        EditMenu(editingAxis: $typeAxisDataType, title: "Series")
+                    } label: {
+                        CircularButton(icon: "chart.dots.scatter") {}
+                            .universalTextStyle()
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 5)
+            }
+        }
+        
+        struct EditMenu: View {
+            @Binding var editingAxis: AxisDataType
+            let title: String
+            
+            var body: some View {
+                Menu {
+                    Button("by Winner") { editingAxis = .winning }
+                    Button("by Experieince") { editingAxis = .experience }
+                    Button("by Type") { editingAxis = .type }
+                    Button("by Group") { editingAxis = .group }
+                } label: { Text(title) }
+            }
+        }
     }
 }
 

@@ -121,6 +121,12 @@ class RealmManager: ObservableObject {
     private func registerProfileLocally( _ profile: EcheveriaProfile ) {
         hasProfile = true
         EcheveriaModel.shared.setProfile(with: profile)
+        
+//        let profile = EcheveriaModel.shared.profile!
+//        EcheveriaModel.updateObject(profile, { thawed in
+//            thawed.createdDate = .now.advanced(by: -86400 )
+//        })
+//
     }
 
 //    MARK: Realm-Loaded Functions
@@ -148,8 +154,6 @@ class RealmManager: ObservableObject {
 //            This wasn't working before, but possibly if there is an instance of Realm in existence it might work?
 
         await self.removeAllNonBaseSubscriptions()
-        
-        print(self.realm.subscriptions.count)
         
 //        Add subscriptions to donwload any groups that youre a part of
         let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: QuerySubKey.groups.rawValue, query: groupQuery.baseQuery)

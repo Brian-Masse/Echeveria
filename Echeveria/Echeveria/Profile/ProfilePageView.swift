@@ -22,6 +22,8 @@ struct ProfilePageView: View {
     }
     
     @ObservedObject var profile: EcheveriaProfile
+    @ObservedResults(EcheveriaGroup.self) var groups
+    
     @State var page: ProfilePage = .main
     
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
@@ -30,7 +32,10 @@ struct ProfilePageView: View {
         GeometryReader { geo in
             
             AsyncLoader {
-                if !profile.loaded { await profile.updatePermissions() }
+                let filteredGroups: [EcheveriaGroup] = groups.filter { group in
+                    group.members.contains( profile.ownerID )
+                }   
+                if !profile.loaded { await profile.updatePermissions(groups: filteredGroups) }
             } content: {
                 VStack(alignment: .leading) {
                     HStack {

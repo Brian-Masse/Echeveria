@@ -15,28 +15,45 @@ struct GameScrollerView: View {
         case gameType = "by Game"
         case groupType = "by Group"
         case winnerType = "by Winner"
+        case none = "None"
         
         var id: String { self.rawValue }
     }
     
-    @State var filter: Filter = .gameType
+    @State var filter: Filter = .none
     
+    let filterable: Bool 
     let geo: GeometryProxy
-    let games: Results<EcheveriaGame>
+    let games: [EcheveriaGame]
+    
+    init( filter: Filter, filterable:Bool = true, geo: GeometryProxy, games: Results<EcheveriaGame>? = nil, gamesArr: [EcheveriaGame]? = nil  ) {
+        self.filterable = filterable
+        self.geo = geo
+        if games != nil { self.games = Array(games!) }
+        else { self.games = gamesArr! }
+        self.filter = filter
+        
+    }
     
     var body: some View {
         VStack {
-            HStack {
-                UniversalText("Games", size: 20, true)
-                Spacer()
-                Menu {
-                    Button("by Game") { filter = .gameType }
-                    Button("by Group") { filter = .groupType }
-                    Button("by Winner") { filter = .winnerType }
-                } label: {
-                    RoundedButton(label: "Filter: \(filter.rawValue)", icon: "line.3.horizontal.decrease.circle") {}
-                        .universalTextStyle()
+            if filterable {
+                HStack {
+                    UniversalText("Games", size: 20, true)
+                    Spacer()
+                    Menu {
+                        Button("by Game") { filter = .gameType }
+                        Button("by Group") { filter = .groupType }
+                        Button("by Winner") { filter = .winnerType }
+                    } label: {
+                        RoundedButton(label: "Filter: \(filter.rawValue)", icon: "line.3.horizontal.decrease.circle") {}
+                            .universalTextStyle()
+                    }
                 }
+            }
+            
+            if filter == .none {
+                GameListView(games: games, title: "", geo: geo) { game in true }
             }
             
             if filter == .gameType {
@@ -68,7 +85,7 @@ struct GameScrollerView: View {
     
     struct GameListView: View {
         
-        let games: Results<EcheveriaGame>
+        let games: [EcheveriaGame]
         let title: String
         
         let geo: GeometryProxy

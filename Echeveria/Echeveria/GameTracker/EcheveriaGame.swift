@@ -121,6 +121,12 @@ class EcheveriaGame: Object, Identifiable {
         return str
     }
     
+    func isWinner(_ id: String) -> Bool {
+        self.winners.contains { str in
+            str == id
+        }
+    }
+    
     static func getGameObject(from id: String) -> EcheveriaGame? {
         let results: Results<EcheveriaGame> = EcheveriaModel.retrieveObject { query in
             query.ownerID == id

@@ -102,6 +102,14 @@ class EcheveriaGroup: Object, Identifiable {
             query.ownerID.in( self.members )
         }
     }
+    
+    static func getGroupName( _ id: ObjectId ) -> String {
+        if let group = EcheveriaGroup.getGroupObject(from: id) {
+            return group.name
+        }
+        return "?"
+        
+    }
 
     static func searchForGroup(_ name: String, profile: EcheveriaProfile) async {
         await EcheveriaModel.shared.realmManager.groupQuery.addQuery(QuerySubKey.groupSearch.rawValue) { query in
