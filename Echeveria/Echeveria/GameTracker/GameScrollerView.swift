@@ -84,7 +84,7 @@ struct GameScrollerView: View {
                 ScrollView(.horizontal) {
                     LazyHStack {
                         ForEach( filtered, id: \.self ) { game in
-                            GameTrackerCardPreviewView(game: game, geo: geo)
+                            GamePreviewView(game: game, geo: geo)
                         }
                     }
                 }

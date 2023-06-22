@@ -136,8 +136,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "authRealm(realm:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -245,8 +245,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "addGenericSubcriptions(name:query:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -261,8 +261,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "removeAllNonBaseSubscriptions()"
             landmarkType = "7">
          </BreakpointContent>
@@ -355,10 +355,106 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "addSubcriptions()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "255B18ED-4C2E-49F2-859A-D556E307862C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/GameTracker/EcheveriaGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "init(_:type:group:date:players:winners:experience:comments:gameData:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "255B18ED-4C2E-49F2-859A-D556E307862C - 6a7a1de818e1866d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Echeveria.EcheveriaGame.__allocating_init(_: Swift.String, type: Echeveria.EcheveriaGame.GameType, group: Echeveria.EcheveriaGroup, date: Foundation.Date, players: RealmSwift.List&lt;Swift.String&gt;, winners: RealmSwift.List&lt;Swift.String&gt;, experience: Echeveria.EcheveriaGame.GameExperience, comments: Swift.String, gameData: Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; Echeveria.EcheveriaGame"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/GameTracker/EcheveriaGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "84"
+                  endingLineNumber = "84"
+                  offsetFromSymbolStart = "1154">
+               </Location>
+               <Location
+                  uuid = "255B18ED-4C2E-49F2-859A-D556E307862C - ea93a817aa7db07e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String, Swift.String) -&gt; Echeveria.GameDataNode in Echeveria.EcheveriaGame.init(_: Swift.String, type: Echeveria.EcheveriaGame.GameType, group: Echeveria.EcheveriaGroup, date: Foundation.Date, players: RealmSwift.List&lt;Swift.String&gt;, winners: RealmSwift.List&lt;Swift.String&gt;, experience: Echeveria.EcheveriaGame.GameExperience, comments: Swift.String, gameData: Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; Echeveria.EcheveriaGame"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/GameTracker/EcheveriaGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "82">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "60904B98-3E42-41B3-8A27-437696B47E14"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/GameTracker/EcheveriaGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "init(_:type:group:date:players:winners:experience:comments:gameData:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "60904B98-3E42-41B3-8A27-437696B47E14 - ea93a817aa7db01f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String, Swift.String) -&gt; Echeveria.GameDataNode in Echeveria.EcheveriaGame.init(_: Swift.String, type: Echeveria.EcheveriaGame.GameType, group: Echeveria.EcheveriaGroup, date: Foundation.Date, players: RealmSwift.List&lt;Swift.String&gt;, winners: RealmSwift.List&lt;Swift.String&gt;, experience: Echeveria.EcheveriaGame.GameExperience, comments: Swift.String, gameData: Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; Echeveria.EcheveriaGame"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/GameTracker/EcheveriaGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "86"
+                  endingLineNumber = "86"
+                  offsetFromSymbolStart = "342">
+               </Location>
+               <Location
+                  uuid = "60904B98-3E42-41B3-8A27-437696B47E14 - ea93a817aa7db19b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String, Swift.String) -&gt; Echeveria.GameDataNode in Echeveria.EcheveriaGame.init(_: Swift.String, type: Echeveria.EcheveriaGame.GameType, group: Echeveria.EcheveriaGroup, date: Foundation.Date, players: RealmSwift.List&lt;Swift.String&gt;, winners: RealmSwift.List&lt;Swift.String&gt;, experience: Echeveria.EcheveriaGame.GameExperience, comments: Swift.String, gameData: Swift.Dictionary&lt;Swift.String, Swift.String&gt;) -&gt; Echeveria.EcheveriaGame"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/GameTracker/EcheveriaGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "90"
+                  endingLineNumber = "90"
+                  offsetFromSymbolStart = "441">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

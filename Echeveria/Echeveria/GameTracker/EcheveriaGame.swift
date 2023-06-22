@@ -8,6 +8,25 @@
 import Foundation
 import RealmSwift
 
+class GameDataNode: Object, Identifiable {
+    @Persisted(primaryKey: true) var _id: ObjectId
+//    This is the user that ultimatley owns this piece of data
+    @Persisted var ownerID: String = ""
+//    This is the id of the game object this piece of data belongs to
+    @Persisted var gameOwnerID: String = ""
+    
+    @Persisted var key: String = ""
+    @Persisted var data: String = ""
+    
+    convenience init(ownerID: String, gameOwnerID: String, key: String, data: String) {
+        self.init()
+        self.ownerID = ownerID
+        self.gameOwnerID = gameOwnerID
+        self.key = key
+        self.data = data
+    }
+}
+
 class EcheveriaGame: Object, Identifiable {
     
     enum GameExperience: String, CaseIterable, Identifiable {
@@ -50,7 +69,9 @@ class EcheveriaGame: Object, Identifiable {
     @Persisted var experieince: String = GameExperience.good.rawValue
     @Persisted var comments: String = ""
     
-    convenience init( _ ownerID: String, type: GameType, group: EcheveriaGroup, date: Date, players: List<String>, winners: List<String>, experience: GameExperience, comments: String ) {
+    @Persisted var gameData: List<GameDataNode> = List()
+    
+    convenience init( _ ownerID: String, type: GameType, group: EcheveriaGroup, date: Date, players: List<String>, winners: List<String>, experience: GameExperience, comments: String, gameData: Dictionary<String, String> ) {
         self.init()
         
         self.ownerID = ownerID
@@ -64,11 +85,30 @@ class EcheveriaGame: Object, Identifiable {
         self.experienceEnum = experience
         self.comments = comments
         
+        let gameDataArry: [GameDataNode] = gameData.map { (key: String, value: String) in
+            let node = GameDataNode(ownerID: self.ownerID, gameOwnerID: self._id.stringValue, key: key, data: value)
+            EcheveriaModel.addObject( node )
+            return node
+        }
+        self.gameData.append(objectsIn: gameDataArry)
+        
         self.registerSelf()
     }
     
     func registerSelf() {
         EcheveriaModel.addObject(self)
+    }
+    
+    func updatePermissions() async {
+        let realmManager = EcheveriaModel.shared.realmManager
+        await realmManager.profileQuery.addQuery { query in
+            query.ownerID.in( self.players )
+        }
+        
+        await realmManager.gameDataNodesQuery.removeAllNonBaseQueries()
+        await realmManager.gameDataNodesQuery.addQuery { query in
+            query.ownerID == self._id.stringValue
+        }
     }
     
     func getWinners() -> String {
@@ -102,6 +142,4 @@ class EcheveriaGame: Object, Identifiable {
         
         return winners
     }
-    
 }
-

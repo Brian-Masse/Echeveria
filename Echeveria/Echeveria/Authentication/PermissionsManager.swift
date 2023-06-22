@@ -11,9 +11,12 @@ import RealmSwift
 enum QuerySubKey: String, CaseIterable {
     case testObject = "testObject"
     case account = "Account"
+    
     case groups = "Groups"
     case groupSearch = "GroupSearch"
+    
     case games = "Games"
+    case gameDataNodes = "GameDataNodes"
 }
 
 class QueryPermission<T: Object> {
@@ -66,5 +69,12 @@ class QueryPermission<T: Object> {
         }) {
             additionalQueries.remove(at: index)
         }
+    }
+    
+    func removeAllNonBaseQueries() async {
+        for wrappedQuery in additionalQueries {
+            await removeQuery( wrappedQuery.name )
+        }
+        
     }
 }

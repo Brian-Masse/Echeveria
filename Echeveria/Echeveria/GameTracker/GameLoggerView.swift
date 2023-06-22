@@ -27,6 +27,8 @@ struct GameLoggerView: View  {
     @State var gameExperieince: EcheveriaGame.GameExperience? = .good
     @State var gameComments: String = ""
     
+    @State var gameValues: Dictionary<String, String> = Dictionary()
+    
     @ObservedResults(EcheveriaGroup.self) var groups
     
     private func refreshGroup() {
@@ -90,6 +92,9 @@ struct GameLoggerView: View  {
                         .onChange(of: group) { _ in refreshGroup() }
                         .universalFormSection()
                     }
+                    
+                    SmashForm(values: $gameValues, players: selectedPlayers)
+                    
                 }
             }.universalForm()
             
@@ -103,7 +108,8 @@ struct GameLoggerView: View  {
                                          players: ArrayToRealmList(selectedPlayers),
                                          winners: ArrayToRealmList(selectedWinners),
                                          experience: gameExperieince!,
-                                         comments: gameComments )
+                                         comments: gameComments,
+                                         gameData: gameValues)
                 presentationMode.wrappedValue.dismiss()
             }
             
