@@ -57,7 +57,7 @@ struct GameTrackerCardPreviewView: View {
     
         VStack(alignment: .leading) {
             UniversalText(game.type, size: 30, true).textCase(.uppercase)
-            UniversalText("Winner: \(game.getWinners())", size: 20)
+//            UniversalText("Winner: \(game.getWinners())", size: 20)
             Spacer()
             
             

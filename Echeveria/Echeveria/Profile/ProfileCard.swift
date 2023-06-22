@@ -33,7 +33,7 @@ struct ProfileCard: View {
             
         }
         .padding()
-        .sheet(isPresented: $showingProfile) { ProfileView(profile: profile) }
+        .sheet(isPresented: $showingProfile) { ProfilePageView(profile: profile) }
         .background(Rectangle()
             .universalForeground()
             .cornerRadius(15)

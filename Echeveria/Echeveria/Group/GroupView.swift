@@ -14,13 +14,11 @@ struct GroupView: View {
     @ObservedRealmObject var group: EcheveriaGroup    
     let games: Results<EcheveriaGame>
     
-    @State var loadingPermissions: Bool = false
     @State var editing: Bool = false
     
     var owner: Bool { group.owner == EcheveriaModel.shared.profile.ownerID }
     
     var body: some View {
-        
         GeometryReader { geo in
             VStack(alignment: .leading) {
                 if owner {
@@ -35,26 +33,22 @@ struct GroupView: View {
                 .padding(.bottom)
                 
                 ScrollView(.vertical) {
-                    if !loadingPermissions {
-                        UniversalText("Members:", size: 20, true)
-                        ForEach( group.members, id: \.self ) { memberID in
-                            ProfileCard(profileID: memberID)
-                        }
-                        
-                        GameScrollerView(geo: geo, games: games)
+                    
+                    AsyncLoader {
+                        await group.updatePermissionsForGroupView()
+                    } content: {
+                        VStack {
+                            UniversalText("Members:", size: 20, true)
+                            ForEach( group.members, id: \.self ) { memberID in
+                                ProfileCard(profileID: memberID)
+                            }
                             
+                            GameScrollerView(geo: geo, games: games)
+                        }
                     }
                 }
                 Spacer()
             }
-//        TODO: while the group is giving local users access to view other users profiles, show a loading view
-//        TODO: also probably shouldnt be giving local users read/write access to other users profiles!
-//            AsyncLoader {
-//                await group.provideLocalUserAccess()
-//                loadingPermissions = false
-//            } closingTask: {
-//                await group.disallowLocalUserAccess()
-//            }
         }
         .universalBackground()
         .sheet(isPresented: $editing) { EditingGroupView(group: group, name: group.name, icon: group.icon) }

@@ -8,22 +8,12 @@
 import Foundation
 import RealmSwift
 
-enum QuerySubKey: String {
+enum QuerySubKey: String, CaseIterable {
     case testObject = "testObject"
     case account = "Account"
     case groups = "Groups"
+    case groupSearch = "GroupSearch"
     case games = "Games"
-}
-
-protocol UniquePermissionsView {
-//    This sends all of the query permissions to their respective objects
-//    ie. ProfileQueryPermissons.addQueries
-//    These should all be pricate
-    var baseKey: QuerySubKey { get }
-    
-    func updatePermissions() async -> Void
-    
-    func removePermissions() async -> Void
 }
 
 class QueryPermission<T: Object> {
@@ -31,27 +21,36 @@ class QueryPermission<T: Object> {
     struct WrappedQuery<O: Object> {
         let name: String
         let query: ((Query<O>) -> Query<Bool>)
+        
+        init(name: String? = nil, query: @escaping ((Query<O>) -> Query<Bool>)) {
+            self.query = query
+            if name == nil  { self.name = UUID().uuidString }
+            else            { self.name = name! }
+            
+        }
     }
     
     let baseQuery: (Query<T>) -> Query<Bool>
-    var additionalQueries: [ WrappedQuery<T> ] = []
+    private var additionalQueries: [ WrappedQuery<T> ] = []
     
     init( baseQuery: @escaping (Query<T>) -> Query<Bool> ) {
         self.baseQuery = baseQuery
     }
 
-    func addQueries( baseName: String, queries: [ ((Query<T>) -> Query<Bool>) ] ) async {
+    func addQueries(_ name: String? = nil, _ queries: [ ((Query<T>) -> Query<Bool>) ] ) async {
         for index in queries.indices {
-            await self.addQuery(name: "\(baseName)\(index)", query: queries[index])
+            await self.addQuery(name, queries[index])
         }
     }
     
-    func addQuery(name: String, query: @escaping ((Query<T>) -> Query<Bool>) ) async {
-        let _ = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: name, query: query)
+    func addQuery(_ name: String? = nil, _ query: @escaping ((Query<T>) -> Query<Bool>) ) async {
         let wrappedQuery = WrappedQuery(name: name, query: query)
+        let _ = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: wrappedQuery.name, query: query)
         additionalQueries.append(wrappedQuery)
     }
     
+//    These aren't super useful, since I'm not able to remove queries / subscriptions when a view unloads it seem
+//    as of now, all the subscriptions are reset when the app is closed, and when the app is opened
     func removeQueries(baseName: String) async {
         for wrappedQuery in additionalQueries {
             if wrappedQuery.name.contains( baseName ) {

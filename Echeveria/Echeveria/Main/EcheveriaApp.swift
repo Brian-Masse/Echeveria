@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct EcheveriaApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+    
     var body: some Scene {
         WindowGroup {
             EcheveriaView()
+                .onChange(of: scenePhase) { newValue in
+                    if newValue == .background {
+                        Task { await EcheveriaModel.shared.realmManager.removeAllNonBaseSubscriptions() }
+                    }
+                }
         }
     }
 }

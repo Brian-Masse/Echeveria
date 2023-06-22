@@ -83,36 +83,34 @@ class EcheveriaGroup: Object, Identifiable {
         if let profile = EcheveriaProfile.getProfileObject(from: memberID) { profile.leaveGroup(self) }
     }
     
-//    When a user is viewing a group, it needs to be able to temporarily pull their information
-//    This inclues all the profiles that the group might have, as well as all the game data associated with it
 //    TODO: I'm not sure this is the best way to do this, it might be long to load hundreds of things at once
 //    there should be a limit to how muhc it pulls at once
-//    func provideLocalUserAccess() async {
-//        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in query.ownerID.in(self.members) })
-//
-//        let _:EcheveriaGame? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .games, query: { query in query.groupID == self._id })
-//    }
-//
-//    func disallowLocalUserAccess() async {
-//        let _:EcheveriaProfile? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
-//            query.ownerID == EcheveriaModel.shared.profile.ownerID
-//        })
-//
-//        let _:EcheveriaGame? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .account, query: { query in
-//            query.ownerID == EcheveriaModel.shared.profile.ownerID
-//        })
-//    }
-//
-//    static func searchForGroup(_ name: String, profile: EcheveriaProfile) async {
-//        let _:EcheveriaGroup? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .groups) { query in
-//            query.name == name || query.members.contains(profile.ownerID)
-//        }
-//    }
-//
-//    static func resetSearch(profile: EcheveriaProfile) async {
-//        let _:EcheveriaGroup? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .groups) { query in
-//            query.members.contains(profile.ownerID)
-//        }
-//    }
+    func updatePermissionsForGroupView() async {
+        let realmManager = EcheveriaModel.shared.realmManager
+        await realmManager.profileQuery.addQuery { query in
+            query.ownerID.in( self.members )
+        }
+        
+        await realmManager.gamesQuery.addQuery { query in
+            query.groupID == self._id
+        }
+    }
+    
+    func updatePermissionsForGameLogger() async {
+        let realmManager = EcheveriaModel.shared.realmManager
+        await realmManager.profileQuery.addQuery { query in
+            query.ownerID.in( self.members )
+        }
+    }
+
+    static func searchForGroup(_ name: String, profile: EcheveriaProfile) async {
+        await EcheveriaModel.shared.realmManager.groupQuery.addQuery(QuerySubKey.groupSearch.rawValue) { query in
+            query.name == name || query.members.contains(profile.ownerID)
+        }
+    }
+
+    static func resetSearch(profile: EcheveriaProfile) async {
+        await EcheveriaModel.shared.realmManager.groupQuery.removeQuery(QuerySubKey.groupSearch.rawValue)
+    }
     
 }

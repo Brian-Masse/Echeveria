@@ -18,43 +18,33 @@ struct MainView: View {
         case profile
     }
     
-    @ObservedResults(TestObject.self) var objs
-    
     @State var page: MainViewPage = .main
+    @State var logging: Bool = false
     
     var body: some View {
         
         VStack {
             
             switch page {
-            case .profile: ProfileView(profile: EcheveriaModel.shared.profile)
+            case .profile: ProfilePageView(profile: EcheveriaModel.shared.profile)
             case .group: GroupPageView()
-            case .main:
-            
-                RoundedButton(label: "Add", icon: "plus.circle") {
-                    let object = TestObject(firstName: "Brian", lastName: "Masse",
-                                            ownerID: EcheveriaModel.shared.realmManager.user!.id)
-                    EcheveriaModel.addObject( object )
-                }
-                RoundedButton(label: "Signout", icon: "shippingbox.and.arrow.backward") {
-                    EcheveriaModel.shared.realmManager.logoutUser()
-                }
-                
-                ScrollView(.vertical) {
-                    ForEach( objs, id: \._id ) { obj in
-                        CardView(item: obj)
-                    }
-                }
+            case .main: EmptyView()
             }
             Spacer()
             HStack {
+                
+                RoundedButton(label: "Log Game", icon: "signpost.and.arrowtriangle.up") { logging = true }
+                
+                Spacer()
                 NamedButton("Home", and: "house.lodge", oriented: .vertical).onTapGesture { page = .main }
-                Spacer()
+//                    .padding(.horizontal)
                 NamedButton("Group", and: "rectangle.3.group", oriented: .vertical).onTapGesture { page = .group }
-                Spacer()
+//                    .padding(.horizontal)
                 NamedButton("Profile", and: "person.crop.square", oriented: .vertical).onTapGesture { page = .profile }
+//                    .padding(.horizontal)
             }.padding([.top, .horizontal])
         }
+        .sheet(isPresented: $logging) { GameLoggerView() }
         .universalBackground()
     }
 }

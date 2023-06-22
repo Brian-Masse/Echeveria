@@ -195,27 +195,27 @@ struct UniversalText: View {
     
 }
 
-struct AsyncLoader: View {
+struct AsyncLoader<Content>: View where Content: View {
     
-    let openningTask: () async -> Void
-    let closingTask: () async -> Void
+    let block: () async -> Void
+    let content: Content
     
     @State var loading: Bool = true
-    @State var leaving: Bool = false
     
+    init( block: @escaping () async -> Void, @ViewBuilder content: @escaping () -> Content ) {
+        self.content = content()
+        self.block = block
+    }
+
     var body: some View {
-        VStack {
+        VStack{
             if loading {
                 ProgressView()
                     .task {
-                        await openningTask()
+                        await block()
                         loading = false
                     }
-            }
-            if leaving { ProgressView().task { await closingTask() } }
-        }
-        .onAppear {leaving = false; loading = true}
-        .onDisappear { leaving = true }
+            } else { content }
+        }.onAppear { loading = true }
     }
-    
 }

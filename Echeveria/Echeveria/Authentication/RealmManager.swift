@@ -146,6 +146,10 @@ class RealmManager: ObservableObject {
 //            Instead, when creating the configuration, use initalSubscriptions to provide the subs before creating the relam
 //            This wasn't working before, but possibly if there is an instance of Realm in existence it might work?
 
+        await self.removeAllNonBaseSubscriptions()
+        
+        print(self.realm.subscriptions.count)
+        
 //        Add subscriptions to donwload any groups that youre a part of
         let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: QuerySubKey.groups.rawValue, query: groupQuery.baseQuery)
         let _:EcheveriaGame? = await self.addGenericSubcriptions(name: QuerySubKey.games.rawValue, query: gamesQuery.baseQuery)
@@ -190,4 +194,17 @@ class RealmManager: ObservableObject {
         let foundSubscriptions = subscriptions.first(named: name)
         return foundSubscriptions != nil
     }
+    
+    func removeAllNonBaseSubscriptions() async {
+            if realm.subscriptions.count > 0 {
+                for subscription in realm.subscriptions {
+                    if !QuerySubKey.allCases.contains(where: { key in
+                        key.rawValue == subscription.name
+                    }) {
+                        await self.removeSubscription(name: subscription.name!)
+                        
+                    }
+                }
+            }
+        }
 }

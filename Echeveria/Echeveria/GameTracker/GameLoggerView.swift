@@ -16,7 +16,6 @@ struct GameLoggerView: View  {
     @State var gameType: EcheveriaGame.GameType? = nil
     @State var group: EcheveriaGroup? = nil
     @State var date: Date = .now
-    @State var loadingPermission: Bool = true
     
     var players: [String]? {
         guard let group = self.group else { return nil }
@@ -32,7 +31,6 @@ struct GameLoggerView: View  {
     
     private func refreshGroup() {
         selectedPlayers = []
-        loadingPermission = true
     }
     
     private func checkCompletion() -> Bool {
@@ -49,11 +47,9 @@ struct GameLoggerView: View  {
     }
     
     var body: some View {
-        
         VStack {
             Form {
                 Section("Basic Information") {
-                    
                     BasicPicker(title: "Game Type", noSeletion: "No Selection", sources: EcheveriaGame.GameType.allCases, selection: $gameType) { gameType in
                         Text(gameType.rawValue)
                     }
@@ -68,34 +64,32 @@ struct GameLoggerView: View  {
                 }.universalFormSection()
                 
                 if group != nil {
-                    if loadingPermission {
-//                        AsyncLoader { await group!.provideLocalUserAccess()
-//                            loadingPermission = false
-//                        } closingTask: { await group!.disallowLocalUserAccess() }
-                    }
-                    
-                    Section("Game Information") {
-                        MultiPicker(title: "Players", selectedSources: $selectedPlayers, sources: players!) { playerID in
-                            if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return profile.firstName }; return nil
-                        } sourceName: { playerID in
-                            if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return ("\(profile.firstName) \(profile.lastName)") }; return nil
-                        }
-                    
-                        MultiPicker(title: "Winners", selectedSources: $selectedWinners, sources: players!) { playerID in
-                            if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return profile.firstName }; return nil
-                        } sourceName: { playerID in
-                            if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return ("\(profile.firstName) \(profile.lastName)") }; return nil
-                        }
+                    AsyncLoader {
+                        await group!.updatePermissionsForGameLogger()
+                    } content: {
+                        Section("Game Information") {
+                            MultiPicker(title: "Players", selectedSources: $selectedPlayers, sources: players!) { playerID in
+                                if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return profile.firstName }; return nil
+                            } sourceName: { playerID in
+                                if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return ("\(profile.firstName) \(profile.lastName)") }; return nil
+                            }
                         
-                        BasicPicker(title: "Game Experience", noSeletion: "None", sources: EcheveriaGame.GameExperience.allCases, selection: $gameExperieince) { content in
-                            Text(content.rawValue)
+                            MultiPicker(title: "Winners", selectedSources: $selectedWinners, sources: players!) { playerID in
+                                if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return profile.firstName }; return nil
+                            } sourceName: { playerID in
+                                if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return ("\(profile.firstName) \(profile.lastName)") }; return nil
+                            }
+                            
+                            BasicPicker(title: "Game Experience", noSeletion: "None", sources: EcheveriaGame.GameExperience.allCases, selection: $gameExperieince) { content in
+                                Text(content.rawValue)
+                            }
+                            
+                            TextField("Comments", text: $gameComments)
+                                .fixedSize(horizontal: true, vertical: false)
                         }
-                        
-                        TextField("Comments", text: $gameComments)
-                            .fixedSize(horizontal: true, vertical: false)
+                        .onChange(of: group) { _ in refreshGroup() }
+                        .universalFormSection()
                     }
-                    .onChange(of: group) { _ in refreshGroup() }
-                    .universalFormSection()
                 }
             }.universalForm()
             

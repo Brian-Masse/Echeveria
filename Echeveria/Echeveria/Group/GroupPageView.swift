@@ -9,69 +9,33 @@ import Foundation
 import SwiftUI
 import RealmSwift
 
-struct GroupPageView: View, UniquePermissionsView {
-    @State var showingGroupCreationView: Bool = false
+struct GroupPageView: View {
     
     @State var searchQuery: String = ""
-    @State var loadingSearch: Bool = false
+    @State var showingGroupCreationView: Bool = false
     @State var showingGroupSearchView: Bool = false
-    @State var loadingPermissions: Bool = true
     
     let profile = EcheveriaModel.shared.profile!
     
-    var baseKey: QuerySubKey = .groups
     
-    func updatePermissions() async {
-        let realmManager = EcheveriaModel.shared.realmManager
-        await realmManager.groupQuery.addQueries(baseName: baseKey.rawValue, queries: [
-            { query in query.owner == EcheveriaModel.shared.profile.ownerID }
-        ])
-    }
-    
-    func removePermissions() async {
-        let realmManager = EcheveriaModel.shared.realmManager
-        await realmManager.groupQuery.removeQueries(baseName: baseKey.rawValue)
-    }
-    
-    
+    //RESET SEARCH
     var body: some View {
-        
-        
-        if !loadingPermissions {
-            VStack {
-                RoundedButton(label: "Create Group", icon: "plus.square") { showingGroupCreationView = true }
-                RoundedButton(label: "Search for Group", icon: "magnifyingglass.circle") { loadingSearch = true }
-                TextField("Search...", text: $searchQuery)
-                
-                ScrollView(.vertical) {
-                    
-                    GroupListView(title: "My Groups:") { group in group.hasMember(profile.ownerID) }
-                    
-                    //                if showingGroupSearchView {
-                    //                    GroupListView(title: "Search Results:") { group in !group.hasMember(profile.ownerID) }
-                    //                }
-                }
-                if loadingSearch {
-                    //                AsyncLoader {
-                    //                    await EcheveriaGroup.searchForGroup(searchQuery, profile: profile)
-                    //                    showingGroupSearchView = true
-                    //                } closingTask: {
-                    //                    await EcheveriaGroup.resetSearch(profile: profile)
-                    //                }
+        VStack {
+            RoundedButton(label: "Create Group", icon: "plus.square") { showingGroupCreationView = true }
+            RoundedButton(label: "Search for Group", icon: "magnifyingglass.circle") { showingGroupSearchView = true }
+            TextField("Search...", text: $searchQuery)
+            
+            ScrollView(.vertical) {
+                GroupListView(title: "My Groups:") { group in group.hasMember(profile.ownerID) }
+                if showingGroupSearchView {
+                    AsyncLoader { await EcheveriaGroup.searchForGroup(searchQuery, profile: profile) } content: {
+                        GroupListView(title: "Search Results:") { group in !group.hasMember(profile.ownerID) }
+                    }
                 }
             }
-            .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
-        }else {
-            AsyncLoader {
-                await updatePermissions()
-                loadingPermissions = false
-            } closingTask: {
-                await removePermissions()
-            }
-
         }
+        .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
     }
-    
 }
 
 struct GroupListView: View {
@@ -85,7 +49,10 @@ struct GroupListView: View {
         let filtered = groups.filter(query)
         
         if !filtered.isEmpty {
-            Text(title).bold(true)
+            HStack {
+                Text(title).bold(true)
+                Spacer()
+            }
             ForEach(groups, id: \._id) { group in
                 if query(group) {
                     GroupPreviewView(group: group)
