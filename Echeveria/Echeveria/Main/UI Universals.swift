@@ -168,6 +168,29 @@ struct LabeledHeader: View {
     }
 }
 
+struct AsyncRoundedButton: View {
+    
+    let label:  String
+    let icon:   String
+    let action: () async -> Void
+    
+    @State var tapped: Bool = false
+    
+    var body: some View {
+        
+        ZStack {
+            RoundedButton(label: label, icon: icon) { tapped = true }
+            if tapped {
+                ProgressView()
+                    .task {
+                        await action()
+                        tapped = false
+                    }
+            }
+        }
+    }
+}
+
 struct UniversalText: View {
  
     let text: String
@@ -212,10 +235,41 @@ struct AsyncLoader: View {
                         loading = false
                     }
             }
-            if leaving { ProgressView().task { await closingTask() } }
+            if leaving { ProgressView().task {
+                await closingTask()
+            } }
         }
         .onAppear {leaving = false; loading = true}
-        .onDisappear { leaving = true }
+        .onDisappear {
+            leaving = true
+        }
+    }
+}
+
+struct AsyncWaiter<Content>: View where Content: View {
+    
+    var content: Content
+    var task: () async -> Void
+    
+    init( task: @escaping () async -> Void, @ViewBuilder contentBuilder: () -> Content ) {
+        self.content    = contentBuilder()
+        self.task       = task
+    }
+    
+    @State var loadingPersmissions: Bool = true
+    
+    var body: some View {
+        
+        if loadingPersmissions {
+            ProgressView()
+                .task {
+                    await task()
+                    loadingPersmissions = false
+                }
+        } else {
+            content
+        }
+        
     }
     
 }

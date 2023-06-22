@@ -126,6 +126,8 @@ class RealmManager: ObservableObject {
 //    Called once the realm is loaded in OpenSyncedRealmView
     func authRealm(realm: Realm) async {
         self.realm = realm
+        print(self.realm.subscriptions.count)
+
         await self.addSubcriptions()
         
         DispatchQueue.main.sync {
@@ -146,6 +148,8 @@ class RealmManager: ObservableObject {
 //            Instead, when creating the configuration, use initalSubscriptions to provide the subs before creating the relam
 //            This wasn't working before, but possibly if there is an instance of Realm in existence it might work?
 
+        await self.removeAllNonBaseSubscriptions()
+        
 //        Add subscriptions to donwload any groups that youre a part of
         let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: QuerySubKey.groups.rawValue, query: groupQuery.baseQuery)
         let _:EcheveriaGame? = await self.addGenericSubcriptions(name: QuerySubKey.games.rawValue, query: gamesQuery.baseQuery)
@@ -153,6 +157,7 @@ class RealmManager: ObservableObject {
     }
     
 //    MARK: Helper Functions
+    
     func addGenericSubcriptions<T>(name: String, query: @escaping ((Query<T>) -> Query<Bool>) ) async -> T? where T:RealmSwiftObject  {
             
         let subscriptions = self.realm.subscriptions
@@ -163,8 +168,8 @@ class RealmManager: ObservableObject {
                 let querySub = QuerySubscription(name: name, query: query)
 
                 if checkSubscription(name: name) {
-                    let foundSubscriptions = subscriptions.first(named: name)!
-                    foundSubscriptions.updateQuery(toType: T.self, where: query)
+//                    let foundSubscriptions = subscriptions.first(named: name)!
+//                    foundSubscriptions.updateQuery(toType: T.self, where: query)
                 }
                 else { subscriptions.append(querySub)}
             }
@@ -185,9 +190,23 @@ class RealmManager: ObservableObject {
         } catch { print("error adding subcription: \(error)") }
     }
     
-    private func checkSubscription(name: String) -> Bool {
+    func checkSubscription(name: String) -> Bool {
         let subscriptions = self.realm.subscriptions
         let foundSubscriptions = subscriptions.first(named: name)
         return foundSubscriptions != nil
+    }
+    
+    func removeAllNonBaseSubscriptions() async {
+    
+        if realm.subscriptions.count > 0 {
+            for subscription in realm.subscriptions {
+                if !QuerySubKey.allCases.contains(where: { key in
+                    key.rawValue == subscription.name
+                }) {
+                    await self.removeSubscription(name: subscription.name!)
+                    
+                }
+            }
+        }
     }
 }

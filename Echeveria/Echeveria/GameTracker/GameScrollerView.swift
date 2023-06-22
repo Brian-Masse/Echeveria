@@ -55,10 +55,14 @@ struct GameScrollerView: View {
                 let winners = EcheveriaGame.getListOfWinners()
                 
                 ForEach( winners, id: \.self ) { winner in
-                    let profile = EcheveriaProfile.getProfileObject(from: winner)
-                    GameListView(games: games, title: profile!.firstName, geo: geo) { game in
-                        game.winners.contains { winnerID in
-                            winnerID == winner
+                    var profile: EcheveriaProfile? = nil
+                    AsyncWaiter {
+                        profile = await EcheveriaProfile.getProfileObject(from: winner)
+                    } contentBuilder: {
+                        GameListView(games: games, title: profile!.firstName, geo: geo) { game in
+                            game.winners.contains { winnerID in
+                                winnerID == winner
+                            }
                         }
                     }
                 }

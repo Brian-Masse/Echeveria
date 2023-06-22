@@ -76,15 +76,15 @@ struct GameLoggerView: View  {
                     
                     Section("Game Information") {
                         MultiPicker(title: "Players", selectedSources: $selectedPlayers, sources: players!) { playerID in
-                            if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return profile.firstName }; return nil
+                            if let profile = await EcheveriaProfile.getProfileObject(from: playerID) { return profile.firstName }; return nil
                         } sourceName: { playerID in
-                            if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return ("\(profile.firstName) \(profile.lastName)") }; return nil
+                            if let profile = await EcheveriaProfile.getProfileObject(from: playerID) { return ("\(profile.firstName) \(profile.lastName)") }; return nil
                         }
                     
                         MultiPicker(title: "Winners", selectedSources: $selectedWinners, sources: players!) { playerID in
-                            if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return profile.firstName }; return nil
+                            if let profile = await EcheveriaProfile.getProfileObject(from: playerID) { return profile.firstName }; return nil
                         } sourceName: { playerID in
-                            if let profile = EcheveriaProfile.getProfileObject(from: playerID) { return ("\(profile.firstName) \(profile.lastName)") }; return nil
+                            if let profile = await EcheveriaProfile.getProfileObject(from: playerID) { return ("\(profile.firstName) \(profile.lastName)") }; return nil
                         }
                         
                         BasicPicker(title: "Game Experience", noSeletion: "None", sources: EcheveriaGame.GameExperience.allCases, selection: $gameExperieince) { content in
@@ -123,8 +123,8 @@ struct GameLoggerView: View  {
         @Binding var selectedSources: ListType
         
         let sources: ListType
-        let previewName: (ListType.Element) -> String?
-        let sourceName: (ListType.Element) -> String?
+        let previewName: (ListType.Element) async -> String?
+        let sourceName: (ListType.Element) async -> String?
         
         private func toggleSource(_ id: ListType.Element) {
             if let index = selectedSources.firstIndex(of: id) {
@@ -133,12 +133,12 @@ struct GameLoggerView: View  {
             else { selectedSources.append(id) }
         }
         
-        private func retrieveSelectionPreview() -> String {
+        private func retrieveSelectionPreview() async -> String {
             if selectedSources.isEmpty { return "None" }
             if selectedSources.count == sources.count { return "All" }
             var returning = ""
             for id in selectedSources {
-                if let str = previewName(id) { returning += str }
+                if let str = await previewName(id) { returning += str }
             }
             return returning
         }
@@ -152,13 +152,22 @@ struct GameLoggerView: View  {
                         Button {
                             toggleSource(source)
                         } label: {
-                            let name = sourceName(source)
-                            if selectedSources.contains(where: { id in id == source }) { Image(systemName: "checkmark") }
-                            Text( name == nil ? "?" : name! ).tag(source)
+                            var name: String? = ""
+                            AsyncWaiter {
+                                name = await sourceName(source)
+                            } contentBuilder: {
+                                if selectedSources.contains(where: { id in id == source }) { Image(systemName: "checkmark") }
+                                Text( name == nil ? "?" : name! ).tag(source)
+                            }
                         }
                     }
                 } label: {
-                    Text( retrieveSelectionPreview() ).universalTextStyle()
+                    var text = ""
+                    AsyncWaiter {
+                        text = await retrieveSelectionPreview()
+                    } contentBuilder: {
+                        Text( text ).universalTextStyle()
+                    }
                     Image(systemName: "chevron.up.chevron.down").universalTextStyle()
 
                 }

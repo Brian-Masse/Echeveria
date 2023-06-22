@@ -54,16 +54,21 @@ struct GameTrackerCardPreviewView: View {
     let geo: GeometryProxy
     
     var body: some View {
-    
-        VStack(alignment: .leading) {
-            UniversalText(game.type, size: 30, true).textCase(.uppercase)
-            UniversalText("Winner: \(game.getWinners())", size: 20)
-            Spacer()
-            
-            
-            UniversalText("\(group.name)", size: 15)
-            Text("\(game.date, style: .date )")
-            
+        var winnerText = ""
+        
+        AsyncWaiter {
+            winnerText = "Winner: \(await game.getWinners())"
+        } contentBuilder: {
+            VStack(alignment: .leading) {
+                UniversalText(game.type, size: 30, true).textCase(.uppercase)
+                UniversalText(winnerText, size: 20)
+                Spacer()
+                
+                
+                UniversalText("\(group.name)", size: 15)
+                Text("\(game.date, style: .date )")
+                
+            }
         }
         .aspectRatio(1, contentMode: .fit)
         .padding()

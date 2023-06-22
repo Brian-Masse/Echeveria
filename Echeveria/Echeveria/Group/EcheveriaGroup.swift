@@ -67,20 +67,20 @@ class EcheveriaGroup: Object, Identifiable {
         }
     }
     
-    func addMember(_ memberID: String) {
+    func addMember(_ memberID: String) async {
         EcheveriaModel.updateObject(self) { thawed in
             thawed.members.append(memberID)
         }
-        if let profile = EcheveriaProfile.getProfileObject(from: memberID) { profile.joinGroup(self._id) }
+        if let profile = await EcheveriaProfile.getProfileObject(from: memberID) { profile.joinGroup(self._id) }
         
     }
     
-    func removeMember(_ memberID: String) {
+    func removeMember(_ memberID: String) async {
         EcheveriaModel.updateObject(self) { thawed in
             guard let int = thawed.members.firstIndex(of: memberID) else { print("Target user is not a member of this group and cannot be deleted"); return }
             thawed.members.remove(at: int)
         }
-        if let profile = EcheveriaProfile.getProfileObject(from: memberID) { profile.leaveGroup(self) }
+        if let profile = await EcheveriaProfile.getProfileObject(from: memberID) { profile.leaveGroup(self) }
     }
     
 //    When a user is viewing a group, it needs to be able to temporarily pull their information
@@ -103,16 +103,14 @@ class EcheveriaGroup: Object, Identifiable {
 //        })
 //    }
 //
-//    static func searchForGroup(_ name: String, profile: EcheveriaProfile) async {
-//        let _:EcheveriaGroup? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .groups) { query in
-//            query.name == name || query.members.contains(profile.ownerID)
-//        }
-//    }
-//
-//    static func resetSearch(profile: EcheveriaProfile) async {
-//        let _:EcheveriaGroup? = await EcheveriaModel.shared.realmManager.addGenericSubcriptions(name: .groups) { query in
-//            query.members.contains(profile.ownerID)
-//        }
-//    }
+    static func searchForGroup(_ name: String, profile: EcheveriaProfile) async {
+        await EcheveriaModel.shared.realmManager.groupQuery.addQuery(name: QuerySubKey.groupSearch.rawValue) { query in
+            query.name == name || query.members.contains(profile.ownerID)
+        }
+    }
+
+    static func resetSearch(profile: EcheveriaProfile) async {
+        await EcheveriaModel.shared.realmManager.groupQuery.removeQuery(QuerySubKey.groupSearch.rawValue)
+    }
     
 }

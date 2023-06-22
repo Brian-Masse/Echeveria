@@ -71,12 +71,12 @@ class EcheveriaGame: Object, Identifiable {
         EcheveriaModel.addObject(self)
     }
     
-    func getWinners() -> String {
-        if self.winners.count == 1 { return EcheveriaProfile.getName(from: self.winners.first!)  }
+    func getWinners() async -> String {
+        if self.winners.count == 1 { return await EcheveriaProfile.getName(from: self.winners.first!)  }
         var str = ""
         for i in self.winners.indices {
-            if i == winners.count - 1 { str += ", and \(EcheveriaProfile.getName(from: self.winners[i]))" }
-            else { str += "\(EcheveriaProfile.getName(from: self.winners[i])), " }
+            if i == winners.count - 1 { str += ", and \(await EcheveriaProfile.getName(from: self.winners[i]))" }
+            else { str += "\(await EcheveriaProfile.getName(from: self.winners[i])), " }
         }
         return str
     }

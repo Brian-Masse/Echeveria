@@ -20,7 +20,6 @@ class EcheveriaProfile: Object, Identifiable {
     @Persisted var icon: String = ""
     
     @Persisted var groups: List<EcheveriaGroup> = List()
-//    @Persisted var games: List<EcheveriaGame> = List()
     
     convenience init(ownerID: String, firstName: String, lastName: String, userName: String, icon: String) {
         self.init()
@@ -31,17 +30,38 @@ class EcheveriaProfile: Object, Identifiable {
         self.icon = icon
     }
     
-    static func getProfileObject(from ownerID: String) -> EcheveriaProfile? {
-        let results: Results<EcheveriaProfile> = EcheveriaModel.retrieveObject { query in
-            query.ownerID == ownerID
-        }
-        guard let profile = results.first else { print( "No profile exists with the given id: \(ownerID)" ); return nil }
+    static func getProfileObject(from ownerID: String) async -> EcheveriaProfile?  {
         
-        return profile   
+        await EcheveriaModel.shared.realmManager.profileQuery.addQuery(name: ownerID) { query in query.ownerID == ownerID }
+        
+        if let profile = findLocalProfile(ownerID) {
+            if checkPermission(profile) { return profile }
+            else { await EcheveriaModel.shared.realmManager.profileQuery.removeQuery(ownerID) }
+        }
+    
+        print( "No profile exists with the given id: \(ownerID)")
+        return nil
+            
+        @Sendable func findLocalProfile(_ ownerID: String) -> EcheveriaProfile? {
+            return DispatchQueue.main.sync {
+                var obj: EcheveriaProfile? = nil
+                let results: Results<EcheveriaProfile> = EcheveriaModel.retrieveObject { query in
+                    query.ownerID == ownerID
+                }
+                if let profile = results.first  { obj = profile }
+                return obj
+            }
+        }
+    
+        @Sendable func checkPermission(_ profile: EcheveriaProfile) -> Bool {
+            return true
+        }
     }
     
-    static func getName(from ownerID: String) -> String {
-        let result = EcheveriaProfile.getProfileObject(from: ownerID)!
+    
+    
+    static func getName(from ownerID: String) async -> String {
+        let result = await EcheveriaProfile.getProfileObject(from: ownerID)!
         return result.firstName
     }
     
@@ -58,14 +78,7 @@ class EcheveriaProfile: Object, Identifiable {
             thawed.icon = icon
         }
     }
-    
-    func addGame(_ gameID: String) {
-//        guard let game = EcheveriaGame.getGameObject(from: gameID) else {return}
-//        EcheveriaModel.updateObject(self) { thawed in
-//            thawed.games.append(game)
-//        }
-    }
-    
+
     func joinGroup(_ groupID: ObjectId) {
         guard let group = EcheveriaGroup.getGroupObject(from: groupID) else { return }
         EcheveriaModel.updateObject(self) { thawed in
