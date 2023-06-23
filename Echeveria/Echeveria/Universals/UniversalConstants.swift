@@ -19,7 +19,7 @@ class Constants {
     
     static let UITitleTextSize: CGFloat     = 45
     static let UIHeaderTextSize: CGFloat    = 30
-    static let UISubHeaderTextSize: CGFloat = 30
+    static let UISubHeaderTextSize: CGFloat = 20
     static let UIDefaultTextSize: CGFloat   = 15
     
 }

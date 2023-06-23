@@ -27,7 +27,7 @@ struct ProfileGameView: View {
         let recentGames = games.returnFirst(5)
         
         VStack {
-            ProfilePageTitle(profile: profile, size: Constants.UISubHeaderTextSize)
+            ProfilePageTitle(profile: profile, text: "Game Logs", size: Constants.UISubHeaderTextSize)
             
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
@@ -121,8 +121,8 @@ struct ProfileGameView: View {
         
         @ObservedObject var profile: EcheveriaProfile
     
-        @State var yAxisDataType: AxisDataType = .type
-        @State var typeAxisDataType: AxisDataType = .winning
+        @State var yAxisDataType: AxisDataType = .winning
+        @State var typeAxisDataType: AxisDataType = .type
         
         let games: [EcheveriaGame]
         

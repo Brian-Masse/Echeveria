@@ -52,7 +52,7 @@ struct GroupView: View {
             }
         }
         .universalBackground()
-        .sheet(isPresented: $editing) { EditingGroupView(group: group, name: group.name, icon: group.icon) }
+        .sheet(isPresented: $editing) { EditingGroupView(group: group, name: group.name, icon: group.icon, description: group.groupDescription) }
     }
     
     
@@ -64,19 +64,21 @@ struct GroupView: View {
         
         @State var name: String
         @State var icon: String
+        @State var description: String
         
         var body: some View {
             VStack {
                 Form {
                     Section("Basic Information") {
                         TextField("Group Name", text: $name)
+                        TextField("Group Description", text: $description)
                         TextField("Group Icon", text: $icon)
                     }
                 }
                 .scrollContentBackground(.hidden)
                 
                 RoundedButton(label: "Done", icon: "checkmark.seal") {
-                    group.updateInformation(name: name, icon: icon)
+                    group.updateInformation(name: name, icon: icon, description: description)
                     presentationMode.wrappedValue.dismiss()
                 }
             }

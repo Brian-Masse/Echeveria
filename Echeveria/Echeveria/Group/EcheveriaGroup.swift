@@ -20,15 +20,15 @@ class EcheveriaGroup: Object, Identifiable {
     
     @Persisted var name: String = ""
     @Persisted var icon: String = ""
-    
-//    @Persisted var games: List<EcheveriaGame> = List()
+    @Persisted var groupDescription: String = ""
     
     var id: String { self._id.stringValue }
     
-    convenience init( name: String, icon: String ) {
+    convenience init( name: String, icon: String, description: String ) {
         self.init()
         self.name = name
         self.icon = icon
+        self.groupDescription = description
     }
     
     static func getGroupObject(from _id: ObjectId) -> EcheveriaGroup? {
@@ -39,11 +39,12 @@ class EcheveriaGroup: Object, Identifiable {
         return group
     }
     
-    func addGame(_ gameID: String) {
-//        guard let game = EcheveriaGame.getGameObject(from: gameID) else {return}
-//        EcheveriaModel.updateObject(self) { thawed in
-//            thawed.games.append(game)
-//        }
+    func updateInformation(name: String, icon: String, description: String) {
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.name = name
+            thawed.icon = icon
+            thawed.groupDescription = description
+        }
     }
     
     func addToRealm() {
@@ -52,13 +53,6 @@ class EcheveriaGroup: Object, Identifiable {
         self.members.append( id )
         
         EcheveriaModel.addObject(self)
-    }
-    
-    func updateInformation(name: String, icon: String) {
-        EcheveriaModel.updateObject(self) { thawed in
-            thawed.name = name
-            thawed.icon = icon
-        }
     }
     
     func hasMember(_ memberID: String) -> Bool {

@@ -38,23 +38,21 @@ struct SearchPageView: View {
     
     var body: some View {
         
-        TextField("Search...", text: $searchQuery)
-        
-        AsyncRoundedButton(label: "Search", icon: "magnifyingglass.circle") {
-            await search( searchQuery )
-            showingSearchView = true
-        }
-        
-        if showingSearchView {
+        GeometryReader { geo in
+            TextField("Search...", text: $searchQuery)
             
-            let foundGroups = Array(groups.filter { group in
-                !group.hasMember(EcheveriaModel.shared.profile.ownerID)
-            })
+            AsyncRoundedButton(label: "Search", icon: "magnifyingglass.circle") {
+                await search( searchQuery )
+                showingSearchView = true
+            }
             
-            VStack {
-                GroupListView(title: "Groups", groups: foundGroups)
+            if showingSearchView {
                 
-                ProfileListView(title: "Players") { profile in profile.firstName == searchQuery || profile.lastName == searchQuery }
+                VStack {
+                    GroupListView(title: "Groups", groups: Array(groups), geo: geo) { group in !group.hasMember(EcheveriaModel.shared.profile.ownerID) }
+                    
+                    ProfileListView(title: "Players") { profile in profile.firstName == searchQuery || profile.lastName == searchQuery }
+                }
             }
         }
     }

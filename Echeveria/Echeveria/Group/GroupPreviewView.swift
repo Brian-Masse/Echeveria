@@ -13,16 +13,24 @@ struct GroupListView: View {
     let title: String
     
     let groups: [EcheveriaGroup]
+    let geo: GeometryProxy
+    let query: (EcheveriaGroup) -> Bool
     
     var body: some View {
         
-        if !groups.isEmpty {
-            HStack {
-                Text(title).bold(true)
-                Spacer()
-            }
-            ForEach(groups, id: \._id) { group in
-                GroupPreviewView(group: group)
+        let filtered = groups.filter { group in
+            query(group)
+        }
+        
+        VStack {
+            if !filtered.isEmpty {
+                HStack {
+                    UniversalText(title, size: Constants.UISubHeaderTextSize, true)
+                    Spacer()
+                }
+                ForEach(filtered, id: \._id) { group in
+                    GroupPreviewView(group: group, geo: geo)
+                }
             }
         }
     }
@@ -31,30 +39,38 @@ struct GroupListView: View {
 struct GroupPreviewView: View {
     
     @ObservedRealmObject var group: EcheveriaGroup
+    let geo: GeometryProxy
     
     @State var showingGroup: Bool = false
     
     let memberID = EcheveriaModel.shared.profile!.ownerID
+    var owner: Bool { group.owner == memberID }
     
     var body: some View {
         
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: group.icon)
-                Text(group.name)
-                    .bold(true)
+                ResizeableIcon(icon: group.icon, size: Constants.UISubHeaderTextSize)
+                UniversalText(group.name, size: Constants.UISubHeaderTextSize, true )
                 Spacer()
+                
+                if owner  { UniversalText("owner", size: Constants.UIDefaultTextSize ).padding(.trailing) }
             }
-            if group.owner == memberID  {
-                Text("owner")
-            }
-            else if !group.hasMember(memberID) {
-                RoundedButton(label: "join", icon: "plus.square") {
-                    group.addMember(memberID)
-                }
-            } else {
-                RoundedButton(label: "leave", icon: "shippingbox.and.arrow.backward") {
-                    group.removeMember(memberID)
+            
+            UniversalText( group.groupDescription, size: Constants.UIDefaultTextSize )
+                .frame(width: geo.size.width - 20)
+                .lineLimit(5)
+            
+        
+            if !owner {
+                if !group.hasMember(memberID) {
+                    RoundedButton(label: "join", icon: "plus.square") {
+                        group.addMember(memberID)
+                    }
+                } else {
+                    RoundedButton(label: "leave", icon: "shippingbox.and.arrow.backward") {
+                        group.removeMember(memberID)
+                    }
                 }
             }
         }
@@ -74,6 +90,7 @@ struct GroupCreationView: View {
     
     @State var name: String = ""
     @State var icon: String = "square.on.square.squareshape.controlhandles"
+    @State var description: String = ""
     
     var body: some View {
         
@@ -81,12 +98,13 @@ struct GroupCreationView: View {
             Form {
                 Section("Basic Information") {
                     TextField("Group Name", text: $name)
+                    TextField("Group Description", text: $description)
                     TextField("Icon", text: $icon)
                 }.universalFormSection()
             }.universalForm()
             
             RoundedButton(label: "Submit", icon: "checkmark.seal") {
-                let group = EcheveriaGroup(name: name, icon: icon)
+                let group = EcheveriaGroup(name: name, icon: icon, description: description)
                 group.addToRealm()
                 presentaitonMode.wrappedValue.dismiss()
             }

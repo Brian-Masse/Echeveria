@@ -41,16 +41,10 @@ struct ProfilePageView: View {
                 await profile.updatePermissions(groups: filteredGroups, id: profile.ownerID)
             } content: {
                 VStack(alignment: .leading) {
-                    
-                    AsyncRoundedButton(label: "exit", icon: "chevron.down") {
-                        presentationMode.wrappedValue.dismiss()
-                        await profile.closePermission(ownerID: profile.ownerID)
-                    }
-                    
                     TabView(selection: $page) {
-                        ProfileMainView(profile: profile, geo: geo).tag( ProfilePage.main )
-                        ProfileGameView(profile: profile, allGames: $games.wrappedValue, geo: geo).tag( ProfilePage.games )
-                        ProfileSocialPage(profile: profile, allGroups: $groups.wrappedValue).tag( ProfilePage.social )
+                        ProfileMainView(profile:    profile, geo: geo).tag( ProfilePage.main )
+                        ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).tag( ProfilePage.games )
+                        ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).tag( ProfilePage.social )
                     }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 }
             }
@@ -62,14 +56,13 @@ struct ProfilePageView: View {
 struct ProfilePageTitle: View {
     
     let profile: EcheveriaProfile
+    let text: String
     let size: CGFloat
     
     var body: some View {
         HStack {
-            Image(systemName: profile.icon)
-                .resizable()
-                .frame(width: size, height: size)
-            UniversalText(profile.userName, size: size, true)
+            ResizeableIcon(icon: profile.icon, size: size)
+            UniversalText(text, size: size, true)
             Spacer()
         }
     }

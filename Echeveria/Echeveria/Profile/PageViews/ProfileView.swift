@@ -22,7 +22,7 @@ struct ProfileMainView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            ProfilePageTitle(profile: profile, size: 45)
+            ProfilePageTitle(profile: profile, text: profile.userName, size: Constants.UITitleTextSize)
             
             ScrollView(.vertical) {
                 UniversalText("\(profile.firstName) \(profile.lastName)", size: 20)

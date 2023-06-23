@@ -92,10 +92,6 @@ class EcheveriaGame: Object, Identifiable {
         }
         self.gameData.append(objectsIn: gameDataArry)
         
-        self.registerSelf()
-    }
-    
-    func registerSelf() {
         EcheveriaModel.addObject(self)
     }
     

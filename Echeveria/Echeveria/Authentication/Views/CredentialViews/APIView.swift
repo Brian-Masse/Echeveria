@@ -13,6 +13,8 @@ struct APIView: View {
     @EnvironmentObject var loginModel: LoginModel
     @State var APIToken: String = "XlT89XaRYXqoWEuvO15uZLYkfx7ztwb1otSz1zr5CmiE9DG3Rnx12l0XBy1IKsIf"
     
+    @State var remove: String = "LpOlH5uMKGInzmMFQ7EBqf3Nj4VOd6RY3ztoPqnjsLnY0S40NWRhoH6qJQS1TH6u"
+    
     @Binding var signingIn: Bool
     
     var body: some View {
@@ -20,6 +22,8 @@ struct APIView: View {
         Form {
             Section("API Token") {
                 TextField("Token", text: $APIToken)
+                TextField("Copy", text: $remove)
+                
             }.universalFormSection()
         }.universalForm()
         

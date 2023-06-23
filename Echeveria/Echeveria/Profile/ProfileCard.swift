@@ -33,10 +33,7 @@ struct ProfileCard: View {
             
         }
         .padding()
-        .fullScreenCover(isPresented: $showingProfile) {
-            ProfilePageView(profile: profile)
-            
-        }
+        .sheet(isPresented: $showingProfile) { ProfilePageView(profile: profile) }
         .background(Rectangle()
             .universalForeground()
             .cornerRadius(15)

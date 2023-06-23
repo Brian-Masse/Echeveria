@@ -129,11 +129,24 @@ struct UniversalText: View {
         
         Text(text)
             .universalTextStyle()
-            .fixedSize()
+//            .fixedSize()
             .lineLimit(3)
             .font(Font.custom("Helvetica", size: size) )
             .bold(bold)
     }
+}
+
+//MARK: ResizeableIcon
+struct ResizeableIcon: View {
+    let icon: String
+    let size: CGFloat
+    
+    var body: some View {
+        Image(systemName: icon)
+            .resizable()
+            .frame(width: size, height: size)
+    }
+    
 }
 
 

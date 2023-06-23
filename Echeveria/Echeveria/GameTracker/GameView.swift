@@ -14,12 +14,7 @@ struct GameView: View {
     @ObservedRealmObject var game: EcheveriaGame
     @ObservedResults(GameDataNode.self) var gameData
 
-    var group: EcheveriaGroup {
-        if let group = EcheveriaGroup.getGroupObject(from: game.groupID) {
-            return group
-        }else { return EcheveriaGroup(name: "", icon: "") }
-            
-    }
+    var group: EcheveriaGroup? { EcheveriaGroup.getGroupObject(from: game.groupID) }
     
     var body: some View {
         AsyncLoader {
@@ -28,8 +23,10 @@ struct GameView: View {
             VStack(alignment:.leading) {
                 UniversalText("Game of \(game.type)", size: 20, true)
                 HStack {
-                    Text("with \(group.name)")
-                    Image(systemName: group.icon)
+                    if group != nil {
+                        Text("with \(group!.name)")
+                        Image(systemName: group!.icon)
+                    }
                     Spacer()
                 }
                 Text("It was a \(game.experieince) time!")
@@ -79,12 +76,8 @@ struct GamePreviewView: View {
     
     @State var showingGameView: Bool = false
 
-    var group: EcheveriaGroup {
-        if let group = EcheveriaGroup.getGroupObject(from: game.groupID) {
-            return group
-        }else { return EcheveriaGroup(name: "", icon: "") }
+    var group: EcheveriaGroup? { EcheveriaGroup.getGroupObject(from: game.groupID) }
             
-    }
     let geo: GeometryProxy
     
     var body: some View {
@@ -95,7 +88,9 @@ struct GamePreviewView: View {
             Spacer()
             
             
-            UniversalText("\(group.name)", size: 15)
+            if group != nil {
+                UniversalText("\(group!.name)", size: 15)
+            }
             Text("\(game.date, style: .date )")
             
         }
