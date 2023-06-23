@@ -21,13 +21,6 @@ struct ProfilePageView: View {
         }
     }
     
-    private func getTextSize() -> CGFloat {
-        switch page {
-        case .main: return 45
-        default:    return 20
-        }
-    }
-    
     @ObservedObject var profile: EcheveriaProfile
     @ObservedResults(EcheveriaGroup.self) var groups
     
@@ -45,13 +38,6 @@ struct ProfilePageView: View {
                 if !profile.loaded { await profile.updatePermissions(groups: filteredGroups) }
             } content: {
                 VStack(alignment: .leading) {
-                    HStack {
-                        Image(systemName: profile.icon)
-                            .resizable()
-                            .frame(width: getTextSize(), height: getTextSize())
-                        UniversalText(profile.userName, size: getTextSize(), true)
-                    }
-                    
                     
                     TabView(selection: $page) {
                         ProfileMainView(profile: profile, geo: geo).tag( ProfilePage.main )
@@ -63,4 +49,46 @@ struct ProfilePageView: View {
         }
         .universalBackground()
     }
+}
+
+struct ProfilePageTitle: View {
+    
+    let profile: EcheveriaProfile
+    let size: CGFloat
+    
+    var body: some View {
+        HStack {
+            Image(systemName: profile.icon)
+                .resizable()
+                .frame(width: size, height: size)
+            UniversalText(profile.userName, size: size, true)
+            Spacer()
+        }
+    }
+}
+
+struct ProfileListView: View {
+    
+    let title: String
+    let query: ((EcheveriaProfile) -> Bool)
+
+    @ObservedResults(EcheveriaProfile.self) var profiles
+    
+    var body: some View {
+        
+        let filtered = profiles.filter(query)
+        
+        if !filtered.isEmpty {
+            HStack {
+                Text(title).bold(true)
+                Spacer()
+            }
+            ForEach(profiles, id: \._id) { profile in
+                if query(profile) {
+                    ProfileCard(profileID: profile.ownerID)
+                }
+            }
+        }
+    }
+    
 }

@@ -21,6 +21,7 @@ class EcheveriaProfile: Object, Identifiable {
     @Persisted var createdDate: Date = .now
     
     @Persisted var groups: List<EcheveriaGroup> = List()
+    @Persisted var friends: List<String> = List()
     
     var loaded: Bool = false
 //    @Persisted var games: List<EcheveriaGame> = List()
@@ -132,6 +133,7 @@ extension Collection {
     
     func returnFirst( _ number: Int ) -> [ Self.Element ] {
         var returning: [Self.Element] = []
+        if self.count == 0 { return returning }
         for i in 0...Swift.min(self.count, number) {
             returning.append( self[i as! Self.Index] )
         }

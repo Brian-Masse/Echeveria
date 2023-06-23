@@ -22,6 +22,8 @@ struct ProfileMainView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            ProfilePageTitle(profile: profile, size: 45)
+            
             ScrollView(.vertical) {
                 UniversalText("\(profile.firstName) \(profile.lastName)", size: 20)
                 UniversalText(profile.ownerID, size: 25, true)
@@ -54,33 +56,37 @@ struct ProfileGameView: View {
         let games: Results<EcheveriaGame> = EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID}
         let recentGames = games.returnFirst(5)
         
-        ScrollView(.vertical) {
-            VStack(alignment: .leading) {
-                
-                UniversalText("Recent Games", size: 30, true)    
-                GameScrollerView(filter: .none, filterable: false, geo: geo, gamesArr: recentGames )
-                    .padding(.bottom)
-                
-                UniversalText("Stats", size: 30, true)
-                GameChart(profile: profile, games: games)
-                
-                let winCountData = profile.getWins(in: .now, games: Array(games))
-                
-                HStack {
-                    StaticGameChart(profile: profile, games: games, title: "Wins by Game", data: winCountData)
-                        { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in dataPoint.winCount }
+        VStack {
+            ProfilePageTitle(profile: profile, size: 20)
+            
+            ScrollView(.vertical) {
+                VStack(alignment: .leading) {
                     
-                    StaticGameChart(profile: profile, games: games, title: "Win Rate by Game", data: winCountData)
-                        { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) }
-                }
-                .padding(.bottom)
+                    UniversalText("Recent Games", size: 30, true)
+                    GameScrollerView(filter: .none, filterable: false, geo: geo, gamesArr: recentGames )
+                        .padding(.bottom)
+                    
+                    UniversalText("Stats", size: 30, true)
+                    GameChart(profile: profile, games: games)
+                    
+                    let winCountData = profile.getWins(in: .now, games: Array(games))
 
-                ZStack(alignment: .topLeading) {
-                    GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID} )
-                    UniversalText("All Games", size: 30, true)
+                    HStack {
+                        StaticGameChart(profile: profile, games: games, title: "Wins by Game", data: winCountData)
+                        { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in dataPoint.winCount }
+
+                        StaticGameChart(profile: profile, games: games, title: "Win Rate by Game", data: winCountData)
+                        { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) }
+                    }
+                    .padding(.bottom)
+
+                    ZStack(alignment: .topLeading) {
+                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID} )
+                        UniversalText("All Games", size: 30, true)
+                    }
                 }
+                Spacer()
             }
-            Spacer()
         }
         .sheet(isPresented: $logging) { GameLoggerView() }
         .universalBackground()
@@ -182,7 +188,7 @@ struct ProfileGameView: View {
                         EditMenu(editingAxis: $yAxisDataType, title: "Y Axis")
                         EditMenu(editingAxis: $typeAxisDataType, title: "Series")
                     } label: {
-                        CircularButton(icon: "chart.dots.scatter") {}
+                        CircularButton(icon: "line.3.horizontal.decrease.circle") {}
                             .universalTextStyle()
                     }
                 }

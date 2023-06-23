@@ -11,9 +11,7 @@ import RealmSwift
 
 struct GroupPageView: View {
     
-    @State var searchQuery: String = ""
     @State var showingGroupCreationView: Bool = false
-    @State var showingGroupSearchView: Bool = false
     
     let profile = EcheveriaModel.shared.profile!
     
@@ -22,16 +20,9 @@ struct GroupPageView: View {
     var body: some View {
         VStack {
             RoundedButton(label: "Create Group", icon: "plus.square") { showingGroupCreationView = true }
-            RoundedButton(label: "Search for Group", icon: "magnifyingglass.circle") { showingGroupSearchView = true }
-            TextField("Search...", text: $searchQuery)
             
             ScrollView(.vertical) {
                 GroupListView(title: "My Groups:") { group in group.hasMember(profile.ownerID) }
-                if showingGroupSearchView {
-                    AsyncLoader { await EcheveriaGroup.searchForGroup(searchQuery, profile: profile) } content: {
-                        GroupListView(title: "Search Results:") { group in !group.hasMember(profile.ownerID) }
-                    }
-                }
             }
         }
         .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
@@ -41,7 +32,7 @@ struct GroupPageView: View {
 struct GroupListView: View {
     let title: String
     let query: ((EcheveriaGroup) -> Bool)
-    
+
     @ObservedResults(EcheveriaGroup.self) var groups
     
     var body: some View {

@@ -191,6 +191,28 @@ struct CircularButton: View {
     }
 }
 
+struct AsyncRoundedButton: View {
+    
+    let label: String
+    let icon: String
+    let action: () async -> Void
+    
+    @State var running: Bool = false
+    
+    var body: some View {
+        ZStack {
+            RoundedButton(label: label, icon: icon, action: { running = true })
+            if running {
+                ProgressView()
+                    .task {
+                        await action()
+                        running = false
+                    }
+            }
+        }
+    }
+}
+
 struct LabeledHeader: View {
     
     let icon: String

@@ -14,7 +14,7 @@ struct MainView: View {
     
     enum MainViewPage {
         case main
-        case group
+        case search
         case profile
     }
     
@@ -27,7 +27,7 @@ struct MainView: View {
             
             switch page {
             case .profile: ProfilePageView(profile: EcheveriaModel.shared.profile)
-            case .group: GroupPageView()
+            case .search: SearchPageView()
             case .main: EmptyView()
             }
             Spacer()
@@ -38,7 +38,7 @@ struct MainView: View {
                 Spacer()
                 NamedButton("Home", and: "house.lodge", oriented: .vertical).onTapGesture { page = .main }
 //                    .padding(.horizontal)
-                NamedButton("Group", and: "rectangle.3.group", oriented: .vertical).onTapGesture { page = .group }
+                NamedButton("Search", and: "magnifyingglass", oriented: .vertical).onTapGesture { page = .search }
 //                    .padding(.horizontal)
                 NamedButton("Profile", and: "person.crop.square", oriented: .vertical).onTapGesture { page = .profile }
 //                    .padding(.horizontal)

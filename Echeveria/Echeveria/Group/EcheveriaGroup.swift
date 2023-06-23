@@ -109,16 +109,5 @@ class EcheveriaGroup: Object, Identifiable {
         }
         return "?"
         
-    }
-
-    static func searchForGroup(_ name: String, profile: EcheveriaProfile) async {
-        await EcheveriaModel.shared.realmManager.groupQuery.addQuery(QuerySubKey.groupSearch.rawValue) { query in
-            query.name == name || query.members.contains(profile.ownerID)
-        }
-    }
-
-    static func resetSearch(profile: EcheveriaProfile) async {
-        await EcheveriaModel.shared.realmManager.groupQuery.removeQuery(QuerySubKey.groupSearch.rawValue)
-    }
-    
+    }    
 }

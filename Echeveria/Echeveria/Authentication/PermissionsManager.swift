@@ -11,6 +11,7 @@ import RealmSwift
 enum QuerySubKey: String, CaseIterable {
     case testObject = "testObject"
     case account = "Account"
+    case profileSearch = "ProfileSearch"
     
     case groups = "Groups"
     case groupSearch = "GroupSearch"
