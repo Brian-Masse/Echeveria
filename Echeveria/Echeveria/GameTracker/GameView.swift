@@ -14,7 +14,12 @@ struct GameView: View {
     @ObservedRealmObject var game: EcheveriaGame
     @ObservedResults(GameDataNode.self) var gameData
 
-    var group: EcheveriaGroup { EcheveriaGroup.getGroupObject(from: game.groupID)! }
+    var group: EcheveriaGroup {
+        if let group = EcheveriaGroup.getGroupObject(from: game.groupID) {
+            return group
+        }else { return EcheveriaGroup(name: "", icon: "") }
+            
+    }
     
     var body: some View {
         AsyncLoader {
@@ -51,8 +56,14 @@ struct GameView: View {
                         
                     }
                 }
+                
+                RoundedButton(label: "Delete Game Log", icon: "x.square") {
+                    EcheveriaModel.deleteObject(game) { passedGame in
+                        passedGame._id == game._id
+                    }
+                }
 
-                Spacer()
+//                Spacer()
                 
                 
             }
@@ -68,7 +79,12 @@ struct GamePreviewView: View {
     
     @State var showingGameView: Bool = false
 
-    var group: EcheveriaGroup { EcheveriaGroup.getGroupObject(from: game.groupID)! }
+    var group: EcheveriaGroup {
+        if let group = EcheveriaGroup.getGroupObject(from: game.groupID) {
+            return group
+        }else { return EcheveriaGroup(name: "", icon: "") }
+            
+    }
     let geo: GeometryProxy
     
     var body: some View {

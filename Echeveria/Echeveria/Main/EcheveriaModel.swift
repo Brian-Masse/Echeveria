@@ -7,8 +7,8 @@
 
 import Foundation
 import RealmSwift
+import Realm
 import SwiftUI
-
 
 //MARK: Model
 class EcheveriaModel {
@@ -49,11 +49,13 @@ class EcheveriaModel {
         
     }
     
-    static func deleteObject( _ object: TestObject ) {
+    static func deleteObject<T: RealmSwiftObject>( _ object: T, where query: @escaping (Query<T>) -> Query<Bool> ) where T: Identifiable {
         
-        let sourceObject = EcheveriaModel.shared.realmManager.realm.objects(TestObject.self).filter { obj in obj._id == object._id }
-    
-        self.writeToRealm { EcheveriaModel.shared.realmManager.realm.delete(sourceObject) }
+        let sourceObjects: Results<T> = EcheveriaModel.retrieveObject(where: query)
+        
+        if let obj = sourceObjects.first {
+            self.writeToRealm { EcheveriaModel.shared.realmManager.realm.delete(obj) }
+        }
     }
 
     

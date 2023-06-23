@@ -78,21 +78,27 @@ class EcheveriaProfile: Object, Identifiable {
         let realmManager = EcheveriaModel.shared.realmManager
 //        This will already have the active profile + the base profile
         
-        let totalMembers: [String] = groups.reduce([]) { partialResult, group in
-            partialResult + group.members
-        }
+//        Cleanup the realm before such a large download process
+//        await realmManager.removeAllNonBaseSubscriptions()
+        
+//        A collection of every member of every gropu that you are a part of
+        let totalMembers: [String] = groups.reduce([]) { partialResult, group in partialResult + group.members }
+//        A collection of all the groupIDs of each group you are a part of
+        let totalGroupIDs: [ObjectId] = groups.reduce([]) { partialResult, group in partialResult + [group._id] }
     
         await realmManager.profileQuery.addQuery { query in
             query.ownerID.in(totalMembers)
         }
-        
 //        Add all of this user's groups
         await realmManager.groupQuery.addQuery{ query in
             query.owner == self.ownerID
         }
 
+        
+        
+//        Get every game that is in any group you're in, and that has you as a player
         await realmManager.gamesQuery.addQuery{ query in
-            query.ownerID == self.ownerID
+            query.groupID.in(totalGroupIDs) && query.players.contains( self.ownerID )
         }
         loaded = true
     }
@@ -134,7 +140,7 @@ extension Collection {
     func returnFirst( _ number: Int ) -> [ Self.Element ] {
         var returning: [Self.Element] = []
         if self.count == 0 { return returning }
-        for i in 0...Swift.min(self.count, number) {
+        for i in 0..<Swift.min(self.count, number) {
             returning.append( self[i as! Self.Index] )
         }
         return returning

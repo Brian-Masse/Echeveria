@@ -23,6 +23,7 @@ struct GroupView: View {
             VStack(alignment: .leading) {
                 if owner {
                     RoundedButton(label: "Edit Group", icon: "pencil.line") { editing = true }
+                    RoundedButton(label: "Delete Group", icon: "x.square") { group.deleteGroup() }
                 }
                 
                 HStack {

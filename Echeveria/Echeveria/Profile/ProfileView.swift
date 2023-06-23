@@ -45,6 +45,7 @@ struct ProfileMainView: View {
 struct ProfileGameView: View {
     
     @ObservedObject var profile: EcheveriaProfile
+    @ObservedResults( EcheveriaGame.self ) var games
     
     @State var logging: Bool = false
     
@@ -52,8 +53,7 @@ struct ProfileGameView: View {
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
     var body: some View {
-        
-        let games: Results<EcheveriaGame> = EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID}
+    
         let recentGames = games.returnFirst(5)
         
         VStack {
@@ -81,7 +81,7 @@ struct ProfileGameView: View {
                     .padding(.bottom)
 
                     ZStack(alignment: .topLeading) {
-                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaModel.retrieveObject { game in game.ownerID == profile.ownerID} )
+                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: games)
                         UniversalText("All Games", size: 30, true)
                     }
                 }
@@ -92,6 +92,7 @@ struct ProfileGameView: View {
         .universalBackground()
     }
     
+//    MARK: Charts
     struct StaticGameChart<DataType: Collection, XAxisData, YAxisData>: View where DataType: RandomAccessCollection, XAxisData: Plottable, YAxisData: Plottable, DataType.Index: Hashable {
         
         @ObservedObject var profile: EcheveriaProfile

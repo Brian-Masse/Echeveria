@@ -42,7 +42,7 @@ struct ProfilePageView: View {
                     TabView(selection: $page) {
                         ProfileMainView(profile: profile, geo: geo).tag( ProfilePage.main )
                         ProfileGameView(profile: profile, geo: geo).tag( ProfilePage.games )
-                        Text("Groups").tag( ProfilePage.groups )
+                        GroupPageView().tag( ProfilePage.groups )
                     }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 }
             }

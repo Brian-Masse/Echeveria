@@ -83,6 +83,17 @@ class EcheveriaGroup: Object, Identifiable {
         if let profile = EcheveriaProfile.getProfileObject(from: memberID) { profile.leaveGroup(self) }
     }
     
+    func deleteGroup() {
+        for member in self.members {
+//            TODO: This should probably let all the games assigned to the group know that the group has been deleted
+            self.removeMember(member)
+        }
+        
+        EcheveriaModel.deleteObject( self ) { group in
+            group._id == self._id
+        }
+    }
+    
 //    TODO: I'm not sure this is the best way to do this, it might be long to load hundreds of things at once
 //    there should be a limit to how muhc it pulls at once
     func updatePermissionsForGroupView() async {

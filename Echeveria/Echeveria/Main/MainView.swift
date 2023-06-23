@@ -48,38 +48,3 @@ struct MainView: View {
         .universalBackground()
     }
 }
-
-struct CardView: View {
-    @ObservedRealmObject var item: TestObject
-    
-    var body: some View {
-        
-        VStack {
-            VStack {
-                HStack {
-                    Image(systemName: "globe")
-                    Text(item.firstName)
-                    Text(item.lastName)
-                    Spacer()
-                }.bold(true)
-                
-                HStack {
-                    Text(item.ownerID)
-                    Spacer()
-                }
-            }.padding()
-            
-            HStack {
-                RoundedButton(label: "Delete", icon: "delete.backward", action: { EcheveriaModel.deleteObject(item) })
-                RoundedButton(label: "Edit", icon: "pencil.circle", action: { item.updateName(to: "Updated!") })
-            }
-            .padding([.horizontal, .bottom])
-        }
-    
-        .background(
-            Rectangle()
-                .universalForeground()
-                .cornerRadius(20)
-        )
-    }
-}
