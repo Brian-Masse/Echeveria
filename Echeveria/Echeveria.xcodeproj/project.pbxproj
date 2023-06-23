@@ -15,6 +15,10 @@
 		C900BAAB2A43875800388B37 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAAA2A43875800388B37 /* PermissionsManager.swift */; };
 		C90F910F2A448E660062B493 /* Smash.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F910E2A448E660062B493 /* Smash.swift */; };
 		C90F91122A45171D0062B493 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F91112A45171D0062B493 /* SearchView.swift */; };
+		C90F91142A46134F0062B493 /* ProfileGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F91132A46134F0062B493 /* ProfileGameView.swift */; };
+		C90F91172A4613CD0062B493 /* ProfileSocialPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F91162A4613CD0062B493 /* ProfileSocialPage.swift */; };
+		C90F911A2A4616300062B493 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F91192A4616300062B493 /* ViewModifiers.swift */; };
+		C90F911C2A4616720062B493 /* UniversalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F911B2A4616720062B493 /* UniversalConstants.swift */; };
 		C90FEC952A43FD8300E7E6CE /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */; };
 		C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6DF2A3A51D1008C6906 /* MainView.swift */; };
 		C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E62A3A7547008C6906 /* RealmManager.swift */; };
@@ -25,7 +29,7 @@
 		C939B6F42A3C1745008C6906 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C939B6F32A3C1745008C6906 /* Realm */; };
 		C939B6F62A3C1745008C6906 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C939B6F52A3C1745008C6906 /* RealmSwift */; };
 		C939B6F92A3EB21F008C6906 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6F82A3EB21F008C6906 /* ProfileView.swift */; };
-		C939B6FB2A3FBB1A008C6906 /* GroupPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6FA2A3FBB1A008C6906 /* GroupPageView.swift */; };
+		C939B6FB2A3FBB1A008C6906 /* GroupPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6FA2A3FBB1A008C6906 /* GroupPreviewView.swift */; };
 		C967C8A52A3FDD8D00217ECB /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967C8A42A3FDD8D00217ECB /* GroupView.swift */; };
 		C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93A2A396C6500C48C6A /* LoginView.swift */; };
 		C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93D2A396E5800C48C6A /* LoginModel.swift */; };
@@ -68,6 +72,10 @@
 		C900BAAA2A43875800388B37 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		C90F910E2A448E660062B493 /* Smash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smash.swift; sourceTree = "<group>"; };
 		C90F91112A45171D0062B493 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		C90F91132A46134F0062B493 /* ProfileGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileGameView.swift; sourceTree = "<group>"; };
+		C90F91162A4613CD0062B493 /* ProfileSocialPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSocialPage.swift; sourceTree = "<group>"; };
+		C90F91192A4616300062B493 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		C90F911B2A4616720062B493 /* UniversalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalConstants.swift; sourceTree = "<group>"; };
 		C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageView.swift; sourceTree = "<group>"; };
 		C939B6DF2A3A51D1008C6906 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C939B6E62A3A7547008C6906 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -76,7 +84,7 @@
 		C939B6EC2A3A8951008C6906 /* EcheveriaProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaProfile.swift; sourceTree = "<group>"; };
 		C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCreationView.swift; sourceTree = "<group>"; };
 		C939B6F82A3EB21F008C6906 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		C939B6FA2A3FBB1A008C6906 /* GroupPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPageView.swift; sourceTree = "<group>"; };
+		C939B6FA2A3FBB1A008C6906 /* GroupPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPreviewView.swift; sourceTree = "<group>"; };
 		C967C8A42A3FDD8D00217ECB /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		C976A93A2A396C6500C48C6A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C976A93D2A396E5800C48C6A /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -144,14 +152,34 @@
 			path = "Specific Games";
 			sourceTree = "<group>";
 		};
+		C90F91152A46135D0062B493 /* PageViews */ = {
+			isa = PBXGroup;
+			children = (
+				C90F91162A4613CD0062B493 /* ProfileSocialPage.swift */,
+				C939B6F82A3EB21F008C6906 /* ProfileView.swift */,
+				C90F91132A46134F0062B493 /* ProfileGameView.swift */,
+				C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */,
+			);
+			path = PageViews;
+			sourceTree = "<group>";
+		};
+		C90F91182A46160A0062B493 /* Universals */ = {
+			isa = PBXGroup;
+			children = (
+				C976A9402A3972EC00C48C6A /* UI Universals.swift */,
+				C90F911B2A4616720062B493 /* UniversalConstants.swift */,
+				C90F91192A4616300062B493 /* ViewModifiers.swift */,
+			);
+			path = Universals;
+			sourceTree = "<group>";
+		};
 		C939B6EE2A3A895A008C6906 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				C939B6F82A3EB21F008C6906 /* ProfileView.swift */,
+				C90F91152A46135D0062B493 /* PageViews */,
 				C900BA9F2A3FE11800388B37 /* ProfileCard.swift */,
 				C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */,
 				C939B6EC2A3A8951008C6906 /* EcheveriaProfile.swift */,
-				C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -169,7 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				C939B6EA2A3A8644008C6906 /* EcheveriaGroup.swift */,
-				C939B6FA2A3FBB1A008C6906 /* GroupPageView.swift */,
+				C939B6FA2A3FBB1A008C6906 /* GroupPreviewView.swift */,
 				C967C8A42A3FDD8D00217ECB /* GroupView.swift */,
 				C90F91112A45171D0062B493 /* SearchView.swift */,
 			);
@@ -183,7 +211,6 @@
 				C997140A2A3902CA00090429 /* EcheveriaApp.swift */,
 				C99714352A3902DE00090429 /* EcheveriaModel.swift */,
 				C939B6DF2A3A51D1008C6906 /* MainView.swift */,
-				C976A9402A3972EC00C48C6A /* UI Universals.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -222,6 +249,7 @@
 		C99714092A3902CA00090429 /* Echeveria */ = {
 			isa = PBXGroup;
 			children = (
+				C90F91182A46160A0062B493 /* Universals */,
 				C976A93F2A396E5C00C48C6A /* Main */,
 				C939B6EE2A3A895A008C6906 /* Profile */,
 				C939B6FD2A3FC4E2008C6906 /* Group */,
@@ -407,11 +435,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C939B6ED2A3A8951008C6906 /* EcheveriaProfile.swift in Sources */,
+				C90F911C2A4616720062B493 /* UniversalConstants.swift in Sources */,
+				C90F911A2A4616300062B493 /* ViewModifiers.swift in Sources */,
 				C90FEC952A43FD8300E7E6CE /* ProfilePageView.swift in Sources */,
 				C967C8A52A3FDD8D00217ECB /* GroupView.swift in Sources */,
+				C90F91172A4613CD0062B493 /* ProfileSocialPage.swift in Sources */,
 				C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */,
 				C900BAA32A4024BB00388B37 /* EcheveriaGame.swift in Sources */,
-				C939B6FB2A3FBB1A008C6906 /* GroupPageView.swift in Sources */,
+				C939B6FB2A3FBB1A008C6906 /* GroupPreviewView.swift in Sources */,
 				C90F910F2A448E660062B493 /* Smash.swift in Sources */,
 				C939B6EB2A3A8644008C6906 /* EcheveriaGroup.swift in Sources */,
 				C90F91122A45171D0062B493 /* SearchView.swift in Sources */,
@@ -421,6 +452,7 @@
 				C900BAA52A40269600388B37 /* GameLoggerView.swift in Sources */,
 				C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */,
 				C997140D2A3902CA00090429 /* EcheveriaView.swift in Sources */,
+				C90F91142A46134F0062B493 /* ProfileGameView.swift in Sources */,
 				C976A9432A39750F00C48C6A /* EmailView.swift in Sources */,
 				C939B6F92A3EB21F008C6906 /* ProfileView.swift in Sources */,
 				C99714362A3902DE00090429 /* EcheveriaModel.swift in Sources */,

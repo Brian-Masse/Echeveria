@@ -13,7 +13,7 @@ struct ProfilePageView: View {
     
     enum ProfilePage: String, CaseIterable, Identifiable {
         case main = "main"
-        case groups = "groups"
+        case social = "social"
         case games = "games"
         
         var id: String {
@@ -50,7 +50,7 @@ struct ProfilePageView: View {
                     TabView(selection: $page) {
                         ProfileMainView(profile: profile, geo: geo).tag( ProfilePage.main )
                         ProfileGameView(profile: profile, allGames: $games.wrappedValue, geo: geo).tag( ProfilePage.games )
-                        GroupPageView().tag( ProfilePage.groups )
+                        ProfileSocialPage(profile: profile, allGroups: $groups.wrappedValue).tag( ProfilePage.social )
                     }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 }
             }

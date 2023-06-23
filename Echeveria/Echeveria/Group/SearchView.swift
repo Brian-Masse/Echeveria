@@ -14,6 +14,8 @@ struct SearchPageView: View {
     @State var searchQuery: String = ""
     @State var showingSearchView: Bool = false
     
+    @ObservedResults(EcheveriaGroup.self) var groups
+    
     func search(_ search: String) async {
         
         await resetSearch()
@@ -44,8 +46,13 @@ struct SearchPageView: View {
         }
         
         if showingSearchView {
+            
+            let foundGroups = Array(groups.filter { group in
+                !group.hasMember(EcheveriaModel.shared.profile.ownerID)
+            })
+            
             VStack {
-                GroupListView(title: "Groups") { group in !group.hasMember(EcheveriaModel.shared.profile.ownerID) }
+                GroupListView(title: "Groups", groups: foundGroups)
                 
                 ProfileListView(title: "Players") { profile in profile.firstName == searchQuery || profile.lastName == searchQuery }
             }

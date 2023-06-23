@@ -1,45 +1,14 @@
 //
-//  ProfileView.swift
+//  ProfileGameView.swift
 //  Echeveria
 //
-//  Created by Brian Masse on 6/17/23.
+//  Created by Brian Masse on 6/23/23.
 //
 
 import Foundation
-import SwiftUI
 import RealmSwift
+import SwiftUI
 import Charts
-
-//MARK: ProfileMainView
-struct ProfileMainView: View {
-    
-    @ObservedObject var profile: EcheveriaProfile
-    @State var editing: Bool = false
-    
-    let geo: GeometryProxy
-    
-    var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            ProfilePageTitle(profile: profile, size: 45)
-            
-            ScrollView(.vertical) {
-                UniversalText("\(profile.firstName) \(profile.lastName)", size: 20)
-                UniversalText(profile.ownerID, size: 25, true)
-                    .padding(.bottom)
-                
-                if mainUser {
-                    RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
-                }
-            }
-            Spacer()
-        }
-        .frame(width: geo.size.width)
-        .sheet(isPresented: $editing) { EditingProfileView().environmentObject(profile) }
-    }
-    
-}
 
 //MARK: ProfileGameView
 struct ProfileGameView: View {
@@ -58,16 +27,16 @@ struct ProfileGameView: View {
         let recentGames = games.returnFirst(5)
         
         VStack {
-            ProfilePageTitle(profile: profile, size: 20)
+            ProfilePageTitle(profile: profile, size: Constants.UISubHeaderTextSize)
             
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
                     
-                    UniversalText("Recent Games", size: 30, true)
+                    UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
                     GameScrollerView(filter: .none, filterable: false, geo: geo, gamesArr: recentGames )
                         .padding(.bottom)
                     
-                    UniversalText("Stats", size: 30, true)
+                    UniversalText("Stats", size: Constants.UIHeaderTextSize, true)
                     GameChart(profile: profile, games: games )
                     
                     let winCountData = profile.getWins(in: .now, games: games)
@@ -83,7 +52,7 @@ struct ProfileGameView: View {
 
                     ZStack(alignment: .topLeading) {
                         GameScrollerView(filter: .gameType, filterable: true, geo: geo, gamesArr: games)
-                        UniversalText("All Games", size: 30, true)
+                        UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
                     }
                 }
                 Spacer()
@@ -116,7 +85,7 @@ struct ProfileGameView: View {
                         
                     }
                 }.universalChart()
-                UniversalText(title, size: 15, true)
+                UniversalText(title, size: Constants.UIDefaultTextSize, true)
                     .padding(.horizontal)
                     .padding(.vertical, 5)
             }
@@ -184,7 +153,7 @@ struct ProfileGameView: View {
                 .universalChart()
                 
                 HStack {
-                    UniversalText( formatTitle(), size: 20, true)
+                    UniversalText( formatTitle(), size: Constants.UISubHeaderTextSize, true)
                     Spacer()
                     Menu {
                         EditMenu(editingAxis: $yAxisDataType, title: "Y Axis")
@@ -212,48 +181,5 @@ struct ProfileGameView: View {
                 } label: { Text(title) }
             }
         }
-    }
-}
-
-//MARK: EditingProfileView
-struct EditingProfileView: View {
-    
-    @Environment(\.presentationMode) var presentationMode
-    
-    @EnvironmentObject var profile: EcheveriaProfile
-    
-    @State var firstName: String = ""
-    @State var lastName: String = ""
-    @State var userName: String = ""
-    @State var icon: String = ""
-    
-    var body: some View {
-        VStack {
-            LabeledHeader(icon: "pencil.line", title: "Edit Profile")
-            
-            Form {
-                Section("Basic Information") {
-                    TextField( "First Name", text: $firstName )
-                    TextField( "Last Name", text: $lastName )
-                    TextField( "User Name", text: $userName )
-                    TextField( "Icon", text: $icon )
-                }.universalFormSection()
-            }
-            .universalForm()
-            .onAppear {
-                firstName = profile.firstName
-                lastName = profile.lastName
-                userName = profile.userName
-                icon = profile.icon
-            }
-            RoundedButton(label: "Done", icon: "checkmark.seal") {
-                profile.updateInformation(firstName: firstName, lastName: lastName, userName: userName, icon: icon)
-                presentationMode.wrappedValue.dismiss()
-            }
-            RoundedButton(label: "Signout", icon: "shippingbox.and.arrow.backward") {
-                EcheveriaModel.shared.realmManager.logoutUser()
-            }
-            
-        }.universalBackground()
     }
 }

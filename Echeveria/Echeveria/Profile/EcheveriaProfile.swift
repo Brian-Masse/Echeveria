@@ -126,6 +126,14 @@ class EcheveriaProfile: Object, Identifiable {
         })
     }
     
+    func getAllowedGroups(from groups: Results<EcheveriaGroup>) -> [EcheveriaGroup] {
+        Array(groups.filter { group in
+            group.members.contains { strID in
+                strID == self.ownerID
+            }
+        })
+    }
+    
 //    MARK: Graphing Helper Functions
     struct WinDataPoint {
         let winCount: Int

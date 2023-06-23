@@ -9,45 +9,20 @@ import Foundation
 import SwiftUI
 import RealmSwift
 
-struct GroupPageView: View {
-    
-    @State var showingGroupCreationView: Bool = false
-    
-    let profile = EcheveriaModel.shared.profile!
-    
-    
-    //RESET SEARCH
-    var body: some View {
-        VStack {
-            RoundedButton(label: "Create Group", icon: "plus.square") { showingGroupCreationView = true }
-            
-            ScrollView(.vertical) {
-                GroupListView(title: "My Groups:") { group in group.hasMember(profile.ownerID) }
-            }
-        }
-        .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
-    }
-}
-
 struct GroupListView: View {
     let title: String
-    let query: ((EcheveriaGroup) -> Bool)
-
-    @ObservedResults(EcheveriaGroup.self) var groups
+    
+    let groups: [EcheveriaGroup]
     
     var body: some View {
         
-        let filtered = groups.filter(query)
-        
-        if !filtered.isEmpty {
+        if !groups.isEmpty {
             HStack {
                 Text(title).bold(true)
                 Spacer()
             }
             ForEach(groups, id: \._id) { group in
-                if query(group) {
-                    GroupPreviewView(group: group)
-                }
+                GroupPreviewView(group: group)
             }
         }
     }
