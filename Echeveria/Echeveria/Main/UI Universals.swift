@@ -77,6 +77,34 @@ struct UniversalChart: ViewModifier {
     }
 }
 
+private struct BecomingVisible: ViewModifier {
+    
+    @State var action: (() -> Void)?
+
+    func body(content: Content) -> some View {
+        content.overlay {
+            GeometryReader { proxy in
+                Color.clear
+                    .preference(
+                        key: VisibleKey.self,
+                        // See discussion!
+                        value: UIScreen.main.bounds.intersects(proxy.frame(in: .global))
+                    )
+                    .onPreferenceChange(VisibleKey.self) { isVisible in
+                        guard isVisible, let action else { return }
+                        action()
+//                        action = nil
+                    }
+            }
+        }
+    }
+
+    struct VisibleKey: PreferenceKey {
+        static var defaultValue: Bool = false
+        static func reduce(value: inout Bool, nextValue: () -> Bool) { }
+    }
+}
+
 extension View {
     func universalBackground() -> some View {
         modifier(UniversalBackground())
@@ -101,8 +129,11 @@ extension View {
     func universalChart() -> some View {
         modifier(UniversalChart())
     }
+    
+    func onBecomingVisible(perform action: @escaping () -> Void) -> some View {
+        modifier(BecomingVisible(action: action))
+    }
 }
-
 
 //MARK: Universal Objects
 struct NamedButton: View {
@@ -276,6 +307,8 @@ struct AsyncLoader<Content>: View where Content: View {
                         loading = false
                     }
             } else { content }
-        }.onAppear { loading = true }
+        }.onBecomingVisible {
+            loading = true
+        }
     }
 }

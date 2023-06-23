@@ -45,7 +45,7 @@ struct ProfileMainView: View {
 struct ProfileGameView: View {
     
     @ObservedObject var profile: EcheveriaProfile
-    @ObservedResults( EcheveriaGame.self ) var games
+    var allGames: Results<EcheveriaGame>
     
     @State var logging: Bool = false
     
@@ -53,7 +53,8 @@ struct ProfileGameView: View {
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
     var body: some View {
-    
+        
+        let games = profile.getAllowedGames(from: allGames)
         let recentGames = games.returnFirst(5)
         
         VStack {
@@ -67,9 +68,9 @@ struct ProfileGameView: View {
                         .padding(.bottom)
                     
                     UniversalText("Stats", size: 30, true)
-                    GameChart(profile: profile, games: games)
+                    GameChart(profile: profile, games: games )
                     
-                    let winCountData = profile.getWins(in: .now, games: Array(games))
+                    let winCountData = profile.getWins(in: .now, games: games)
 
                     HStack {
                         StaticGameChart(profile: profile, games: games, title: "Wins by Game", data: winCountData)
@@ -81,7 +82,7 @@ struct ProfileGameView: View {
                     .padding(.bottom)
 
                     ZStack(alignment: .topLeading) {
-                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: games)
+                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, gamesArr: games)
                         UniversalText("All Games", size: 30, true)
                     }
                 }
@@ -97,7 +98,7 @@ struct ProfileGameView: View {
         
         @ObservedObject var profile: EcheveriaProfile
         
-        let games: Results<EcheveriaGame>
+        let games: [EcheveriaGame]
         
         let title: String
         
@@ -154,7 +155,7 @@ struct ProfileGameView: View {
         @State var yAxisDataType: AxisDataType = .type
         @State var typeAxisDataType: AxisDataType = .winning
         
-        let games: Results<EcheveriaGame>
+        let games: [EcheveriaGame]
         
         var body: some View {
             

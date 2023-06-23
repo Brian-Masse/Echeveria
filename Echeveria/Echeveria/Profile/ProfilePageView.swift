@@ -21,8 +21,11 @@ struct ProfilePageView: View {
         }
     }
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @ObservedObject var profile: EcheveriaProfile
     @ObservedResults(EcheveriaGroup.self) var groups
+    @ObservedResults(EcheveriaGame.self) var games
     
     @State var page: ProfilePage = .main
     
@@ -34,14 +37,19 @@ struct ProfilePageView: View {
             AsyncLoader {
                 let filteredGroups: [EcheveriaGroup] = groups.filter { group in
                     group.members.contains( profile.ownerID )
-                }   
-                if !profile.loaded { await profile.updatePermissions(groups: filteredGroups) }
+                } 
+                await profile.updatePermissions(groups: filteredGroups, id: profile.ownerID)
             } content: {
                 VStack(alignment: .leading) {
                     
+                    AsyncRoundedButton(label: "exit", icon: "chevron.down") {
+                        presentationMode.wrappedValue.dismiss()
+                        await profile.closePermission(ownerID: profile.ownerID)
+                    }
+                    
                     TabView(selection: $page) {
                         ProfileMainView(profile: profile, geo: geo).tag( ProfilePage.main )
-                        ProfileGameView(profile: profile, geo: geo).tag( ProfilePage.games )
+                        ProfileGameView(profile: profile, allGames: $games.wrappedValue, geo: geo).tag( ProfilePage.games )
                         GroupPageView().tag( ProfilePage.groups )
                     }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                 }

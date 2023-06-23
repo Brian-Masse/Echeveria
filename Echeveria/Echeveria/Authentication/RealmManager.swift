@@ -33,7 +33,7 @@ class RealmManager: ObservableObject {
     lazy var groupQuery: (QueryPermission<EcheveriaGroup>)!           = QueryPermission { query in query.members.contains(self.user!.id) }
     lazy var gamesQuery: (QueryPermission<EcheveriaGame>)!            = QueryPermission { query in query.ownerID == self.user!.id }
     lazy var gameDataNodesQuery: (QueryPermission<GameDataNode>)!     = QueryPermission { query in query.ownerID == self.user!.id }
-        
+    
     init() {
         self.checkLogin()
     }

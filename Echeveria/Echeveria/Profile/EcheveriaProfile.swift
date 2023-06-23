@@ -24,7 +24,6 @@ class EcheveriaProfile: Object, Identifiable {
     @Persisted var friends: List<String> = List()
     
     var loaded: Bool = false
-//    @Persisted var games: List<EcheveriaGame> = List()
     
     convenience init(ownerID: String, firstName: String, lastName: String, userName: String, icon: String) {
         self.init()
@@ -35,6 +34,7 @@ class EcheveriaProfile: Object, Identifiable {
         self.icon = icon
     }
     
+//    MARK: Conveinience Functions
     static func getProfileObject(from ownerID: String) -> EcheveriaProfile? {
         let results: Results<EcheveriaProfile> = EcheveriaModel.retrieveObject { query in
             query.ownerID == ownerID
@@ -49,6 +49,13 @@ class EcheveriaProfile: Object, Identifiable {
         return result.firstName
     }
     
+//        A collection of all the groupIDs of each group you are a part of
+    func getGroupIDs(_ groups: [EcheveriaGroup]? = nil) -> [ObjectId] {
+        if let passedGroups = groups { return passedGroups.reduce([]) { partialResult, group in partialResult + [group._id] } }
+        return self.groups.reduce([]) { partialResult, group in partialResult + [group._id] }
+    }
+    
+//    MARK: Class Methods
     func updateInformation( firstName: String, lastName: String, userName: String, icon: String ) {
         EcheveriaModel.updateObject(self) { thawed in
             thawed.firstName = firstName
@@ -74,33 +81,49 @@ class EcheveriaProfile: Object, Identifiable {
         }
     }
     
-    func updatePermissions(groups: [EcheveriaGroup]) async {
-        let realmManager = EcheveriaModel.shared.realmManager
-//        This will already have the active profile + the base profile
+//    MARK: Permissions
+    func updatePermissions(groups: [EcheveriaGroup], id: String) async {
         
-//        Cleanup the realm before such a large download process
-//        await realmManager.removeAllNonBaseSubscriptions()
+        if loaded { return }
+        let realmManager = EcheveriaModel.shared.realmManager
         
 //        A collection of every member of every gropu that you are a part of
         let totalMembers: [String] = groups.reduce([]) { partialResult, group in partialResult + group.members }
-//        A collection of all the groupIDs of each group you are a part of
-        let totalGroupIDs: [ObjectId] = groups.reduce([]) { partialResult, group in partialResult + [group._id] }
+        let totalGroupIDs = self.getGroupIDs(groups)
     
-        await realmManager.profileQuery.addQuery { query in
+        await realmManager.profileQuery.addQuery(id + QuerySubKey.account.rawValue) { query in
             query.ownerID.in(totalMembers)
         }
 //        Add all of this user's groups
-        await realmManager.groupQuery.addQuery{ query in
+        await realmManager.groupQuery.addQuery(id + QuerySubKey.groups.rawValue) { query in
             query.owner == self.ownerID
         }
-
-        
         
 //        Get every game that is in any group you're in, and that has you as a player
-        await realmManager.gamesQuery.addQuery{ query in
+        await realmManager.gamesQuery.addQuery(id + QuerySubKey.games.rawValue) { query in
             query.groupID.in(totalGroupIDs) && query.players.contains( self.ownerID )
         }
+        
         loaded = true
+    }
+    
+    func closePermission(ownerID: String) async {
+//        TODO: This should technically also clear all the profiles except this active one, but I don't feel like coding that rn, and its not essential :)
+        
+        let realmManager = EcheveriaModel.shared.realmManager
+        await realmManager.profileQuery.removeQuery(ownerID)
+        await realmManager.groupQuery.removeQuery(ownerID)
+        await realmManager.gamesQuery.removeQuery(ownerID)
+        
+        loaded = false
+    }
+    
+    func getAllowedGames(from games: Results<EcheveriaGame>) -> [EcheveriaGame] {
+        Array(games.filter { game in
+            self.getGroupIDs().contains { id in
+                id == game.groupID
+            }
+        })
     }
     
 //    MARK: Graphing Helper Functions
