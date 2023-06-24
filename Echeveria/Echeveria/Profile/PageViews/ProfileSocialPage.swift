@@ -68,7 +68,12 @@ struct ProfileSocialPage: View {
                         
                         CircularButton(icon: "plus") { showingGroupCreationView = true  }
                             .padding( [.leading], 5 )
-                            .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
+                            .sheet(isPresented: $showingGroupCreationView) { GroupCreationView(group: nil,
+                                                                                               name: "", icon:
+                                                                                                "rectangle.3.group",
+                                                                                               description: "",
+                                                                                               colorIndex: 0,
+                                                                                               editing: false) }
                     }.padding(.bottom)
                     
                     ListView(title: "Joined Groups", collection: groups, geo: geo) { group in 

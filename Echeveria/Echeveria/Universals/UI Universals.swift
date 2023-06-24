@@ -227,7 +227,7 @@ struct AsyncLoader<Content>: View where Content: View {
 
 //MARK: Graphs
 
-struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>: View{
+struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>: View where C3: Hashable {
     
     let initialDate: Date
     
@@ -243,6 +243,11 @@ struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>:
     
     let styleTitle: String
     let styleContent: (T) -> C3
+    let styleCount: Int
+    
+    let primaryColor: Color
+    
+    @State var dictionary: Dictionary<C3, Color> = Dictionary()
     
     var body: some View {
         
@@ -270,6 +275,16 @@ struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>:
                 }
             }
             .universalChart()
+            .chartForegroundStyleScale { (value: C3) in dictionary[value] ?? .red }
+            .onAppear {
+                var dic: Dictionary<C3, Color> = Dictionary()
+                for i in 0..<styleCount  {
+                    let key: C3 =  styleContent( content[ i ] )
+                    dic[key] =  Colors.getPallette(from: primaryColor)[ i ]
+                }
+                self.dictionary = dic
+            }
+            
             
             UniversalText(title, size: Constants.UISubHeaderTextSize, true)
                 .padding(.horizontal)
@@ -280,7 +295,7 @@ struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>:
 }
 
 
-struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterable>: View where F: (Identifiable & RawRepresentable), F.AllCases: RandomAccessCollection, F.RawValue: StringProtocol {
+struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterable>: View where F: (Identifiable & RawRepresentable), F.AllCases: RandomAccessCollection, F.RawValue: StringProtocol, C1: Hashable {
 
     let title: String
     let data: [T]
@@ -293,12 +308,16 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
     
     let styleTitle: String?
     let Style: (( T ) -> C1)?
+    let styleCount: Int
+    
+    let primaryColor: Color
     
     @Binding var filter: F?
     
-    init( title: String, data: [T], XAxisTitle: String, XAxis: @escaping ( T ) -> C1, YAxisTitle: String, YAxis: @escaping ( T ) -> C2, styleTitle: String? = nil, Style: (( T ) -> C1)? = nil, filter: Binding<F?>? = Optional<Binding<EcheveriaGame.GameExperience?>>.none) {
+    init( title: String, data: [T], primaryColor: Color, XAxisTitle: String, XAxis: @escaping ( T ) -> C1, YAxisTitle: String, YAxis: @escaping ( T ) -> C2, styleTitle: String? = nil, Style: (( T ) -> C1)? = nil, styleCount: Int = 0, filter: Binding<F?>? = Optional<Binding<EcheveriaGame.GameExperience?>>.none) {
         self.title = title
         self.data = data
+        self.primaryColor = primaryColor
         
         self.XAxisTitle = XAxisTitle
         self.XAxis = XAxis
@@ -306,9 +325,12 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
         self.YAxis = YAxis
         self.styleTitle = styleTitle
         self.Style = Style
+        self.styleCount = styleCount
         
         self._filter = filter ?? Binding.constant(nil)
     }
+    
+    @State var dictionary: Dictionary<C1, Color> = Dictionary()
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -329,7 +351,17 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                             y: .value(YAxisTitle, YAxis( data ) )
                         ).foregroundStyle(by: .value(styleTitle!, Style!( data ) ) )
                     }
-                }.universalChart()
+                }
+                .universalChart()
+                .chartForegroundStyleScale { (value: C1) in dictionary[value] ?? .red }
+                .onAppear {
+                    var dic: Dictionary<C1, Color> = Dictionary()
+                    for i in 0..<styleCount  {
+                        let key: C1 =  Style!( data[ i ] )
+                        dic[key] = Colors.getPallette(from: primaryColor)[ i ]
+                    }
+                    self.dictionary = dic
+                }
             }
             
             HStack {

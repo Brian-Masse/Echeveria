@@ -42,11 +42,11 @@ struct ProfileGameView: View {
                     let winCountData = profile.getWins(in: .now, games: games)
                     
                     HStack {
-                        StaticGameChart(title: "Wins by Game", data: winCountData,
+                        StaticGameChart(title: "Wins by Game", data: winCountData, primaryColor: .red,
                                         XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
                                         YAxisTitle: "WinCount", YAxis: { dataPoint in dataPoint.winCount })
                         
-                        StaticGameChart(title: "Win Rate by Game", data: winCountData,
+                        StaticGameChart(title: "Win Rate by Game", data: winCountData, primaryColor: .red,
                                         XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
                                         YAxisTitle: "WinRate", YAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) })
 

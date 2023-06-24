@@ -19,6 +19,21 @@ private struct UniversalBackground: ViewModifier {
     }
 }
 
+private struct UniversalColoredBackground: ViewModifier {
+    
+    let color: Color
+    
+    func body(content: Content) -> some View {
+        ZStack(alignment: .top) {
+            LinearGradient(colors: [color.opacity(0.8), .clear], startPoint: .top, endPoint: .bottom )
+                .frame(maxHeight: 300)
+            content.padding()
+        }
+        .universalBackground(padding: false)
+        .ignoresSafeArea()
+    }
+}
+
 private struct UniversalForeground: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     let reversed: Bool
@@ -106,6 +121,10 @@ private struct BecomingVisible: ViewModifier {
 extension View {
     func universalBackground(padding: Bool = true) -> some View {
         modifier(UniversalBackground( padding: padding ))
+    }
+    
+    func universalColoredBackground(_ color: Color) -> some View {
+        modifier(UniversalColoredBackground(color: color))
     }
     
     func universalForeground(not reveresed: Bool = false) -> some View {

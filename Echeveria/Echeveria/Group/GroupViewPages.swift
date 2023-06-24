@@ -49,7 +49,9 @@ struct MainGroupViewPage: View {
                     RoundedButton(label: "Delete Group", icon: "x.square") { group.deleteGroup() }
                 }
             }
-        }.sheet(isPresented: $editing) { EditingGroupView(group: group, name: group.name, icon: group.icon, description: group.groupDescription) }
+        }.sheet(isPresented: $editing) {
+            GroupCreationView(group: group, name: group.name, icon: group.icon, description: group.groupDescription, colorIndex: group.colorIndex, editing: true)
+        }
     }
     
     struct MembersView: View {
@@ -101,10 +103,11 @@ struct ChartsGroupViewPage: View {
                 
                 let gameCount = group.getGameCount(games: Array(sorted), filterByPlayer: gameCountFilter == .byPlayer)
                 
-                StaticGameChart(title: "Number of Games Played, Filtered", data: gameCount,
+                StaticGameChart(title: "Number of Games Played, Filtered", data: gameCount, primaryColor: Colors.colorOptions[ group.colorIndex ],
                                 XAxisTitle: "GameType", XAxis: { history in history.type },
                                 YAxisTitle: "Count", YAxis: { history in history.count },
                                 styleTitle: "Style", Style: { history in history.styleData },
+                                styleCount: gameCountFilter == .byPlayer ? group.members.count : EcheveriaGame.GameExperience.allCases.count,
                                 filter: Binding(get: { gameCountFilter }, set: { val in gameCountFilter = val! }) )
                 
                 let gameCountHistory = group.getGameCountHistory(games: Array(sorted))
@@ -112,7 +115,8 @@ struct ChartsGroupViewPage: View {
                 TimeBasedChart(initialDate: group.createdDate, title: "All Games", content: gameCountHistory,
                                xAxisTitle: "Date", xAxisContent: { history in history.date },
                                yAxisTitle: "Count", yAxisContent: { history in history.count },
-                               styleTitle: "GameType", styleContent: { history in history.type })
+                               styleTitle: "GameType", styleContent: { history in history.type }, styleCount:  EcheveriaGame.GameType.allCases.count,
+                               primaryColor: Colors.colorOptions[ group.colorIndex ] )
                 
                 HStack {
                     UniversalText("Total Number of Games", size: Constants.UISubHeaderTextSize, true)
@@ -141,9 +145,7 @@ struct ChartsGroupViewPage: View {
             }
         }
         
-        let colors: [Color] = [ .red, .orange, .init(red: 255 / 255, green: 129 / 255, blue: 120 / 255), .init(red: 107 / 255, green: 10 / 255, blue: 3 / 255), .purple, ]
         
-        @State var dictionary: Dictionary<String, Color> = Dictionary()
         
         @ObservedRealmObject var group: EcheveriaGroup
         let games: Results<EcheveriaGame>
@@ -162,21 +164,10 @@ struct ChartsGroupViewPage: View {
             TimeBasedChart(initialDate: group.createdDate, title: "Best Players", content: winnerCountHistory,
                            xAxisTitle: "Date", xAxisContent:        { history in history.date },
                            yAxisTitle: "WinCount", yAxisContent:    { history in history.winCount },
-                           styleTitle: "Player", styleContent:      { history in history.player.firstName })
-            .chartForegroundStyleScale { (value: String) in
-                dictionary[value] ?? .red
-            }
-            .onAppear {
-                
-                var dic: Dictionary<String, Color> = Dictionary()
-                for index in group.members.indices {
-                    if let profile = EcheveriaProfile.getProfileObject(from: group.members[index]) {
-                        dic[profile.firstName] = colors[index]
-                    }
-                }
-                self.dictionary = dic
-            }
+                           styleTitle: "Player", styleContent:      { history in history.player.firstName }, styleCount: group.members.count,
+                           primaryColor: Colors.colorOptions[ group.colorIndex ])
             
+    
             VStack {
                 HStack {
                     UniversalText("Best Player", size: Constants.UISubHeaderTextSize, true)

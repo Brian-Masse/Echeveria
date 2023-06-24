@@ -57,7 +57,7 @@ struct ProfilePageView: View {
                     }
                 }
             }
-        }.universalBackground()
+        }.universalColoredBackground(.blue)
     }
 }
 

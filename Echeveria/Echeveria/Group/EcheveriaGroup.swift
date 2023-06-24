@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import SwiftUI
 
 class EcheveriaGroup: Object, Identifiable {
     
@@ -15,30 +16,34 @@ class EcheveriaGroup: Object, Identifiable {
     
 //    This is a list of the ownerIDs of the EcheveriaProfiles
 //    TODO: This should probabaly be another form of identification, so that you don't have another users data downloaded on your device
-    @Persisted var members: List<String> = List()
+    @Persisted var members: RealmSwift.List<String> = List()
     @Persisted var owner: String
     
     @Persisted var name: String = ""
     @Persisted var icon: String = ""
     @Persisted var groupDescription: String = ""
+    @Persisted var colorIndex: Int = 0
     
     @Persisted var createdDate: Date = .now
     
     var id: String { self._id.stringValue }
     
-    convenience init( name: String, icon: String, description: String ) {
+    convenience init( name: String, icon: String, description: String, colorIndex: Int ) {
         self.init()
         self.name = name
         self.icon = icon
         self.groupDescription = description
         self.createdDate = .now
+        
+        self.colorIndex = colorIndex
     }
     
-    func updateInformation(name: String, icon: String, description: String) {
+    func updateInformation(name: String, icon: String, description: String, colorIndex: Int) {
         EcheveriaModel.updateObject(self) { thawed in
             thawed.name = name
             thawed.icon = icon
             thawed.groupDescription = description
+            thawed.colorIndex = colorIndex
         }
     }
     
@@ -62,6 +67,10 @@ class EcheveriaGroup: Object, Identifiable {
             return group.name
         }
         return "?"
+    }
+    
+    func getColor() -> Color {
+        return Colors.colorOptions[self.colorIndex]
         
     }
     

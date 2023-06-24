@@ -61,9 +61,14 @@ struct GroupCreationView: View {
     
     @Environment(\.presentationMode) var presentaitonMode
     
-    @State var name: String = ""
-    @State var icon: String = "square.on.square.squareshape.controlhandles"
-    @State var description: String = ""
+    let group: EcheveriaGroup?
+    
+    @State var name: String
+    @State var icon: String
+    @State var description: String
+    @State var colorIndex: Int
+    
+    let editing: Bool
     
     var body: some View {
         
@@ -73,12 +78,26 @@ struct GroupCreationView: View {
                     TextField("Group Name", text: $name)
                     TextField("Group Description", text: $description)
                     TextField("Icon", text: $icon)
+                    
+                    Picker(selection: $colorIndex) {
+                        ForEach(Colors.colorOptions.indices, id: \.self) { i in
+                            Text( Colors.colorOptions[i].description ).tag( i )
+                        }
+                    } label: {
+                        Text("Group Color")
+                    }
+
+                    
                 }.universalFormSection()
             }.universalForm()
             
             RoundedButton(label: "Submit", icon: "checkmark.seal") {
-                let group = EcheveriaGroup(name: name, icon: icon, description: description)
-                group.addToRealm()
+                if !editing {
+                    let group = EcheveriaGroup(name: name, icon: icon, description: description, colorIndex: colorIndex)
+                    group.addToRealm()
+                }else {
+                    group!.updateInformation(name: name, icon: icon, description: description, colorIndex: colorIndex)
+                }
                 presentaitonMode.wrappedValue.dismiss()
             }
         }
