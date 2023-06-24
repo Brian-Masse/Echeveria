@@ -9,36 +9,6 @@ import Foundation
 import SwiftUI
 import RealmSwift
 
-struct ListView<C: Collection, T: Identifiable, Content: View>: View where C.Element == T  {
-    let title: String
-    
-    let collection: C
-    let geo: GeometryProxy
-    
-    let query: (T) -> Bool
-    
-    @ViewBuilder var contentBuilder: (T) -> Content
-
-    var body: some View {
-        
-        let filtered = collection.filter { obj in
-            query(obj)
-        }
-        
-        VStack {
-            if !filtered.isEmpty {
-                HStack {
-                    UniversalText(title, size: Constants.UISubHeaderTextSize, true)
-                    Spacer()
-                }
-                ForEach(filtered, id: \.id) { obj in
-                    contentBuilder( obj )
-                }
-            }
-        }
-    }
-}
-
 struct GroupPreviewView: View {
     
     @ObservedRealmObject var group: EcheveriaGroup

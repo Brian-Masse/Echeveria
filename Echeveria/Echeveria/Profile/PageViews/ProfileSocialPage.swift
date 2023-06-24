@@ -25,7 +25,7 @@ struct ProfileSocialPage: View {
                     
                     UniversalText("Friends", size: Constants.UIHeaderTextSize, true)
                     ListView(title: "", collection: profile.friends, geo: geo) { id in true } contentBuilder: { profileID in
-                        ProfileCard(profileID: profileID)
+                        ProfilePreviewView(profileID: profileID)
                     }
                         .padding(.bottom)
 

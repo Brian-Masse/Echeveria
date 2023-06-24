@@ -209,7 +209,7 @@ class EcheveriaProfile: Object, Identifiable {
     }
     
 //    MARK: Graphing Helper Functions
-    struct WinDataPoint {
+    struct WinDataPoint: Hashable {
         let winCount: Int
         let totalCount: Int
         let game: EcheveriaGame.GameType
@@ -226,23 +226,3 @@ class EcheveriaProfile: Object, Identifiable {
         return data 
     }
 }
-
-class TestObject: Object, Identifiable {
-    
-    @Persisted(primaryKey: true) var _id: ObjectId
-    @Persisted var firstName: String = ""
-    @Persisted var lastName: String = ""
-    @Persisted var ownerID: String = ""
-    
-    convenience init( firstName: String, lastName: String, ownerID: String ) {
-        self.init()
-        self.firstName = firstName
-        self.lastName = lastName
-        self.ownerID = ownerID
-    }
-    
-    func updateName(to name: String) {
-        EcheveriaModel.updateObject(self) { thawed in thawed.firstName = name }
-    }
-}
-

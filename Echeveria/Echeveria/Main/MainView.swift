@@ -21,6 +21,8 @@ struct MainView: View {
     @State var page: MainViewPage = .main
     @State var logging: Bool = false
     
+    @ObservedResults( EcheveriaGroup.self ) var groups
+    
     var body: some View {
         
         GeometryReader { geo in
@@ -30,6 +32,9 @@ struct MainView: View {
                 case .profile: ProfilePageView(profile: EcheveriaModel.shared.profile)
                 case .search: SearchPageView()
                 case .main: VStack { Text("top")
+                    
+//                    ProfileSocialPage(profile: EcheveriaModel.shared.profile, allGroups: groups, geo: geo)
+                    
                     Spacer()
                     Text("bottom") }
                 }

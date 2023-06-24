@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import RealmSwift
 
-struct ProfileCard: View {
+struct ProfilePreviewView: View {
 
     let profile: EcheveriaProfile
     
@@ -39,6 +39,33 @@ struct ProfileCard: View {
             .cornerRadius(Constants.UIDefaultCornerRadius)
             .onTapGesture { showingProfile = true }
         )
+    }
+}
+
+struct ReducedProfilePreviewView: View {
+
+    let profile: EcheveriaProfile
+    
+    init( profileID: String ) {
+        self.profile = EcheveriaModel.retrieveObject(where: { query in
+            query.ownerID == profileID
+        }).first!
+    }
+    
+    @State var presenting: Bool = false
+    
+    var body: some View {
+        
+        HStack {
+            ResizeableIcon(icon: profile.icon, size: Constants.UISubHeaderTextSize)
+            UniversalText( "\(profile.firstName) \(profile.lastName)", size: Constants.UISubHeaderTextSize, true )
+            Spacer()
+            UniversalText( "\(profile.userName)", size: Constants.UIDefaultTextSize )
+        }
+        .fullScreenCover(isPresented: $presenting) { ProfilePageView(profile: profile) }
+        .onTapGesture { presenting = true }
+        
+            
     }
     
 }

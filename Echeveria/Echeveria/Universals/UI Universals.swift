@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Charts
 
 //MARK: Universal Objects
 struct NamedButton: View {
@@ -131,6 +132,35 @@ struct AsynCircularButton: View {
     }
 }
 
+//MARK: List View
+struct ListView<C: Collection, T: Identifiable, Content: View>: View where C.Element == T  {
+    let title: String
+    
+    let collection: C
+    let geo: GeometryProxy
+    
+    let query: (T) -> Bool
+    
+    @ViewBuilder var contentBuilder: (T) -> Content
+
+    var body: some View {
+        
+        let filtered = collection.filter { obj in query(obj) }
+        
+        VStack {
+            if !filtered.isEmpty {
+                HStack {
+                    UniversalText(title, size: Constants.UISubHeaderTextSize, true)
+                    Spacer()
+                }
+                ForEach(filtered, id: \.id) { obj in
+                    contentBuilder( obj )
+                }
+            }
+        }
+    }
+}
+
 //MARK: UniversalText
 struct UniversalText: View {
     let text: String
@@ -138,7 +168,7 @@ struct UniversalText: View {
     let bold: Bool
     let wrap: Bool
     
-    init(_ text: String, size: CGFloat, wrap: Bool = false, _ bold: Bool = false) {
+    init(_ text: String, size: CGFloat, wrap: Bool = true, _ bold: Bool = false) {
         self.text = text
         self.size = size
         self.bold = bold
@@ -150,7 +180,8 @@ struct UniversalText: View {
         Text(text)
             .universalTextStyle()
 //            .fixedSize()
-            .lineLimit(3)
+            .minimumScaleFactor(wrap ? 1 : 0.5)
+            .lineLimit(wrap ? 5 : 1)
             .font(Font.custom("Helvetica", size: size) )
             .bold(bold)
     }
@@ -191,5 +222,129 @@ struct AsyncLoader<Content>: View where Content: View {
                     }
             } else { content }
         }.onBecomingVisible { loading = true }
+    }
+}
+
+//MARK: Graphs
+
+struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>: View{
+    
+    let initialDate: Date
+    
+    let title: String
+    
+    let content: [T]
+    
+    let xAxisTitle: String
+    let xAxisContent: (T) -> C1
+    
+    let yAxisTitle: String
+    let yAxisContent: (T) -> C2
+    
+    let styleTitle: String
+    let styleContent: (T) -> C3
+    
+    var body: some View {
+        
+        ZStack(alignment: .topLeading) {
+            Chart {
+                ForEach(content, id: \.self ) { content in
+                    LineMark(
+                        x: .value(xAxisTitle, xAxisContent(content) ),
+                        y: .value(yAxisTitle, yAxisContent(content) )
+                    )
+                    .foregroundStyle(by: .value(styleTitle, styleContent(content)))
+                }
+                
+            }
+            
+            .chartXScale(domain: [ initialDate, Date.now.advanced(by: 3600) ])
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .day)){ value in
+                    if let date = value.as(Date.self) {
+                        AxisValueLabel( date.formatted(date: .numeric, time: .omitted)  )
+                    }
+                    
+                    AxisGridLine()
+                    AxisTick()
+                }
+            }
+            .universalChart()
+            
+            UniversalText(title, size: Constants.UISubHeaderTextSize, true)
+                .padding(.horizontal)
+                .padding(.vertical, 7)
+        }
+        
+    }
+}
+
+
+struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterable>: View where F: (Identifiable & RawRepresentable), F.AllCases: RandomAccessCollection, F.RawValue: StringProtocol {
+
+    let title: String
+    let data: [T]
+    
+    let XAxisTitle: String
+    let XAxis: ( T ) -> C1
+    
+    let YAxisTitle: String
+    let YAxis: ( T ) -> C2
+    
+    let styleTitle: String?
+    let Style: (( T ) -> C1)?
+    
+    @Binding var filter: F?
+    
+    init( title: String, data: [T], XAxisTitle: String, XAxis: @escaping ( T ) -> C1, YAxisTitle: String, YAxis: @escaping ( T ) -> C2, styleTitle: String? = nil, Style: (( T ) -> C1)? = nil, filter: Binding<F?>? = Optional<Binding<EcheveriaGame.GameExperience?>>.none) {
+        self.title = title
+        self.data = data
+        
+        self.XAxisTitle = XAxisTitle
+        self.XAxis = XAxis
+        self.YAxisTitle = YAxisTitle
+        self.YAxis = YAxis
+        self.styleTitle = styleTitle
+        self.Style = Style
+        
+        self._filter = filter ?? Binding.constant(nil)
+    }
+    
+    var body: some View {
+        ZStack(alignment: .top) {
+            if Style == nil {
+                Chart {
+                    ForEach(data, id: \.self) { data in
+                        BarMark(
+                            x: .value(XAxisTitle, XAxis( data ) ),
+                            y: .value(YAxisTitle, YAxis( data ) )
+                        )
+                    }
+                }.universalChart()
+            } else {
+                Chart {
+                    ForEach(data, id: \.self) { data in
+                        BarMark(
+                            x: .value(XAxisTitle, XAxis( data ) ),
+                            y: .value(YAxisTitle, YAxis( data ) )
+                        ).foregroundStyle(by: .value(styleTitle!, Style!( data ) ) )
+                    }
+                }.universalChart()
+            }
+            
+            HStack {
+                UniversalText(title, size: Constants.UIDefaultTextSize, true)
+                Spacer()
+            
+                if filter != nil {
+                    Menu {
+                        ForEach(F.allCases) { content in
+                            Button(content.rawValue) { filter = content }
+                        }
+                    } label: { CircularButton(icon: "line.3.horizontal.decrease.circle") {}.universalTextStyle() }
+                }
+            }.padding(.horizontal)
+                .padding(.vertical, 5)
+        }
     }
 }

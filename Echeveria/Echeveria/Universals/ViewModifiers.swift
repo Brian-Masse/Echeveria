@@ -11,8 +11,11 @@ import SwiftUI
 //MARK: View Modifiers
 private struct UniversalBackground: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
+
+    let padding: Bool
+    
     func body(content: Content) -> some View {
-        content.padding().background(colorScheme == .light ? Colors.lightGrey : .black)
+        content.padding( padding ? 15 : 0 ).background(colorScheme == .light ? Colors.lightGrey : .black)
     }
 }
 
@@ -62,6 +65,17 @@ private struct UniversalChart: ViewModifier {
     }
 }
 
+private struct RectangularBackground: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background( Rectangle()
+                .cornerRadius(Constants.UIDefaultCornerRadius)
+                .universalForeground()
+            )
+    }
+}
+
 private struct BecomingVisible: ViewModifier {
     @State var action: (() -> Void)?
 
@@ -90,8 +104,8 @@ private struct BecomingVisible: ViewModifier {
 }
 
 extension View {
-    func universalBackground() -> some View {
-        modifier(UniversalBackground())
+    func universalBackground(padding: Bool = true) -> some View {
+        modifier(UniversalBackground( padding: padding ))
     }
     
     func universalForeground(not reveresed: Bool = false) -> some View {
@@ -100,6 +114,10 @@ extension View {
     
     func universalTextStyle() -> some View {
         modifier(UniversalTextStyle())
+    }
+    
+    func rectangularBackgorund() -> some View {
+        modifier(RectangularBackground())
     }
     
     func universalForm() -> some View {

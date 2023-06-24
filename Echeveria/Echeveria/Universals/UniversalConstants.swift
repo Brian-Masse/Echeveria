@@ -59,4 +59,12 @@ extension Collection {
         }
         return returning
     }
+    
+    func returnLast( _ number: Int) -> Self.SubSequence {
+    
+        let count = self.count - 1
+        let lowerBound = Swift.max(0, count - number)
+        
+        return self[ (lowerBound as! Self.Index)...(count as! Self.Index) ]
+    }
 }

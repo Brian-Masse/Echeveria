@@ -20,20 +20,11 @@ struct GameScrollerView: View {
         var id: String { self.rawValue }
     }
     
-    @State var filter: Filter = .none
+    @State var filter: Filter
     
     let filterable: Bool 
     let geo: GeometryProxy
     let games: [EcheveriaGame]
-    
-    init( filter: Filter, filterable:Bool = true, geo: GeometryProxy, games: Results<EcheveriaGame>? = nil, gamesArr: [EcheveriaGame]? = nil  ) {
-        self.filterable = filterable
-        self.geo = geo
-        if games != nil { self.games = Array(games!) }
-        else { self.games = gamesArr! }
-        self.filter = filter
-        
-    }
     
     var body: some View {
         VStack {
@@ -52,7 +43,7 @@ struct GameScrollerView: View {
                 }
             }
             
-            if filter == .none {
+            if filter == GameScrollerView.Filter.none {
                 GameListView(games: games, title: "", geo: geo) { game in true }
             }
             

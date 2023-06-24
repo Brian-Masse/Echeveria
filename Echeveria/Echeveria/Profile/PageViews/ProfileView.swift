@@ -84,7 +84,7 @@ struct ProfileMainView: View {
                 
                 ListView(title: "", collection: requests.indices, geo: geo) { i in true}
                 contentBuilder: { i in
-                    ProfileCard(profileID:  requests[i] )
+                    ProfilePreviewView(profileID:  requests[i] )
                     
                     HStack {
                         let date = profile.friendRequestDates[i].formatted(date: .numeric, time: .omitted)

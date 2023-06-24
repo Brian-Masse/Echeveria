@@ -33,25 +33,28 @@ struct ProfileGameView: View {
                 VStack(alignment: .leading) {
                     
                     UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
-                    GameScrollerView(filter: .none, filterable: false, geo: geo, gamesArr: recentGames )
+                    GameScrollerView(filter: .none, filterable: false, geo: geo, games: recentGames )
                         .padding(.bottom)
                     
                     UniversalText("Stats", size: Constants.UIHeaderTextSize, true)
                     GameChart(profile: profile, games: games )
                     
                     let winCountData = profile.getWins(in: .now, games: games)
-
+                    
                     HStack {
-                        StaticGameChart(profile: profile, games: games, title: "Wins by Game", data: winCountData)
-                        { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in dataPoint.winCount }
+                        StaticGameChart(title: "Wins by Game", data: winCountData,
+                                        XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
+                                        YAxisTitle: "WinCount", YAxis: { dataPoint in dataPoint.winCount })
+                        
+                        StaticGameChart(title: "Win Rate by Game", data: winCountData,
+                                        XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
+                                        YAxisTitle: "WinRate", YAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) })
 
-                        StaticGameChart(profile: profile, games: games, title: "Win Rate by Game", data: winCountData)
-                        { dataPoint in dataPoint.game.rawValue } getYAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) }
                     }
                     .padding(.bottom)
 
                     ZStack(alignment: .topLeading) {
-                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, gamesArr: games)
+                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: games)
                         UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
                     }.padding(.bottom, 80)
                 }
@@ -62,34 +65,6 @@ struct ProfileGameView: View {
     }
     
 //    MARK: Charts
-    struct StaticGameChart<DataType: Collection, XAxisData, YAxisData>: View where DataType: RandomAccessCollection, XAxisData: Plottable, YAxisData: Plottable, DataType.Index: Hashable {
-        
-        @ObservedObject var profile: EcheveriaProfile
-        
-        let games: [EcheveriaGame]
-        
-        let title: String
-        
-        let data: DataType
-        let getXAxis: ( DataType.Element ) -> XAxisData
-        let getYAxis: ( DataType.Element ) -> YAxisData
-        
-        var body: some View {
-            ZStack(alignment: .topLeading) {
-                Chart {
-                    ForEach(data.indices, id: \.self) { i in
-                        BarMark(
-                            x: .value("X", getXAxis( data[i] ) ),
-                            y: .value("Y", getYAxis( data[i] ) ))
-                        
-                    }
-                }.universalChart()
-                UniversalText(title, size: Constants.UIDefaultTextSize, true)
-                    .padding(.horizontal)
-                    .padding(.vertical, 5)
-            }
-        }
-    }
     
     struct GameChart: View {
         enum AxisDataType: String {
@@ -142,7 +117,7 @@ struct ProfileGameView: View {
                 .chartXAxis {
                     AxisMarks(values: .stride(by: .day)){ value in
                         if let date = value.as(Date.self) {
-                            AxisValueLabel( date.formatted(.dateTime)  )
+                            AxisValueLabel( date.formatted(date: .numeric, time: .omitted)  )
                         }
                         
                         AxisGridLine()

@@ -34,12 +34,12 @@ struct GameView: View {
                 
                 UniversalText( game.winners.count == 1 ? "Winner" : "Winners", size: 20, true )
                 ForEach( game.winners, id: \.self ) { playerID in
-                    ProfileCard(profileID: playerID)
+                    ProfilePreviewView(profileID: playerID)
                 }
                 
                 UniversalText( "Players", size: 20, true)
                 ForEach( game.players, id: \.self ) { playerID in
-                    ProfileCard(profileID: playerID)
+                    ProfilePreviewView(profileID: playerID)
                 }
                 
                 UniversalText( "Game Information", size: 20, true)

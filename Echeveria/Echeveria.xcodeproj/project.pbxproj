@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C900BAA02A3FE11800388B37 /* ProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BA9F2A3FE11800388B37 /* ProfileCard.swift */; };
+		C900BAA02A3FE11800388B37 /* ProfilePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BA9F2A3FE11800388B37 /* ProfilePreviewView.swift */; };
 		C900BAA32A4024BB00388B37 /* EcheveriaGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA22A4024BB00388B37 /* EcheveriaGame.swift */; };
 		C900BAA52A40269600388B37 /* GameLoggerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA42A40269600388B37 /* GameLoggerView.swift */; };
 		C900BAA72A40EEDB00388B37 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C900BAA62A40EEDB00388B37 /* GameView.swift */; };
@@ -36,6 +36,7 @@
 		C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9402A3972EC00C48C6A /* UI Universals.swift */; };
 		C976A9432A39750F00C48C6A /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9422A39750F00C48C6A /* EmailView.swift */; };
 		C976A9462A39776C00C48C6A /* APIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A9452A39776C00C48C6A /* APIView.swift */; };
+		C97C68CC2A46B12E000E7AA5 /* GroupViewPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97C68CB2A46B12E000E7AA5 /* GroupViewPages.swift */; };
 		C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140A2A3902CA00090429 /* EcheveriaApp.swift */; };
 		C997140D2A3902CA00090429 /* EcheveriaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C997140C2A3902CA00090429 /* EcheveriaView.swift */; };
 		C997140F2A3902CC00090429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C997140E2A3902CC00090429 /* Assets.xcassets */; };
@@ -64,7 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C900BA9F2A3FE11800388B37 /* ProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCard.swift; sourceTree = "<group>"; };
+		C900BA9F2A3FE11800388B37 /* ProfilePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePreviewView.swift; sourceTree = "<group>"; };
 		C900BAA22A4024BB00388B37 /* EcheveriaGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaGame.swift; sourceTree = "<group>"; };
 		C900BAA42A40269600388B37 /* GameLoggerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLoggerView.swift; sourceTree = "<group>"; };
 		C900BAA62A40EEDB00388B37 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -91,6 +92,7 @@
 		C976A9402A3972EC00C48C6A /* UI Universals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI Universals.swift"; sourceTree = "<group>"; };
 		C976A9422A39750F00C48C6A /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		C976A9452A39776C00C48C6A /* APIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIView.swift; sourceTree = "<group>"; };
+		C97C68CB2A46B12E000E7AA5 /* GroupViewPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewPages.swift; sourceTree = "<group>"; };
 		C99714072A3902CA00090429 /* Echeveria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echeveria.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C997140A2A3902CA00090429 /* EcheveriaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaApp.swift; sourceTree = "<group>"; };
 		C997140C2A3902CA00090429 /* EcheveriaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaView.swift; sourceTree = "<group>"; };
@@ -177,7 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				C90F91152A46135D0062B493 /* PageViews */,
-				C900BA9F2A3FE11800388B37 /* ProfileCard.swift */,
+				C900BA9F2A3FE11800388B37 /* ProfilePreviewView.swift */,
 				C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */,
 				C939B6EC2A3A8951008C6906 /* EcheveriaProfile.swift */,
 			);
@@ -199,6 +201,7 @@
 				C939B6EA2A3A8644008C6906 /* EcheveriaGroup.swift */,
 				C939B6FA2A3FBB1A008C6906 /* GroupPreviewView.swift */,
 				C967C8A42A3FDD8D00217ECB /* GroupView.swift */,
+				C97C68CB2A46B12E000E7AA5 /* GroupViewPages.swift */,
 				C90F91112A45171D0062B493 /* SearchView.swift */,
 			);
 			path = Group;
@@ -441,13 +444,14 @@
 				C967C8A52A3FDD8D00217ECB /* GroupView.swift in Sources */,
 				C90F91172A4613CD0062B493 /* ProfileSocialPage.swift in Sources */,
 				C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */,
+				C97C68CC2A46B12E000E7AA5 /* GroupViewPages.swift in Sources */,
 				C900BAA32A4024BB00388B37 /* EcheveriaGame.swift in Sources */,
 				C939B6FB2A3FBB1A008C6906 /* GroupPreviewView.swift in Sources */,
 				C90F910F2A448E660062B493 /* Smash.swift in Sources */,
 				C939B6EB2A3A8644008C6906 /* EcheveriaGroup.swift in Sources */,
 				C90F91122A45171D0062B493 /* SearchView.swift in Sources */,
 				C900BAA92A4122B300388B37 /* GameScrollerView.swift in Sources */,
-				C900BAA02A3FE11800388B37 /* ProfileCard.swift in Sources */,
+				C900BAA02A3FE11800388B37 /* ProfilePreviewView.swift in Sources */,
 				C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */,
 				C900BAA52A40269600388B37 /* GameLoggerView.swift in Sources */,
 				C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */,
