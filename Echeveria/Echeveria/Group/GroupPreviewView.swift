@@ -9,17 +9,20 @@ import Foundation
 import SwiftUI
 import RealmSwift
 
-struct GroupListView: View {
+struct ListView<C: Collection, T: Identifiable, Content: View>: View where C.Element == T  {
     let title: String
     
-    let groups: [EcheveriaGroup]
+    let collection: C
     let geo: GeometryProxy
-    let query: (EcheveriaGroup) -> Bool
     
+    let query: (T) -> Bool
+    
+    @ViewBuilder var contentBuilder: (T) -> Content
+
     var body: some View {
         
-        let filtered = groups.filter { group in
-            query(group)
+        let filtered = collection.filter { obj in
+            query(obj)
         }
         
         VStack {
@@ -28,8 +31,8 @@ struct GroupListView: View {
                     UniversalText(title, size: Constants.UISubHeaderTextSize, true)
                     Spacer()
                 }
-                ForEach(filtered, id: \._id) { group in
-                    GroupPreviewView(group: group, geo: geo)
+                ForEach(filtered, id: \.id) { obj in
+                    contentBuilder( obj )
                 }
             }
         }

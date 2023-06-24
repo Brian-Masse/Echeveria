@@ -21,6 +21,9 @@ class EcheveriaProfile: Object, Identifiable {
     @Persisted var createdDate: Date = .now
     
     @Persisted var groups: List<EcheveriaGroup> = List()
+    
+    @Persisted var friendRequests: List<String> = List()
+    @Persisted var friendRequestDates: List<Date> = List()
     @Persisted var friends: List<String> = List()
     
     var loaded: Bool = false
@@ -47,6 +50,14 @@ class EcheveriaProfile: Object, Identifiable {
     static func getName(from ownerID: String) -> String {
         let result = EcheveriaProfile.getProfileObject(from: ownerID)!
         return result.firstName
+    }
+    
+    func checkFriend( _ profileID: String ) -> Bool {
+        self.friends.contains(where: { string in string == profileID })
+    }
+    
+    func hasBeenRequested(by profileID: String) -> Bool {
+        self.friendRequests.contains(where: { string in string == profileID })
     }
     
 //        A collection of all the groupIDs of each group you are a part of
@@ -81,6 +92,69 @@ class EcheveriaProfile: Object, Identifiable {
         }
     }
     
+//    MARK: Friend Functions
+    private func addFriendRequest( _ requestingID: String ) {
+        
+        if self.friendRequests.contains(where: { str in str == requestingID }) { return }
+        
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.friendRequests.append( requestingID )
+            thawed.friendRequestDates.append(.now)
+        }
+    }
+    
+    func requestFriend(_ requestedFriend: EcheveriaProfile ) {
+        requestedFriend.addFriendRequest( self.ownerID )
+    }
+    
+    func acceptFriend( _ acceptedProfileID: String, index: Int ) {
+        
+        if index >= self.friendRequests.count { return }
+        let id = self.friendRequests[index]
+        if id != acceptedProfileID { return }
+        
+        self.removeFriendRequest(acceptedProfileID)
+        
+        if let profile = EcheveriaProfile.getProfileObject(from: acceptedProfileID) {
+            EcheveriaModel.updateObject(self) { thawed in
+                thawed.friends.append( acceptedProfileID )
+            }
+            
+            profile.addFriend( self.ownerID )            
+        }
+    }
+    
+    private func addFriend(_ profileID: String) {
+//        if they also requested to follow you, delete that request
+        self.removeFriendRequest(profileID)
+        
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.friends.append( profileID )
+        }
+    }
+    
+    private func removeFriendRequest( _ id: String ) {
+        if let index = self.friendRequests.firstIndex(of: id) {
+            EcheveriaModel.updateObject(self) { thawed in
+                thawed.friendRequests.remove(at: index)
+                thawed.friendRequestDates.remove(at: index)
+            }
+        }
+    }
+    
+    func removeFriend( _ id: String, first: Bool = true ) {
+        if let index = self.friends.firstIndex(of: id) {
+            EcheveriaModel.updateObject(self) { thawed in
+                thawed.friends.remove(at: index)
+            }
+        }
+        if first {
+            if let profile = EcheveriaProfile.getProfileObject(from: id) {
+                profile.removeFriend( self.ownerID, first: false )
+            }
+        }
+    }
+    
 //    MARK: Permissions
     func updatePermissions(groups: [EcheveriaGroup], id: String) async {
         
@@ -111,9 +185,9 @@ class EcheveriaProfile: Object, Identifiable {
 //        TODO: This should technically also clear all the profiles except this active one, but I don't feel like coding that rn, and its not essential :)
         
         let realmManager = EcheveriaModel.shared.realmManager
-        await realmManager.profileQuery.removeQuery(ownerID)
-        await realmManager.groupQuery.removeQuery(ownerID)
-        await realmManager.gamesQuery.removeQuery(ownerID)
+        await realmManager.profileQuery.removeQuery(ownerID + QuerySubKey.account.rawValue)
+        await realmManager.groupQuery.removeQuery(ownerID + QuerySubKey.groups.rawValue)
+        await realmManager.gamesQuery.removeQuery(ownerID + QuerySubKey.games.rawValue)
         
         loaded = false
     }
@@ -150,31 +224,6 @@ class EcheveriaProfile: Object, Identifiable {
             data.append( .init(winCount: counts.1, totalCount: counts.0, game: content) )
         }
         return data 
-    }
-}
-
-extension Collection {
-    func countAllThatSatisfy( mainQuery: (Self.Element) -> Bool, subQuery: ((Self.Element) -> Bool)? = nil ) -> (Int,Int) {
-        var mainCounter = 0
-        var subCounter = 0
-        for element in self {
-            if mainQuery(element) {
-                mainCounter += 1
-                if subQuery != nil {
-                    if subQuery!(element) { subCounter += 1 }
-                }
-            }
-        }
-        return (mainCounter, subCounter)
-    }
-    
-    func returnFirst( _ number: Int ) -> [ Self.Element ] {
-        var returning: [Self.Element] = []
-        if self.count == 0 { return returning }
-        for i in 0..<Swift.min(self.count, number) {
-            returning.append( self[i as! Self.Index] )
-        }
-        return returning
     }
 }
 

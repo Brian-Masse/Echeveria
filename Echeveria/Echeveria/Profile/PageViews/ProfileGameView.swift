@@ -53,13 +53,12 @@ struct ProfileGameView: View {
                     ZStack(alignment: .topLeading) {
                         GameScrollerView(filter: .gameType, filterable: true, geo: geo, gamesArr: games)
                         UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
-                    }
+                    }.padding(.bottom, 80)
                 }
                 Spacer()
             }
         }
         .sheet(isPresented: $logging) { GameLoggerView() }
-        .universalBackground()
     }
     
 //    MARK: Charts

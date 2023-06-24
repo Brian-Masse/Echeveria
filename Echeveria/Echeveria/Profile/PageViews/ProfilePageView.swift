@@ -40,16 +40,24 @@ struct ProfilePageView: View {
                 } 
                 await profile.updatePermissions(groups: filteredGroups, id: profile.ownerID)
             } content: {
-                VStack(alignment: .leading) {
-                    TabView(selection: $page) {
-                        ProfileMainView(profile:    profile, geo: geo).tag( ProfilePage.main )
-                        ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).tag( ProfilePage.games )
-                        ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).tag( ProfilePage.social )
-                    }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                ZStack(alignment: .topTrailing) {
+                    VStack(alignment: .leading) {
+                        TabView(selection: $page) {
+                            ProfileMainView(profile:    profile, geo: geo).tag( ProfilePage.main )
+                            ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).tag( ProfilePage.games )
+                            ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).tag( ProfilePage.social )
+                        }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                    }
+                    
+                    if !mainUser {
+                        AsynCircularButton(icon: "chevron.down") {
+                            await profile.closePermission(ownerID: profile.ownerID)
+                            presentationMode.wrappedValue.dismiss()
+                        }.padding(.horizontal)
+                    }
                 }
             }
-        }
-        .universalBackground()
+        }.universalBackground()
     }
 }
 
@@ -68,28 +76,3 @@ struct ProfilePageTitle: View {
     }
 }
 
-struct ProfileListView: View {
-    
-    let title: String
-    let query: ((EcheveriaProfile) -> Bool)
-
-    @ObservedResults(EcheveriaProfile.self) var profiles
-    
-    var body: some View {
-        
-        let filtered = profiles.filter(query)
-        
-        if !filtered.isEmpty {
-            HStack {
-                Text(title).bold(true)
-                Spacer()
-            }
-            ForEach(profiles, id: \._id) { profile in
-                if query(profile) {
-                    ProfileCard(profileID: profile.ownerID)
-                }
-            }
-        }
-    }
-    
-}

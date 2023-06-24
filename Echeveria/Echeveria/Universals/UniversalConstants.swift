@@ -22,4 +22,41 @@ class Constants {
     static let UISubHeaderTextSize: CGFloat = 20
     static let UIDefaultTextSize: CGFloat   = 15
     
+    static let UIDefaultCornerRadius: CGFloat = 15
+    
+}
+
+//MARK: Extensions
+
+extension String: Identifiable {
+    public var id: String { self }
+}
+
+extension Int: Identifiable {
+    public var id: Int { self }
+}
+
+extension Collection {
+    func countAllThatSatisfy( mainQuery: (Self.Element) -> Bool, subQuery: ((Self.Element) -> Bool)? = nil ) -> (Int,Int) {
+        var mainCounter = 0
+        var subCounter = 0
+        for element in self {
+            if mainQuery(element) {
+                mainCounter += 1
+                if subQuery != nil {
+                    if subQuery!(element) { subCounter += 1 }
+                }
+            }
+        }
+        return (mainCounter, subCounter)
+    }
+    
+    func returnFirst( _ number: Int ) -> [ Self.Element ] {
+        var returning: [Self.Element] = []
+        if self.count == 0 { return returning }
+        for i in 0..<Swift.min(self.count, number) {
+            returning.append( self[i as! Self.Index] )
+        }
+        return returning
+    }
 }

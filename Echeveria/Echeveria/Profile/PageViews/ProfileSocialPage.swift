@@ -22,6 +22,14 @@ struct ProfileSocialPage: View {
             
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
+                    
+                    UniversalText("Friends", size: Constants.UIHeaderTextSize, true)
+                    ListView(title: "", collection: profile.friends, geo: geo) { id in true } contentBuilder: { profileID in
+                        ProfileCard(profileID: profileID)
+                    }
+                        .padding(.bottom)
+
+                    
                     UniversalText("Groups", size: Constants.UIHeaderTextSize, true)
                     GroupCollectionView(profile: profile, allGroups: allGroups, geo: geo)
                         .padding(.bottom)
@@ -54,15 +62,20 @@ struct ProfileSocialPage: View {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
                     ZStack(alignment: .topTrailing) {
-                        GroupListView(title: "My Groups", groups: groups, geo: geo ) { group in group.owner == profile.ownerID }
+                        
+                        ListView(title: "My Groups", collection: groups, geo: geo) { group in group.owner == profile.ownerID }
+                        contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
+                        
                         CircularButton(icon: "plus") { showingGroupCreationView = true  }
                             .padding( [.leading], 5 )
                             .sheet(isPresented: $showingGroupCreationView) { GroupCreationView() }
-                    }
+                    }.padding(.bottom)
                     
-                    GroupListView(title: "Joined Groups", groups: groups, geo: geo ) { group in
+                    ListView(title: "Joined Groups", collection: groups, geo: geo) { group in 
                         group.owner != profile.ownerID && group.members.contains(where: { str in str == profile.ownerID })
-                    }
+                    } contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
+                        .padding(.bottom, 80)
+                    
                 }
             }
         }

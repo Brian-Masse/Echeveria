@@ -111,6 +111,26 @@ struct AsyncRoundedButton: View {
     }
 }
 
+struct AsynCircularButton: View {
+    let icon: String
+    let action: () async -> Void
+    
+    @State var running: Bool = false
+    
+    var body: some View {
+        ZStack {
+            CircularButton(icon: icon, action: { running = true })
+            if running {
+                ProgressView()
+                    .task {
+                        await action()
+                        running = false
+                    }
+            }
+        }
+    }
+}
+
 //MARK: UniversalText
 struct UniversalText: View {
     let text: String

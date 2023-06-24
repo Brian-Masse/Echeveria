@@ -33,10 +33,10 @@ struct ProfileCard: View {
             
         }
         .padding()
-        .sheet(isPresented: $showingProfile) { ProfilePageView(profile: profile) }
+        .fullScreenCover(isPresented: $showingProfile) { ProfilePageView(profile: profile) }
         .background(Rectangle()
             .universalForeground()
-            .cornerRadius(15)
+            .cornerRadius(Constants.UIDefaultCornerRadius)
             .onTapGesture { showingProfile = true }
         )
     }

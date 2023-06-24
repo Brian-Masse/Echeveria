@@ -23,28 +23,37 @@ struct MainView: View {
     
     var body: some View {
         
-        VStack {
-            
-            switch page {
-            case .profile: ProfilePageView(profile: EcheveriaModel.shared.profile)
-            case .search: SearchPageView()
-            case .main: EmptyView()
+        GeometryReader { geo in
+            ZStack(alignment: .bottom) {
+                
+                switch page {
+                case .profile: ProfilePageView(profile: EcheveriaModel.shared.profile)
+                case .search: SearchPageView()
+                case .main: VStack { Text("top")
+                    Spacer()
+                    Text("bottom") }
+                }
+                
+                HStack {
+                    
+                    RoundedButton(label: "Log Game", icon: "signpost.and.arrowtriangle.up") { logging = true }
+                    
+                    Spacer()
+                    NamedButton("Home", and: "house.lodge", oriented: .vertical).onTapGesture { page = .main }
+                    NamedButton("Search", and: "magnifyingglass", oriented: .vertical).onTapGesture { page = .search }
+                    NamedButton("Profile", and: "person.crop.square", oriented: .vertical).onTapGesture { page = .profile }
+                    
+                }
+                .padding()
+                .background(Rectangle()
+                    .cornerRadius(30)
+                    .universalForeground()
+                    .shadow(color: .black.opacity(0.3), radius: 15, x: 0, y: 10)
+                )
+                .padding(.horizontal)
             }
-            Spacer()
-            HStack {
-                
-                RoundedButton(label: "Log Game", icon: "signpost.and.arrowtriangle.up") { logging = true }
-                
-                Spacer()
-                NamedButton("Home", and: "house.lodge", oriented: .vertical).onTapGesture { page = .main }
-//                    .padding(.horizontal)
-                NamedButton("Search", and: "magnifyingglass", oriented: .vertical).onTapGesture { page = .search }
-//                    .padding(.horizontal)
-                NamedButton("Profile", and: "person.crop.square", oriented: .vertical).onTapGesture { page = .profile }
-//                    .padding(.horizontal)
-            }.padding([.top, .horizontal])
+            .frame(width: geo.size.width, height: geo.size.height)
         }
         .sheet(isPresented: $logging) { GameLoggerView() }
-        .universalBackground()
     }
 }

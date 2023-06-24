@@ -12,7 +12,7 @@ import SwiftUI
 private struct UniversalBackground: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
-        content.padding(5).background(colorScheme == .light ? Colors.lightGrey : .black)
+        content.padding().background(colorScheme == .light ? Colors.lightGrey : .black)
     }
 }
 
