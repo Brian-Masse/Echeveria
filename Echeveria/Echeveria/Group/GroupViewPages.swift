@@ -33,6 +33,8 @@ struct MainGroupViewPage: View {
                     UniversalText(group.groupDescription, size: Constants.UIDefaultTextSize)
                 }
                 
+                UniversalText("Created on \(group.createdDate.formatted(date: .numeric, time: .omitted))", size: Constants.UIDefaultTextSize, lighter: true)
+                
                 MembersView(group: group)
                     .padding(.bottom)
                 
@@ -59,14 +61,16 @@ struct MainGroupViewPage: View {
         @ObservedRealmObject var group: EcheveriaGroup
         
         var body: some View {
-            VStack {
+            VStack(alignment: .leading) {
                 UniversalText("Members", size: Constants.UIHeaderTextSize, true)
-                ForEach( group.members, id: \.self ) { memberID in
-                    ReducedProfilePreviewView(profileID: memberID)
-                        .padding(.bottom, 5)
+                VStack {
+                    ForEach( group.members, id: \.self ) { memberID in
+                        ReducedProfilePreviewView(profileID: memberID)
+                            .padding(.bottom, 5)
+                    }.rectangularBackgorund()
                 }
             }
-            .rectangularBackgorund()
+            
         }
     }
     

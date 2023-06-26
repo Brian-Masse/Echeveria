@@ -167,12 +167,14 @@ struct UniversalText: View {
     let size: CGFloat
     let bold: Bool
     let wrap: Bool
+    let lighter: Bool
     
-    init(_ text: String, size: CGFloat, wrap: Bool = true, _ bold: Bool = false) {
+    init(_ text: String, size: CGFloat, wrap: Bool = true, lighter: Bool = false, _ bold: Bool = false) {
         self.text = text
         self.size = size
         self.bold = bold
         self.wrap = wrap
+        self.lighter = lighter
     }
     
     var body: some View {
@@ -184,6 +186,7 @@ struct UniversalText: View {
             .lineLimit(wrap ? 5 : 1)
             .font(Font.custom("Helvetica", size: size) )
             .bold(bold)
+            .opacity(lighter ? 0.8 : 1)
     }
 }
 

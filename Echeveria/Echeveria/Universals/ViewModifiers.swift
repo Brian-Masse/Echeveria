@@ -27,7 +27,8 @@ private struct UniversalColoredBackground: ViewModifier {
         ZStack(alignment: .top) {
             LinearGradient(colors: [color.opacity(0.8), .clear], startPoint: .top, endPoint: .bottom )
                 .frame(maxHeight: 300)
-            content.padding()
+            content
+//                .padding()
         }
         .universalBackground(padding: false)
         .ignoresSafeArea()
@@ -38,7 +39,7 @@ private struct UniversalForeground: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     let reversed: Bool
     func body(content: Content) -> some View {
-        if !reversed { return content.foregroundColor(colorScheme == .light ? .white : Colors.darkGrey) }
+            if !reversed { return content.foregroundColor(colorScheme == .light ? .white : Colors.darkGrey) }
         return content.foregroundColor(colorScheme == .light ? Colors.darkGrey : .white )
     }
 }

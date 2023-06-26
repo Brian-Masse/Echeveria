@@ -43,17 +43,21 @@ struct ProfilePageView: View {
                 ZStack(alignment: .topTrailing) {
                     VStack(alignment: .leading) {
                         TabView(selection: $page) {
-                            ProfileMainView(profile:    profile, geo: geo).tag( ProfilePage.main )
-                            ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).tag( ProfilePage.games )
-                            ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).tag( ProfilePage.social )
+                            ProfileMainView(profile:    profile, geo: geo).padding().tag( ProfilePage.main )
+                            ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).padding().tag( ProfilePage.games )
+                            ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).padding().tag( ProfilePage.social )
                         }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     }
                     
-                    if !mainUser {
+
+                    if presentationMode.wrappedValue.isPresented {
                         AsynCircularButton(icon: "chevron.down") {
-                            await profile.closePermission(ownerID: profile.ownerID)
+                            if !mainUser { await profile.closePermission(ownerID: profile.ownerID) }
                             presentationMode.wrappedValue.dismiss()
-                        }.padding(.horizontal)
+                        }
+                        .padding([.top, .trailing])
+                        .padding(.top, 50)
+                        .padding(.horizontal)
                     }
                 }
             }

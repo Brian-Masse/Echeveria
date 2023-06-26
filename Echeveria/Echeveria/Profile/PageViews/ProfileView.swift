@@ -41,7 +41,6 @@ struct ProfileMainView: View {
             }
             Spacer()
         }
-        .frame(width: geo.size.width)
         .sheet(isPresented: $editing) { EditingProfileView().environmentObject(profile) }
     }
     

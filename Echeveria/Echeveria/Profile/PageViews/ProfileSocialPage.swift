@@ -17,12 +17,12 @@ struct ProfileSocialPage: View {
     let geo: GeometryProxy
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
             ProfilePageTitle(profile: profile, text: "Social", size: Constants.UISubHeaderTextSize)
             
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    
+//
                     UniversalText("Friends", size: Constants.UIHeaderTextSize, true)
                     ListView(title: "", collection: profile.friends, geo: geo) { id in true } contentBuilder: { profileID in
                         ProfilePreviewView(profileID: profileID)
@@ -34,7 +34,7 @@ struct ProfileSocialPage: View {
                     GroupCollectionView(profile: profile, allGroups: allGroups, geo: geo)
                         .padding(.bottom)
                     
-                }.frame(width: geo.size.width)
+                }
             }
         }
     }
@@ -59,30 +59,25 @@ struct ProfileSocialPage: View {
         
         var body: some View {
             let groups = profile.getAllowedGroups(from: allGroups)
-            ScrollView(.vertical) {
-                VStack(alignment: .leading) {
-                    ZStack(alignment: .topTrailing) {
-                        
-                        ListView(title: "My Groups", collection: groups, geo: geo) { group in group.owner == profile.ownerID }
-                        contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
-                        
-                        CircularButton(icon: "plus") { showingGroupCreationView = true  }
-                            .padding( [.leading], 5 )
-                            .sheet(isPresented: $showingGroupCreationView) { GroupCreationView(group: nil,
-                                                                                               name: "", icon:
-                                                                                                "rectangle.3.group",
-                                                                                               description: "",
-                                                                                               colorIndex: 0,
-                                                                                               editing: false) }
-                    }.padding(.bottom)
-                    
-                    ListView(title: "Joined Groups", collection: groups, geo: geo) { group in 
-                        group.owner != profile.ownerID && group.members.contains(where: { str in str == profile.ownerID })
-                    } contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
-                        .padding(.bottom, 80)
-                    
-                }
-            }
+            ZStack(alignment: .topTrailing) {
+                
+                ListView(title: "My Groups", collection: groups, geo: geo) { group in group.owner == profile.ownerID }
+                contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
+                
+                CircularButton(icon: "plus") { showingGroupCreationView = true  }
+                    .padding( [.leading], 5 )
+                    .sheet(isPresented: $showingGroupCreationView) { GroupCreationView(group: nil,
+                                                                                       name: "", icon:
+                                                                                        "rectangle.3.group",
+                                                                                       description: "",
+                                                                                       colorIndex: 0,
+                                                                                       editing: false) }
+            }.padding(.bottom)
+            
+            ListView(title: "Joined Groups", collection: groups, geo: geo) { group in
+                group.owner != profile.ownerID && group.members.contains(where: { str in str == profile.ownerID })
+            } contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
+                .padding(.bottom, 80)
         }
     }
 }

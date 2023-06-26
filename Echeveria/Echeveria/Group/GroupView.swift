@@ -33,8 +33,9 @@ struct GroupView: View {
                 }
             }
             
-            
-        }.universalColoredBackground( Colors.colorOptions[ group.colorIndex ] )
+        }
+        .padding()
+        .universalColoredBackground( Colors.colorOptions[ group.colorIndex ] )
     }
     
 

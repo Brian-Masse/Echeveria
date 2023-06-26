@@ -45,6 +45,7 @@
 		C99714272A3902CC00090429 /* EcheveriaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714262A3902CC00090429 /* EcheveriaUITests.swift */; };
 		C99714292A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714282A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift */; };
 		C99714362A3902DE00090429 /* EcheveriaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99714352A3902DE00090429 /* EcheveriaModel.swift */; };
+		C9D884652A49E96C00E0D822 /* GamePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D884642A49E96C00E0D822 /* GamePreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		C99714262A3902CC00090429 /* EcheveriaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaUITests.swift; sourceTree = "<group>"; };
 		C99714282A3902CC00090429 /* EcheveriaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C99714352A3902DE00090429 /* EcheveriaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaModel.swift; sourceTree = "<group>"; };
+		C9D884642A49E96C00E0D822 /* GamePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				C90F91102A448E6A0062B493 /* Specific Games */,
 				C900BAA82A4122B300388B37 /* GameScrollerView.swift */,
 				C900BAA62A40EEDB00388B37 /* GameView.swift */,
+				C9D884642A49E96C00E0D822 /* GamePreviewView.swift */,
 				C900BAA42A40269600388B37 /* GameLoggerView.swift */,
 			);
 			path = GameTracker;
@@ -444,6 +447,7 @@
 				C967C8A52A3FDD8D00217ECB /* GroupView.swift in Sources */,
 				C90F91172A4613CD0062B493 /* ProfileSocialPage.swift in Sources */,
 				C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */,
+				C9D884652A49E96C00E0D822 /* GamePreviewView.swift in Sources */,
 				C97C68CC2A46B12E000E7AA5 /* GroupViewPages.swift in Sources */,
 				C900BAA32A4024BB00388B37 /* EcheveriaGame.swift in Sources */,
 				C939B6FB2A3FBB1A008C6906 /* GroupPreviewView.swift in Sources */,

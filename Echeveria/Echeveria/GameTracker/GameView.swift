@@ -15,97 +15,81 @@ struct GameView: View {
     @ObservedResults(GameDataNode.self) var gameData
 
     var group: EcheveriaGroup? { EcheveriaGroup.getGroupObject(from: game.groupID) }
+    var owner: Bool { EcheveriaModel.shared.profile.ownerID == game.ownerID }
     
     var body: some View {
         AsyncLoader {
             await game.updatePermissions()
         } content: {
-            VStack(alignment:.leading) {
-                UniversalText("Game of \(game.type)", size: 20, true)
-                HStack {
-                    if group != nil {
-                        Text("with \(group!.name)")
-                        Image(systemName: group!.icon)
-                    }
-                    Spacer()
-                }
-                Text("It was a \(game.experieince) time!")
-                    .padding(.bottom, 5)
-                
-                UniversalText( game.winners.count == 1 ? "Winner" : "Winners", size: 20, true )
-                ForEach( game.winners, id: \.self ) { playerID in
-                    ProfilePreviewView(profileID: playerID)
-                }
-                
-                UniversalText( "Players", size: 20, true)
-                ForEach( game.players, id: \.self ) { playerID in
-                    ProfilePreviewView(profileID: playerID)
-                }
-                
-                UniversalText( "Game Information", size: 20, true)
-                ForEach( game.players, id: \.self ) { playerID in
-                    VStack {
-                        Text(playerID)
-    
-                        if let data = gameData.where({ query in query.key == playerID }).first?.data {
-                            Text( data )
+            ScrollView(.vertical) {
+                VStack(alignment:.leading) {
+                    UniversalText("\(game.type)", size: Constants.UITitleTextSize, true)
+                        .padding(.bottom, 5)
+                    
+                    UniversalText("Overview", size: Constants.UIHeaderTextSize, true)
+                        .padding(.bottom, 5)
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            UniversalText("Date", size: Constants.UISubHeaderTextSize, lighter: true, true)
+                            UniversalText("Group", size: Constants.UISubHeaderTextSize, lighter: true, true)
+                            UniversalText("Experieince", size: Constants.UISubHeaderTextSize, lighter: true, true)
                         }
                         
+                        Spacer()
+                        VStack(alignment: .trailing) {
+                            UniversalText(game.date.formatted(date: .numeric, time: .omitted), size: Constants.UIDefaultTextSize)
+                            HStack { if group != nil {
+                                UniversalText(group!.name, size: Constants.UIDefaultTextSize, lighter: true)
+                                Image(systemName: group!.icon)
+                            } }
+                            UniversalText(game.experieince, size: Constants.UIDefaultTextSize)
+                        }
+                    }
+                    .padding(.bottom)
+                    
+                    VStack(alignment: .leading) {
+                        
+                        UniversalText("Game Information", size: Constants.UIHeaderTextSize, true)
+                            .padding(.bottom, 5)
+                        
+                        UniversalText( game.winners.count == 1 ? "Winner" : "Winners", size: Constants.UISubHeaderTextSize, true )
+                        ForEach( game.winners, id: \.self ) { memberID in
+                            ReducedProfilePreviewView(profileID: memberID).padding(.bottom, 5)
+                        }.rectangularBackgorund()
+                        
+                        UniversalText( "Players", size: Constants.UISubHeaderTextSize, true)
+                        ForEach( game.players, id: \.self ) { memberID in
+                            ReducedProfilePreviewView(profileID: memberID).padding(.bottom, 5)
+                        }.rectangularBackgorund()
+                    }
+                    
+                    //                UniversalText( "Game Information", size: 20, true)
+                    //                ForEach( game.players, id: \.self ) { playerID in
+                    //                    VStack {
+                    //                        Text(playerID)
+                    //
+                    //                        if let data = gameData.where({ query in query.key == playerID }).first?.data {
+                    //                            Text( data )
+                    //                        }
+                    //
+                    //                    }
+                    //                }
+                    
+                    
+                    Spacer()
+                    if owner {
+                        RoundedButton(label: "Delete Game Log", icon: "x.square") {
+                            EcheveriaModel.deleteObject(game) { passedGame in
+                                passedGame._id == game._id
+                            }
+                        }
                     }
                 }
-                
-                RoundedButton(label: "Delete Game Log", icon: "x.square") {
-                    EcheveriaModel.deleteObject(game) { passedGame in
-                        passedGame._id == game._id
-                    }
-                }
-
-//                Spacer()
-                
-                
+                .padding()
             }
         }
-        .universalBackground()
+        .universalColoredBackground(Colors.forestGreen)
     }
 }
 
-//TODO: if a game is deleted then the app crashes, which should not be the case!
-struct GamePreviewView: View {
-    
-    @ObservedRealmObject var game: EcheveriaGame
-    
-    @State var showingGameView: Bool = false
-
-    var group: EcheveriaGroup? { EcheveriaGroup.getGroupObject(from: game.groupID) }
-            
-    let geo: GeometryProxy
-    
-    var body: some View {
-    
-        VStack(alignment: .leading) {
-            UniversalText(game.type, size: 30, true).textCase(.uppercase)
-//            UniversalText("Winner: \(game.getWinners())", size: 20)
-            Spacer()
-            
-            
-            if group != nil {
-                UniversalText("\(group!.name)", size: 15)
-            }
-            Text("\(game.date, style: .date )")
-            
-        }
-        .aspectRatio(1, contentMode: .fit)
-        .padding()
-        .frame(width: geo.size.width / 2.5, height: geo.size.width / 2.5)
-        .background(Rectangle()
-            .cornerRadius(20)
-            .universalForeground()
-            .onTapGesture { showingGameView = true }
-        )
-        .sheet(isPresented: $showingGameView) {
-            GameView(game: game)
-            
-        }
-    }
-    
-}

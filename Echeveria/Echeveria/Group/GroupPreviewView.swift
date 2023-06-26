@@ -30,9 +30,7 @@ struct GroupPreviewView: View {
                 if owner  { UniversalText("owner", size: Constants.UIDefaultTextSize ).padding(.trailing) }
             }
             
-            UniversalText( group.groupDescription, size: Constants.UIDefaultTextSize )
-                .frame(width: geo.size.width - 20)
-                .lineLimit(5)
+            UniversalText( group.groupDescription, size: Constants.UIDefaultTextSize, lighter: true )
             
         
             if !owner {
@@ -47,7 +45,7 @@ struct GroupPreviewView: View {
                 }
             }
         }
-        .padding(10)
+        .padding()
         .background(Rectangle()
             .cornerRadius(15)
             .universalForeground()
