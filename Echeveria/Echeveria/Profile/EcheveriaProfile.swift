@@ -179,7 +179,7 @@ class EcheveriaProfile: Object, Identifiable {
         let realmManager = EcheveriaModel.shared.realmManager
         
 //        A collection of every member of every gropu that you are a part of
-        var totalMembers: [String] = groups.reduce([]) { partialResult, group in partialResult + group.members }
+        var totalMembers: [String] = groups.reduce([id]) { partialResult, group in partialResult + group.members }
         totalMembers.append(contentsOf: friendRequests)
         totalMembers.append(contentsOf: friends)
         let totalGroupIDs = self.getGroupIDs(groups)

@@ -10,16 +10,7 @@ import RealmSwift
 import SwiftUI
 
 struct ProfilePageView: View {
-    
-    enum ProfilePage: String, CaseIterable, Identifiable {
-        case main = "main"
-        case social = "social"
-        case games = "games"
-        
-        var id: String {
-            self.rawValue
-        }
-    }
+
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -27,7 +18,7 @@ struct ProfilePageView: View {
     @ObservedResults(EcheveriaGroup.self) var groups
     @ObservedResults(EcheveriaGame.self) var games
     
-    @State var page: ProfilePage = .main
+    @Binding var page: MainView.ProfilePage
     
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
@@ -45,7 +36,7 @@ struct ProfilePageView: View {
                     ShapeBackgrond(page: $page, geo: geo,
                                    sizePath: [ .init(width: 150, height: 225), .init(width: 225, height: 337.5), .init(width: 225, height: 337.5) ],
                                    posPath: [ .init(x: -geo.size.width + 80, y: geo.size.height - 180), .init(x: -geo.size.width / 2, y: 50), .init(x: 100, y: 0) ],
-                                   rotPath: [ -CGFloat.pi / 3, CGFloat.pi / 1.2, CGFloat.pi / 6 ])
+                                   rotPath: [ -CGFloat.pi / 2.5, CGFloat.pi / 1.2, CGFloat.pi / 6 ])
                     
                     ShapeBackgrond(page: $page, geo: geo,
                                    sizePath: [ .init(width: 300, height: 450), .init(width: 225, height: 337.5), .init(width: 225, height: 337.5) ],
@@ -55,9 +46,10 @@ struct ProfilePageView: View {
                     
                     VStack(alignment: .leading) {
                         TabView(selection: $page) {
-                            ProfileMainView(profile:    profile, allGames: $games.wrappedValue, geo: geo).padding().tag( ProfilePage.main )
-                            ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).padding().tag( ProfilePage.games )
-                            ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).padding().tag( ProfilePage.social )
+                            ProfileMainView(profile:    profile, allGames: $games.wrappedValue, geo: geo).padding().tag( MainView.ProfilePage.main )
+                            ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).padding().tag(  MainView.ProfilePage.games )
+                            ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).padding().tag(  MainView.ProfilePage.social )
+                            SearchPageView(geo: geo).padding().tag(  MainView.ProfilePage.search )
                         }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     }
                     
@@ -79,7 +71,8 @@ struct ProfilePageView: View {
     
     struct ShapeBackgrond: View {
         
-        @Binding var page: ProfilePage
+        @Environment(\.colorScheme) var colorScheme
+        @Binding var page: MainView.ProfilePage
         let geo: GeometryProxy
         
         let sizePath: [CGSize]
@@ -91,6 +84,7 @@ struct ProfilePageView: View {
             case .main: return 0
             case .games: return 1
             case .social: return 2
+            case .search: return 1
             }
         }
         
@@ -98,13 +92,11 @@ struct ProfilePageView: View {
             
             Polygon()
                 .foregroundColor(.blue)
-                .opacity(0.4)
+                .opacity(colorScheme == .light ? 0.4 : 0.2)
                 .rotationEffect(Angle(radians: rotPath[getI()]), anchor: .center)
                 .frame(width: sizePath[getI()].width, height: sizePath[getI()].height)
                 .offset(x: posPath[getI()].x, y: posPath[getI()].y)
-            
                 .animation(.easeOut(duration: 0.25), value: page)
-            
         }
     }
     

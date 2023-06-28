@@ -14,6 +14,7 @@ struct ProfilePreviewView: View {
     let profile: EcheveriaProfile
     
     @State var showingProfile: Bool = false
+    @State var page: MainView.ProfilePage = .main
     
     init( profileID: String ) {
         self.profile = EcheveriaModel.retrieveObject(where: { query in
@@ -33,7 +34,7 @@ struct ProfilePreviewView: View {
             
         }
         
-        .fullScreenCover(isPresented: $showingProfile) { ProfilePageView(profile: profile) }
+        .fullScreenCover(isPresented: $showingProfile) { ProfilePageView(profile: profile, page: $page) }
         .opaqueRectangularBackground()
         .onTapGesture { showingProfile = true }
         
@@ -43,6 +44,7 @@ struct ProfilePreviewView: View {
 struct ReducedProfilePreviewView: View {
 
     let profile: EcheveriaProfile
+    @State var page: MainView.ProfilePage = .main
     
     init( profileID: String ) {
         self.profile = EcheveriaModel.retrieveObject(where: { query in
@@ -61,7 +63,7 @@ struct ReducedProfilePreviewView: View {
             UniversalText( "\(profile.userName)", size: Constants.UIDefaultTextSize )
         }
         .opaqueRectangularBackground()
-        .fullScreenCover(isPresented: $presenting) { ProfilePageView(profile: profile) }
+        .fullScreenCover(isPresented: $presenting) { ProfilePageView(profile: profile, page: $page) }
         .onTapGesture { presenting = true }
         
             

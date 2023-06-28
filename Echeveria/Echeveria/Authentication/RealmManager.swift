@@ -214,15 +214,22 @@ class RealmManager: ObservableObject {
     }
     
     func removeAllNonBaseSubscriptions() async {
-            if realm.subscriptions.count > 0 {
-                for subscription in realm.subscriptions {
-                    if !QuerySubKey.allCases.contains(where: { key in
-                        key.rawValue == subscription.name
-                    }) {
-                        await self.removeSubscription(name: subscription.name!)
-                        
-                    }
+        
+        DispatchQueue.main.sync {
+            if EcheveriaModel.shared.realmManager.hasProfile {
+                EcheveriaModel.shared.profile.loaded = false
+            }
+        }
+        
+        if realm.subscriptions.count > 0 {
+            for subscription in realm.subscriptions {
+                if !QuerySubKey.allCases.contains(where: { key in
+                    key.rawValue == subscription.name
+                }) {
+                    await self.removeSubscription(name: subscription.name!)
+                    
                 }
             }
         }
+    }
 }

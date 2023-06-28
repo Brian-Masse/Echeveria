@@ -15,6 +15,8 @@ struct SearchPageView: View {
     @State private var showingSearchView: Bool = false
     @FocusState private var formIsFocussed: Bool
     
+    let geo: GeometryProxy
+    
     @ObservedResults(EcheveriaGroup.self) var groups
     @ObservedResults(EcheveriaProfile.self) var profiles
     
@@ -39,43 +41,38 @@ struct SearchPageView: View {
     }
     
     var body: some View {
-
-        GeometryReader { geo in
-            VStack(alignment: .leading) {
-                
-                UniversalText("Search", size: Constants.UITitleTextSize, true)
-                UniversalText("Search for the name of other users or groups to join social parties, add friends, and log games together!", size: Constants.UIDefaultTextSize, lighter: true )
-                
-                    .padding(.bottom)
-                
-                TextField("Search...", text: $searchQuery)
-                    .focused($formIsFocussed)
-                    .opaqueRectangularBackground()
-                    .padding(.horizontal, 7)
-                
-                AsyncRoundedButton(label: "Search", icon: "magnifyingglass.circle") {
-                    await search( searchQuery )
-                    formIsFocussed = false
-                    showingSearchView = true
-                }
-                
-                if showingSearchView {
-                    ScrollView(.vertical) {
-                        VStack(alignment: .leading) {
-                            
-                            ListView(title: "Groups", collection: Array(groups), geo: geo) { group in !group.hasMember(EcheveriaModel.shared.profile.ownerID) }
-                            contentBuilder: { group in GroupPreviewView( group: group, geo: geo ) }
-                            
-//                            TODO: The first time this loads it will automatically dismiss the views
-                            ListView(title: "Players", collection: Array(profiles), geo: geo) { profile in
-                                profile.firstName == searchQuery || profile.lastName == searchQuery }
-                            contentBuilder: { profile in ProfilePreviewView(profileID: profile.ownerID) }
-                        }
+        VStack(alignment: .leading) {
+            UniversalText("Search", size: Constants.UIHeaderTextSize, true)
+            UniversalText("Search for the name of other users or groups to join social parties, add friends, and log games together!", size: Constants.UIDefaultTextSize, lighter: true )
+            
+                .padding(.bottom)
+            
+            TextField("Search...", text: $searchQuery)
+                .focused($formIsFocussed)
+                .opaqueRectangularBackground()
+                .padding(.horizontal, 7)
+            
+            AsyncRoundedButton(label: "Search", icon: "magnifyingglass.circle") {
+                await search( searchQuery )
+                formIsFocussed = false
+                showingSearchView = true
+            }
+            Spacer()
+            
+            if showingSearchView {
+                ScrollView(.vertical) {
+                    VStack(alignment: .leading) {
+                        
+                        ListView(title: "Groups", collection: Array(groups), geo: geo) { group in !group.hasMember(EcheveriaModel.shared.profile.ownerID) }
+                    contentBuilder: { group in GroupPreviewView( group: group, geo: geo ) }
+                        
+                        //                            TODO: The first time this loads it will automatically dismiss the views
+                        ListView(title: "Players", collection: Array(profiles), geo: geo) { profile in
+                            profile.firstName == searchQuery || profile.lastName == searchQuery }
+                    contentBuilder: { profile in ProfilePreviewView(profileID: profile.ownerID) }
                     }
                 }
             }
-            .padding()
-            .padding(.top, 50)
-        }.universalColoredBackground(.blue)
+        }
     }
 }

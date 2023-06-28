@@ -12,7 +12,7 @@ class Colors {
     static let tint = Color.blue
     
     static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
-    static let darkGrey = Color(red: 0.1, green: 0.1, blue: 0.1)
+    static let darkGrey = Color(red: 0.1, green: 0.1, blue: 0.1).opacity(0.9)
     static let forestGreen = makeColor(80, 120, 87)
     
     static let colorOptions: [Color] = [ .red, forestGreen ]

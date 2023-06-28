@@ -125,6 +125,8 @@ struct ResizeableIcon: View {
 
 //MARK: AsyncLoader
 struct AsyncLoader<Content>: View where Content: View {
+    @Environment(\.scenePhase) private var scenePhase
+    
     let block: () async -> Void
     let content: Content
     
@@ -142,8 +144,15 @@ struct AsyncLoader<Content>: View where Content: View {
                         await block()
                         loading = false
                     }
-            } else { content }
-        }.onBecomingVisible { loading = true }
+            } else if scenePhase != .background && scenePhase != .inactive { content }
+        }
+        .onBecomingVisible { loading = true }
+        .onChange(of: scenePhase) { newValue in
+            if newValue == .active {
+                loading = true
+                
+            }
+        }
     }
 }
 

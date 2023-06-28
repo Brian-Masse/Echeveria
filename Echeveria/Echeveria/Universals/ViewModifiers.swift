@@ -21,14 +21,20 @@ private struct UniversalBackground: ViewModifier {
 
 private struct UniversalColoredBackground: ViewModifier {
     
+    @Environment(\.colorScheme) var colorScheme
     let color: Color
     
     func body(content: Content) -> some View {
-        ZStack(alignment: .top) {
-            LinearGradient(colors: [color.opacity(0.6), .clear], startPoint: .top, endPoint: .bottom )
-                .frame(maxHeight: 800)
+        ZStack(alignment: colorScheme == .light ? .top : .bottom) {
+            if colorScheme == .light {
+                LinearGradient(colors: [color.opacity(0.6), .clear], startPoint: .top, endPoint: .bottom )
+                    .frame(maxHeight: 800)
+            } else {
+                LinearGradient(colors: [color.opacity(0.4), .clear], startPoint: .bottom, endPoint: .top )
+                    .frame(maxHeight: 800)
+            }
+        
             content
-//                .padding()
         }
         .universalBackground(padding: false)
         .ignoresSafeArea()
@@ -83,13 +89,19 @@ private struct UniversalChart: ViewModifier {
 
 private struct RectangularBackground: ViewModifier {
     let rounded: Bool
+    let radius: CGFloat?
+
+    private func getRadius() -> CGFloat {
+        if let radius = radius { return radius}
+        return rounded ? 100 : Constants.UIDefaultCornerRadius
+    }
     
     func body(content: Content) -> some View {
         content
             .background(.thinMaterial)
             .foregroundColor(Colors.tint.opacity(0.6))
             .foregroundStyle(.ultraThickMaterial)
-            .cornerRadius(rounded ? 100 : Constants.UIDefaultCornerRadius)
+            .cornerRadius(getRadius())
             .padding(.horizontal, 5)
     }
 }
@@ -150,8 +162,8 @@ extension View {
         modifier(UniversalTextStyle())
     }
     
-    func rectangularBackgorund(rounded: Bool = false) -> some View {
-        modifier(RectangularBackground(rounded: rounded))
+    func rectangularBackgorund(rounded: Bool = false, radius: CGFloat? = nil) -> some View {
+        modifier(RectangularBackground(rounded: rounded, radius: radius))
     }
     
     func opaqueRectangularBackground() -> some View {
