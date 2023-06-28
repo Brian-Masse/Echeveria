@@ -30,8 +30,8 @@ struct GroupPreviewView: View {
                 Spacer()
                 
                 ShortRoundedButton("Favorite", to: "", icon: "seal", to: "checkmark.seal") { isFavorite } action: {
-                    if isFavorite   { EcheveriaModel.shared.profile.unfavoriteGroup(group) }
-                    else            { EcheveriaModel.shared.profile.favoriteGroup(group) }
+                    if isFavorite   { withAnimation { EcheveriaModel.shared.profile.unfavoriteGroup(group) }}
+                    else            { withAnimation { EcheveriaModel.shared.profile.favoriteGroup(group) }}
                 }
             }
             

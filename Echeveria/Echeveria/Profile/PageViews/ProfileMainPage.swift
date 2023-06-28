@@ -35,20 +35,16 @@ struct ProfileMainView: View {
                     if mainUser { FriendRequestView(profile: profile, geo: geo)
                     } else { FriendButtonView(profile: profile) }
                     
-                    if profile.friends.count != 0 {
-                        UniversalText("Friends", size: Constants.UIHeaderTextSize, true)
-                        ListView(title: "", collection: profile.friends, geo: geo) { _ in true } contentBuilder: { friendID in
-                            ProfilePreviewView(profileID: friendID)
-                        }
-                    }
+                    ProfileViews.FriendView(profile: profile, geo: geo)
+                        .padding(.bottom)
                     
                     if profile.favoriteGroups.count != 0 {
-                        UniversalText("Favorite Groups", size: Constants.UIHeaderTextSize, true)
+                        UniversalText("Favorite Groups", size: Constants.UIHeaderTextSize, true).transition(.opacity)
                         ListView(title: "", collection: profile.favoriteGroups, geo: geo) { _ in true } contentBuilder: { groupID in
                             if let group = EcheveriaGroup.getGroupObject(from: groupID) {
                                 GroupPreviewView(group: group, geo: geo)
                             }
-                        }
+                        }.transition(.opacity)
                     }
                     
                     RecentGamesView(games: Array(allGames), geo: geo)

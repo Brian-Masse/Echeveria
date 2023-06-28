@@ -71,6 +71,18 @@ class RealmManager: ObservableObject {
         else { self.signedIn = true }
     }
     
+//    only needs to run for email + password signup
+    func registerUser(_ email: String, _ password: String) async {
+        
+        let client = app.emailPasswordAuth
+        
+        do {
+            try await client.registerUser(email: email, password: password)
+        } catch {
+            print("failed to register user: \(error.localizedDescription)")
+        }
+    }
+    
     func logoutUser() {
         self.user!.logOut { error in
             if let error = error { print("error logging out: \(error.localizedDescription)") }

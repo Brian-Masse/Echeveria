@@ -104,8 +104,14 @@ struct RecentGamesView: View {
     
         VStack(alignment: .leading) {
             UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
-            GameScrollerView(filter: .none, filterable: false, geo: geo, games: recentGames )
-                .padding(.bottom)
+            if recentGames.count == 0 {
+                
+                LargeFormRoundedButton(label: "Log your First Game", icon: "plus", action: {})
+                
+            } else {
+                GameScrollerView(filter: .none, filterable: false, geo: geo, games: recentGames )
+                    .padding(.bottom)
+            }
         }
     }
 }

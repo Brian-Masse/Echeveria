@@ -32,13 +32,11 @@ struct ProfilePreviewView: View {
             Text(profile.ownerID)
             
         }
-        .padding()
+        
         .fullScreenCover(isPresented: $showingProfile) { ProfilePageView(profile: profile) }
-        .background(Rectangle()
-            .universalForeground()
-            .cornerRadius(Constants.UIDefaultCornerRadius)
-            .onTapGesture { showingProfile = true }
-        )
+        .opaqueRectangularBackground()
+        .onTapGesture { showingProfile = true }
+        
     }
 }
 
@@ -62,6 +60,7 @@ struct ReducedProfilePreviewView: View {
             Spacer()
             UniversalText( "\(profile.userName)", size: Constants.UIDefaultTextSize )
         }
+        .opaqueRectangularBackground()
         .fullScreenCover(isPresented: $presenting) { ProfilePageView(profile: profile) }
         .onTapGesture { presenting = true }
         

@@ -24,15 +24,19 @@ struct GroupView: View {
     var body: some View {
 
         GeometryReader { geo in
-            VStack(alignment: .leading) {
-                UniversalText(group.name, size: Constants.UITitleTextSize, wrap: false, true)
-                
-                TabView(selection: $page) {
-                    MainGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.overview)
-                    ChartsGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.stats)
+            
+            AsyncLoader {
+                await group.updatePermissionsForGroupView()
+            } content: {
+                VStack(alignment: .leading) {
+                    UniversalText(group.name, size: Constants.UITitleTextSize, wrap: false, true)
+                    
+                    TabView(selection: $page) {
+                        MainGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.overview)
+                        ChartsGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.stats)
+                    }
                 }
             }
-            
         }
         .padding()
         .universalColoredBackground( Colors.colorOptions[ group.colorIndex ] )

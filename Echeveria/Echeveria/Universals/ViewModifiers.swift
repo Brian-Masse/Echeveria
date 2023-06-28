@@ -82,13 +82,27 @@ private struct UniversalChart: ViewModifier {
 }
 
 private struct RectangularBackground: ViewModifier {
+    let rounded: Bool
+    
+    func body(content: Content) -> some View {
+        content
+            .background(.thinMaterial)
+            .foregroundColor(Colors.tint.opacity(0.6))
+            .foregroundStyle(.ultraThickMaterial)
+            .cornerRadius(rounded ? 100 : Constants.UIDefaultCornerRadius)
+            .padding(.horizontal, 5)
+    }
+}
+
+private struct OpaqueRectangularBackground: ViewModifier {
+    
+    @Environment(\.colorScheme) var colorScheme
+    
     func body(content: Content) -> some View {
         content
             .padding()
-            .background( Rectangle()
-                .cornerRadius(Constants.UIDefaultCornerRadius)
-                .universalForeground()
-            )
+            .background(colorScheme == .light ? .white : Colors.darkGrey )
+            .cornerRadius(Constants.UIDefaultCornerRadius)
     }
 }
 
@@ -136,8 +150,12 @@ extension View {
         modifier(UniversalTextStyle())
     }
     
-    func rectangularBackgorund() -> some View {
-        modifier(RectangularBackground())
+    func rectangularBackgorund(rounded: Bool = false) -> some View {
+        modifier(RectangularBackground(rounded: rounded))
+    }
+    
+    func opaqueRectangularBackground() -> some View {
+        modifier(OpaqueRectangularBackground())
     }
     
     func universalForm() -> some View {

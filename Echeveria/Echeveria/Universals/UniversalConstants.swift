@@ -112,8 +112,9 @@ extension Collection {
         return returning
     }
     
-    func returnLast( _ number: Int) -> Self.SubSequence {
+    func returnLast( _ number: Int) -> Self.SubSequence? {
     
+        if self.count == 0 { return nil }
         let count = self.count - 1
         let lowerBound = Swift.max(0, count - number)
         

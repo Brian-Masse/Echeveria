@@ -22,11 +22,8 @@ struct ProfileSocialPage: View {
             
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-//
-                    UniversalText("Friends", size: Constants.UIHeaderTextSize, true)
-                    ListView(title: "", collection: profile.friends, geo: geo) { id in true } contentBuilder: { profileID in
-                        ProfilePreviewView(profileID: profileID)
-                    }
+
+                    ProfileViews.FriendView(profile: profile, geo: geo)
                         .padding(.bottom)
 
                     
@@ -64,16 +61,23 @@ struct ProfileSocialPage: View {
                 ListView(title: "My Groups", collection: groups, geo: geo) { group in group.owner == profile.ownerID }
                 contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
                 
-                ShortRoundedButton("add", icon: "plus") { showingGroupCreationView = true }
-                    .offset(y: -5)
-                    .sheet(isPresented: $showingGroupCreationView) { GroupCreationView(group: nil,
-                                                                                       name: "", icon:
-                                                                                        "rectangle.3.group",
-                                                                                       description: "",
-                                                                                       colorIndex: 0,
-                                                                                       editing: false) }
+                if groups.count != 0 {
+                    ShortRoundedButton("add", icon: "plus") { showingGroupCreationView = true }
+                        .offset(y: -5)
+                }
                     
-            }.padding(.bottom)
+            }
+            .padding(.bottom)
+            .sheet(isPresented: $showingGroupCreationView) { GroupCreationView(group: nil,
+                                                                               name: "", icon:
+                                                                                "rectangle.3.group",
+                                                                               description: "",
+                                                                               colorIndex: 0,
+                                                                               editing: false) }
+            
+            if groups.count == 0 {
+                LargeFormRoundedButton(label: "Add or Join Group", icon: "plus") { showingGroupCreationView = true }
+            }
             
             ListView(title: "Joined Groups", collection: groups, geo: geo) { group in
                 group.owner != profile.ownerID && group.members.contains(where: { str in str == profile.ownerID })

@@ -38,14 +38,18 @@ struct MainGroupViewPage: View {
                 MembersView(group: group)
                     .padding(.bottom)
                 
-                UniversalText("Best Players", size: Constants.UIHeaderTextSize, true)
-                ChartsGroupViewPage.OverviewChart(group: group, games: games)
-                    .padding(.bottom)
-                
-                UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
-                GameScrollerView(filter: .none, filterable: false, geo: geo, games: recentGames )
-                    .padding(.bottom)
-                
+                if games.count != 0 {
+                    UniversalText("Best Players", size: Constants.UIHeaderTextSize, true)
+                    ChartsGroupViewPage.OverviewChart(group: group, games: games)
+                        .padding(.bottom)
+                    
+                    UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
+                    GameScrollerView(filter: .none, filterable: false, geo: geo, games: recentGames )
+                        .padding(.bottom)
+                } else {
+                    LargeFormRoundedButton(label: "Log Games to View Data", icon: "signpost.and.arrowtriangle.up") {}
+                }
+                    
                 if owner {
                     RoundedButton(label: "Edit Group", icon: "pencil.line") { editing = true }
                     RoundedButton(label: "Delete Group", icon: "x.square") { group.deleteGroup() }
@@ -67,7 +71,7 @@ struct MainGroupViewPage: View {
                     ForEach( group.members, id: \.self ) { memberID in
                         ReducedProfilePreviewView(profileID: memberID)
                             .padding(.bottom, 5)
-                    }.rectangularBackgorund()
+                    }
                 }
             }
             
@@ -101,40 +105,44 @@ struct ChartsGroupViewPage: View {
         ScrollView(.vertical) {
             VStack(alignment: .leading) {
                 
-                UniversalText("Stats", size: Constants.UIHeaderTextSize, true)
-                OverviewChart(group: group, games: games)
-                    .padding(.bottom)
-                
-                let gameCount = group.getGameCount(games: Array(sorted), filterByPlayer: gameCountFilter == .byPlayer)
-                
-                StaticGameChart(title: "Number of Games Played, Filtered", data: gameCount, primaryColor: Colors.colorOptions[ group.colorIndex ],
-                                XAxisTitle: "GameType", XAxis: { history in history.type },
-                                YAxisTitle: "Count", YAxis: { history in history.count },
-                                styleTitle: "Style", Style: { history in history.styleData },
-                                styleCount: gameCountFilter == .byPlayer ? group.members.count : EcheveriaGame.GameExperience.allCases.count,
-                                filter: Binding(get: { gameCountFilter }, set: { val in gameCountFilter = val! }) )
-                
-                let gameCountHistory = group.getGameCountHistory(games: Array(sorted))
-                
-                TimeBasedChart(initialDate: group.createdDate, title: "All Games", content: gameCountHistory,
-                               xAxisTitle: "Date", xAxisContent: { history in history.date },
-                               yAxisTitle: "Count", yAxisContent: { history in history.count },
-                               styleTitle: "GameType", styleContent: { history in history.type }, styleCount:  EcheveriaGame.GameType.allCases.count,
-                               primaryColor: Colors.colorOptions[ group.colorIndex ] )
-                
-                HStack {
-                    UniversalText("Total Number of Games", size: Constants.UISubHeaderTextSize, true)
-                    Spacer()
-                    UniversalText("\(games.count)", size: Constants.UISubHeaderTextSize)
+                if games.count != 0 {
+                    UniversalText("Stats", size: Constants.UIHeaderTextSize, true)
+                    OverviewChart(group: group, games: games)
+                        .padding(.bottom)
                     
+                    let gameCount = group.getGameCount(games: Array(sorted), filterByPlayer: gameCountFilter == .byPlayer)
+                    
+                    StaticGameChart(title: "Number of Games Played, Filtered", data: gameCount, primaryColor: Colors.colorOptions[ group.colorIndex ],
+                                    XAxisTitle: "GameType", XAxis: { history in history.type },
+                                    YAxisTitle: "Count", YAxis: { history in history.count },
+                                    styleTitle: "Style", Style: { history in history.styleData },
+                                    styleCount: gameCountFilter == .byPlayer ? group.members.count : EcheveriaGame.GameExperience.allCases.count,
+                                    filter: Binding(get: { gameCountFilter }, set: { val in gameCountFilter = val! }) )
+                    
+                    let gameCountHistory = group.getGameCountHistory(games: Array(sorted))
+                    
+                    TimeBasedChart(initialDate: group.createdDate, title: "All Games", content: gameCountHistory,
+                                   xAxisTitle: "Date", xAxisContent: { history in history.date },
+                                   yAxisTitle: "Count", yAxisContent: { history in history.count },
+                                   styleTitle: "GameType", styleContent: { history in history.type }, styleCount:  EcheveriaGame.GameType.allCases.count,
+                                   primaryColor: Colors.colorOptions[ group.colorIndex ] )
+                    
+                    HStack {
+                        UniversalText("Total Number of Games", size: Constants.UISubHeaderTextSize, true)
+                        Spacer()
+                        UniversalText("\(games.count)", size: Constants.UISubHeaderTextSize)
+                        
+                    }
+                    .padding(.horizontal, 5)
+                    .padding(.bottom)
+                    
+                    ZStack(alignment: .topLeading) {
+                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: Array(games))
+                        UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
+                    }.padding(.bottom, 80)
+                } else {
+                    LargeFormRoundedButton(label: "Log Games to View Data", icon: "signpost.and.arrowtriangle.up") {}
                 }
-                .padding(.horizontal, 5)
-                .padding(.bottom)
-                
-                ZStack(alignment: .topLeading) {
-                    GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: Array(games))
-                    UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
-                }.padding(.bottom, 80)
             }
         }
     }
@@ -143,13 +151,13 @@ struct ChartsGroupViewPage: View {
         
         private func getSortedWinners(from winnerCountHistory: [EcheveriaGroup.WinnerHistoryNode]) -> [EcheveriaGroup.WinnerHistoryNode] {
             let memberCount = group.members.count
-            let mostRecent = winnerCountHistory.returnLast(memberCount)
-            return mostRecent.sorted { element1, element2 in
-                element2.winCount > element1.winCount
+            if let mostRecent = winnerCountHistory.returnLast(memberCount) {
+                return mostRecent.sorted { element1, element2 in
+                    element2.winCount > element1.winCount
+                }
             }
+            return []
         }
-        
-        
         
         @ObservedRealmObject var group: EcheveriaGroup
         let games: Results<EcheveriaGame>

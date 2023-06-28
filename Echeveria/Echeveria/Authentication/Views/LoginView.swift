@@ -35,7 +35,7 @@ struct LoginView: View {
                     Spacer()
                     switch signinMethod {
                     case .API:          APIView(signingIn: $signingIn)
-                    case .email:        EmailView()
+                    case .email:        EmailView(signingIn: $signingIn)
                     case .Apple:        Text("Apple")
                     case .Anonymous:    RoundedButton(label: "Login", icon: "checkmark.seal") { self.signingIn = true; loginModel.AnonymousSignIn() }
                     }
