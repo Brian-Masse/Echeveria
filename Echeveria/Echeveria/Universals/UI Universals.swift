@@ -58,20 +58,22 @@ struct RoundedButton: View {
     let action: ()->Void
     
     var body: some View {
+        
         HStack {
             Spacer()
             Image(systemName: icon)
             Text(label)
             Spacer()
         }
+        
         .padding(.horizontal)
-        .padding(.vertical, 5)
-        .background(
-            Rectangle()
-                .foregroundColor(Colors.tint)
-                .cornerRadius(50)
-                .onTapGesture { action() }
-        )
+        .padding(.vertical, 7)
+        .background(.thinMaterial)
+        .foregroundColor(Colors.tint.opacity(0.6))
+        .foregroundStyle(.ultraThickMaterial)
+        .cornerRadius(50)
+        .padding(.horizontal, 5)
+        .onTapGesture { action() }
     }
 }
 
@@ -130,6 +132,49 @@ struct AsynCircularButton: View {
             }
         }
     }
+}
+
+struct ShortRoundedButton: View {
+    
+    let label: String
+    let completedLabel: String
+    let icon: String
+    let completedIcon: String
+    
+    let completed: () -> Bool
+    let action: () -> Void
+    
+    @State var tempCompletion: Bool = false
+    
+    init( _ label: String, to completedLabel: String = "", icon: String, to completedIcon: String = "", completed: @escaping () -> Bool = {false}, action: @escaping () -> Void ) {
+        self.label = label
+        self.completedLabel = completedLabel
+        self.icon = icon
+        self.completedIcon = completedIcon
+        self.completed = completed
+        self.action = action
+    }
+    
+    var body: some View {
+        let label: String = (self.completed() || tempCompletion ) ? completedLabel : label
+        let completedIcon: String = (self.completed() || tempCompletion ) ? completedIcon : icon
+        
+        HStack {
+            if label != "" { Text(label) }
+//            UniversalText(label, size: Constants.UIDefaultTextSize, true)
+            Image(systemName: completedIcon)
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 5)
+        .background(.thinMaterial)
+        .foregroundColor(Colors.tint.opacity(0.6))
+        .foregroundStyle(.ultraThickMaterial)
+        .cornerRadius(50)
+        .animation(.default, value: completed() )
+        .onTapGesture { action() }
+        
+    }
+    
 }
 
 //MARK: List View
@@ -279,6 +324,7 @@ struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>:
             .chartForegroundStyleScale { (value: C3) in dictionary[value] ?? .red }
             .onAppear {
                 var dic: Dictionary<C3, Color> = Dictionary()
+                if content.count == 0 { return }
                 for i in 0..<styleCount  {
                     let key: C3 =  styleContent( content[ i ] )
                     dic[key] =  Colors.getPallette(from: primaryColor)[ i ]

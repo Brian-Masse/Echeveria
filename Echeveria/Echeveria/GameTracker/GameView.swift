@@ -93,3 +93,19 @@ struct GameView: View {
     }
 }
 
+struct RecentGamesView: View {
+    
+    let games: [EcheveriaGame]
+    let geo: GeometryProxy
+    
+    var body: some View {
+        
+        let recentGames = games.returnFirst(5)
+    
+        VStack(alignment: .leading) {
+            UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
+            GameScrollerView(filter: .none, filterable: false, geo: geo, games: recentGames )
+                .padding(.bottom)
+        }
+    }
+}

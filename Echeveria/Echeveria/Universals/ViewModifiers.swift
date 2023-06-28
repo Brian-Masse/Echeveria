@@ -25,8 +25,8 @@ private struct UniversalColoredBackground: ViewModifier {
     
     func body(content: Content) -> some View {
         ZStack(alignment: .top) {
-            LinearGradient(colors: [color.opacity(0.8), .clear], startPoint: .top, endPoint: .bottom )
-                .frame(maxHeight: 300)
+            LinearGradient(colors: [color.opacity(0.6), .clear], startPoint: .top, endPoint: .bottom )
+                .frame(maxHeight: 800)
             content
 //                .padding()
         }

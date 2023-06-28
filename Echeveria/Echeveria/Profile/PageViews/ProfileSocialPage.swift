@@ -64,14 +64,15 @@ struct ProfileSocialPage: View {
                 ListView(title: "My Groups", collection: groups, geo: geo) { group in group.owner == profile.ownerID }
                 contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
                 
-                CircularButton(icon: "plus") { showingGroupCreationView = true  }
-                    .padding( [.leading], 5 )
+                ShortRoundedButton("add", icon: "plus") { showingGroupCreationView = true }
+                    .offset(y: -5)
                     .sheet(isPresented: $showingGroupCreationView) { GroupCreationView(group: nil,
                                                                                        name: "", icon:
                                                                                         "rectangle.3.group",
                                                                                        description: "",
                                                                                        colorIndex: 0,
                                                                                        editing: false) }
+                    
             }.padding(.bottom)
             
             ListView(title: "Joined Groups", collection: groups, geo: geo) { group in

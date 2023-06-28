@@ -17,29 +17,55 @@ struct ProfileMainView: View {
     @ObservedObject var profile: EcheveriaProfile
     @State var editing: Bool = false
     
+    let allGames: Results<EcheveriaGame>
     let geo: GeometryProxy
     
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
     var body: some View {
         VStack(alignment: .leading) {
-            ProfilePageTitle(profile: profile, text: profile.userName, size: Constants.UITitleTextSize)
+        
+            ProfilePageTitle(profile: profile, text: "\(profile.firstName) \(profile.lastName)", size: Constants.UITitleTextSize)
 
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    UniversalText("\(profile.firstName) \(profile.lastName)", size: 20)
-                    UniversalText(profile.ownerID, size: 25, true)
+                    UniversalText("\(profile.userName)", size: Constants.UISubHeaderTextSize, true)
                         .padding(.bottom)
 
-                    if mainUser {
-                        FriendRequestView(profile: profile, geo: geo)
-                        RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
-                    } else {
-                       FriendButtonView(profile: profile)
+                    if mainUser { FriendRequestView(profile: profile, geo: geo)
+                    } else { FriendButtonView(profile: profile) }
+                    
+                    if profile.friends.count != 0 {
+                        UniversalText("Friends", size: Constants.UIHeaderTextSize, true)
+                        ListView(title: "", collection: profile.friends, geo: geo) { _ in true } contentBuilder: { friendID in
+                            ProfilePreviewView(profileID: friendID)
+                        }
                     }
+                    
+                    if profile.favoriteGroups.count != 0 {
+                        UniversalText("Favorite Groups", size: Constants.UIHeaderTextSize, true)
+                        ListView(title: "", collection: profile.favoriteGroups, geo: geo) { _ in true } contentBuilder: { groupID in
+                            if let group = EcheveriaGroup.getGroupObject(from: groupID) {
+                                GroupPreviewView(group: group, geo: geo)
+                            }
+                        }
+                    }
+                    
+                    RecentGamesView(games: Array(allGames), geo: geo)
+                        .padding(.bottom)
+                }
+                Spacer()
+                
+                if mainUser {
+                    VStack {
+                        RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
+                        RoundedButton(label: "Signout", icon: "shippingbox.and.arrow.backward") { EcheveriaModel.shared.realmManager.logoutUser() }
+                        UniversalText("id: \(profile.ownerID)", size: Constants.UIDefaultTextSize, lighter: true)
+                            .padding(.horizontal, 5)
+                    }
+                    .padding(.bottom, 90)
                 }
             }
-            Spacer()
         }
         .sheet(isPresented: $editing) { EditingProfileView().environmentObject(profile) }
     }
@@ -77,25 +103,28 @@ struct ProfileMainView: View {
         
         var body: some View {
             if profile.friendRequests.count != 0 {
-                UniversalText("Friend Requests", size: Constants.UIHeaderTextSize, true)
-                
-                let requests = Array( profile.friendRequests as RealmSwift.List<String> )
-                
-                ListView(title: "", collection: requests.indices, geo: geo) { i in true}
-                contentBuilder: { i in
-                    ProfilePreviewView(profileID:  requests[i] )
+                VStack(alignment: .leading) {
+                    UniversalText("Friend Requests", size: Constants.UIHeaderTextSize, true)
                     
-                    HStack {
-                        let date = profile.friendRequestDates[i].formatted(date: .numeric, time: .omitted)
-                        
-                        UniversalText( "Requested on \( date )", size: Constants.UIDefaultTextSize )
-                        Spacer()
-                        RoundedButton(label: "Accept", icon: "checkmark") {
-                            profile.acceptFriend(requests[i], index: i)
+                    let requests = Array( profile.friendRequests as RealmSwift.List<String> )
+                    
+                    ListView(title: "", collection: requests.indices, geo: geo) { i in true} contentBuilder: { i in
+                    
+                        VStack(alignment: .leading) {
+                            ZStack(alignment: .topTrailing) {
+                                ProfilePreviewView(profileID:  requests[i] )
+                                ShortRoundedButton("accept", icon: "checkmark") {
+                                    profile.acceptFriend(requests[i], index: i)
+                                }
+                                .padding()
+                            }
+                            
+                            let date = profile.friendRequestDates[i].formatted(date: .numeric, time: .omitted)
+                            UniversalText( "Requested on \( date )", size: Constants.UIDefaultTextSize, lighter: true, true )
+                                .padding(.leading)
                         }
-                        
                     }
-                }
+                }.padding(.bottom)
             }
         }
     }
@@ -135,9 +164,6 @@ struct EditingProfileView: View {
             RoundedButton(label: "Done", icon: "checkmark.seal") {
                 profile.updateInformation(firstName: firstName, lastName: lastName, userName: userName, icon: icon)
                 presentationMode.wrappedValue.dismiss()
-            }
-            RoundedButton(label: "Signout", icon: "shippingbox.and.arrow.backward") {
-                EcheveriaModel.shared.realmManager.logoutUser()
             }
             
         }.universalBackground()

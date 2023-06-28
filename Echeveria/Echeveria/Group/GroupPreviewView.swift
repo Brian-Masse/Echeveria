@@ -19,16 +19,23 @@ struct GroupPreviewView: View {
     let memberID = EcheveriaModel.shared.profile!.ownerID
     var owner: Bool { group.owner == memberID }
     
+    var isFavorite: Bool { EcheveriaModel.shared.profile.favoriteGroups.contains(where: { str in str == group._id.stringValue }) }
+    
     var body: some View {
         
         VStack(alignment: .leading) {
             HStack {
                 ResizeableIcon(icon: group.icon, size: Constants.UISubHeaderTextSize)
-                UniversalText(group.name, size: Constants.UISubHeaderTextSize, true )
+                UniversalText(group.name, size: Constants.UISubHeaderTextSize, wrap: false, true )
                 Spacer()
                 
-                if owner  { UniversalText("owner", size: Constants.UIDefaultTextSize ).padding(.trailing) }
+                ShortRoundedButton("Favorite", to: "", icon: "seal", to: "checkmark.seal") { isFavorite } action: {
+                    if isFavorite   { EcheveriaModel.shared.profile.unfavoriteGroup(group) }
+                    else            { EcheveriaModel.shared.profile.favoriteGroup(group) }
+                }
             }
+            
+            if owner  { UniversalText("owner", size: Constants.UIDefaultTextSize ) }
             
             UniversalText( group.groupDescription, size: Constants.UIDefaultTextSize, lighter: true )
             

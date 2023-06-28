@@ -38,7 +38,7 @@ struct ProfilePageView: View {
                 let filteredGroups: [EcheveriaGroup] = groups.filter { group in
                     group.members.contains( profile.ownerID )
                 } 
-                await profile.updatePermissions(groups: filteredGroups, id: profile.ownerID)
+                await profile.updatePermissions(groups: filteredGroups, friendRequests: Array(profile.friendRequests), friends: Array(profile.friends), id: profile.ownerID)
             } content: {
                 ZStack(alignment: .topTrailing) {
                     
@@ -55,7 +55,7 @@ struct ProfilePageView: View {
                     
                     VStack(alignment: .leading) {
                         TabView(selection: $page) {
-                            ProfileMainView(profile:    profile, geo: geo).padding().tag( ProfilePage.main )
+                            ProfileMainView(profile:    profile, allGames: $games.wrappedValue, geo: geo).padding().tag( ProfilePage.main )
                             ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).padding().tag( ProfilePage.games )
                             ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).padding().tag( ProfilePage.social )
                         }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
@@ -63,6 +63,7 @@ struct ProfilePageView: View {
                     
 
                     if presentationMode.wrappedValue.isPresented {
+                        
                         AsynCircularButton(icon: "chevron.down") {
                             if !mainUser { await profile.closePermission(ownerID: profile.ownerID) }
                             presentationMode.wrappedValue.dismiss()

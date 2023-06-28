@@ -56,6 +56,11 @@ class EcheveriaGroup: Object, Identifiable {
         return group
     }
     
+    static func getGroupObject(from id: String) -> EcheveriaGroup? {
+        let objID = try! ObjectId(string: id)
+        return getGroupObject(from: objID)
+    }
+    
     func hasMember(_ memberID: String) -> Bool {
         return self.members.contains { id in
             id == memberID

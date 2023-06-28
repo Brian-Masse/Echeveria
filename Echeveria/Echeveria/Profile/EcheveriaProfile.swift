@@ -21,6 +21,7 @@ class EcheveriaProfile: Object, Identifiable {
     @Persisted var createdDate: Date = .now
     
     @Persisted var groups: List<EcheveriaGroup> = List()
+    @Persisted var favoriteGroups: List<String> = List()
     
     @Persisted var friendRequests: List<String> = List()
     @Persisted var friendRequestDates: List<Date> = List()
@@ -92,6 +93,22 @@ class EcheveriaProfile: Object, Identifiable {
         }
     }
     
+    func favoriteGroup( _ group: EcheveriaGroup ) {
+        if self.favoriteGroups.contains(where: { str in str == group._id.stringValue }) { return }
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.favoriteGroups.append( group._id.stringValue )
+        }
+    }
+    
+    func unfavoriteGroup( _ group: EcheveriaGroup ) {
+        EcheveriaModel.updateObject(self) { thawed in
+            if let index = thawed.favoriteGroups.firstIndex(of: group._id.stringValue) {
+                thawed.favoriteGroups.remove(at: index)
+            }
+            
+        }
+    }
+    
 //    MARK: Friend Functions
     private func addFriendRequest( _ requestingID: String ) {
         
@@ -156,13 +173,15 @@ class EcheveriaProfile: Object, Identifiable {
     }
     
 //    MARK: Permissions
-    func updatePermissions(groups: [EcheveriaGroup], id: String) async {
+    func updatePermissions(groups: [EcheveriaGroup], friendRequests: [String], friends: [String], id: String) async {
         
         if loaded { return }
         let realmManager = EcheveriaModel.shared.realmManager
         
 //        A collection of every member of every gropu that you are a part of
-        let totalMembers: [String] = groups.reduce([]) { partialResult, group in partialResult + group.members }
+        var totalMembers: [String] = groups.reduce([]) { partialResult, group in partialResult + group.members }
+        totalMembers.append(contentsOf: friendRequests)
+        totalMembers.append(contentsOf: friends)
         let totalGroupIDs = self.getGroupIDs(groups)
     
         await realmManager.profileQuery.addQuery(id + QuerySubKey.account.rawValue) { query in
@@ -193,7 +212,7 @@ class EcheveriaProfile: Object, Identifiable {
     }
     
     func getAllowedGames(from games: Results<EcheveriaGame>) -> [EcheveriaGame] {
-        Array(games.filter { game in
+        return Array(games.filter { game in
             self.getGroupIDs().contains { id in
                 id == game.groupID
             }

@@ -41,7 +41,7 @@ struct MainView: View {
                 
                 HStack {
                     
-                    RoundedButton(label: "Log Game", icon: "signpost.and.arrowtriangle.up") { logging = true }
+//                    RoundedButton(label: "Log Game", icon: "signpost.and.arrowtriangle.up") { logging = true }
                     
                     Spacer()
                     NamedButton("Home", and: "house.lodge", oriented: .vertical).onTapGesture { page = .main }
