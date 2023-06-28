@@ -152,7 +152,7 @@ struct ProfileGameView: View {
                         EditMenu(editingAxis: $yAxisDataType, title: "Y Axis")
                         EditMenu(editingAxis: $typeAxisDataType, title: "Series")
                     } label: {
-                        CircularButton(icon: "line.3.horizontal.decrease.circle") {}
+                        ShortRoundedButton("filter", icon: "line.3.horizontal.decrease.circle") { }
                             .universalTextStyle()
                     }
                 }

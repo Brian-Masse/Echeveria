@@ -64,11 +64,11 @@ struct ProfilePageView: View {
 
                     if presentationMode.wrappedValue.isPresented {
                         
-                        AsynCircularButton(icon: "chevron.down") {
+                        asyncShortRoundedButton(label: "dismiss", icon: "chevron.down") {
                             if !mainUser { await profile.closePermission(ownerID: profile.ownerID) }
                             presentationMode.wrappedValue.dismiss()
                         }
-                        .padding([.top, .trailing])
+                        .padding(.top)
                         .padding(.top, 50)
                         .padding(.horizontal)
                     }

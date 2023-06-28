@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 
 //MARK: Buttons
+
+
+
+//MARK: Rounded Buttons
 struct RoundedButton: View {
     let label:  String
     let icon:   String
@@ -27,22 +31,6 @@ struct RoundedButton: View {
         .padding(.vertical, 7)
         .rectangularBackgorund(rounded: true)
         .onTapGesture { action() }
-    }
-}
-
-struct CircularButton: View {
-    let icon:   String
-    let action: ()->Void
-    
-    var body: some View {
-        Image(systemName: icon)
-            .padding(5)
-            .background(
-                Rectangle()
-                    .foregroundColor(Colors.tint)
-                    .cornerRadius(50)
-                    .onTapGesture { action() }
-            )
     }
 }
 
@@ -67,26 +55,7 @@ struct AsyncRoundedButton: View {
     }
 }
 
-struct AsynCircularButton: View {
-    let icon: String
-    let action: () async -> Void
-    
-    @State var running: Bool = false
-    
-    var body: some View {
-        ZStack {
-            CircularButton(icon: icon, action: { running = true })
-            if running {
-                ProgressView()
-                    .task {
-                        await action()
-                        running = false
-                    }
-            }
-        }
-    }
-}
-
+//MARK: ShortRoundedButton
 struct ShortRoundedButton: View {
     
     let label: String
@@ -125,6 +94,30 @@ struct ShortRoundedButton: View {
     }
 }
 
+struct asyncShortRoundedButton: View {
+    
+    let label: String
+    let icon: String
+    let action: () async -> Void
+    
+    @State var running: Bool = false
+    
+    var body: some View {
+        ZStack {
+            ShortRoundedButton(label, icon: icon) { running = true }
+            if running {
+                ProgressView()
+                    .task {
+                        await action()
+                        running = false
+                    }
+            }
+        }
+    }
+    
+}
+
+//MARK: LargeFormRoundedButton
 struct LargeFormRoundedButton: View {
     
     let label: String

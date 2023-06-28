@@ -20,13 +20,15 @@ struct ProfileViews {
         let geo: GeometryProxy
         
         var body: some View {
-            UniversalText("Friends", size: Constants.UIHeaderTextSize, true)
-            if profile.friends.count != 0 {
-                ListView(title: "", collection: profile.friends, geo: geo) { _ in true } contentBuilder: { friendID in
-                    ProfilePreviewView(profileID: friendID)
+            VStack(alignment: .leading) {
+                UniversalText("Friends", size: Constants.UIHeaderTextSize, true)
+                if profile.friends.count != 0 {
+                    ListView(title: "", collection: profile.friends, geo: geo) { _ in true } contentBuilder: { friendID in
+                        ProfilePreviewView(profileID: friendID)
+                    }
+                }else {
+                    LargeFormRoundedButton(label: "Add Friends", icon: "plus") { }
                 }
-            }else {
-                LargeFormRoundedButton(label: "Add Friends", icon: "plus") { }
             }
         }
     }    

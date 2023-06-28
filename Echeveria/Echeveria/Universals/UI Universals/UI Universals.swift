@@ -51,7 +51,6 @@ struct NamedButton: View {
     }
 }
 
-
 //MARK: List View
 struct ListView<C: Collection, T: Identifiable, Content: View>: View where C.Element == T  {
     let title: String
@@ -69,10 +68,10 @@ struct ListView<C: Collection, T: Identifiable, Content: View>: View where C.Ele
         
         VStack {
             if !filtered.isEmpty {
-                HStack {
+                if title != "" { HStack {
                     UniversalText(title, size: Constants.UISubHeaderTextSize, true)
                     Spacer()
-                }
+                } }
                 ForEach(filtered, id: \.id) { obj in
                     contentBuilder( obj )
                 }
@@ -293,7 +292,11 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                         ForEach(F.allCases) { content in
                             Button(content.rawValue) { filter = content }
                         }
-                    } label: { CircularButton(icon: "line.3.horizontal.decrease.circle") {}.universalTextStyle() }
+                    } label: {
+                        ShortRoundedButton("filter", icon: "line.3.horizontal.decrease.circle") { }
+                            .universalTextStyle()
+                            .padding(.top)
+                    }
                 }
             }.padding(.horizontal)
                 .padding(.vertical, 5)

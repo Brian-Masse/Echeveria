@@ -41,14 +41,17 @@ struct SearchPageView: View {
     var body: some View {
 
         GeometryReader { geo in
-            VStack {
+            VStack(alignment: .leading) {
+                
+                UniversalText("Search", size: Constants.UITitleTextSize, true)
+                UniversalText("Search for the name of other users or groups to join social parties, add friends, and log games together!", size: Constants.UIDefaultTextSize, lighter: true )
+                
+                    .padding(.bottom)
+                
                 TextField("Search...", text: $searchQuery)
                     .focused($formIsFocussed)
-                    .padding()
-                    .background(Rectangle()
-                        .cornerRadius(Constants.UIDefaultCornerRadius)
-                        .universalForeground()
-                    )
+                    .opaqueRectangularBackground()
+                    .padding(.horizontal, 7)
                 
                 AsyncRoundedButton(label: "Search", icon: "magnifyingglass.circle") {
                     await search( searchQuery )
@@ -71,6 +74,8 @@ struct SearchPageView: View {
                     }
                 }
             }
-        }.universalBackground()
+            .padding()
+            .padding(.top, 50)
+        }.universalColoredBackground(.blue)
     }
 }

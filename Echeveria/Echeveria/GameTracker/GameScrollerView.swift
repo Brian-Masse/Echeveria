@@ -37,7 +37,7 @@ struct GameScrollerView: View {
                         Button("by Group") { filter = .groupType }
                         Button("by Winner") { filter = .winnerType }
                     } label: {
-                        CircularButton(icon: "line.3.horizontal.decrease.circle") {}
+                        ShortRoundedButton("filter", icon: "line.3.horizontal.decrease.circle") { }
                             .universalTextStyle()
                     }
                 }
