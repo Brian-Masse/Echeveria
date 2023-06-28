@@ -37,15 +37,34 @@ struct ProfileGameView: View {
                         .padding(.bottom)
                     
                     UniversalText("Stats", size: Constants.UIHeaderTextSize, true)
+                    
+                    let winStreakData = profile.getWinStreakData(games: Array(games), profileID: profile.ownerID)
+                    let longestWinStreak = profile.getLongestWinStreak(from: Array(games), profileID: profile.ownerID)
+                    
+                    TimeBasedChart(initialDate: profile.createdDate, title: "Winstreak History", content: winStreakData,
+                                   xAxisTitle: "Date", xAxisContent: { data in data.date },
+                                   yAxisTitle: "Streak", yAxisContent: { data in data.streak },
+                                   styleTitle: "GameType", styleContent: { data in data.type },
+                                   styleCount: EcheveriaGame.GameType.allCases.count, primaryColor: .blue)
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            UniversalText("Longest Winstreak", size: Constants.UISubHeaderTextSize, true)
+//                            UniversalText( "\( longestWinStreak.1.formatted(date: .numeric, time: .omitted) ) - \(longestWinStreak.2.formatted(date: .numeric, time: .omitted))" , size: Constants.UIDefaultTextSize, lighter: true )
+                        }
+                        Spacer()
+                        UniversalText("\(longestWinStreak)", size: Constants.UISubHeaderTextSize )
+                    }.padding(.bottom, 5)
+                    
                     GameChart(profile: profile, games: games )
-                    
+
                     let winCountData = profile.getWins(in: .now, games: games)
-                    
+
                     HStack {
                         StaticGameChart(title: "Wins by Game", data: winCountData, primaryColor: .red,
                                         XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
                                         YAxisTitle: "WinCount", YAxis: { dataPoint in dataPoint.winCount })
-                        
+
                         StaticGameChart(title: "Win Rate by Game", data: winCountData, primaryColor: .red,
                                         XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
                                         YAxisTitle: "WinRate", YAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) })

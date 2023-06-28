@@ -225,4 +225,45 @@ class EcheveriaProfile: Object, Identifiable {
         }
         return data 
     }
+    
+    struct WinStreakDataPoint: Hashable {
+        let streak: Int
+        let type: String
+        let date: Date
+    }
+    
+    func getWinStreakData( games: [EcheveriaGame], profileID: String, byType: Bool = true ) -> [WinStreakDataPoint] {
+        
+        var data: [WinStreakDataPoint] = []
+        var dic: Dictionary<String, Int> = Dictionary()
+        let sorted = EcheveriaGame.sort(games)
+        
+        for type in EcheveriaGame.GameType.allCases { dic[type.rawValue] = 0 }
+    
+        for game in sorted {
+            
+            if game.winners.contains(where: { str in str == profileID })  {
+                dic[byType ? game.type : "-"]! += 1
+            } else { dic[byType ? game.type : "-"] = 0 }
+            
+            for type in EcheveriaGame.GameType.allCases {
+                data.append(.init(streak: dic[byType ? type.rawValue : "-"]!, type: type.rawValue, date: game.date))
+            }
+        }
+        return data
+    }
+    
+    func getLongestWinStreak(from games: [EcheveriaGame], profileID: String) -> Int {
+        
+        let winStreakData = getWinStreakData(games: games, profileID: profileID, byType: false)
+        
+        var streak: Int = 0
+//        var startDate: Date = .now
+//        var endDate: Date = .now
+        
+        for data in winStreakData {
+            streak = max(streak, data.streak)
+        }
+        return streak
+    }
 }

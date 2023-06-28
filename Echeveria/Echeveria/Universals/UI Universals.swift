@@ -233,9 +233,7 @@ struct AsyncLoader<Content>: View where Content: View {
 struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>: View where C3: Hashable {
     
     let initialDate: Date
-    
     let title: String
-    
     let content: [T]
     
     let xAxisTitle: String
@@ -288,12 +286,10 @@ struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>:
                 self.dictionary = dic
             }
             
-            
             UniversalText(title, size: Constants.UISubHeaderTextSize, true)
                 .padding(.horizontal)
                 .padding(.vertical, 7)
         }
-        
     }
 }
 

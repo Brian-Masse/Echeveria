@@ -19,20 +19,23 @@ class Colors {
     
     private static let reds: [Color] = [ .red, makeColor(255, 129, 120), makeColor(161, 47, 47), makeColor(230, 119, 132), makeColor(163, 82, 82)]
     private static let greens: [Color] = [ forestGreen, makeColor(47, 82, 52), makeColor(143, 161, 146), makeColor(189, 178, 128), makeColor(85, 153, 75)]
+    private static let blues: [Color] = [ .blue, makeColor(29, 101, 138), .orange, makeColor(167, 207, 242), .green ]
     
     private static let redPallette: ColorPallette = ColorPallette(baseColor: .red, reds)
     private static let greenPallette: ColorPallette = ColorPallette(baseColor: forestGreen, greens)
+    private static let bluePallette: ColorPallette = ColorPallette(baseColor: .blue, blues)
     private static let greyPallette: ColorPallette = ColorPallette(baseColor: .gray, [])
     
     static func getPallette(from color: Color ) -> ColorPallette {
         if color == .red { return redPallette }
         if color == forestGreen { return greenPallette }
+        if color == .blue { return bluePallette }
         
         return greyPallette
     }
     
     private static func makeColor( _ r: CGFloat, _ g: CGFloat, _ b: CGFloat ) -> Color {
-        return Color(red: r / 255, green: g / 255, blue: b / 255)
+        Color(red: r / 255, green: g / 255, blue: b / 255)
     }
     
 }

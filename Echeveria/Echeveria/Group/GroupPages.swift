@@ -96,7 +96,7 @@ struct ChartsGroupViewPage: View {
     
     var body: some View {
         
-        let sorted = games.sorted { game1, game2 in game2.date > game1.date }
+        let sorted = EcheveriaGame.sort(Array(games))
         
         ScrollView(.vertical) {
             VStack(alignment: .leading) {

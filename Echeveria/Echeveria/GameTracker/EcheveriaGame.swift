@@ -95,6 +95,7 @@ class EcheveriaGame: Object, Identifiable {
         EcheveriaModel.addObject(self)
     }
     
+//    MARK: Permissions
     func updatePermissions() async {
         let realmManager = EcheveriaModel.shared.realmManager
         await realmManager.profileQuery.addQuery { query in
@@ -107,6 +108,21 @@ class EcheveriaGame: Object, Identifiable {
         }
     }
     
+    
+//    MARK: Convenience Functions
+    static func getGameObject(from id: String) -> EcheveriaGame? {
+        let results: Results<EcheveriaGame> = EcheveriaModel.retrieveObject { query in
+            query.ownerID == id
+        }
+        guard let game = results.first else { print( "No game exists with the given id: \(id)" ); return nil }
+        return game
+    }
+    
+    static func sort(_ games: [EcheveriaGame]) -> [EcheveriaGame] {
+        games.sorted { game1, game2 in game2.date > game1.date }
+    }
+    
+//    MARK: Class Methods
     func getWinners() -> String {
         if self.winners.count == 1 { return EcheveriaProfile.getName(from: self.winners.first!)  }
         var str = ""
@@ -121,14 +137,6 @@ class EcheveriaGame: Object, Identifiable {
         self.winners.contains { str in
             str == id
         }
-    }
-    
-    static func getGameObject(from id: String) -> EcheveriaGame? {
-        let results: Results<EcheveriaGame> = EcheveriaModel.retrieveObject { query in
-            query.ownerID == id
-        }
-        guard let game = results.first else { print( "No game exists with the given id: \(id)" ); return nil }
-        return game
     }
     
 //    when filtering by Winners, this will go throuhg all the cards stored in the realm, compile all the winners and format it into a list to filter by

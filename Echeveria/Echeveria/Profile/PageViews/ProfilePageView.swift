@@ -41,6 +41,18 @@ struct ProfilePageView: View {
                 await profile.updatePermissions(groups: filteredGroups, id: profile.ownerID)
             } content: {
                 ZStack(alignment: .topTrailing) {
+                    
+                    ShapeBackgrond(page: $page, geo: geo,
+                                   sizePath: [ .init(width: 150, height: 225), .init(width: 225, height: 337.5), .init(width: 225, height: 337.5) ],
+                                   posPath: [ .init(x: -geo.size.width + 80, y: geo.size.height - 180), .init(x: -geo.size.width / 2, y: 50), .init(x: 100, y: 0) ],
+                                   rotPath: [ -CGFloat.pi / 3, CGFloat.pi / 1.2, CGFloat.pi / 6 ])
+                    
+                    ShapeBackgrond(page: $page, geo: geo,
+                                   sizePath: [ .init(width: 300, height: 450), .init(width: 225, height: 337.5), .init(width: 225, height: 337.5) ],
+                                   posPath: [ .init(x: 70, y: 20), .init(x: 20, y: geo.size.height / 2), .init(x: -geo.size.width + 100, y: geo.size.height / 1.5) ],
+                                   rotPath: [ 0, CGFloat.pi / 5, CGFloat.pi / 4.5 ])
+                    
+                    
                     VStack(alignment: .leading) {
                         TabView(selection: $page) {
                             ProfileMainView(profile:    profile, geo: geo).padding().tag( ProfilePage.main )
@@ -62,6 +74,55 @@ struct ProfilePageView: View {
                 }
             }
         }.universalColoredBackground(.blue)
+    }
+    
+    struct ShapeBackgrond: View {
+        
+        @Binding var page: ProfilePage
+        let geo: GeometryProxy
+        
+        let sizePath: [CGSize]
+        let posPath: [CGPoint]
+        let rotPath: [CGFloat]
+        
+        private func getI() -> Int {
+            switch page {
+            case .main: return 0
+            case .games: return 1
+            case .social: return 2
+            }
+        }
+        
+        var body: some View {
+            
+            Polygon()
+                .foregroundColor(.blue)
+                .opacity(0.4)
+                .rotationEffect(Angle(radians: rotPath[getI()]), anchor: .center)
+                .frame(width: sizePath[getI()].width, height: sizePath[getI()].height)
+                .offset(x: posPath[getI()].x, y: posPath[getI()].y)
+            
+                .animation(.easeOut(duration: 0.25), value: page)
+            
+        }
+    }
+    
+    struct Polygon: Shape {
+        func path(in rect: CGRect) -> Path {
+            var path = Path()
+            
+            let width = rect.width
+            let height = rect.height
+            
+            path.move(to: .init(x: rect.maxX, y: rect.minY + (height / 4)))
+            path.addLine(to: .init(x: rect.maxX + (width / 2), y: rect.maxY))
+            path.addLine(to: .init(x: rect.maxX, y: rect.maxY + (height / 4)))
+            path.addLine(to: .init(x: rect.minX, y: rect.maxX))
+            path.addLine(to: .init(x: rect.minX + (width / 4), y: rect.minY + (height / 3.5)))
+            path.addLine(to: .init(x: rect.maxX, y: rect.minY + (height / 4) ))
+                         
+            return path
+        }
     }
 }
 
