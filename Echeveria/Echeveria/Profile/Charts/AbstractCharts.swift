@@ -64,8 +64,40 @@ struct TimeByPlayerAndTypeChart<Graph: View>: View {
             chartBuilder($filteredGames, $filteredMembers)
         }
         .padding()
-//        .foregroundColor(Colors.colorOptions[group.colorIndex])
         .universalTextStyle()
         .rectangularBackgorund()
     }
 }
+
+struct TimeByTypeChart<Graph: View>: View {
+    
+    let title: String
+    let games: [EcheveriaGame]
+    
+    @ViewBuilder var chartBuilder: ( Binding<[String]> ) -> Graph
+    @State var filteredGames:   [String] = []
+    
+    var body: some View {
+
+        VStack {
+            HStack {
+                UniversalText(title, size: Constants.UISubHeaderTextSize, true)
+                Spacer()
+                Menu {
+                    ForEach( EcheveriaGame.GameType.allCases.indices, id: \.self ) { i in
+                        Button { withAnimation {filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue ) } } label: {
+                            let selected = !filteredGames.contains { str in str == EcheveriaGame.GameType.allCases[i].rawValue }
+                            if selected { Image(systemName: "checkmark") }
+                            Text(EcheveriaGame.GameType.allCases[i].rawValue)
+                        }
+                    }
+                } label: { FilterButton() }.menuActionDismissBehavior(.disabled)
+            }
+            chartBuilder($filteredGames)
+        }
+        .padding()
+        .universalTextStyle()
+        .rectangularBackgorund()
+    }
+}
+

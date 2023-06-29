@@ -72,6 +72,7 @@ struct ProfileSocialPage: View {
             ListView(title: "Joined Groups", collection: groups, geo: geo) { group in
                 group.owner != profile.ownerID && group.members.contains(where: { str in str == profile.ownerID })
             } contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
+                .padding(.bottom, 80)
                 
         }
     }

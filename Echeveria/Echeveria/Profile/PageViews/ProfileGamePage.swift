@@ -24,7 +24,6 @@ struct ProfileGameView: View {
     var body: some View {
         
         let games = profile.getAllowedGames(from: allGames)
-        let recentGames = games.returnFirst(5)
         
         VStack {
             ProfilePageTitle(profile: profile, text: "Game Logs", size: Constants.UISubHeaderTextSize)
@@ -32,44 +31,35 @@ struct ProfileGameView: View {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
                     
-                    UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
-                    GameScrollerView(filter: .none, filterable: false, geo: geo, games: recentGames )
-                        .padding(.bottom)
-                    
-                    UniversalText("Stats", size: Constants.UIHeaderTextSize, true)
+                    UniversalText("Overview", size: Constants.UIHeaderTextSize, true)
                     
                     let winStreakData = profile.getWinStreakData(games: Array(games), profileID: profile.ownerID)
                     let longestWinStreak = profile.getLongestWinStreak(from: Array(games), profileID: profile.ownerID)
                     
-                    TimeBasedChart(initialDate: profile.createdDate, title: "Winstreak History", content: winStreakData, primaryColor: profile.getColor(),
-                                   xAxisTitle: "Date", xAxisContent: { data in data.date },
-                                   yAxisTitle: "Streak", yAxisContent: { data in data.streak },
-                                   styleTitle: "GameType", styleContent: { data in data.type },
-                                   styleCount: EcheveriaGame.GameType.allCases.count)
+                    let games = Array(games)
                     
-                    HStack {
-                        VStack(alignment: .leading) {
-                            UniversalText("Longest Winstreak", size: Constants.UISubHeaderTextSize, true)
+                    TimeByTypeChart(title: "Wins", games: games) { fgames in
+                        ProfileWinHistoryChart(profile: profile, games: games, filteredGames: fgames)
+                        let winCountData = profile.getWins(in: .now, games: games)
+
+                        HStack {
+                            StaticGameChart(title: "Wins by Game", data: winCountData, primaryColor: profile.getColor(),
+                                            XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
+                                            YAxisTitle: "WinCount", YAxis: { dataPoint in dataPoint.winCount })
+
+                            StaticGameChart(title: "Win Rate by Game", data: winCountData, primaryColor: profile.getColor(),
+                                            XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
+                                            YAxisTitle: "WinRate", YAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) })
                         }
-                        Spacer()
-                        UniversalText("\(longestWinStreak)", size: Constants.UISubHeaderTextSize )
-                    }.padding(.bottom, 5)
-                    
-                    GameChart(profile: profile, games: games )
-
-                    let winCountData = profile.getWins(in: .now, games: games)
-
-                    HStack {
-                        StaticGameChart(title: "Wins by Game", data: winCountData, primaryColor: profile.getColor(),
-                                        XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
-                                        YAxisTitle: "WinCount", YAxis: { dataPoint in dataPoint.winCount })
-
-                        StaticGameChart(title: "Win Rate by Game", data: winCountData, primaryColor: profile.getColor(),
-                                        XAxisTitle: "GameType", XAxis: { dataPoint in dataPoint.game.rawValue },
-                                        YAxisTitle: "WinRate", YAxis: { dataPoint in Float(dataPoint.winCount) / Float(max(1, dataPoint.totalCount)) })
-
                     }
-                    .padding(.bottom)
+                    
+                    RecentGamesView(games: games, geo: geo)
+                    
+                    UniversalText("All Data", size: Constants.UIHeaderTextSize, true)
+                    TimeByTypeChart(title: "Win Streaks", games: games) { fgames in
+                        ProfileWinStreakHistoryChart(profile: profile, games: games, filteredGames: fgames)
+                        GameChart(profile: profile, games: games )
+                    }.padding(.bottom)
 
                     ZStack(alignment: .topLeading) {
                         GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: games)

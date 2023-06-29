@@ -24,7 +24,8 @@
 		C90FEC952A43FD8300E7E6CE /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */; };
 		C9143CF52A4D02D9009ED03F /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = C9143CF42A4D02D9009ED03F /* SymbolPicker */; };
 		C9143CF82A4D5067009ED03F /* AbstractCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF72A4D5067009ED03F /* AbstractCharts.swift */; };
-		C9143CFA2A4E200E009ED03F /* IndividualCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF92A4E200E009ED03F /* IndividualCharts.swift */; };
+		C9143CFA2A4E200E009ED03F /* IndividualGroupCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF92A4E200E009ED03F /* IndividualGroupCharts.swift */; };
+		C9143CFC2A4E3F42009ED03F /* IndividualProfileCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CFB2A4E3F42009ED03F /* IndividualProfileCharts.swift */; };
 		C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6DF2A3A51D1008C6906 /* MainView.swift */; };
 		C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E62A3A7547008C6906 /* RealmManager.swift */; };
 		C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */; };
@@ -85,7 +86,8 @@
 		C90F911B2A4616720062B493 /* UniversalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalConstants.swift; sourceTree = "<group>"; };
 		C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageView.swift; sourceTree = "<group>"; };
 		C9143CF72A4D5067009ED03F /* AbstractCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractCharts.swift; sourceTree = "<group>"; };
-		C9143CF92A4E200E009ED03F /* IndividualCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualCharts.swift; sourceTree = "<group>"; };
+		C9143CF92A4E200E009ED03F /* IndividualGroupCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualGroupCharts.swift; sourceTree = "<group>"; };
+		C9143CFB2A4E3F42009ED03F /* IndividualProfileCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualProfileCharts.swift; sourceTree = "<group>"; };
 		C939B6DF2A3A51D1008C6906 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C939B6E62A3A7547008C6906 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFlexibleSyncRealmView.swift; sourceTree = "<group>"; };
@@ -192,7 +194,8 @@
 			isa = PBXGroup;
 			children = (
 				C9143CF72A4D5067009ED03F /* AbstractCharts.swift */,
-				C9143CF92A4E200E009ED03F /* IndividualCharts.swift */,
+				C9143CF92A4E200E009ED03F /* IndividualGroupCharts.swift */,
+				C9143CFB2A4E3F42009ED03F /* IndividualProfileCharts.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -483,7 +486,7 @@
 				C9143CF82A4D5067009ED03F /* AbstractCharts.swift in Sources */,
 				C97C68CC2A46B12E000E7AA5 /* GroupPages.swift in Sources */,
 				C900BAA32A4024BB00388B37 /* EcheveriaGame.swift in Sources */,
-				C9143CFA2A4E200E009ED03F /* IndividualCharts.swift in Sources */,
+				C9143CFA2A4E200E009ED03F /* IndividualGroupCharts.swift in Sources */,
 				C939B6FB2A3FBB1A008C6906 /* GroupPreviewView.swift in Sources */,
 				C99AF4832A4CB67A00BF766A /* SupportingViews.swift in Sources */,
 				C90F910F2A448E660062B493 /* Smash.swift in Sources */,
@@ -508,6 +511,7 @@
 				C939B6F12A3AC40B008C6906 /* ProfileCreationView.swift in Sources */,
 				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,
 				C900BAA72A40EEDB00388B37 /* GameView.swift in Sources */,
+				C9143CFC2A4E3F42009ED03F /* IndividualProfileCharts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
