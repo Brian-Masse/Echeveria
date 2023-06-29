@@ -1,0 +1,71 @@
+//
+//  BestPlayerGraph.swift
+//  Echeveria
+//
+//  Created by Brian Masse on 6/29/23.
+//
+
+import Foundation
+import SwiftUI
+import Charts
+import RealmSwift
+
+struct DataNode {
+    var id: String
+    var name: String {
+        get { EcheveriaProfile.getProfileObject(from: id)?.firstName ?? "?" }
+        set { id = newValue }
+    }
+    let wins: Int
+    let date: Date
+    let type: String
+}
+
+//MARK: TimeByPlayerAndTypeChart
+struct TimeByPlayerAndTypeChart<Graph: View>: View {
+    
+    let title: String
+    let group: EcheveriaGroup
+    let games: [EcheveriaGame]
+    
+    @ViewBuilder var chartBuilder: ( Binding<[String]>, Binding<[String]>  ) -> Graph
+    
+    @State var filteredMembers: [String] = []
+    @State var filteredGames:   [String] = []
+    
+    var body: some View {
+
+        VStack {
+            HStack {
+                UniversalText(title, size: Constants.UISubHeaderTextSize, true)
+                Spacer()
+                Menu {
+                    Menu {
+                        ForEach( group.members ) { id in
+                            Button { withAnimation { filteredMembers.toggleValue(id) }} label: {
+                                let selected = !filteredMembers.contains { str in str == id }
+                                if selected { Image(systemName: "checkmark") }
+                                Text(EcheveriaProfile.getName(from: id))
+                            }
+                        }
+                    } label: { Text("Players") }
+
+                    Menu {
+                        ForEach( EcheveriaGame.GameType.allCases.indices, id: \.self ) { i in
+                            Button { withAnimation {filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue ) } } label: {
+                                let selected = !filteredGames.contains { str in str == EcheveriaGame.GameType.allCases[i].rawValue }
+                                if selected { Image(systemName: "checkmark") }
+                                Text(EcheveriaGame.GameType.allCases[i].rawValue)
+                            }
+                        }
+                    } label: { Text("Games") }
+                } label: { FilterButton() }.menuActionDismissBehavior(.disabled)
+            }
+            chartBuilder($filteredGames, $filteredMembers)
+        }
+        .padding()
+//        .foregroundColor(Colors.colorOptions[group.colorIndex])
+        .universalTextStyle()
+        .rectangularBackgorund()
+    }
+}

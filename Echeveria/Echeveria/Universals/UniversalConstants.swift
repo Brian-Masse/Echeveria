@@ -9,7 +9,12 @@ import Foundation
 import SwiftUI
 
 class Colors {
-    static let tint = Color.blue
+    static var tint: Color {
+        if let profile = EcheveriaModel.shared.profile {
+            return profile.getColor()
+        }
+        return .blue
+    }
     
     static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
     static let darkGrey = Color(red: 0.1, green: 0.1, blue: 0.1).opacity(0.9)
@@ -31,7 +36,7 @@ class Colors {
         if color == forestGreen { return greenPallette }
         if color == .blue { return bluePallette }
         
-        return greyPallette
+        return ColorPallette(baseColor: color, [])
     }
     
     private static func makeColor( _ r: CGFloat, _ g: CGFloat, _ b: CGFloat ) -> Color {
@@ -75,6 +80,9 @@ class Constants {
     static let UIDefaultTextSize: CGFloat   = 15
     
     static let UIDefaultCornerRadius: CGFloat = 15
+    
+    static let HourTime: Double = 3600
+    static let DayTime: Double = 86400
     
 }
 
@@ -121,6 +129,18 @@ extension Collection {
         return self[ (lowerBound as! Self.Index)...(count as! Self.Index) ]
     }
 }
+
+extension Array {
+    
+    mutating func toggleValue( _ value: Self.Element ) where Self.Element: Equatable {
+        if let index = self.firstIndex(where: { element in element == value }) {
+            self.remove(at: index)
+            return
+        }
+        self.append(value)
+    }
+}
+
 
 
 //MARK: Color Extension

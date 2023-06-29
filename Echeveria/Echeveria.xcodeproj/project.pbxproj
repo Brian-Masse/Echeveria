@@ -22,6 +22,9 @@
 		C90F911F2A4658170062B493 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C90F911E2A4658170062B493 /* Realm */; };
 		C90F91212A4658170062B493 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90F91202A4658170062B493 /* RealmSwift */; };
 		C90FEC952A43FD8300E7E6CE /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */; };
+		C9143CF52A4D02D9009ED03F /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = C9143CF42A4D02D9009ED03F /* SymbolPicker */; };
+		C9143CF82A4D5067009ED03F /* AbstractCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF72A4D5067009ED03F /* AbstractCharts.swift */; };
+		C9143CFA2A4E200E009ED03F /* IndividualCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF92A4E200E009ED03F /* IndividualCharts.swift */; };
 		C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6DF2A3A51D1008C6906 /* MainView.swift */; };
 		C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E62A3A7547008C6906 /* RealmManager.swift */; };
 		C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */; };
@@ -81,6 +84,8 @@
 		C90F91192A4616300062B493 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		C90F911B2A4616720062B493 /* UniversalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalConstants.swift; sourceTree = "<group>"; };
 		C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageView.swift; sourceTree = "<group>"; };
+		C9143CF72A4D5067009ED03F /* AbstractCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractCharts.swift; sourceTree = "<group>"; };
+		C9143CF92A4E200E009ED03F /* IndividualCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualCharts.swift; sourceTree = "<group>"; };
 		C939B6DF2A3A51D1008C6906 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C939B6E62A3A7547008C6906 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFlexibleSyncRealmView.swift; sourceTree = "<group>"; };
@@ -120,6 +125,7 @@
 			files = (
 				C90F91212A4658170062B493 /* RealmSwift in Frameworks */,
 				C90F911F2A4658170062B493 /* Realm in Frameworks */,
+				C9143CF52A4D02D9009ED03F /* SymbolPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,10 +188,20 @@
 			path = Universals;
 			sourceTree = "<group>";
 		};
+		C9143CF62A4D5045009ED03F /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				C9143CF72A4D5067009ED03F /* AbstractCharts.swift */,
+				C9143CF92A4E200E009ED03F /* IndividualCharts.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		C939B6EE2A3A895A008C6906 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				C99AF4822A4CB67A00BF766A /* SupportingViews.swift */,
+				C9143CF62A4D5045009ED03F /* Charts */,
 				C90F91152A46135D0062B493 /* PageViews */,
 				C900BA9F2A3FE11800388B37 /* ProfilePreviewView.swift */,
 				C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */,
@@ -336,6 +352,7 @@
 			packageProductDependencies = (
 				C90F911E2A4658170062B493 /* Realm */,
 				C90F91202A4658170062B493 /* RealmSwift */,
+				C9143CF42A4D02D9009ED03F /* SymbolPicker */,
 			);
 			productName = Echeveria;
 			productReference = C99714072A3902CA00090429 /* Echeveria.app */;
@@ -411,6 +428,7 @@
 			mainGroup = C99713FE2A3902CA00090429;
 			packageReferences = (
 				C90F911D2A4658170062B493 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				C9143CF32A4D02D9009ED03F /* XCRemoteSwiftPackageReference "SymbolPicker" */,
 			);
 			productRefGroup = C99714082A3902CA00090429 /* Products */;
 			projectDirPath = "";
@@ -462,8 +480,10 @@
 				C90F91172A4613CD0062B493 /* ProfileSocialPage.swift in Sources */,
 				C976A9412A3972EC00C48C6A /* UI Universals.swift in Sources */,
 				C9D884652A49E96C00E0D822 /* GamePreviewView.swift in Sources */,
+				C9143CF82A4D5067009ED03F /* AbstractCharts.swift in Sources */,
 				C97C68CC2A46B12E000E7AA5 /* GroupPages.swift in Sources */,
 				C900BAA32A4024BB00388B37 /* EcheveriaGame.swift in Sources */,
+				C9143CFA2A4E200E009ED03F /* IndividualCharts.swift in Sources */,
 				C939B6FB2A3FBB1A008C6906 /* GroupPreviewView.swift in Sources */,
 				C99AF4832A4CB67A00BF766A /* SupportingViews.swift in Sources */,
 				C90F910F2A448E660062B493 /* Smash.swift in Sources */,
@@ -849,6 +869,14 @@
 				kind = branch;
 			};
 		};
+		C9143CF32A4D02D9009ED03F /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/xnth97/SymbolPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -861,6 +889,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C90F911D2A4658170062B493 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		C9143CF42A4D02D9009ED03F /* SymbolPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9143CF32A4D02D9009ED03F /* XCRemoteSwiftPackageReference "SymbolPicker" */;
+			productName = SymbolPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

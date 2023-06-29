@@ -122,10 +122,21 @@ struct ResizeableIcon: View {
     }
 }
 
+//MARK: Small Views
+
+struct FilterButton: View {
+    var body: some View {
+        ShortRoundedButton("filter", icon: "line.3.horizontal.decrease.circle") { }
+            .universalTextStyle()
+    }
+}
+
 
 //MARK: AsyncLoader
 struct AsyncLoader<Content>: View where Content: View {
     @Environment(\.scenePhase) private var scenePhase
+    
+    @ObservedObject var model = EcheveriaModel.shared
     
     let block: () async -> Void
     let content: Content
@@ -143,15 +154,16 @@ struct AsyncLoader<Content>: View where Content: View {
                 ProgressView() .task {
                         await block()
                         loading = false
+                    model.triggerReload = false
                     }
             } else if scenePhase != .background && scenePhase != .inactive { content }
         }
         .onBecomingVisible { loading = true }
         .onChange(of: scenePhase) { newValue in
-            if newValue == .active {
-                loading = true
-                
-            }
+            if newValue == .active { loading = true }
+        }
+        .onChange(of: model.triggerReload) { newValue in
+            if newValue { loading = true }
         }
     }
 }
@@ -163,6 +175,7 @@ struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>:
     let initialDate: Date
     let title: String
     let content: [T]
+    let primaryColor: Color
     
     let xAxisTitle: String
     let xAxisContent: (T) -> C1
@@ -173,38 +186,36 @@ struct TimeBasedChart<T: Hashable, C1: Plottable, C2: Plottable, C3: Plottable>:
     let styleTitle: String
     let styleContent: (T) -> C3
     let styleCount: Int
-    
-    let primaryColor: Color
-    
+
     @State var dictionary: Dictionary<C3, Color> = Dictionary()
     
     var body: some View {
         
         ZStack(alignment: .topLeading) {
-            Chart {
-                ForEach(content, id: \.self ) { content in
-                    LineMark(
-                        x: .value(xAxisTitle, xAxisContent(content) ),
-                        y: .value(yAxisTitle, yAxisContent(content) )
-                    )
-                    .foregroundStyle(by: .value(styleTitle, styleContent(content)))
-                }
-                
-            }
-            
-            .chartXScale(domain: [ initialDate, Date.now.advanced(by: 3600) ])
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .day)){ value in
-                    if let date = value.as(Date.self) {
-                        AxisValueLabel( date.formatted(date: .numeric, time: .omitted)  )
+//            ScrollView(.horizontal) {
+                Chart {
+                    ForEach(content, id: \.self ) { content in
+                        LineMark(
+                            x: .value(xAxisTitle, xAxisContent(content) ),
+                            y: .value(yAxisTitle, yAxisContent(content) )
+                        )
+                        .foregroundStyle(by: .value(styleTitle, styleContent(content)))
                     }
-                    
-                    AxisGridLine()
-                    AxisTick()
                 }
-            }
-            .universalChart()
-            .chartForegroundStyleScale { (value: C3) in dictionary[value] ?? .red }
+                .chartForegroundStyleScale { (value: C3) in dictionary[value] ?? .red }
+                .chartXScale(domain: [ initialDate, Date.now.advanced(by: 3600) ])
+                .chartXAxis {
+                    AxisMarks(values: .stride(by: .day)){ value in
+                        if let date = value.as(Date.self) {
+                            AxisValueLabel( date.formatted(date: .numeric, time: .omitted)  )
+                        }
+                        
+                        AxisGridLine()
+                        AxisTick()
+                    }
+//                }
+                    
+            }.universalChart()
             .onAppear {
                 var dic: Dictionary<C3, Color> = Dictionary()
                 if content.count == 0 { return }
@@ -268,7 +279,7 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                         BarMark(
                             x: .value(XAxisTitle, XAxis( data ) ),
                             y: .value(YAxisTitle, YAxis( data ) )
-                        )
+                        ).foregroundStyle(primaryColor)
                     }
                 }.universalChart()
             } else {
@@ -301,11 +312,7 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                         ForEach(F.allCases) { content in
                             Button(content.rawValue) { filter = content }
                         }
-                    } label: {
-                        ShortRoundedButton("filter", icon: "line.3.horizontal.decrease.circle") { }
-                            .universalTextStyle()
-                            .padding(.top)
-                    }
+                    } label: { FilterButton() }
                 }
             }.padding(.horizontal)
                 .padding(.vertical, 5)

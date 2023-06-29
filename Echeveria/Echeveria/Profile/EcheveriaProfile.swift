@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import SwiftUI
 
 class EcheveriaProfile: Object, Identifiable {
     
@@ -18,24 +19,36 @@ class EcheveriaProfile: Object, Identifiable {
     @Persisted var userName: String = ""
     @Persisted var icon: String = ""
     
+    @Persisted var r: Double = 0
+    @Persisted var g: Double = 0
+    @Persisted var b: Double = 0
+    
     @Persisted var createdDate: Date = .now
     
-    @Persisted var groups: List<EcheveriaGroup> = List()
-    @Persisted var favoriteGroups: List<String> = List()
+    @Persisted var groups: RealmSwift.List<EcheveriaGroup> = RealmSwift.List()
+    @Persisted var favoriteGroups: RealmSwift.List<String> = RealmSwift.List()
     
-    @Persisted var friendRequests: List<String> = List()
-    @Persisted var friendRequestDates: List<Date> = List()
-    @Persisted var friends: List<String> = List()
+    @Persisted var friendRequests: RealmSwift.List<String> = RealmSwift.List()
+    @Persisted var friendRequestDates: RealmSwift.List<Date> = RealmSwift.List()
+    @Persisted var friends: RealmSwift.List<String> = RealmSwift.List()
     
     var loaded: Bool = false
     
-    convenience init(ownerID: String, firstName: String, lastName: String, userName: String, icon: String) {
+    convenience init(ownerID: String, firstName: String, lastName: String, userName: String, icon: String, color: Color) {
         self.init()
         self.ownerID = ownerID
         self.firstName = firstName
         self.lastName = lastName
         self.userName = userName
         self.icon = icon
+        
+        let components = color.components
+        self.r = components.red
+        self.g = components.green
+        self.b = components.blue
+        
+        self.loaded = false
+        
     }
     
 //    MARK: Conveinience Functions
@@ -67,13 +80,25 @@ class EcheveriaProfile: Object, Identifiable {
         return self.groups.reduce([]) { partialResult, group in partialResult + [group._id] }
     }
     
+    func getColor() -> Color {
+        Color(red: r, green: g, blue: b)
+    }
+    
 //    MARK: Class Methods
-    func updateInformation( firstName: String, lastName: String, userName: String, icon: String ) {
+    func updateInformation( firstName: String, lastName: String, userName: String, icon: String, color: Color ) {
         EcheveriaModel.updateObject(self) { thawed in
             thawed.firstName = firstName
             thawed.lastName = lastName
             thawed.userName = userName
             thawed.icon = icon
+        
+            let components = color.components
+            thawed.r = components.red
+            thawed.g = components.green
+            thawed.b = components.blue
+            
+            thawed.loaded = false
+            EcheveriaModel.shared.triggerReload = true
         }
     }
     

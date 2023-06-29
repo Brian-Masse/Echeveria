@@ -11,10 +11,12 @@ import Realm
 import SwiftUI
 
 //MARK: Model
-class EcheveriaModel {
+class EcheveriaModel: ObservableObject {
     
     static let shared = EcheveriaModel()
     let realmManager = RealmManager()
+    
+    @Published var triggerReload: Bool = false
     
     private(set) var profile: EcheveriaProfile!
     

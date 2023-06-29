@@ -40,7 +40,7 @@ struct ProfileCreationView: View {
                 ProgressView()
                     .task {
                         //TODO: need to checks that all fields are filled in and that they are a minimum length
-                        let profile = EcheveriaProfile(ownerID: "", firstName: firstName, lastName: lastName, userName: username, icon: icon)
+                        let profile = EcheveriaProfile(ownerID: "", firstName: firstName, lastName: lastName, userName: username, icon: icon, color: .blue)
                         await EcheveriaModel.shared.realmManager.addProfile(profile: profile)
                     }
             }

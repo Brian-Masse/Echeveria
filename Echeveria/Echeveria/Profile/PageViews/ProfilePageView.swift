@@ -14,7 +14,7 @@ struct ProfilePageView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var profile: EcheveriaProfile
+    @ObservedRealmObject var profile: EcheveriaProfile
     @ObservedResults(EcheveriaGroup.self) var groups
     @ObservedResults(EcheveriaGame.self) var games
     
@@ -45,17 +45,16 @@ struct ProfilePageView: View {
                     
                     
                     VStack(alignment: .leading) {
-                        TabView(selection: $page) {
-                            ProfileMainView(profile:    profile, allGames: $games.wrappedValue, geo: geo).padding().tag( MainView.ProfilePage.main )
-                            ProfileGameView(profile:    profile, allGames: $games.wrappedValue,     geo: geo).padding().tag(  MainView.ProfilePage.games )
-                            ProfileSocialPage(profile:  profile, allGroups: $groups.wrappedValue,   geo: geo).padding().tag(  MainView.ProfilePage.social )
+                        TabView(selection: $page) {  
+                            ProfileMainView(profile:  $profile.wrappedValue, allGames: $games.wrappedValue, geo: geo).padding().tag( MainView.ProfilePage.main )
+                            ProfileGameView(profile:  $profile.wrappedValue, allGames: $games.wrappedValue,     geo: geo).padding().tag(  MainView.ProfilePage.games )
+                            ProfileSocialPage(profile:$profile.wrappedValue, allGroups: $groups.wrappedValue,   geo: geo).padding().tag(  MainView.ProfilePage.social )
                             SearchPageView(geo: geo).padding().tag(  MainView.ProfilePage.search )
                         }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     }
                     
 
                     if presentationMode.wrappedValue.isPresented {
-                        
                         asyncShortRoundedButton(label: "dismiss", icon: "chevron.down") {
                             if !mainUser { await profile.closePermission(ownerID: profile.ownerID) }
                             presentationMode.wrappedValue.dismiss()
@@ -66,7 +65,7 @@ struct ProfilePageView: View {
                     }
                 }
             }
-        }.universalColoredBackground(.blue)
+        }.universalColoredBackground( profile.getColor() )
     }
     
     struct ShapeBackgrond: View {
@@ -91,7 +90,7 @@ struct ProfilePageView: View {
         var body: some View {
             
             Polygon()
-                .foregroundColor(.blue)
+                .foregroundColor( Colors.tint )
                 .opacity(colorScheme == .light ? 0.4 : 0.2)
                 .rotationEffect(Angle(radians: rotPath[getI()]), anchor: .center)
                 .frame(width: sizePath[getI()].width, height: sizePath[getI()].height)

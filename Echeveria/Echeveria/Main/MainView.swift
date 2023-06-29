@@ -28,13 +28,14 @@ struct MainView: View {
     @State var logging: Bool = false
     
     @ObservedResults( EcheveriaGroup.self ) var groups
+    @ObservedResults( EcheveriaProfile.self, where: { query in query.ownerID == EcheveriaModel.shared.profile.ownerID } ) var profiles
     
     var body: some View {
         
         GeometryReader { geo in
             ZStack(alignment: .bottomLeading) {
                 
-                ProfilePageView(profile: EcheveriaModel.shared.profile, page: $page)
+                ProfilePageView(profile: profiles.first!, page: $page)
                 
                 ZStack(alignment: .leading) {
                     
@@ -48,21 +49,19 @@ struct MainView: View {
                     .padding()
                     .padding(.horizontal, 5)
                     .universalTextStyle()
-//                    .background( Colors.tint )
                     .background(.ultraThickMaterial)
                     .cornerRadius(100)
-                    .padding(.leading, 20)
+                    .padding(.leading, 15)
                     .shadow(radius: 7)
-                    
-//                    RoundedButton(label: "Log Game", icon: "signpost.and.arrowtriangle.up") { logging = true }
+                    .onTapGesture { logging = true }
                     
                     HStack {
                         Spacer()
-                        TabBarButton(icon: "house.lodge", test: mainView, activePage: $page, page: .main)
-                        TabBarButton(icon: "chart.bar.xaxis", test: mainView, activePage: $page, page: .games)
-                        TabBarButton(icon: "person.3.sequence", test: mainView, activePage: $page, page: .social)
-                        TabBarButton(icon: "magnifyingglass", test: mainView, activePage: $page, page: .search)
-                            .padding(.trailing, 20)
+                        TabBarButton(icon: "house.lodge", test: mainView, geo: geo, activePage: $page, page: .main)
+                        TabBarButton(icon: "chart.bar.xaxis", test: mainView, geo: geo, activePage: $page, page: .games)
+                        TabBarButton(icon: "person.3.sequence", test: mainView, geo: geo, activePage: $page, page: .social)
+                        TabBarButton(icon: "magnifyingglass", test: mainView, geo: geo, activePage: $page, page: .search)
+                            .padding(.trailing, 15)
                     }
                         
                 }
@@ -82,6 +81,7 @@ struct MainView: View {
         @Environment(\.colorScheme) var colorScheme
         let icon: String
         let test: Namespace.ID
+        let geo: GeometryProxy
 
         @Binding var activePage: ProfilePage
         let page: ProfilePage
@@ -92,7 +92,7 @@ struct MainView: View {
                 
                 if activePage == page {
                     Rectangle()
-                        .frame(width: 50, height: 50)
+                        .frame(width: (50 / 414) * geo.size.width, height: (50 / 414) * geo.size.width)
                         .foregroundStyle(.ultraThickMaterial)
                         .cornerRadius(Constants.UIDefaultCornerRadius)
                         .rotationEffect(Angle(radians: CGFloat.pi / 4))
@@ -101,7 +101,7 @@ struct MainView: View {
                 
                 Image(systemName: icon)
                     .onTapGesture { withAnimation { activePage = page }}
-                    .padding(15)
+                    .padding(13)
                     .universalTextStyle()
                 
             }

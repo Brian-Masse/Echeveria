@@ -14,7 +14,7 @@ import Charts
 //MARK: ProfileMainView
 struct ProfileMainView: View {
     
-    @ObservedObject var profile: EcheveriaProfile
+    let profile: EcheveriaProfile
     @State var editing: Bool = false
     
     let allGames: Results<EcheveriaGame>
@@ -63,7 +63,7 @@ struct ProfileMainView: View {
                 }
             }
         }
-        .sheet(isPresented: $editing) { EditingProfileView().environmentObject(profile) }
+        .sheet(isPresented: $editing) { ProfileViews.EditingProfileView().environmentObject(profile) }
     }
     
     struct FriendButtonView: View {
@@ -123,45 +123,5 @@ struct ProfileMainView: View {
                 }.padding(.bottom)
             }
         }
-    }
-}
-
-
-//MARK: EditingProfileView
-struct EditingProfileView: View {
-    
-    @Environment(\.presentationMode) var presentationMode
-    
-    @EnvironmentObject var profile: EcheveriaProfile
-    
-    @State var firstName: String = ""
-    @State var lastName: String = ""
-    @State var userName: String = ""
-    @State var icon: String = ""
-    
-    var body: some View {
-        VStack {
-            
-            Form {
-                Section("Basic Information") {
-                    TextField( "First Name", text: $firstName )
-                    TextField( "Last Name", text: $lastName )
-                    TextField( "User Name", text: $userName )
-                    TextField( "Icon", text: $icon )
-                }.universalFormSection()
-            }
-            .universalForm()
-            .onAppear {
-                firstName = profile.firstName
-                lastName = profile.lastName
-                userName = profile.userName
-                icon = profile.icon
-            }
-            RoundedButton(label: "Done", icon: "checkmark.seal") {
-                profile.updateInformation(firstName: firstName, lastName: lastName, userName: userName, icon: icon)
-                presentationMode.wrappedValue.dismiss()
-            }
-            
-        }.universalBackground()
     }
 }

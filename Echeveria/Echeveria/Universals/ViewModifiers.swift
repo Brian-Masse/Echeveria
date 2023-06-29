@@ -87,7 +87,31 @@ private struct UniversalChart: ViewModifier {
     }
 }
 
+private struct ColoredChart: ViewModifier {
+    
+    @State var dictionary: Dictionary<String, Color> = Dictionary()
+    let series: [String]
+    let primaryColor: Color
+    
+    func body(content: Content) -> some View {
+        
+        content
+            .chartForegroundStyleScale { value in dictionary[value] ?? .red }
+            .onAppear {
+                var dic: Dictionary<String, Color> = Dictionary()
+                if series.count == 0 { return }
+                for i in 0..<series.count  {
+                    let key: String =  series[i]
+                    dic[key] =  Colors.getPallette(from: primaryColor)[ i ]
+                }
+                self.dictionary = dic
+            }
+    }
+}
+
 private struct RectangularBackground: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    
     let rounded: Bool
     let radius: CGFloat?
 
@@ -102,7 +126,6 @@ private struct RectangularBackground: ViewModifier {
             .foregroundColor(Colors.tint.opacity(0.6))
             .foregroundStyle(.ultraThickMaterial)
             .cornerRadius(getRadius())
-            .padding(.horizontal, 5)
     }
 }
 
@@ -180,6 +203,10 @@ extension View {
     
     func universalChart() -> some View {
         modifier(UniversalChart())
+    }
+    
+    func coloredChart(_ series: [String], color: Color) -> some View {
+        modifier( ColoredChart(series: series, primaryColor: color) )
     }
     
     func onBecomingVisible(perform action: @escaping () -> Void) -> some View {
