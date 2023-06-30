@@ -242,11 +242,7 @@ class EcheveriaProfile: Object, Identifiable {
     }
     
     func getAllowedGames(from games: Results<EcheveriaGame>) -> [EcheveriaGame] {
-        return Array(games.filter { game in
-            self.getGroupIDs().contains { id in
-                id == game.groupID
-            }
-        })
+        Array(games.where { game in game.players.contains( self.ownerID ) })
     }
     
     func getAllowedGroups(from groups: Results<EcheveriaGroup>) -> [EcheveriaGroup] {

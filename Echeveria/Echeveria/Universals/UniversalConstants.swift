@@ -138,6 +138,18 @@ extension Array {
     }
 }
 
+extension String {
+    
+    func strip() -> String {
+        self
+        .lowercased()
+        .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    func strip(_ string: String) -> String {
+        return string.strip()
+    }
+}
 
 
 //MARK: Color Extension

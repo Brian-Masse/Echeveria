@@ -575,69 +575,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "215CBFE6-C30D-4FD1-903D-93798119DF36"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Echeveria/Profile/EcheveriaProfile.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "getAllowedGames(from:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "215CBFE6-C30D-4FD1-903D-93798119DF36 - 57f64851670fd637"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (RealmSwift.ObjectId) -&gt; Swift.Bool in closure #1 (Echeveria.EcheveriaGame) -&gt; Swift.Bool in Echeveria.EcheveriaProfile.getAllowedGames(from: RealmSwift.Results&lt;Echeveria.EcheveriaGame&gt;) -&gt; Swift.Array&lt;Echeveria.EcheveriaGame&gt;"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "216"
-                  endingLineNumber = "216"
-                  offsetFromSymbolStart = "114">
-               </Location>
-               <Location
-                  uuid = "215CBFE6-C30D-4FD1-903D-93798119DF36 - 20cb3d5122933233"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Echeveria.EcheveriaProfile.getAllowedGames(from: RealmSwift.Results&lt;Echeveria.EcheveriaGame&gt;) -&gt; Swift.Array&lt;Echeveria.EcheveriaGame&gt;"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "216"
-                  endingLineNumber = "216"
-                  offsetFromSymbolStart = "286">
-               </Location>
-               <Location
-                  uuid = "215CBFE6-C30D-4FD1-903D-93798119DF36 - 7dcc6a8d98056c56"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Echeveria.EcheveriaGame) -&gt; Swift.Bool in Echeveria.EcheveriaProfile.getAllowedGames(from: RealmSwift.Results&lt;Echeveria.EcheveriaGame&gt;) -&gt; Swift.Array&lt;Echeveria.EcheveriaGame&gt;"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "217"
-                  endingLineNumber = "217"
-                  offsetFromSymbolStart = "51">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "E41DC839-72A4-4252-8F69-9B5BA53A8735"
             shouldBeEnabled = "No"
             ignoreCount = "0"

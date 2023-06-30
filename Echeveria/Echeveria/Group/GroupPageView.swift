@@ -20,6 +20,7 @@ struct GroupView: View {
     let games: Results<EcheveriaGame>
     
     @State var page: GroupPage = .overview
+    @State var dismissing: Bool = false
     
     var body: some View {
 
@@ -28,16 +29,17 @@ struct GroupView: View {
             AsyncLoader {
                 await group.updatePermissionsForGroupView(id: group._id.stringValue)
                 EcheveriaModel.shared.addActiveColor(with: Colors.colorOptions[group.colorIndex])
-            } content: {
+            } content: { if !dismissing {
                 ZStack(alignment: .topTrailing) {
                     VStack(alignment: .leading) {
                         HStack {
                             UniversalText(group.name, size: Constants.UITitleTextSize, wrap: false, true)
                             Spacer()
                             ProfileViews.DismissView { EcheveriaModel.shared.removeActiveColor() } action: {
+                                dismissing = true
                                 await group.closePermissions(id: group._id.stringValue)
                             }
-
+                            
                         }
                         
                         TabView(selection: $page) {
@@ -48,7 +50,7 @@ struct GroupView: View {
                 }
                 .padding(.top, 45)
                 .padding(.bottom, 30)
-            }
+            } }
         }
         .padding()
         .universalColoredBackground( Colors.colorOptions[ group.colorIndex ] )

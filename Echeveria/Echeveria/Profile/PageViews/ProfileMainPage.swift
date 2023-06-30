@@ -47,7 +47,7 @@ struct ProfileMainView: View {
                         }.transition(.opacity)
                     }
                     
-                    RecentGamesView(games: Array(allGames), geo: geo)
+                    RecentGamesView(games: profile.getAllowedGames(from: allGames), geo: geo)
                         .padding(.bottom)
                 }
                 Spacer()
