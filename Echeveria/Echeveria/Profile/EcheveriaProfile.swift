@@ -230,7 +230,10 @@ class EcheveriaProfile: Object, Identifiable {
     func closePermission(ownerID: String) async {
 //        TODO: This should technically also clear all the profiles except this active one, but I don't feel like coding that rn, and its not essential :)
         
-        DispatchQueue.main.sync { loaded = false }
+        DispatchQueue.main.sync {
+            loaded = false
+            EcheveriaModel.shared.removeActiveColor()
+        }
         
         let realmManager = EcheveriaModel.shared.realmManager
         await realmManager.profileQuery.removeQuery(ownerID + QuerySubKey.account.rawValue)

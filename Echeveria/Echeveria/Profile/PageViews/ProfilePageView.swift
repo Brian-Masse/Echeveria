@@ -19,6 +19,7 @@ struct ProfilePageView: View {
     @ObservedResults(EcheveriaGame.self) var games
     
     @Binding var page: MainView.ProfilePage
+    @State var dismissing: Bool = false
     
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
@@ -30,7 +31,7 @@ struct ProfilePageView: View {
                 } 
                 await profile.updatePermissions(groups: filteredGroups, friendRequests: Array(profile.friendRequests), friends: Array(profile.friends), id: profile.ownerID)
                 EcheveriaModel.shared.addActiveColor(with: profile.getColor())
-            } content: {
+            } content: { if !dismissing {
                 ZStack(alignment: .topTrailing) {
                     ShapeBackgrond(page: $page, geo: geo,
                                    sizePath: [ .init(width: 150, height: 225), .init(width: 225, height: 337.5), .init(width: 225, height: 337.5) ],
@@ -52,14 +53,13 @@ struct ProfilePageView: View {
                         }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     }
                     
-                    ProfileViews.DismissView {
-                        if !mainUser { await profile.closePermission(ownerID: profile.ownerID) }
-                        EcheveriaModel.shared.removeActiveColor()
+                    ProfileViews.DismissView { EcheveriaModel.shared.removeActiveColor() } action: {
+                        await profile.closePermission(ownerID: profile.ownerID)
                     }
                     .padding(.top)
                     .padding(.top, 50)
                 }
-            }
+            }}
         }.universalColoredBackground( profile.getColor() )
     }
     

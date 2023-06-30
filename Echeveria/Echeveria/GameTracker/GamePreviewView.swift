@@ -15,8 +15,7 @@ struct GamePreviewView: View {
     
     @State var showingGameView: Bool = false
 
-    var group: EcheveriaGroup? { EcheveriaGroup.getGroupObject(from: game.groupID) }
-            
+    let group: EcheveriaGroup
     let geo: GeometryProxy
     
     var body: some View {
@@ -24,7 +23,7 @@ struct GamePreviewView: View {
         VStack(alignment: .leading) {
             UniversalText(game.type, size: Constants.UIHeaderTextSize - 5, true).textCase(.uppercase)
             
-            if group != nil { UniversalText("\(group!.name)", size: Constants.UIDefaultTextSize, lighter: true, true) }
+            UniversalText("\(group.name)", size: Constants.UIDefaultTextSize, lighter: true, true)
             UniversalText(game.date.formatted(date: .numeric, time: .omitted), size: Constants.UIDefaultTextSize, lighter: true )
             
         }

@@ -52,7 +52,8 @@ class EcheveriaGroup: Object, Identifiable {
         let results: Results<EcheveriaGroup> = EcheveriaModel.retrieveObject { query in
             query._id == _id
         }
-        guard let group = results.first else { print( "No group exists with the given id: \(_id)" ); return nil }
+        guard let group = results.first else {
+            print( "No group exists with the given id: \(_id)" ); return nil }
         return group
     }
     

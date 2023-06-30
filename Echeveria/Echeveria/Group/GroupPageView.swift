@@ -34,10 +34,10 @@ struct GroupView: View {
                         HStack {
                             UniversalText(group.name, size: Constants.UITitleTextSize, wrap: false, true)
                             Spacer()
-                            ProfileViews.DismissView {
+                            ProfileViews.DismissView { EcheveriaModel.shared.removeActiveColor() } action: {
                                 await group.closePermissions(id: group._id.stringValue)
-                                EcheveriaModel.shared.removeActiveColor()
                             }
+
                         }
                         
                         TabView(selection: $page) {

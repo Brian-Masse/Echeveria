@@ -38,11 +38,14 @@ struct ProfileViews {
     struct DismissView: View {
         
         @Environment(\.presentationMode) var presentationMode
+        let preAction: () async -> Void
         let action: () async -> Void
+        
         
         var body: some View {
             if presentationMode.wrappedValue.isPresented {
                 asyncShortRoundedButton(label: "dismiss", icon: "chevron.down") {
+                    await preAction()
                     presentationMode.wrappedValue.dismiss()
                     await action()
                 }
