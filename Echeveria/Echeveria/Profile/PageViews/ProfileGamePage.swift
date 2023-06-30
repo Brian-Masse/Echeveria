@@ -33,11 +33,6 @@ struct ProfileGameView: View {
                     
                     UniversalText("Overview", size: Constants.UIHeaderTextSize, true)
                     
-                    let winStreakData = profile.getWinStreakData(games: Array(games), profileID: profile.ownerID)
-                    let longestWinStreak = profile.getLongestWinStreak(from: Array(games), profileID: profile.ownerID)
-                    
-                    let games = Array(games)
-                    
                     TimeByTypeChart(title: "Wins", games: games) { fgames in
                         ProfileWinHistoryChart(profile: profile, games: games, filteredGames: fgames)
                         let winCountData = profile.getWins(in: .now, games: games)

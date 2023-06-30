@@ -12,38 +12,6 @@ import RealmSwift
 struct ProfilePreviewView: View {
 
     let profile: EcheveriaProfile
-    
-    @State var showingProfile: Bool = false
-    @State var page: MainView.ProfilePage = .main
-    
-    init( profileID: String ) {
-        self.profile = EcheveriaModel.retrieveObject(where: { query in
-            query.ownerID == profileID
-        }).first!
-    }
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            UniversalText(profile.userName, size: 20, true)
-            HStack {
-                Text(profile.firstName)
-                Text(profile.lastName)
-                Spacer()
-            }
-            Text(profile.ownerID)
-            
-        }
-        
-        .fullScreenCover(isPresented: $showingProfile) { ProfilePageView(profile: profile, page: $page) }
-        .opaqueRectangularBackground()
-        .onTapGesture { showingProfile = true }
-        
-    }
-}
-
-struct ReducedProfilePreviewView: View {
-
-    let profile: EcheveriaProfile
     @State var page: MainView.ProfilePage = .main
     
     init( profileID: String ) {

@@ -88,6 +88,8 @@ class RealmManager: ObservableObject {
             if let error = error { print("error logging out: \(error.localizedDescription)") }
             
             DispatchQueue.main.sync {
+                EcheveriaModel.shared.setActiveColor(with: Colors.main)
+                
                 self.signedIn = false
                 self.hasProfile = false
                 self.realmLoaded = false

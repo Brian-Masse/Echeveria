@@ -98,6 +98,7 @@ class EcheveriaProfile: Object, Identifiable {
             thawed.b = components.blue
             
             thawed.loaded = false
+            
             EcheveriaModel.shared.triggerReload = true
         }
     }
@@ -222,7 +223,7 @@ class EcheveriaProfile: Object, Identifiable {
             query.groupID.in(totalGroupIDs) && query.players.contains( self.ownerID )
         }
         
-        loaded = true
+        DispatchQueue.main.sync { loaded = true }
     }
     
     func closePermission(ownerID: String) async {
@@ -233,7 +234,7 @@ class EcheveriaProfile: Object, Identifiable {
         await realmManager.groupQuery.removeQuery(ownerID + QuerySubKey.groups.rawValue)
         await realmManager.gamesQuery.removeQuery(ownerID + QuerySubKey.games.rawValue)
         
-        loaded = false
+        DispatchQueue.main.sync { loaded = false }
     }
     
     func getAllowedGames(from games: Results<EcheveriaGame>) -> [EcheveriaGame] {

@@ -9,12 +9,8 @@ import Foundation
 import SwiftUI
 
 class Colors {
-    static var tint: Color {
-        if let profile = EcheveriaModel.shared.profile {
-            return profile.getColor()
-        }
-        return .blue
-    }
+    static var tint: Color { EcheveriaModel.shared.activeColors.last ?? main }
+    static var main: Color { forestGreen }
     
     static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
     static let darkGrey = Color(red: 0.1, green: 0.1, blue: 0.1).opacity(0.9)
@@ -45,6 +41,7 @@ class Colors {
     
 }
 
+//MARK: ColorPallette
 class ColorPallette {
     
     let mainColors: [Color]

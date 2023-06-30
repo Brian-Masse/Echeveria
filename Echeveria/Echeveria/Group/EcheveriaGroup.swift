@@ -119,13 +119,13 @@ class EcheveriaGroup: Object, Identifiable {
 //    MARK: Permissions
 //    TODO: I'm not sure this is the best way to do this, it might be long to load hundreds of things at once
 //    there should be a limit to how muhc it pulls at once
-    func updatePermissionsForGroupView() async {
+    func updatePermissionsForGroupView(id: String) async {
         let realmManager = EcheveriaModel.shared.realmManager
-        await realmManager.profileQuery.addQuery { query in
+        await realmManager.profileQuery.addQuery(id + QuerySubKey.account.rawValue) { query in
             query.ownerID.in( self.members )
         }
         
-        await realmManager.gamesQuery.addQuery { query in
+        await realmManager.gamesQuery.addQuery(id + QuerySubKey.games.rawValue) { query in
             query.groupID == self._id
         }
     }
@@ -135,6 +135,13 @@ class EcheveriaGroup: Object, Identifiable {
         await realmManager.profileQuery.addQuery { query in
             query.ownerID.in( self.members )
         }
+    }
+    
+    func closePermissions(id: String) async {
+        let realmManager = EcheveriaModel.shared.realmManager
+        
+        await realmManager.profileQuery.removeQuery(id + QuerySubKey.account.rawValue)
+        await realmManager.gamesQuery.removeQuery(id + QuerySubKey.games.rawValue)
     }
     
 //    MARK: Graphing Helper Functions

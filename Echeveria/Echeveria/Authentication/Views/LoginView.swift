@@ -27,6 +27,9 @@ struct LoginView: View {
             }else {
                 
                 VStack {
+                    
+                
+                    
                     Picker("Sign in Method", selection: $signinMethod) {
                         ForEach( LoginModel.LoginMethod.allCases ) { content in
                             Text( content.rawValue )
@@ -43,7 +46,7 @@ struct LoginView: View {
             }
         }
         .environmentObject(loginModel)
-        .universalBackground()
+        .universalColoredBackground( Colors.tint )
     }
 }
 

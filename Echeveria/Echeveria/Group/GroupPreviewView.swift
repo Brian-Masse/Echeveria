@@ -57,7 +57,7 @@ struct GroupPreviewView: View {
             .cornerRadius(15)
             .universalForeground()
             .onTapGesture { showingGroup = true }
-            .sheet(isPresented: $showingGroup) { GroupView(group: group, games: EcheveriaModel.retrieveObject { game in game.groupID == group._id } ) }
+            .fullScreenCover(isPresented: $showingGroup) { GroupView(group: group, games: EcheveriaModel.retrieveObject { game in game.groupID == group._id } ) }
         )
     }
 }

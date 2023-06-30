@@ -19,9 +19,24 @@ class EcheveriaModel: ObservableObject {
     @Published var triggerReload: Bool = false
     
     private(set) var profile: EcheveriaProfile!
+    private(set) var activeColors: [Color] = []
     
     func setProfile(with profile: EcheveriaProfile) {
         self.profile = profile
+        self.activeColors.append(profile.getColor())
+    }
+    
+    func addActiveColor(with color: Color) {
+        self.activeColors.append(color)
+    }
+    
+    func setActiveColor(with color: Color) {
+        self.activeColors = [color]
+    }
+    
+    func removeActiveColor() {
+        if activeColors.count <= 1 { return }
+        self.activeColors.removeLast()
     }
     
     //MARK: Convience Functions

@@ -34,6 +34,23 @@ struct ProfileViews {
         }
     }
     
+//    MARK: DismissView {
+    struct DismissView: View {
+        
+        @Environment(\.presentationMode) var presentationMode
+        let action: () async -> Void
+        
+        var body: some View {
+            if presentationMode.wrappedValue.isPresented {
+                asyncShortRoundedButton(label: "dismiss", icon: "chevron.down") {
+                    await action()
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .padding(.horizontal, 5)
+            }
+        }
+    }
+    
     //MARK: EditingProfileView
     struct EditingProfileView: View {
         

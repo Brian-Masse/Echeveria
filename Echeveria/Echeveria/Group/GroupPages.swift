@@ -26,8 +26,6 @@ struct MainGroupViewPage: View {
         ScrollView(.vertical) {
             VStack(alignment: .leading) {
                 
-                let recentGames = games.returnFirst(5)
-                
                 HStack {
                     ResizeableIcon(icon: group.icon, size: Constants.UIHeaderTextSize)
                     UniversalText(group.groupDescription, size: Constants.UIDefaultTextSize)
@@ -68,7 +66,7 @@ struct MainGroupViewPage: View {
                 UniversalText("Members", size: Constants.UIHeaderTextSize, true)
                 VStack {
                     ForEach( group.members, id: \.self ) { memberID in
-                        ReducedProfilePreviewView(profileID: memberID)
+                        ProfilePreviewView(profileID: memberID)
                             .padding(.bottom, 5)
                     }
                 }

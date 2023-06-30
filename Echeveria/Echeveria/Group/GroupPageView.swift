@@ -26,16 +26,28 @@ struct GroupView: View {
         GeometryReader { geo in
             
             AsyncLoader {
-                await group.updatePermissionsForGroupView()
+                await group.updatePermissionsForGroupView(id: group._id.stringValue)
+                EcheveriaModel.shared.addActiveColor(with: Colors.colorOptions[group.colorIndex])
             } content: {
-                VStack(alignment: .leading) {
-                    UniversalText(group.name, size: Constants.UITitleTextSize, wrap: false, true)
-                    
-                    TabView(selection: $page) {
-                        MainGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.overview)
-                        ChartsGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.stats)
+                ZStack(alignment: .topTrailing) {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            UniversalText(group.name, size: Constants.UITitleTextSize, wrap: false, true)
+                            Spacer()
+                            ProfileViews.DismissView {
+                                await group.closePermissions(id: group._id.stringValue)
+                                EcheveriaModel.shared.removeActiveColor()
+                            }
+                        }
+                        
+                        TabView(selection: $page) {
+                            MainGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.overview)
+                            ChartsGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.stats)
+                        }
                     }
                 }
+                .padding(.top, 45)
+                .padding(.bottom, 30)
             }
         }
         .padding()

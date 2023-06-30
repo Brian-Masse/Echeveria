@@ -30,6 +30,7 @@ struct ProfilePageView: View {
                     group.members.contains( profile.ownerID )
                 } 
                 await profile.updatePermissions(groups: filteredGroups, friendRequests: Array(profile.friendRequests), friends: Array(profile.friends), id: profile.ownerID)
+                EcheveriaModel.shared.addActiveColor(with: profile.getColor())
             } content: {
                 ZStack(alignment: .topTrailing) {
                     
@@ -53,16 +54,12 @@ struct ProfilePageView: View {
                         }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     }
                     
-
-                    if presentationMode.wrappedValue.isPresented {
-                        asyncShortRoundedButton(label: "dismiss", icon: "chevron.down") {
-                            if !mainUser { await profile.closePermission(ownerID: profile.ownerID) }
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                        .padding(.top)
-                        .padding(.top, 50)
-                        .padding(.horizontal)
+                    ProfileViews.DismissView {
+                        if !mainUser { await profile.closePermission(ownerID: profile.ownerID) }
+                        EcheveriaModel.shared.removeActiveColor()
                     }
+                    .padding(.top)
+                    .padding(.top, 50)
                 }
             }
         }.universalColoredBackground( profile.getColor() )

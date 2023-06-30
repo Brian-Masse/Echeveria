@@ -55,12 +55,12 @@ struct GameView: View {
                         
                         UniversalText( game.winners.count == 1 ? "Winner" : "Winners", size: Constants.UISubHeaderTextSize, true )
                         ForEach( game.winners, id: \.self ) { memberID in
-                            ReducedProfilePreviewView(profileID: memberID).padding(.bottom, 5)
+                            ProfilePreviewView(profileID: memberID).padding(.bottom, 5)
                         }.rectangularBackgorund()
                         
                         UniversalText( "Players", size: Constants.UISubHeaderTextSize, true)
                         ForEach( game.players, id: \.self ) { memberID in
-                            ReducedProfilePreviewView(profileID: memberID).padding(.bottom, 5)
+                            ProfilePreviewView(profileID: memberID).padding(.bottom, 5)
                         }.rectangularBackgorund()
                     }
                     
