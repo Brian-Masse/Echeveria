@@ -56,13 +56,16 @@ class RealmManager: ObservableObject {
     }
     
 //    Called by the LoginModel once credentials are provided
-    func authUser(credentials: Credentials) async {
+    func authUser(credentials: Credentials) async -> Error? {
 //        this simply logs the profile in and returns any status errors
 //        Once the user is signed in, the LoginView loads the realm using the config generated in self.post-authentication()
         do {
+            
+        
             self.user = try await app.login(credentials: credentials)
             self.postAuthenticationInit()
-        } catch { print("error logging in: \(error.localizedDescription)") }
+            return nil
+        } catch { print("error logging in: \(error.localizedDescription)"); return error }
     }
     
     private func postAuthenticationInit(loggingin: Bool = false) {
@@ -71,15 +74,23 @@ class RealmManager: ObservableObject {
         else { self.signedIn = true }
     }
     
+    static func stripEmail(_ email: String) -> String {
+        email
+            .lowercased()
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
 //    only needs to run for email + password signup
-    func registerUser(_ email: String, _ password: String) async {
+    func registerUser(_ email: String, _ password: String) async -> Error? {
         
         let client = app.emailPasswordAuth
-        
         do {
             try await client.registerUser(email: email, password: password)
+            return nil
         } catch {
+            if error.localizedDescription == "name already in use" { return nil }
             print("failed to register user: \(error.localizedDescription)")
+            return error
         }
     }
     

@@ -155,8 +155,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "authRealm(realm:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -264,8 +264,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "addGenericSubcriptions(name:query:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -280,8 +280,8 @@
             filePath = "Echeveria/Authentication/RealmManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
             landmarkName = "removeAllNonBaseSubscriptions()"
             landmarkType = "7">
          </BreakpointContent>
@@ -534,8 +534,8 @@
             filePath = "Echeveria/Profile/PageViews/ProfilePageView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -582,8 +582,8 @@
             filePath = "Echeveria/Profile/EcheveriaProfile.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "getAllowedGames(from:)"
             landmarkType = "7">
             <Locations>
@@ -825,22 +825,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1D2946C6-5DF7-4899-96E3-3A9F12EC2256"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Echeveria/Profile/EcheveriaProfile.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
-            landmarkName = "updatePermissions(groups:friendRequests:friends:id:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "59E58A95-94E8-4ACE-B164-F6B478C7B0AB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -941,8 +925,8 @@
             filePath = "Echeveria/Profile/PageViews/ProfilePageView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -1023,6 +1007,393 @@
                   startingLineNumber = "78"
                   endingLineNumber = "78"
                   offsetFromSymbolStart = "142">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F9B34A39-1237-4748-AD3A-97855DD32CE7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/Profile/SupportingViews.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "F9B34A39-1237-4748-AD3A-97855DD32CE7 - ff625dcb970bc615"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.String) -&gt; Echeveria.ProfilePreviewView in closure #1 () -&gt; SwiftUI.TupleView&lt;(Echeveria.UniversalText, SwiftUI._ConditionalContent&lt;Echeveria.ListView&lt;RealmSwift.List&lt;Swift.String&gt;, Swift.String, Echeveria.ProfilePreviewView&gt;, Echeveria.LargeFormRoundedButton&gt;)&gt; in Echeveria.ProfileViews.FriendView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/SupportingViews.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "417">
+               </Location>
+               <Location
+                  uuid = "F9B34A39-1237-4748-AD3A-97855DD32CE7 - ff625dcb970bc615"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.String) -&gt; Echeveria.ProfilePreviewView in closure #1 () -&gt; SwiftUI.TupleView&lt;(Echeveria.UniversalText, SwiftUI._ConditionalContent&lt;Echeveria.ListView&lt;RealmSwift.List&lt;Swift.String&gt;, Swift.String, Echeveria.ProfilePreviewView&gt;, Echeveria.LargeFormRoundedButton&gt;)&gt; in Echeveria.ProfileViews.FriendView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/SupportingViews.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "320">
+               </Location>
+               <Location
+                  uuid = "F9B34A39-1237-4748-AD3A-97855DD32CE7 - ff625dcb970bc615"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.String) -&gt; Echeveria.ProfilePreviewView in closure #1 () -&gt; SwiftUI.TupleView&lt;(Echeveria.UniversalText, SwiftUI._ConditionalContent&lt;Echeveria.ListView&lt;RealmSwift.List&lt;Swift.String&gt;, Swift.String, Echeveria.ProfilePreviewView&gt;, Echeveria.LargeFormRoundedButton&gt;)&gt; in Echeveria.ProfileViews.FriendView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/SupportingViews.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "374">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DF6681B0-3EEA-44A2-971A-E5FED3DF61E0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/Profile/PageViews/ProfilePageView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "DF6681B0-3EEA-44A2-971A-E5FED3DF61E0 - e5b6e5bf76a95eef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #2 () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt; in closure #2 () -&gt; SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt; in closure #1 (SwiftUI.GeometryProxy) -&gt; Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "68">
+               </Location>
+               <Location
+                  uuid = "DF6681B0-3EEA-44A2-971A-E5FED3DF61E0 - 835b06cc479a7e28"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for closure #2 () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt; in closure #2 () -&gt; SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt; in closure #1 (SwiftUI.GeometryProxy) -&gt; Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "DF6681B0-3EEA-44A2-971A-E5FED3DF61E0 - 98ce3a567b3bdacd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #2 () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt; in closure #2 () -&gt; SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt; in closure #1 (SwiftUI.GeometryProxy) -&gt; Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "DF6681B0-3EEA-44A2-971A-E5FED3DF61E0 - e5b6e5bf76a95eef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #2 () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt; in closure #2 () -&gt; SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt; in closure #1 (SwiftUI.GeometryProxy) -&gt; Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "427">
+               </Location>
+               <Location
+                  uuid = "DF6681B0-3EEA-44A2-971A-E5FED3DF61E0 - 98ce3a567b3bdacd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #2 () async -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt; in closure #2 () -&gt; SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt; in closure #1 (SwiftUI.GeometryProxy) -&gt; Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "110">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7292513C-B5D9-4DB1-BD5A-DA8D3406FC82"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/Profile/PageViews/ProfilePageView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "7292513C-B5D9-4DB1-BD5A-DA8D3406FC82 - 72408c4fdf6593d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 () async -&gt; () in closure #1 (SwiftUI.GeometryProxy) -&gt; Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "119">
+               </Location>
+               <Location
+                  uuid = "7292513C-B5D9-4DB1-BD5A-DA8D3406FC82 - adb7ebb9c22978c2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Echeveria.EcheveriaGroup) -&gt; Swift.Bool in closure #1 () async -&gt; () in closure #1 (SwiftUI.GeometryProxy) -&gt; Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "110">
+               </Location>
+               <Location
+                  uuid = "7292513C-B5D9-4DB1-BD5A-DA8D3406FC82 - be2d5815dc8923ce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SwiftUI.GeometryProxy) -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt;)&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "569">
+               </Location>
+               <Location
+                  uuid = "7292513C-B5D9-4DB1-BD5A-DA8D3406FC82 - 30b93c296ce453d4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () async -&gt; () in closure #1 (SwiftUI.GeometryProxy) -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt;)&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "176">
+               </Location>
+               <Location
+                  uuid = "7292513C-B5D9-4DB1-BD5A-DA8D3406FC82 - 1344c96b255377b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 () async -&gt; () in closure #1 (SwiftUI.GeometryProxy) -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, Echeveria.AsyncLoader&lt;SwiftUI.ZStack&lt;SwiftUI.TupleView&lt;(Echeveria.ProfilePageView.ShapeBackgrond, Echeveria.ProfilePageView.ShapeBackgrond, SwiftUI.VStack&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;&gt;)&gt; in Echeveria.ProfilePageView.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/PageViews/ProfilePageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "103">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/Profile/EcheveriaProfile.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "updatePermissions(groups:friendRequests:friends:id:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - c50b2fb1dab8fc1d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "218"
+                  endingLineNumber = "218"
+                  offsetFromSymbolStart = "227">
+               </Location>
+               <Location
+                  uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - e5e6c33879b58532"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "218"
+                  endingLineNumber = "218"
+                  offsetFromSymbolStart = "34">
+               </Location>
+               <Location
+                  uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - 209f79fbf091a01f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "218"
+                  endingLineNumber = "218"
+                  offsetFromSymbolStart = "142">
+               </Location>
+               <Location
+                  uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - b20d22e2610e0e26"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (RealmSwift.Query&lt;Echeveria.EcheveriaGroup&gt;) -&gt; RealmSwift.Query&lt;Swift.Bool&gt; in Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "208"
+                  endingLineNumber = "208"
+                  offsetFromSymbolStart = "39">
+               </Location>
+               <Location
+                  uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - 99a4966fcc603813"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "218"
+                  endingLineNumber = "218"
+                  offsetFromSymbolStart = "1090">
+               </Location>
+               <Location
+                  uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - 7cb7364b705a4130"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "218"
+                  endingLineNumber = "218"
+                  offsetFromSymbolStart = "34">
+               </Location>
+               <Location
+                  uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - c50b2fb1dab8fc1d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "218"
+                  endingLineNumber = "218"
+                  offsetFromSymbolStart = "142">
+               </Location>
+               <Location
+                  uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - 67fb941e8493f439"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (RealmSwift.Query&lt;Echeveria.EcheveriaGroup&gt;) -&gt; RealmSwift.Query&lt;Swift.Bool&gt; in Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "208"
+                  endingLineNumber = "208"
+                  offsetFromSymbolStart = "39">
                </Location>
             </Locations>
          </BreakpointContent>

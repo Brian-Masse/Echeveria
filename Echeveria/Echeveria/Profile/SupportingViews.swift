@@ -43,8 +43,8 @@ struct ProfileViews {
         var body: some View {
             if presentationMode.wrappedValue.isPresented {
                 asyncShortRoundedButton(label: "dismiss", icon: "chevron.down") {
-                    await action()
                     presentationMode.wrappedValue.dismiss()
+                    await action()
                 }
                 .padding(.horizontal, 5)
             }

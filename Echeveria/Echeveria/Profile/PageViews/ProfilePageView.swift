@@ -24,7 +24,6 @@ struct ProfilePageView: View {
     
     var body: some View {
         GeometryReader { geo in
-            
             AsyncLoader {
                 let filteredGroups: [EcheveriaGroup] = groups.filter { group in
                     group.members.contains( profile.ownerID )
@@ -33,7 +32,6 @@ struct ProfilePageView: View {
                 EcheveriaModel.shared.addActiveColor(with: profile.getColor())
             } content: {
                 ZStack(alignment: .topTrailing) {
-                    
                     ShapeBackgrond(page: $page, geo: geo,
                                    sizePath: [ .init(width: 150, height: 225), .init(width: 225, height: 337.5), .init(width: 225, height: 337.5) ],
                                    posPath: [ .init(x: -geo.size.width + 80, y: geo.size.height - 180), .init(x: -geo.size.width / 2, y: 50), .init(x: 100, y: 0) ],
@@ -46,7 +44,7 @@ struct ProfilePageView: View {
                     
                     
                     VStack(alignment: .leading) {
-                        TabView(selection: $page) {  
+                        TabView(selection: $page) {
                             ProfileMainView(profile:  $profile.wrappedValue, allGames: $games.wrappedValue, geo: geo).padding().tag( MainView.ProfilePage.main )
                             ProfileGameView(profile:  $profile.wrappedValue, allGames: $games.wrappedValue,     geo: geo).padding().tag(  MainView.ProfilePage.games )
                             ProfileSocialPage(profile:$profile.wrappedValue, allGroups: $groups.wrappedValue,   geo: geo).padding().tag(  MainView.ProfilePage.social )

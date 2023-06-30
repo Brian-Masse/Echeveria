@@ -17,31 +17,51 @@ struct LoginView: View {
     
     @State var signinMethod: LoginModel.LoginMethod = .email
     @State var signingIn: Bool = false
+    @State var devMode: Bool = false
+    
+    @ViewBuilder
+    func form(geo: GeometryProxy) -> some View {
+        VStack(alignment: .leading) {
+            EmailView(signingIn: $signingIn)
+                .padding(.bottom, 20)
+            
+            Toggle(isOn: $devMode) {
+                UniversalText("Advanced Options", size: Constants.UISubHeaderTextSize, lighter: true, true)
+            }.tint(Colors.tint)
+            
+            if devMode {
+                APIView(signingIn: $signingIn)
+                    .padding(.bottom)
+                
+                UniversalText("Anonymous", size: Constants.UISubHeaderTextSize, lighter: true, true)
+                RoundedButton(label: "Login Anonymously", icon: "person.badge.clock") { self.signingIn = true; loginModel.AnonymousSignIn() }
+                UniversalText( "An anonymous account has the same permissions as a regular user, but is deleted when logging out. Do not sign in anonymously for long term use.", size: Constants.UIDefaultTextSize, wrap: true, lighter: true )
+                    .frame(width: geo.size.width - 65)
+                    .fixedSize()
+            }
+        }
+        .animation(.default, value: devMode)
+        .padding()
+//        .universalTextStyle()
+        .rectangularBackgorund()
+        .padding(.horizontal, 15)
+        .padding(.vertical, 20)
+        .padding(.bottom, 40)
+        .shadow(radius: 10)
+    }
     
     var body: some View {
     
-        ZStack {
-            if signingIn {
-                ProgressView()
-                    .task { await loginModel.authenticateUser() }
-            }else {
-                
-                VStack {
-                    
-                
-                    
-                    Picker("Sign in Method", selection: $signinMethod) {
-                        ForEach( LoginModel.LoginMethod.allCases ) { content in
-                            Text( content.rawValue )
-                        }
-                    }.pickerStyle(.segmented)
-                    Spacer()
-                    switch signinMethod {
-                    case .API:          APIView(signingIn: $signingIn)
-                    case .email:        EmailView(signingIn: $signingIn)
-                    case .Apple:        Text("Apple")
-                    case .Anonymous:    RoundedButton(label: "Login", icon: "checkmark.seal") { self.signingIn = true; loginModel.AnonymousSignIn() }
-                    }
+        GeometryReader { geo in
+            VStack(alignment: .leading) {
+                UniversalText("Choose Sign in Method", size: Constants.UITitleTextSize, true)
+                    .padding(.horizontal, 15)
+                    .padding(.top, 60)
+            
+                if devMode { ScrollView(.vertical) {
+                    form(geo: geo)
+                }} else {
+                    form(geo: geo)
                 }
             }
         }
@@ -50,9 +70,3 @@ struct LoginView: View {
     }
 }
 
-
-//struct SwiftUIView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoginView()
-//    }
-//}

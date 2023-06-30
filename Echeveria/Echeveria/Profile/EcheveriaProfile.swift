@@ -204,8 +204,9 @@ class EcheveriaProfile: Object, Identifiable {
         if loaded { return }
         let realmManager = EcheveriaModel.shared.realmManager
         
-//        A collection of every member of every gropu that you are a part of
+//        A collection of every member of every group that you are a part of
         var totalMembers: [String] = groups.reduce([id]) { partialResult, group in partialResult + group.members }
+        
         totalMembers.append(contentsOf: friendRequests)
         totalMembers.append(contentsOf: friends)
         let totalGroupIDs = self.getGroupIDs(groups)
@@ -215,7 +216,7 @@ class EcheveriaProfile: Object, Identifiable {
         }
 //        Add all of this user's groups
         await realmManager.groupQuery.addQuery(id + QuerySubKey.groups.rawValue) { query in
-            query.owner == self.ownerID
+            query.owner.in( totalMembers )
         }
         
 //        Get every game that is in any group you're in, and that has you as a player
@@ -229,12 +230,12 @@ class EcheveriaProfile: Object, Identifiable {
     func closePermission(ownerID: String) async {
 //        TODO: This should technically also clear all the profiles except this active one, but I don't feel like coding that rn, and its not essential :)
         
+        DispatchQueue.main.sync { loaded = false }
+        
         let realmManager = EcheveriaModel.shared.realmManager
         await realmManager.profileQuery.removeQuery(ownerID + QuerySubKey.account.rawValue)
         await realmManager.groupQuery.removeQuery(ownerID + QuerySubKey.groups.rawValue)
         await realmManager.gamesQuery.removeQuery(ownerID + QuerySubKey.games.rawValue)
-        
-        DispatchQueue.main.sync { loaded = false }
     }
     
     func getAllowedGames(from games: Results<EcheveriaGame>) -> [EcheveriaGame] {

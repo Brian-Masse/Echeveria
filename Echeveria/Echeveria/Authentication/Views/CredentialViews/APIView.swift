@@ -19,17 +19,19 @@ struct APIView: View {
     
     var body: some View {
         
-        Form {
-            Section("API Token") {
+        VStack(alignment: .leading) {
+            UniversalText("API Token", size: Constants.UISubHeaderTextSize, lighter: true, true)
+            VStack {
                 TextField("Token", text: $APIToken)
                 TextField("Copy", text: $remove)
-                
-            }.universalFormSection()
-        }.universalForm()
-        
-        RoundedButton(label: "Submit", icon: "checkmark.seal") {
-            loginModel.APISignIn(APIToken)
-            signingIn = true
+            }
+            .opaqueRectangularBackground()
+            .padding(.bottom)
+            
+            AsyncRoundedButton(label: "Login with Token", icon: "lanyardcard") {
+                loginModel.APISignIn(APIToken)
+                let _ = await loginModel.authenticateUser()
+            }   
         }
     }
 }

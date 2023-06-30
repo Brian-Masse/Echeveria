@@ -41,7 +41,7 @@ class LoginModel: ObservableObject {
         self.credentials = Credentials.emailPassword(email: email, password: password)
     }
     
-    func authenticateUser() async {
+    func authenticateUser() async -> Error? {
         await EcheveriaModel.shared.realmManager.authUser(credentials: self.credentials)
     }
     

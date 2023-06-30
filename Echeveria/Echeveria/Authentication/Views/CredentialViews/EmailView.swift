@@ -21,29 +21,43 @@ struct EmailView: View {
     
     @Binding var signingIn: Bool
     
+    @State var error: Error?
+    @State var failedToRegisterUser: Bool = false
+    
     var body: some View {
         
-        VStack {
-            Form {
-//                Section("Basic Info") {
-//                    TextField("First Name", text: $firstName)
-//                    TextField("Last Name", text: $lastName)
-//                    TextField("userName", text: $userName)
-//                }.universalFormSection()
+        VStack(alignment: .leading) {
+            UniversalText("email", size: Constants.UISubHeaderTextSize, lighter: true, true)
+            VStack(spacing: 10) {
+                TextField("email", text: $email)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+                SecureField("password", text: $password)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+            }
+            .opaqueRectangularBackground()
+            
+            AsyncRoundedButton(label: "Login with email", icon: "envelope") {
+                let fixexEmail = RealmManager.stripEmail(email)
+                error =  await EcheveriaModel.shared.realmManager.registerUser(fixexEmail, password)
+                if error == nil {
+                    loginModel.passwordSignIn(fixexEmail, password)
+                    
+                    error = await loginModel.authenticateUser()
+                    if self.error != nil { failedToRegisterUser = true }
+                    
+                    
+                } else { failedToRegisterUser = true }
                 
-                Section("Account") {
-                    TextField("email", text: $email)
-                    TextField("password", text: $password)
-                }.universalFormSection()
             }
-            .universalForm()
-            
-            AsyncRoundedButton(label: "Submit", icon: "checkmark.seal") {
-                await EcheveriaModel.shared.realmManager.registerUser(email, password)
-                loginModel.passwordSignIn(email, password)
-                signingIn = true
+            .alert(isPresented: $failedToRegisterUser) {
+                Alert(
+                    title: Text("Issue Registering User"),
+                    message: Text(error!.localizedDescription),
+                    dismissButton: .cancel())
             }
-            
+            .padding(.bottom)
         }
     }
     

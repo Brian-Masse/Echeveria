@@ -66,12 +66,17 @@ struct SearchPageView: View {
                         ListView(title: "Groups", collection: Array(groups), geo: geo) { group in !group.hasMember(EcheveriaModel.shared.profile.ownerID) }
                     contentBuilder: { group in GroupPreviewView( group: group, geo: geo ) }
                         
-                        //                            TODO: The first time this loads it will automatically dismiss the views
-                        ListView(title: "Players", collection: Array(profiles), geo: geo) { profile in
-                            profile.firstName == searchQuery || profile.lastName == searchQuery }
-                    contentBuilder: { profile in ProfilePreviewView(profileID: profile.ownerID) }
+                        
+                        let filtered = profiles.filter { profile in profile.firstName == searchQuery || profile.lastName == searchQuery }.compactMap { profile in
+                            profile.ownerID
+                        }
+                        
+//                            TODO: The first time this loads it will automatically dismiss the views
+                        ListView(title: "Players", collection: Array(filtered), geo: geo) { _ in true } contentBuilder: { profileID in
+                            ProfilePreviewView(profileID: profileID)
+                        }
                     }
-                }
+                }.padding(.bottom, 80)
             }
         }
     }

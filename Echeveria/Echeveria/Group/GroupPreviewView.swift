@@ -29,6 +29,7 @@ struct GroupPreviewView: View {
                 UniversalText(group.name, size: Constants.UISubHeaderTextSize, wrap: false, true )
                 Spacer()
                 
+                
                 ShortRoundedButton("Favorite", to: "", icon: "seal", to: "checkmark.seal") { isFavorite } action: {
                     if isFavorite   { withAnimation { EcheveriaModel.shared.profile.unfavoriteGroup(group) }}
                     else            { withAnimation { EcheveriaModel.shared.profile.favoriteGroup(group) }}
