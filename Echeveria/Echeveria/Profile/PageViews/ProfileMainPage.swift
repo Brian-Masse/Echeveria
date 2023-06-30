@@ -107,7 +107,7 @@ struct ProfileMainView: View {
                     ListView(title: "", collection: requests.indices, geo: geo) { i in true} contentBuilder: { i in
                     
                         VStack(alignment: .leading) {
-                            ZStack(alignment: .topTrailing) {
+                            ZStack(alignment: .trailing) {
                                 ProfilePreviewView(profileID:  requests[i] )
                                 ShortRoundedButton("accept", icon: "checkmark") {
                                     profile.acceptFriend(requests[i], index: i)

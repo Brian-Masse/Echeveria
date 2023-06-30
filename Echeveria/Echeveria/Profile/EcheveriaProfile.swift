@@ -216,7 +216,7 @@ class EcheveriaProfile: Object, Identifiable {
         }
 //        Add all of this user's groups
         await realmManager.groupQuery.addQuery(id + QuerySubKey.groups.rawValue) { query in
-            query.owner.in( totalMembers )
+            query.members.contains(id)
         }
         
 //        Get every game that is in any group you're in, and that has you as a player
@@ -246,11 +246,7 @@ class EcheveriaProfile: Object, Identifiable {
     }
     
     func getAllowedGroups(from groups: Results<EcheveriaGroup>) -> [EcheveriaGroup] {
-        Array(groups.filter { group in
-            group.members.contains { strID in
-                strID == self.ownerID
-            }
-        })
+        Array(groups.filter { group in group.members.contains { str in str == self.ownerID } })
     }
     
 //    MARK: Graphing Helper Functions

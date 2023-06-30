@@ -58,7 +58,7 @@ struct MainView: View {
                     HStack {
                         Spacer()
                         TabBarButton(icon: "house.lodge", test: mainView, geo: geo, activePage: $page, page: .main)
-                        TabBarButton(icon: "chart.bar.xaxis", test: mainView, geo: geo, activePage: $page, page: .games)
+                        TabBarButton(icon: "chart.bar", test: mainView, geo: geo, activePage: $page, page: .games)
                         TabBarButton(icon: "person.3.sequence", test: mainView, geo: geo, activePage: $page, page: .social)
                         TabBarButton(icon: "magnifyingglass", test: mainView, geo: geo, activePage: $page, page: .search)
                             .padding(.trailing, 15)
