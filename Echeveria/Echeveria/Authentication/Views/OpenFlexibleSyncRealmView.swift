@@ -29,10 +29,30 @@ struct OpenFlexibleSyncRealmView: View {
         }
     }
     
+    private func dismissScreen() {
+        EcheveriaModel.shared.realmManager.realmLoaded = false
+        EcheveriaModel.shared.realmManager.signedIn = false
+        EcheveriaModel.shared.realmManager.hasProfile = false
+    }
+    
     var body: some View {
         
         GeometryReader { geo in
             ZStack(alignment: .center) {
+                VStack {
+                    Spacer()
+                    Image("signin.backgorund")
+                        .resizable()
+                        .renderingMode(.template)
+                        .rotationEffect(Angle( degrees: 0 ))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: geo.size.width + 200)
+                        .offset(x: -80, y: 40)
+                        .foregroundColor(Colors.main)
+                        .opacity(0.7)
+//                        .rotation3DEffect(Angle(degrees: 180), axis: (x: 0, y: 1, z: 0))
+                }
+                
                 VStack {
                     switch asyncOpen {
                         
@@ -61,6 +81,7 @@ struct OpenFlexibleSyncRealmView: View {
                         VStack {
                             loadingCase(icon: "server.rack", title: "Downloading Realm from Server")
                             ProgressView(progress)
+                                .tint(Colors.main)
                         }
                         
                     case .error(let error):
@@ -71,6 +92,9 @@ struct OpenFlexibleSyncRealmView: View {
                                 showingAlert = true
                             }
                     }
+                    
+                    RoundedButton(label: "cancel", icon: "chevron.left", action: dismissScreen)
+                        .padding(.top)
                 }
                 .frame(width: geo.size.width / 3)
                 .padding()
@@ -80,11 +104,8 @@ struct OpenFlexibleSyncRealmView: View {
                 .alert(isPresented: $showingAlert) { Alert(
                     title: Text(title),
                     message: Text(alertMessage),
-                    dismissButton: .cancel {
-                        EcheveriaModel.shared.realmManager.realmLoaded = false
-                        EcheveriaModel.shared.realmManager.signedIn = false
-                        EcheveriaModel.shared.realmManager.hasProfile = false
-                    }   ) }
+                    dismissButton: .cancel { dismissScreen() })
+                }
             }.frame(width: geo.size.width, height: geo.size.height)
             
         }.universalColoredBackground(Colors.main)

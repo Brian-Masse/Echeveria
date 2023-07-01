@@ -14,26 +14,30 @@ struct EcheveriaView: View {
     
     var body: some View {
         
-        if !realmManager.signedIn {
-            LoginView()
+        VStack {
+            if !realmManager.signedIn {
+                LoginView()
+                    .transition( .asymmetric(insertion: .push(from: .leading), removal: .push(from: .trailing)) )
+                
+            } else if !realmManager.realmLoaded {
+                OpenFlexibleSyncRealmView()
+                    .transition( .push(from: .trailing) )
+                    .environment(\.realmConfiguration, realmManager.configuration)
+                
+            } else if !realmManager.hasProfile {
+                ProfileCreationView()
+                    .transition( .push(from: .trailing) )
+                    .environment(\.realmConfiguration, realmManager.configuration)
+            }
+            else {
+                MainView()
+                    .transition( .asymmetric(insertion: .push(from: .trailing), removal: .push(from: .leading)) )
+                    .environment(\.realmConfiguration, realmManager.configuration)
+            }
+        }
+        .animation(.default, value: realmManager.signedIn)
+        .animation(.default, value: realmManager.realmLoaded)
+        .animation(.default, value: realmManager.hasProfile)
         
-        } else if !realmManager.realmLoaded {
-            OpenFlexibleSyncRealmView()
-                .environment(\.realmConfiguration, realmManager.configuration)
-            
-        } else if !realmManager.hasProfile {
-            ProfileCreationView()
-                .environment(\.realmConfiguration, realmManager.configuration)
-        }
-        else {
-            MainView()
-                .environment(\.realmConfiguration, realmManager.configuration)
-        }
     }
 }
-
-//struct SwiftUIView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        signupForm()
-//    }
-//}

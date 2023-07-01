@@ -7,6 +7,7 @@
 
 import Foundation
 import RealmSwift
+import SwiftUI
 
 class GameDataNode: Object, Identifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
@@ -64,14 +65,14 @@ class EcheveriaGame: Object, Identifiable {
     @Persisted var groupID: ObjectId = ObjectId()
     @Persisted var date: Date = .now
     
-    @Persisted var players: List<String> = List()
-    @Persisted var winners: List<String> = List()
+    @Persisted var players: RealmSwift.List<String> = List()
+    @Persisted var winners: RealmSwift.List<String> = List()
     @Persisted var experieince: String = GameExperience.good.rawValue
     @Persisted var comments: String = ""
     
-    @Persisted var gameData: List<GameDataNode> = List()
+    @Persisted var gameData: RealmSwift.List<GameDataNode> = List()
     
-    convenience init( _ ownerID: String, type: GameType, group: EcheveriaGroup, date: Date, players: List<String>, winners: List<String>, experience: GameExperience, comments: String, gameData: Dictionary<String, String> ) {
+    convenience init( _ ownerID: String, type: GameType, group: EcheveriaGroup, date: Date, players: RealmSwift.List<String>, winners: RealmSwift.List<String>, experience: GameExperience, comments: String, gameData: Dictionary<String, String> ) {
         self.init()
         
         self.ownerID = ownerID
@@ -96,9 +97,9 @@ class EcheveriaGame: Object, Identifiable {
     }
     
 //    MARK: Permissions
-    func updatePermissions() async {
+    func updatePermissions(id: String ) async {
         let realmManager = EcheveriaModel.shared.realmManager
-        await realmManager.profileQuery.addQuery { query in
+        await realmManager.profileQuery.addQuery(id + QuerySubKey.games.rawValue) { query in
             query.ownerID.in( self.players )
         }
         
@@ -106,6 +107,14 @@ class EcheveriaGame: Object, Identifiable {
         await realmManager.gameDataNodesQuery.addQuery { query in
             query.ownerID == self._id.stringValue
         }
+    }
+    
+    func closePermissions(id: String) async {
+        let realmManager = EcheveriaModel.shared.realmManager
+        
+        await realmManager.gamesQuery.removeQuery(id + QuerySubKey.games.rawValue)
+        await realmManager.gameDataNodesQuery.removeAllNonBaseQueries()
+        
     }
     
     
@@ -120,6 +129,13 @@ class EcheveriaGame: Object, Identifiable {
     
     static func sort(_ games: [EcheveriaGame]) -> [EcheveriaGame] {
         games.sorted { game1, game2 in game2.date > game1.date }
+    }
+    
+    static func getGameColor( _ game: String ) -> Color {
+        if game == GameType.smash.rawValue { return .red }
+        if game == GameType.magic.rawValue { return .blue }
+        if game == GameType.other.rawValue { return Colors.forestGreen }
+        return .gray
     }
     
 //    MARK: Class Methods

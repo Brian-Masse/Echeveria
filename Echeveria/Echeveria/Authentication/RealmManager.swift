@@ -60,8 +60,6 @@ class RealmManager: ObservableObject {
 //        this simply logs the profile in and returns any status errors
 //        Once the user is signed in, the LoginView loads the realm using the config generated in self.post-authentication()
         do {
-            
-        
             self.user = try await app.login(credentials: credentials)
             self.postAuthenticationInit()
             return nil
@@ -95,15 +93,17 @@ class RealmManager: ObservableObject {
     }
     
     func logoutUser() {
-        self.user!.logOut { error in
-            if let error = error { print("error logging out: \(error.localizedDescription)") }
-            
-            DispatchQueue.main.sync {
-                EcheveriaModel.shared.setActiveColor(with: Colors.main)
+        if let user = self.user {
+            user.logOut { error in
+                if let error = error { print("error logging out: \(error.localizedDescription)") }
                 
-                self.signedIn = false
-                self.hasProfile = false
-                self.realmLoaded = false
+                DispatchQueue.main.sync {
+                    EcheveriaModel.shared.setActiveColor(with: Colors.main)
+                    
+                    self.signedIn = false
+                    self.hasProfile = false
+                    self.realmLoaded = false
+                }
             }
         }
     }

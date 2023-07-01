@@ -27,7 +27,7 @@ struct EmailView: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            UniversalText("email", size: Constants.UISubHeaderTextSize, lighter: true, true)
+            UniversalText("email", size: Constants.UISubHeaderTextSize, lighter: true)
             VStack(spacing: 10) {
                 TextField("email", text: $email)
                     .autocorrectionDisabled()

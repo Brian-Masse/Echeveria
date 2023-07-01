@@ -53,11 +53,24 @@ struct LoginView: View {
     var body: some View {
     
         GeometryReader { geo in
+            VStack {
+                Spacer()
+                Image("signin.backgorund")
+                    .resizable()
+                    .renderingMode(.template)
+                    .rotationEffect(Angle( degrees: -20 ))
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: geo.size.width + 200)
+                    .offset(x: -120, y: 50)
+                    .foregroundColor(Colors.main)
+                    .opacity(0.7)
+            }
+            
             VStack(alignment: .leading) {
                 UniversalText("Choose Sign in Method", size: Constants.UITitleTextSize, true)
                     .padding(.horizontal, 15)
                     .padding(.top, 60)
-            
+                
                 if devMode { ScrollView(.vertical) {
                     form(geo: geo)
                 }} else {

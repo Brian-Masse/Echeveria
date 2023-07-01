@@ -20,7 +20,7 @@ struct APIView: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            UniversalText("API Token", size: Constants.UISubHeaderTextSize, lighter: true, true)
+            UniversalText("API Token", size: Constants.UISubHeaderTextSize, lighter: true)
             VStack {
                 TextField("Token", text: $APIToken)
                 TextField("Copy", text: $remove)

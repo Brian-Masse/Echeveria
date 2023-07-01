@@ -374,8 +374,8 @@
             filePath = "Echeveria/GameTracker/EcheveriaGame.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "init(_:type:group:date:players:winners:experience:comments:gameData:)"
             landmarkType = "7">
             <Locations>
@@ -422,8 +422,8 @@
             filePath = "Echeveria/GameTracker/EcheveriaGame.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "init(_:type:group:date:players:winners:experience:comments:gameData:)"
             landmarkType = "7">
             <Locations>
@@ -755,99 +755,6 @@
                   startingLineNumber = "144"
                   endingLineNumber = "144"
                   offsetFromSymbolStart = "76">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "59E58A95-94E8-4ACE-B164-F6B478C7B0AB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Echeveria/Profile/EcheveriaProfile.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "updatePermissions(groups:friendRequests:friends:id:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "59E58A95-94E8-4ACE-B164-F6B478C7B0AB - 99a4966fcc603d6f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "182"
-                  endingLineNumber = "182"
-                  offsetFromSymbolStart = "472">
-               </Location>
-               <Location
-                  uuid = "59E58A95-94E8-4ACE-B164-F6B478C7B0AB - c50b2fb1dab8f961"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "182"
-                  endingLineNumber = "182"
-                  offsetFromSymbolStart = "825">
-               </Location>
-               <Location
-                  uuid = "59E58A95-94E8-4ACE-B164-F6B478C7B0AB - 209f79fbf091a563"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(5) suspend resume partial function for Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "182"
-                  endingLineNumber = "182"
-                  offsetFromSymbolStart = "862">
-               </Location>
-               <Location
-                  uuid = "59E58A95-94E8-4ACE-B164-F6B478C7B0AB - 714efad67e133d3f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Array&lt;Swift.String&gt;, Echeveria.EcheveriaGroup) -&gt; Swift.Array&lt;Swift.String&gt; in Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "182"
-                  endingLineNumber = "182"
-                  offsetFromSymbolStart = "52">
-               </Location>
-               <Location
-                  uuid = "59E58A95-94E8-4ACE-B164-F6B478C7B0AB - 59ae0dbff6fc630"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (RealmSwift.Query&lt;Echeveria.EcheveriaProfile&gt;) -&gt; RealmSwift.Query&lt;Swift.Bool&gt; in Echeveria.EcheveriaProfile.updatePermissions(groups: Swift.Array&lt;Echeveria.EcheveriaGroup&gt;, friendRequests: Swift.Array&lt;Swift.String&gt;, friends: Swift.Array&lt;Swift.String&gt;, id: Swift.String) async -&gt; ()"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "182"
-                  endingLineNumber = "182"
-                  offsetFromSymbolStart = "39">
                </Location>
             </Locations>
          </BreakpointContent>
