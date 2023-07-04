@@ -139,6 +139,12 @@ class EcheveriaGame: Object, Identifiable {
     }
     
 //    MARK: Class Methods
+    
+    subscript (key: String) -> String {
+        gameData.first { node in node.key == key }?.data ?? "No entry"
+        
+    }
+    
     func getWinners() -> String {
         if self.winners.count == 1 { return EcheveriaProfile.getName(from: self.winners.first!)  }
         var str = ""

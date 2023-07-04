@@ -60,8 +60,6 @@ struct GameView: View {
                         .padding(.bottom)
                         
                         VStack(alignment: .leading) {
-                            UniversalText("Game Information", size: Constants.UIHeaderTextSize, true)
-                                .padding(.bottom, 5)
                             
                             UniversalText( game.winners.count == 1 ? "Winner" : "Winners", size: Constants.UISubHeaderTextSize, true )
                             ForEach( game.winners, id: \.self ) { memberID in
@@ -74,7 +72,36 @@ struct GameView: View {
                             }
                         }
                         
-                        //                UniversalText( "Game Information", size: 20, true)
+                        UniversalText( "Game Information", size: Constants.UISubHeaderTextSize, true )
+                            .padding(.bottom, 5)
+                    
+                        ForEach(game.players, id: \.self) { playerID in
+                            VStack(alignment: .leading) {
+                                if let profile = EcheveriaProfile.getProfileObject(from: playerID) {
+                                    UniversalText("\(profile.firstName) \(profile.lastName)", size: Constants.UISubHeaderTextSize, true)
+                                        .padding(.bottom, 5)
+                                    HStack {
+                                        VStack(alignment:.leading) {
+                                            UniversalText("Character", size: Constants.UIDefaultTextSize, true)
+                                            UniversalText("Damage", size: Constants.UIDefaultTextSize, true)
+                                            UniversalText("KOs", size: Constants.UIDefaultTextSize, true)
+                                        }
+                                        Spacer()
+                                        VStack(alignment: .trailing) {
+                                            UniversalText( game[playerID + SmashForm.SmashDataKey.charachter.rawValue ] , size: Constants.UIDefaultTextSize, lighter: true)
+                                            UniversalText( game[playerID + SmashForm.SmashDataKey.damage.rawValue ], size: Constants.UIDefaultTextSize, lighter: true)
+                                            UniversalText( game[playerID + SmashForm.SmashDataKey.KOs.rawValue ], size: Constants.UIDefaultTextSize, lighter: true)
+                                        }
+                                    }
+                                }
+                            }
+                            .padding()
+                            .universalTextStyle()
+                            .rectangularBackgorund()
+                            .padding(.bottom, 5)
+                            
+                        }
+                        
                         //                ForEach( game.players, id: \.self ) { playerID in
                         //                    VStack {
                         //                        Text(playerID)
@@ -112,7 +139,8 @@ struct RecentGamesView: View {
     
     var body: some View {
         
-        let recentGames = games.returnFirst(5)
+        let count = games.count - 1
+        let recentGames = games.sorted { game1, game2 in game1.date < game2.date }[ max( count - 5, 0 )...count ]
     
         VStack(alignment: .leading) {
             UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
@@ -121,7 +149,7 @@ struct RecentGamesView: View {
                 LargeFormRoundedButton(label: "Log your First Game", icon: "plus", action: {})
                 
             } else {
-                GameScrollerView(filter: .none, filterable: false, geo: geo, games: recentGames )
+                GameScrollerView(filter: .none, filterable: false, geo: geo, games: Array(recentGames).reversed() )
                     .padding(.bottom)
             }
         }
