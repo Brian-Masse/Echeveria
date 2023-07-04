@@ -31,6 +31,7 @@ struct ProfileMainView: View {
                 VStack(alignment: .leading) {
                     UniversalText("\(profile.userName)", size: Constants.UISubHeaderTextSize, true)
                         .padding(.bottom)
+                
 
                     if mainUser { FriendRequestView(profile: profile, geo: geo)
                     } else { FriendButtonView(profile: profile) }
@@ -45,6 +46,13 @@ struct ProfileMainView: View {
                                 GroupPreviewView(group: group, geo: geo)
                             }
                         }.transition(.opacity)
+                    }
+                
+                    if profile.favoriteGames.count != 0 {
+                        ZStack(alignment: .topLeading) {
+                            UniversalText("Favorite Games", size: Constants.UIHeaderTextSize, true)
+                            GameScrollerView(filter: .none, filterable: true, geo: geo, games: profile.getFavoriteGames(from: allGames))
+                        }
                     }
                     
                     RecentGamesView(games: profile.getAllowedGames(from: allGames), geo: geo)

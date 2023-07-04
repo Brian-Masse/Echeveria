@@ -14,6 +14,8 @@ struct GameView: View {
     @ObservedRealmObject var game: EcheveriaGame
     @ObservedResults(GameDataNode.self) var gameData
 
+    @State var favorited: Bool = false
+    
     var group: EcheveriaGroup? { EcheveriaGroup.getGroupObject(from: game.groupID) }
     var owner: Bool { EcheveriaModel.shared.profile.ownerID == game.ownerID }
     
@@ -30,6 +32,8 @@ struct GameView: View {
                     
                     Spacer()
                     ProfileViews.DismissView { EcheveriaModel.shared.removeActiveColor() } action: {
+                        if favorited { EcheveriaModel.shared.profile.favoriteGame(game) }
+                        else { EcheveriaModel.shared.profile.unfavoriteGame(game) }
                         await game.closePermissions(id: game._id.stringValue)
                     }
                 }
@@ -37,8 +41,15 @@ struct GameView: View {
                 ScrollView(.vertical) {
                     VStack(alignment:.leading) {
                         
-                        UniversalText("Overview", size: Constants.UIHeaderTextSize, true)
-                            .padding(.bottom, 5)
+                        HStack {
+                            UniversalText("Overview", size: Constants.UIHeaderTextSize, true)
+                                .padding(.bottom, 5)
+                            
+                            Spacer()
+                            
+                            ShortRoundedButton("Favorite", to: "", icon: "seal", to: "checkmark.seal") { favorited } action: { favorited.toggle() }
+                                .onAppear { favorited = EcheveriaModel.shared.profile.favoriteGames.contains { str in game._id.stringValue == str } }
+                        }
                         
                         HStack {
                             VStack(alignment: .leading) {
@@ -101,19 +112,6 @@ struct GameView: View {
                             .padding(.bottom, 5)
                             
                         }
-                        
-                        //                ForEach( game.players, id: \.self ) { playerID in
-                        //                    VStack {
-                        //                        Text(playerID)
-                        //
-                        //                        if let data = gameData.where({ query in query.key == playerID }).first?.data {
-                        //                            Text( data )
-                        //                        }
-                        //
-                        //                    }
-                        //                }
-                        
-                        
                         Spacer()
                         if owner {
                             RoundedButton(label: "Delete Game Log", icon: "x.square") {
@@ -128,6 +126,7 @@ struct GameView: View {
             .padding()
             .padding(.bottom, 30)
         }
+        .padding(.top, 40)
         .universalColoredBackground(EcheveriaGame.getGameColor(game.type) )
     }
 }

@@ -21,7 +21,9 @@ struct GamePreviewView: View {
     var body: some View {
     
         VStack(alignment: .leading) {
-            UniversalText(game.type, size: Constants.UIHeaderTextSize - 5, true).textCase(.uppercase)
+            HStack {
+                UniversalText(game.type, size: Constants.UIHeaderTextSize - 5, true).textCase(.uppercase)
+            }
             
             UniversalText("\(group.name)", size: Constants.UIDefaultTextSize, lighter: true, true)
             UniversalText(game.date.formatted(date: .numeric, time: .omitted), size: Constants.UIDefaultTextSize, lighter: true )
@@ -34,7 +36,7 @@ struct GamePreviewView: View {
             .universalForeground()
             .onTapGesture { showingGameView = true }
         )
-        .sheet(isPresented: $showingGameView) {
+        .fullScreenCover(isPresented: $showingGameView) {
             GameView(game: game)
             
         }

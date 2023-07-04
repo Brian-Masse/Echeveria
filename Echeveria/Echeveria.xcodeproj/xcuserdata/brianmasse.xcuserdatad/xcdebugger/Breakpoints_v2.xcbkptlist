@@ -582,8 +582,8 @@
             filePath = "Echeveria/Profile/EcheveriaProfile.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "getGroupIDs(_:)"
             landmarkType = "7">
             <Locations>
@@ -1021,8 +1021,8 @@
             filePath = "Echeveria/Profile/EcheveriaProfile.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "updatePermissions(groups:friendRequests:friends:id:)"
             landmarkType = "7">
             <Locations>

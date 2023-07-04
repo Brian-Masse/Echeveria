@@ -27,6 +27,7 @@ class EcheveriaProfile: Object, Identifiable {
     
     @Persisted var groups: RealmSwift.List<EcheveriaGroup> = RealmSwift.List()
     @Persisted var favoriteGroups: RealmSwift.List<String> = RealmSwift.List()
+    @Persisted var favoriteGames: RealmSwift.List<String> = RealmSwift.List()
     
     @Persisted var friendRequests: RealmSwift.List<String> = RealmSwift.List()
     @Persisted var friendRequestDates: RealmSwift.List<Date> = RealmSwift.List()
@@ -84,6 +85,10 @@ class EcheveriaProfile: Object, Identifiable {
         Color(red: r, green: g, blue: b)
     }
     
+    func getFavoriteGames(from allGames: Results<EcheveriaGame>) -> [EcheveriaGame] {
+        Array(allGames.filter { game in self.favoriteGames.contains { str in game._id.stringValue == str } })
+    }
+    
 //    MARK: Class Methods
     func updateInformation( firstName: String, lastName: String, userName: String, icon: String, color: Color ) {
         EcheveriaModel.updateObject(self) { thawed in
@@ -131,7 +136,21 @@ class EcheveriaProfile: Object, Identifiable {
             if let index = thawed.favoriteGroups.firstIndex(of: group._id.stringValue) {
                 thawed.favoriteGroups.remove(at: index)
             }
-            
+        }
+    }
+    
+    func favoriteGame( _ game: EcheveriaGame ) {
+        if self.favoriteGames.contains(where: { str in str == game._id.stringValue }) { return }
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.favoriteGames.append( game._id.stringValue )
+        }
+    }
+    
+    func unfavoriteGame( _ game: EcheveriaGame ) {
+        EcheveriaModel.updateObject(self) { thawed in
+            if let index = thawed.favoriteGames.firstIndex(of: game._id.stringValue) {
+                thawed.favoriteGames.remove(at: index)
+            }
         }
     }
     
