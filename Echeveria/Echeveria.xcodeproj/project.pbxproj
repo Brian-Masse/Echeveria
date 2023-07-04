@@ -26,6 +26,7 @@
 		C9143CF82A4D5067009ED03F /* AbstractCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF72A4D5067009ED03F /* AbstractCharts.swift */; };
 		C9143CFA2A4E200E009ED03F /* IndividualGroupCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF92A4E200E009ED03F /* IndividualGroupCharts.swift */; };
 		C9143CFC2A4E3F42009ED03F /* IndividualProfileCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CFB2A4E3F42009ED03F /* IndividualProfileCharts.swift */; };
+		C92B29EC2A53B2FE00B61877 /* UniversalForms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92B29EB2A53B2FD00B61877 /* UniversalForms.swift */; };
 		C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6DF2A3A51D1008C6906 /* MainView.swift */; };
 		C939B6E72A3A7547008C6906 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E62A3A7547008C6906 /* RealmManager.swift */; };
 		C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */; };
@@ -88,6 +89,7 @@
 		C9143CF72A4D5067009ED03F /* AbstractCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractCharts.swift; sourceTree = "<group>"; };
 		C9143CF92A4E200E009ED03F /* IndividualGroupCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualGroupCharts.swift; sourceTree = "<group>"; };
 		C9143CFB2A4E3F42009ED03F /* IndividualProfileCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualProfileCharts.swift; sourceTree = "<group>"; };
+		C92B29EB2A53B2FD00B61877 /* UniversalForms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalForms.swift; sourceTree = "<group>"; };
 		C939B6DF2A3A51D1008C6906 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		C939B6E62A3A7547008C6906 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFlexibleSyncRealmView.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 			children = (
 				C976A9402A3972EC00C48C6A /* UI Universals.swift */,
 				C99AF4802A4CB3FC00BF766A /* UniversalButtons.swift */,
+				C92B29EB2A53B2FD00B61877 /* UniversalForms.swift */,
 			);
 			path = "UI Universals";
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				C900BAA02A3FE11800388B37 /* ProfilePreviewView.swift in Sources */,
 				C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */,
 				C900BAA52A40269600388B37 /* GameLoggerView.swift in Sources */,
+				C92B29EC2A53B2FE00B61877 /* UniversalForms.swift in Sources */,
 				C939B6E02A3A51D1008C6906 /* MainView.swift in Sources */,
 				C997140D2A3902CA00090429 /* EcheveriaView.swift in Sources */,
 				C90F91142A46134F0062B493 /* ProfileGamePage.swift in Sources */,

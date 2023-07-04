@@ -32,17 +32,20 @@ class Smash<Content>: EcheveriaIndividualGame where Content: View {
 
 struct SmashForm: View {
 
+    enum SmashDataKey: String {
+        case charachter     = "charachter"
+        case damage         = "damage"
+        case KOs            = "KOs"
+    }
+    
     func retrieveValue<T>( _ key: String, defaultValue: T ) -> T {
         if let value: T = values[key] as? T { return value }
         return defaultValue
     }
     
-    func createBinding(forKey key: String, defaultValue: String) -> Binding<String> {
-        Binding {
-            retrieveValue(key, defaultValue: defaultValue)
-        } set: { newValue in
-            values[key] = newValue
-        }
+    func createBinding(forKey key: String, defaultValue: String = "") -> Binding<String> {
+        Binding { retrieveValue(key, defaultValue: defaultValue)
+        } set: { newValue in values[key] = newValue }
     }
     
     @Binding var values: Dictionary<String, String>
@@ -52,20 +55,20 @@ struct SmashForm: View {
     
     var body: some View {
         
-        Section("Smash Specific Information") {
-            ForEach( players, id:\.self ) { playerID in
-                if let profile = EcheveriaProfile.getProfileObject(from: playerID) {
-                    
-                    Picker(selection: createBinding(forKey: playerID, defaultValue: "No Selection")) {
-                        Text("No Selection").tag("No Selection")
-                        ForEach( smashPlayers, id: \.self ) { player in
-                            Text(player)
-                        }
-                    } label: {
-                        Text(profile.firstName)
+        if players.count != 0 {
+            TransparentForm("Game Specific Info") {
+                ForEach( players, id:\.self ) { playerID in
+                    if let profile = EcheveriaProfile.getProfileObject(from: playerID) {
+                        
+                        let binding: Binding<String> = createBinding(forKey: playerID + SmashDataKey.charachter.rawValue)
+                        BasicPicker(title: profile.firstName, noSeletion: "No Selection", sources: smashPlayers, selection: binding ) { obj in Text( obj ) }
+                        
+                        TextField(text: createBinding(forKey:  playerID + SmashDataKey.damage.rawValue)) { Text( "Damage %" ) }
+
+                        TextField(text: createBinding(forKey:  playerID + SmashDataKey.KOs.rawValue)) { Text( "KOs" ) }
                     }
                 }
             }
-        }.universalFormSection()
+        }
     }
 }

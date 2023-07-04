@@ -61,8 +61,10 @@ private struct UniversalForm: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
         content
-            .ignoresSafeArea()
+            .padding()
             .tint(Colors.tint)
+            .universalTextStyle()
+            .rectangularBackgorund()
             .scrollContentBackground(.hidden)
     }
 }
@@ -70,7 +72,13 @@ private struct UniversalForm: ViewModifier {
 private struct UniversalFormSection: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
-        content.listRowBackground(colorScheme == .light ? .white : Colors.darkGrey )
+        content
+            .padding()
+            .tint(Colors.tint)
+            .universalTextStyle()
+            .rectangularBackgorund()
+            .scrollContentBackground(.hidden)
+            .padding(.bottom)
     }
 }
 

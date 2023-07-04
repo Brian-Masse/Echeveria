@@ -77,6 +77,7 @@ class Constants {
     static let UIDefaultTextSize: CGFloat   = 15
     
     static let UIDefaultCornerRadius: CGFloat = 15
+    static let UIFormSpacing        : CGFloat = 10
     
     static let HourTime: Double = 3600
     static let DayTime: Double = 86400

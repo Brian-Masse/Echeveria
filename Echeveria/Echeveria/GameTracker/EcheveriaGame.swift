@@ -72,13 +72,13 @@ class EcheveriaGame: Object, Identifiable {
     
     @Persisted var gameData: RealmSwift.List<GameDataNode> = List()
     
-    convenience init( _ ownerID: String, type: GameType, group: EcheveriaGroup, date: Date, players: RealmSwift.List<String>, winners: RealmSwift.List<String>, experience: GameExperience, comments: String, gameData: Dictionary<String, String> ) {
+    convenience init( _ ownerID: String, type: GameType, group: String, date: Date, players: RealmSwift.List<String>, winners: RealmSwift.List<String>, experience: GameExperience, comments: String, gameData: Dictionary<String, String> ) {
         self.init()
         
         self.ownerID = ownerID
         
         self.typeEnum = type
-        self.groupID = group._id
+        self.groupID = try! ObjectId(string: group)
         self.date = date
         
         self.players = players
