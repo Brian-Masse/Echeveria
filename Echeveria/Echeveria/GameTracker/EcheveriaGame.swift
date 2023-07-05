@@ -138,12 +138,17 @@ class EcheveriaGame: Object, Identifiable {
         return .gray
     }
     
-//    MARK: Class Methods
     
     subscript (key: String) -> String {
         gameData.first { node in node.key == key }?.data ?? "No entry"
-        
     }
+    
+    static func getNodeData( from key: String, in values: [ GameDataNode ]) -> String {
+        values.first { node in node.key == key }?.data ?? "No entry"
+    }
+    
+    
+//    MARK: Class Methods
     
     func getWinners() -> String {
         if self.winners.count == 1 { return EcheveriaProfile.getName(from: self.winners.first!)  }

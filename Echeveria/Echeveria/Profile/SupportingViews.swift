@@ -67,42 +67,63 @@ struct ProfileViews {
         @State var icon: String = ""
         @State var color: Color = .red
         
+        @State var activePreferences: EcheveriaGame.GameType = .smash
         @State var preferences: Dictionary<String, String>
         
         @State var showingPicker: Bool = false
         
         var body: some View {
             GeometryReader { geo in
-                VStack(alignment: .leading) {
-                    
-                    UniversalText("Edit Profile", size: Constants.UITitleTextSize, true)
-                        .padding(.bottom)
-            
-                    TransparentForm("Basic Information") {
-                        TextField( "First Name", text: $firstName )
-                        TextField( "Last Name", text: $lastName )
-                        TextField( "User Name", text: $userName )
-                    }
+                ZStack(alignment: .bottom) {
+                    VStack(alignment: .leading) {
                         
-                    TransparentForm("Personalization") {
-                        HStack {
-                            UniversalText("\(icon)", size: Constants.UIDefaultTextSize)
-                            Spacer()
-                            Image(systemName: "chevron.right")
+                        UniversalText("Edit Profile", size: Constants.UITitleTextSize, true)
+                            .padding(.bottom)
+                        
+                        TransparentForm("Basic Information") {
+                            TextField( "First Name", text: $firstName )
+                            TextField( "Last Name", text: $lastName )
+                            TextField( "User Name", text: $userName )
                         }
-                        .onTapGesture { showingPicker = true }
-                        .sheet(isPresented: $showingPicker) { SymbolPicker(symbol: $icon) }
                         
-                        UniqueColorPicker(selectedColor: $color)
+                        TransparentForm("Personalization") {
+                            HStack {
+                                UniversalText("\(icon)", size: Constants.UIDefaultTextSize)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                            }
+                            .onTapGesture { showingPicker = true }
+                            .sheet(isPresented: $showingPicker) { SymbolPicker(symbol: $icon) }
+                            
+                            UniqueColorPicker(selectedColor: $color)
+                        }
+                        .onAppear {
+                            firstName = profile.firstName
+                            lastName = profile.lastName
+                            userName = profile.userName
+                            icon = profile.icon
+                        }
+                        
+                        
+                        HStack {
+                            UniversalText("Preferences", size: Constants.UIHeaderTextSize, true)
+                            Spacer()
+                            
+                            Picker("Game", selection: $activePreferences) {
+                                ForEach(EcheveriaGame.GameType.allCases, id: \.self) { content in
+                                    Text( content.rawValue )
+                                }
+                            }.tint(Colors.tint)
+                        }
+                        
+                        switch activePreferences {
+                        case .smash:   Smash.PreferencesForm(preferences: $preferences)
+                        case .magic:   Magic.PreferencesForm(preferences: $preferences)
+                        default: EmptyView()
+                        }
+                        
+                        Spacer()
                     }
-                    .onAppear {
-                        firstName = profile.firstName
-                        lastName = profile.lastName
-                        userName = profile.userName
-                        icon = profile.icon
-                    }
-                    
-                    Smash.SmashPreferencesForm(preferences: $preferences)
                     
                     RoundedButton(label: "Done", icon: "checkmark.seal") {
                         profile.updateInformation(firstName: firstName,
@@ -114,7 +135,11 @@ struct ProfileViews {
                         )
                         presentationMode.wrappedValue.dismiss()
                     }
+                    .padding()
+                    .shadow(radius: 5)
+                    .padding(.bottom, 20)
                 }
+                .frame(height: geo.size.height)
             }
             .padding()
             .universalColoredBackground(Colors.tint)

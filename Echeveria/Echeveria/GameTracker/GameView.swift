@@ -86,32 +86,13 @@ struct GameView: View {
                         UniversalText( "Game Information", size: Constants.UISubHeaderTextSize, true )
                             .padding(.bottom, 5)
                     
-                        ForEach(game.players, id: \.self) { playerID in
-                            VStack(alignment: .leading) {
-                                if let profile = EcheveriaProfile.getProfileObject(from: playerID) {
-                                    UniversalText("\(profile.firstName) \(profile.lastName)", size: Constants.UISubHeaderTextSize, true)
-                                        .padding(.bottom, 5)
-                                    HStack {
-                                        VStack(alignment:.leading) {
-                                            UniversalText("Character", size: Constants.UIDefaultTextSize, true)
-                                            UniversalText("Damage", size: Constants.UIDefaultTextSize, true)
-                                            UniversalText("KOs", size: Constants.UIDefaultTextSize, true)
-                                        }
-                                        Spacer()
-                                        VStack(alignment: .trailing) {
-                                            UniversalText( game[playerID + Smash.SmashDataKey.charachter.rawValue ] , size: Constants.UIDefaultTextSize, lighter: true)
-                                            UniversalText( game[playerID + Smash.SmashDataKey.damage.rawValue ], size: Constants.UIDefaultTextSize, lighter: true)
-                                            UniversalText( game[playerID + Smash.SmashDataKey.KOs.rawValue ], size: Constants.UIDefaultTextSize, lighter: true)
-                                        }
-                                    }
-                                }
-                            }
-                            .padding()
-                            .universalTextStyle()
-                            .rectangularBackgorund()
-                            .padding(.bottom, 5)
-                            
+
+                        switch game.type {
+                        case EcheveriaGame.GameType.smash.rawValue:  Smash.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                        case EcheveriaGame.GameType.magic.rawValue: Magic.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                        default: EmptyView()
                         }
+                        
                         Spacer()
                         if owner {
                             RoundedButton(label: "Delete Game Log", icon: "x.square") {

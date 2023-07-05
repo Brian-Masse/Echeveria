@@ -11,22 +11,17 @@ import RealmSwift
 
 class Smash {
     
-    enum SmashDataKey: String {
+    enum DataKey: String {
         case charachter     = "charachter"
         case damage         = "damage"
         case KOs            = "KOs"
         case charachterCount = "charachterCount"
     }
     
-    struct SmashPreferencesForm: View {
-        
-        func retrieveValue<T>( _ key: String, defaultValue: T) -> T {
-            if let value: T = preferences[key] as? T { return value }
-            return defaultValue
-        }
+    struct PreferencesForm: View {
         
         func createBinding(forKey key: String, defaultValue: String = "") -> Binding<String> {
-            Binding { self.retrieveValue(key, defaultValue: defaultValue)
+            Binding { preferences[key] ?? defaultValue
             } set: { newValue in preferences[key] = newValue }
         }
         
@@ -34,12 +29,12 @@ class Smash {
         
         var body: some View {
             
-            let count = Int(preferences[EcheveriaModel.shared.profile.ownerID + Smash.SmashDataKey.charachterCount.rawValue] ?? "0") ?? 0
+            let count = Int(preferences[EcheveriaModel.shared.profile.ownerID + Smash.DataKey.charachterCount.rawValue] ?? "0") ?? 0
             
             VStack {
                 TransparentForm("Smash Preferences") {
                     ForEach( 0...count, id: \.self ) { i in
-                        let key = EcheveriaModel.shared.profile.ownerID + Smash.SmashDataKey.charachter.rawValue + "\(i)"
+                        let key = EcheveriaModel.shared.profile.ownerID + Smash.DataKey.charachter.rawValue + "\(i)"
                         let value = preferences[ key ] ?? "No Selection"
                         
                         let binding: Binding<String> = createBinding(forKey: key, defaultValue: value)
@@ -49,15 +44,15 @@ class Smash {
                         
                 }
                 RoundedButton(label: "Add Another", icon: "plus") {
-                    preferences[EcheveriaModel.shared.profile.ownerID + Smash.SmashDataKey.charachterCount.rawValue] =
-                        "\(Int( preferences[EcheveriaModel.shared.profile.ownerID + Smash.SmashDataKey.charachterCount.rawValue]  ?? "0" )! + 1)"
+                    preferences[EcheveriaModel.shared.profile.ownerID + Smash.DataKey.charachterCount.rawValue] =
+                        "\(Int( preferences[EcheveriaModel.shared.profile.ownerID + Smash.DataKey.charachterCount.rawValue]  ?? "0" )! + 1)"
                 }
             }
         }
         
     }
 
-    struct SmashForm: View {
+    struct InputForm: View {
         
         func retrieveValue<T>( _ key: String, defaultValue: T) -> T {
             if let value: T = values[key] as? T { return value }
@@ -75,11 +70,11 @@ class Smash {
         var body: some View {
             
             if players.count != 0 {
-                TransparentForm("Game Specific Info") {
+                TransparentForm("Smash Info") {
                     ForEach( players, id:\.self ) { playerID in
                         if let profile = EcheveriaProfile.getProfileObject(from: playerID) {
                             
-                            let binding: Binding<String> = createBinding(forKey: playerID + Smash.SmashDataKey.charachter.rawValue)
+                            let binding: Binding<String> = createBinding(forKey: playerID + Smash.DataKey.charachter.rawValue)
                             
                             HStack {
                                 
@@ -88,11 +83,11 @@ class Smash {
                                 
                                 Menu {
                                     Menu("Favorites") {
-                                        let node = profile.getGameDataNode( profile.ownerID + Smash.SmashDataKey.charachterCount.rawValue )
+                                        let node = profile.getGameDataNode( profile.ownerID + Smash.DataKey.charachterCount.rawValue )
                                         let count = Int( node?.data ?? "0"  ) ?? 0
                                         
                                         ForEach( 0...count, id: \.self ) { i in
-                                            let key = profile.ownerID + Smash.SmashDataKey.charachter.rawValue + "\(i)"
+                                            let key = profile.ownerID + Smash.DataKey.charachter.rawValue + "\(i)"
                                             if let characterNode = profile.getGameDataNode(key) {
                                                 Button(characterNode.data) { binding.wrappedValue = characterNode.data }
                                             }
@@ -106,18 +101,54 @@ class Smash {
                                     }
                                     
                                 } label: {
-                                    Text( values[ playerID + Smash.SmashDataKey.charachter.rawValue ] ?? "No Selection"  )
+                                    Text( values[ playerID + Smash.DataKey.charachter.rawValue ] ?? "No Selection"  )
                                     ResizeableIcon(icon: "chevron.up.chevron.down", size: Constants.UIDefaultTextSize)
                                 }
                                 .foregroundColor(Colors.tint)
                             }
                             
-                            TextField(text: createBinding(forKey:  playerID + Smash.SmashDataKey.damage.rawValue)) { Text( "Damage %" ) }
+                            TextField(text: createBinding(forKey:  playerID + Smash.DataKey.damage.rawValue)) { Text( "Damage %" ) }
 
-                            TextField(text: createBinding(forKey:  playerID + Smash.SmashDataKey.KOs.rawValue)) { Text( "KOs" ) }
+                            TextField(text: createBinding(forKey:  playerID + Smash.DataKey.KOs.rawValue)) { Text( "KOs" ) }
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    struct GameDisplay: View {
+        
+        let players: [String]
+        let gameData: [GameDataNode]
+        
+        var body: some View {
+            
+            ForEach(players, id: \.self) { playerID in
+                VStack(alignment: .leading) {
+                    if let profile = EcheveriaProfile.getProfileObject(from: playerID) {
+                        UniversalText("\(profile.firstName) \(profile.lastName)", size: Constants.UISubHeaderTextSize, true)
+                            .padding(.bottom, 5)
+                        HStack {
+                            VStack(alignment:.leading) {
+                                UniversalText("Character", size: Constants.UIDefaultTextSize, true)
+                                UniversalText("Damage", size: Constants.UIDefaultTextSize, true)
+                                UniversalText("KOs", size: Constants.UIDefaultTextSize, true)
+                            }
+                            Spacer()
+                            VStack(alignment: .trailing) {
+                                UniversalText( EcheveriaGame.getNodeData(from: playerID + Smash.DataKey.charachter.rawValue, in: gameData), size: Constants.UIDefaultTextSize, lighter: true)
+                                UniversalText( EcheveriaGame.getNodeData(from: playerID + Smash.DataKey.damage.rawValue, in: gameData), size: Constants.UIDefaultTextSize, lighter: true)
+                                UniversalText( EcheveriaGame.getNodeData(from: playerID + Smash.DataKey.KOs.rawValue, in: gameData), size: Constants.UIDefaultTextSize, lighter: true)
+                            }
+                        }
+                    }
+                }
+                .padding()
+                .universalTextStyle()
+                .rectangularBackgorund()
+                .padding(.bottom, 5)
+                
             }
         }
     }
