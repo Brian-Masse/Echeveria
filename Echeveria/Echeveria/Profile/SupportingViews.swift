@@ -70,16 +70,19 @@ struct ProfileViews {
         @State var showingPicker: Bool = false
         
         var body: some View {
-            VStack {
-                
-                Form {
-                    Section("Basic Information") {
+            GeometryReader { geo in
+                VStack(alignment: .leading) {
+                    
+                    UniversalText("Edit Profile", size: Constants.UITitleTextSize, true)
+                        .padding(.bottom)
+            
+                    TransparentForm("Basic Information") {
                         TextField( "First Name", text: $firstName )
                         TextField( "Last Name", text: $lastName )
                         TextField( "User Name", text: $userName )
-                    }.universalFormSection()
-                    
-                    Section("Personalization") {
+                    }
+                        
+                    TransparentForm("Personalization") {
                         HStack {
                             UniversalText("\(icon)", size: Constants.UIDefaultTextSize)
                             Spacer()
@@ -88,25 +91,22 @@ struct ProfileViews {
                         .onTapGesture { showingPicker = true }
                         .sheet(isPresented: $showingPicker) { SymbolPicker(symbol: $icon) }
                         
-                        ColorPicker(selection: $color, supportsOpacity: false) {
-                            Text("Accent Color")
-                        }
+                        UniqueColorPicker(selectedColor: $color)
+                    }
+                    .onAppear {
+                        firstName = profile.firstName
+                        lastName = profile.lastName
+                        userName = profile.userName
+                        icon = profile.icon
+                    }
+                    RoundedButton(label: "Done", icon: "checkmark.seal") {
+                        profile.updateInformation(firstName: firstName, lastName: lastName, userName: userName, icon: icon, color: color)
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
-                .universalForm()
-                .onAppear {
-                    firstName = profile.firstName
-                    lastName = profile.lastName
-                    userName = profile.userName
-                    icon = profile.icon
-                }
-                RoundedButton(label: "Done", icon: "checkmark.seal") {
-                    profile.updateInformation(firstName: firstName, lastName: lastName, userName: userName, icon: icon, color: color)
-                    presentationMode.wrappedValue.dismiss()
-                }
-                
-            }.universalBackground()
+            }
+            .padding()
+            .universalColoredBackground(Colors.tint)
         }
     }
-
 }

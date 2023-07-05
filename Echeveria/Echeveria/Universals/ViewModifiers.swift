@@ -61,10 +61,9 @@ private struct UniversalForm: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
         content
-            .padding()
+            .ignoresSafeArea()
             .tint(Colors.tint)
-            .universalTextStyle()
-            .rectangularBackgorund()
+            .background(.ultraThinMaterial)
             .scrollContentBackground(.hidden)
     }
 }
