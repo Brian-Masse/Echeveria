@@ -100,7 +100,7 @@ struct GameLoggerView: View  {
                                     }
                                 }
                                 
-                                SmashForm(values: $gameValues, players: selectedPlayers)
+                                Smash.SmashForm(values: $gameValues, players: selectedPlayers)
                             }
                             .padding(.bottom, 50)
                             .onChange(of: group) { _ in refreshGroup() }

@@ -99,9 +99,9 @@ struct GameView: View {
                                         }
                                         Spacer()
                                         VStack(alignment: .trailing) {
-                                            UniversalText( game[playerID + SmashForm.SmashDataKey.charachter.rawValue ] , size: Constants.UIDefaultTextSize, lighter: true)
-                                            UniversalText( game[playerID + SmashForm.SmashDataKey.damage.rawValue ], size: Constants.UIDefaultTextSize, lighter: true)
-                                            UniversalText( game[playerID + SmashForm.SmashDataKey.KOs.rawValue ], size: Constants.UIDefaultTextSize, lighter: true)
+                                            UniversalText( game[playerID + Smash.SmashDataKey.charachter.rawValue ] , size: Constants.UIDefaultTextSize, lighter: true)
+                                            UniversalText( game[playerID + Smash.SmashDataKey.damage.rawValue ], size: Constants.UIDefaultTextSize, lighter: true)
+                                            UniversalText( game[playerID + Smash.SmashDataKey.KOs.rawValue ], size: Constants.UIDefaultTextSize, lighter: true)
                                         }
                                     }
                                 }

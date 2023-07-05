@@ -136,6 +136,9 @@ class EcheveriaGroup: Object, Identifiable {
         await realmManager.profileQuery.addQuery { query in
             query.ownerID.in( self.members )
         }
+        await realmManager.gameDataNodesQuery.addQuery { query in
+            query.ownerID.in(self.members)
+        }
     }
     
     func closePermissions(id: String) async {
@@ -143,6 +146,7 @@ class EcheveriaGroup: Object, Identifiable {
         
         await realmManager.profileQuery.removeQuery(id + QuerySubKey.account.rawValue)
         await realmManager.gamesQuery.removeQuery(id + QuerySubKey.games.rawValue)
+        await realmManager.gameDataNodesQuery.removeAllNonBaseQueries()
     }
     
 //    MARK: Graphing Helper Functions

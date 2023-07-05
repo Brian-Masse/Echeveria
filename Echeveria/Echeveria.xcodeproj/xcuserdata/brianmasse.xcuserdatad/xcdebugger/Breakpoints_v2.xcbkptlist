@@ -582,8 +582,8 @@
             filePath = "Echeveria/Profile/EcheveriaProfile.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "getGroupIDs(_:)"
             landmarkType = "7">
             <Locations>
@@ -1021,8 +1021,8 @@
             filePath = "Echeveria/Profile/EcheveriaProfile.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "updatePermissions(groups:friendRequests:friends:id:)"
             landmarkType = "7">
             <Locations>
@@ -1163,6 +1163,102 @@
             endingLineNumber = "56"
             landmarkName = "getGroupObject(from:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "42B6D853-CBAC-49D8-A249-7CEA1F136CDD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/Profile/EcheveriaProfile.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "createPreferencesDictionary()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "42B6D853-CBAC-49D8-A249-7CEA1F136CDD - b75f539bd7bb9c6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Echeveria.EcheveriaProfile.createPreferencesDictionary() -&gt; Swift.Dictionary&lt;Swift.String, Swift.String&gt;"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "104">
+               </Location>
+               <Location
+                  uuid = "42B6D853-CBAC-49D8-A249-7CEA1F136CDD - b75f539bd7bb9c6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Echeveria.EcheveriaProfile.createPreferencesDictionary() -&gt; Swift.Dictionary&lt;Swift.String, Swift.String&gt;"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "101">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BDEC5B7D-2387-4C7C-8E3B-B75D343C9570"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/GameTracker/Specific Games/Smash.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "BDEC5B7D-2387-4C7C-8E3B-B75D343C9570 - 4c932a6566ec6cd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; Swift.Optional&lt;SwiftUI.ForEach&lt;Swift.ClosedRange&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;SwiftUI.Text&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, Swift.Optional&lt;SwiftUI.ForEach&lt;Swift.ClosedRange&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;SwiftUI.Text&gt;&gt;&gt;&gt;, SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;Swift.String&gt;, Swift.String, SwiftUI.Text&gt;&gt;)&gt; in closure #1 (Swift.String) -&gt; Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, Swift.Optional&lt;SwiftUI.ForEach&lt;Swift.ClosedRange&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;SwiftUI.Text&gt;&gt;&gt;&gt;, SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;Swift.String&gt;, Swift.String, SwiftUI.Text&gt;&gt;)&gt;&gt;, Echeveria.BasicPicker&lt;Swift.Array&lt;Swift.String&gt;, SwiftUI.Text&gt;, SwiftUI.TextField&lt;SwiftUI.Text&gt;, SwiftUI.TextField&lt;SwiftUI.Text&gt;)&gt;&gt; in closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;Swift.String&gt;, Swift.String, Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, Swift.Optional&lt;SwiftUI.ForEach&lt;Swift.ClosedRange&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;SwiftUI.Text&gt;&gt;&gt;&gt;, SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;Swift.String&gt;, Swift.String, SwiftUI.Text&gt;&gt;)&gt;&gt;, Echeveria.BasicPicker&lt;Swift.Array&lt;Swift.String&gt;, SwiftUI.Text&gt;, SwiftUI.TextField&lt;SwiftUI.Text&gt;, SwiftUI.TextField&lt;SwiftUI.Text&gt;)&gt;&gt;&gt; in Echeveria.Smash.SmashForm.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/GameTracker/Specific%20Games/Smash.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "102"
+                  endingLineNumber = "102"
+                  offsetFromSymbolStart = "278">
+               </Location>
+               <Location
+                  uuid = "BDEC5B7D-2387-4C7C-8E3B-B75D343C9570 - 4c932a6566ec6cd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; Swift.Optional&lt;SwiftUI.ForEach&lt;Swift.ClosedRange&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;SwiftUI.Text&gt;&gt;&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, Swift.Optional&lt;SwiftUI.ForEach&lt;Swift.ClosedRange&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;SwiftUI.Text&gt;&gt;&gt;&gt;, SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;Swift.String&gt;, Swift.String, SwiftUI.Text&gt;&gt;)&gt; in closure #1 (Swift.String) -&gt; Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, Swift.Optional&lt;SwiftUI.ForEach&lt;Swift.ClosedRange&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;SwiftUI.Text&gt;&gt;&gt;&gt;, SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;Swift.String&gt;, Swift.String, SwiftUI.Text&gt;&gt;)&gt;&gt;, Echeveria.BasicPicker&lt;Swift.Array&lt;Swift.String&gt;, SwiftUI.Text&gt;, SwiftUI.TextField&lt;SwiftUI.Text&gt;, SwiftUI.TextField&lt;SwiftUI.Text&gt;)&gt;&gt; in closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;Swift.String&gt;, Swift.String, Swift.Optional&lt;SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(SwiftUI.Menu&lt;SwiftUI.Text, Swift.Optional&lt;SwiftUI.ForEach&lt;Swift.ClosedRange&lt;Swift.Int&gt;, Swift.Int, Swift.Optional&lt;SwiftUI.Text&gt;&gt;&gt;&gt;, SwiftUI.Menu&lt;SwiftUI.Text, SwiftUI.ForEach&lt;Swift.Array&lt;Swift.String&gt;, Swift.String, SwiftUI.Text&gt;&gt;)&gt;&gt;, Echeveria.BasicPicker&lt;Swift.Array&lt;Swift.String&gt;, SwiftUI.Text&gt;, SwiftUI.TextField&lt;SwiftUI.Text&gt;, SwiftUI.TextField&lt;SwiftUI.Text&gt;)&gt;&gt;&gt; in Echeveria.Smash.SmashForm.body.getter : some"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/GameTracker/Specific%20Games/Smash.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "102"
+                  endingLineNumber = "102"
+                  offsetFromSymbolStart = "1304">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

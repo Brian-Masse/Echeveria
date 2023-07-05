@@ -25,6 +25,8 @@ class EcheveriaProfile: Object, Identifiable {
     
     @Persisted var createdDate: Date = .now
     
+    @Persisted var gamePreferences: RealmSwift.List<GameDataNode> = List()
+    
     @Persisted var groups: RealmSwift.List<EcheveriaGroup> = RealmSwift.List()
     @Persisted var favoriteGroups: RealmSwift.List<String> = RealmSwift.List()
     @Persisted var favoriteGames: RealmSwift.List<String> = RealmSwift.List()
@@ -89,8 +91,23 @@ class EcheveriaProfile: Object, Identifiable {
         Array(allGames.filter { game in self.favoriteGames.contains { str in game._id.stringValue == str } })
     }
     
+    func createPreferencesDictionary() -> Dictionary<String, String> {
+        var dic: Dictionary<String, String> = Dictionary()
+        for node in gamePreferences {
+            dic[ node.key ] = node.data
+        }
+        return dic
+    }
+    
+    func getGameDataNode(_ key: String) -> GameDataNode? {
+        return gamePreferences.first { node in
+            node.key == key
+        }
+        
+    }
+    
 //    MARK: Class Methods
-    func updateInformation( firstName: String, lastName: String, userName: String, icon: String, color: Color ) {
+    func updateInformation( firstName: String, lastName: String, userName: String, icon: String, color: Color, preferences: Dictionary<String, String>) {
         EcheveriaModel.updateObject(self) { thawed in
             thawed.firstName = firstName
             thawed.lastName = lastName
@@ -102,8 +119,15 @@ class EcheveriaProfile: Object, Identifiable {
             thawed.g = components.green
             thawed.b = components.blue
             
-            thawed.loaded = false
+            var gamePreferences: [GameDataNode] = []
+            for pair in preferences {
+                if let node = thawed.gamePreferences.first(where: { node in node.key == pair.key }) {
+                    node.data = pair.value
+                } else { gamePreferences.append( GameDataNode(ownerID: thawed.ownerID, gameOwnerID: "", key: pair.key, data: pair.value) ) }
+            }
+            thawed.gamePreferences.append(objectsIn: gamePreferences)
             
+            thawed.loaded = false
             EcheveriaModel.shared.triggerReload = true
         }
     }

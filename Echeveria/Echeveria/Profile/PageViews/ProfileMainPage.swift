@@ -71,7 +71,8 @@ struct ProfileMainView: View {
                 }
             }
         }
-        .sheet(isPresented: $editing) { ProfileViews.EditingProfileView().environmentObject(profile) }
+        .sheet(isPresented: $editing) { ProfileViews.EditingProfileView(preferences: profile.createPreferencesDictionary())
+            .environmentObject(profile) }
     }
     
     struct FriendButtonView: View {

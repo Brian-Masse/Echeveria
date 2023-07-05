@@ -67,6 +67,8 @@ struct ProfileViews {
         @State var icon: String = ""
         @State var color: Color = .red
         
+        @State var preferences: Dictionary<String, String>
+        
         @State var showingPicker: Bool = false
         
         var body: some View {
@@ -99,8 +101,17 @@ struct ProfileViews {
                         userName = profile.userName
                         icon = profile.icon
                     }
+                    
+                    Smash.SmashPreferencesForm(preferences: $preferences)
+                    
                     RoundedButton(label: "Done", icon: "checkmark.seal") {
-                        profile.updateInformation(firstName: firstName, lastName: lastName, userName: userName, icon: icon, color: color)
+                        profile.updateInformation(firstName: firstName,
+                                                  lastName: lastName,
+                                                  userName: userName,
+                                                  icon: icon,
+                                                  color: color,
+                                                  preferences: preferences
+                        )
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
