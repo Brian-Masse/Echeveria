@@ -70,8 +70,11 @@ struct GameView: View {
                                     } }
                                     UniversalText(game.experieince, size: Constants.UIDefaultTextSize)
                                 }
-                            }
-                            .padding(.bottom)
+                            }.padding(.bottom, 5)
+                            
+                            UniversalText(game.comments, size: Constants.UIDefaultTextSize)
+                                .padding(.bottom)
+                            
                             
                             VStack(alignment: .leading) {
                                 
@@ -89,14 +92,14 @@ struct GameView: View {
                             UniversalText( "Game Information", size: Constants.UISubHeaderTextSize, true )
                                 .padding(.bottom, 5)
                             
-                            
-                            switch game.type {
-                            case EcheveriaGame.GameType.smash.rawValue:     Smash.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
-                            case EcheveriaGame.GameType.magic.rawValue:     Magic.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
-                            case EcheveriaGame.GameType.spikeBall.rawValue: LawnGame.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
-                            case EcheveriaGame.GameType.bags.rawValue:      LawnGame.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
-                                
-                            default: EmptyView()
+                            VStack {
+                                switch game.type {
+                                case EcheveriaGame.GameType.smash.rawValue:     Smash.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                                case EcheveriaGame.GameType.magic.rawValue:     Magic.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                                case EcheveriaGame.GameType.spikeBall.rawValue: LawnGame.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                                case EcheveriaGame.GameType.bags.rawValue:      LawnGame.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                                default: EmptyView()
+                                }
                             }
                             
                             Spacer()
