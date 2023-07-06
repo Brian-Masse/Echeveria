@@ -121,7 +121,7 @@ class EcheveriaGroup: Object, Identifiable {
     func deleteGroup() {
         for member in self.members {
 //            TODO: This should probably let all the games assigned to the group know that the group has been deleted
-//            self.removeMember(member)
+            self.removeMember(member)
         }
         
         EcheveriaModel.deleteObject( self ) { group in

@@ -46,7 +46,7 @@ struct GroupView: View {
                         }
                         
                         TabView(selection: $page) {
-                            MainGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.overview)
+                            MainGroupViewPage(group: group, games: games, geo: geo, deleting: $dismissing).tag(GroupPage.overview)
                             ChartsGroupViewPage(group: group, games: games, geo: geo).tag(GroupPage.stats)
                         }
                     }

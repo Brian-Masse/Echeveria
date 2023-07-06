@@ -149,11 +149,11 @@ class EcheveriaProfile: Object, Identifiable {
             
             unfavoriteGroup(group)
             
-            for gameID in thawed.favoriteGames {
-                if let game = EcheveriaGame.getGameObject(from: gameID) {
-                    if game.groupID.stringValue == group._id.stringValue { unfavoriteGame(game) }
-                }
-            }
+//            for gameID in thawed.favoriteGames {
+//                if let game = EcheveriaGame.getGameObject(from: gameID) {
+//                    if game.groupID.stringValue == group._id.stringValue { unfavoriteGame(game) }
+//                }
+//            }
         }
     }
 

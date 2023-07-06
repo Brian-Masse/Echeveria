@@ -93,9 +93,9 @@ struct GameScrollerView: View {
                     LazyHStack {
                         ForEach( filtered, id: \.self ) { gameID in
                             if let game = EcheveriaGame.getGameObject(from: gameID) {
-                                if let group = EcheveriaGroup.getGroupObject(from: game.groupID) {
-                                    GamePreviewView(gameID: gameID, group: group, geo: geo)
-                                }
+                                GamePreviewView(gameID: gameID,
+                                                groupName: EcheveriaGroup.getGroupObject(from: game.groupID)?.name ?? "No Group",
+                                                geo: geo)
                             }
                         }
                     }

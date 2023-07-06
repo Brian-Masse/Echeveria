@@ -31,7 +31,7 @@ struct WinHistoryChart: View {
         
         VStack {
             let nodes = makeNodes()
-            let sortedWins = nodes.sorted{ node1, node2 in node1.date < node2.date }.returnLast(group.members.count - 1)!.sorted{ node1, node2 in node1.wins < node2.wins }
+                let sortedWins = nodes.sorted{ node1, node2 in node1.date < node2.date }.returnLast(group.members.count - 1)!.sorted{ node1, node2 in node1.wins < node2.wins }
             
             Chart {
                 ForEach(nodes.indices) { i in

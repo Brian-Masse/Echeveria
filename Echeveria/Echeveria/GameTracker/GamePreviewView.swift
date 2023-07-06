@@ -15,7 +15,7 @@ struct GamePreviewView: View {
     
     @State var showingGameView: Bool = false
 
-    let group: EcheveriaGroup
+    let groupName: String
     let geo: GeometryProxy
     
     var body: some View {
@@ -27,7 +27,7 @@ struct GamePreviewView: View {
                     UniversalText(game.type, size: Constants.UIHeaderTextSize - 5, true).textCase(.uppercase)
                 }
                 
-                UniversalText("\(group.name)", size: Constants.UIDefaultTextSize, lighter: true, true)
+                UniversalText(groupName, size: Constants.UIDefaultTextSize, lighter: true, true)
                 UniversalText(game.date.formatted(date: .numeric, time: .omitted), size: Constants.UIDefaultTextSize, lighter: true )
                 
             }

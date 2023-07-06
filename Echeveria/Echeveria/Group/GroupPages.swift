@@ -14,11 +14,14 @@ import Charts
 //MARK: MainGroupViewPage
 struct MainGroupViewPage: View {
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @ObservedRealmObject var group: EcheveriaGroup
     let games: Results<EcheveriaGame>
     let geo: GeometryProxy
     
     @State var editing: Bool = false
+    @Binding var deleting: Bool
     
     var owner: Bool { group.owner == EcheveriaModel.shared.profile.ownerID }
     
@@ -52,7 +55,16 @@ struct MainGroupViewPage: View {
                         EcheveriaModel.shared.addActiveColor(with: group.getColor())
                         editing = true
                     }
-                    RoundedButton(label: "Delete Group", icon: "x.square") { group.deleteGroup() }
+                    AsyncRoundedButton(label: "Delete Group", icon: "x.square") {
+                        
+                        deleting = true
+                        
+                        EcheveriaModel.shared.removeActiveColor()
+                        presentationMode.wrappedValue.dismiss()
+                        
+                        await group.closePermissions(id: group._id.stringValue)
+                        group.deleteGroup()
+                    }
                 }
             }
         }.sheet(isPresented: $editing, onDismiss: {

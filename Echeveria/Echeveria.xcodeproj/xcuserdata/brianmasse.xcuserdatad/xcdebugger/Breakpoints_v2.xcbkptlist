@@ -976,7 +976,7 @@
             startingLineNumber = "270"
             endingLineNumber = "270"
             landmarkName = "updatePermissions(groups:friendRequests:friends:id:)"
-            landmarkType = "9">
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "9C508ED6-4D45-45BB-B164-DD7C037D45F0 - c50b2fb1dab8fc1d"
@@ -1130,7 +1130,7 @@
             startingLineNumber = "97"
             endingLineNumber = "97"
             landmarkName = "createPreferencesDictionary()"
-            landmarkType = "9">
+            landmarkType = "7">
             <Locations>
                <Location
                   uuid = "42B6D853-CBAC-49D8-A249-7CEA1F136CDD - b75f539bd7bb9c6"
@@ -1239,8 +1239,8 @@
             filePath = "Echeveria/Group/GroupPages.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -1338,7 +1338,7 @@
             startingLineNumber = "335"
             endingLineNumber = "335"
             landmarkName = "getWins(in:games:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
