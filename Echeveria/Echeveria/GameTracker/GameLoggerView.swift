@@ -101,12 +101,14 @@ struct GameLoggerView: View  {
                                 }
                                 
                                 switch gameType {
-                                case .smash: Smash.InputForm(values: $gameValues, players: selectedPlayers)
-                                case .magic: Magic.InputForm(values: $gameValues, players: selectedPlayers)
+                                case .smash:        Smash.InputForm(values: $gameValues, players: selectedPlayers)
+                                case .magic:        Magic.InputForm(values: $gameValues, players: selectedPlayers)
+                                case .spikeBall:    LawnGame.InputForm(values: $gameValues, players: selectedPlayers)
+                                case .bags:         LawnGame.InputForm(values: $gameValues, players: selectedPlayers)
                                 default: EmptyView()
                                 }
                             }
-                            .padding(.bottom, 50)
+                            .padding(.bottom, 65)
                             .onChange(of: group) { _ in refreshGroup() }
                         }
                     }

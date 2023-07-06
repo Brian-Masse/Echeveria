@@ -41,9 +41,11 @@ class EcheveriaGame: Object, Identifiable {
     }
     
     enum GameType: String, CaseIterable, Identifiable {
-        case other  = "other"
-        case smash  = "smash"
-        case magic  = "magic"
+        case smash  = "Smash"
+        case magic  = "Magic"
+        case spikeBall = "Spikeball"
+        case bags = "Bags"
+        case other  = "Other"
         
         var id: String { self.rawValue }
     }
@@ -57,6 +59,8 @@ class EcheveriaGame: Object, Identifiable {
         get { GameExperience(rawValue: type)! }
         set { experieince = newValue.rawValue }
     }
+    
+    static let emptyGameDataNodeTitle: String = "No entry"
     
     @Persisted(primaryKey: true) var _id: ObjectId
     @Persisted var ownerID: String = ""
@@ -131,20 +135,26 @@ class EcheveriaGame: Object, Identifiable {
         games.sorted { game1, game2 in game2.date > game1.date }
     }
     
-    static func getGameColor( _ game: String ) -> Color {
-        if game == GameType.smash.rawValue { return .red }
-        if game == GameType.magic.rawValue { return .blue }
-        if game == GameType.other.rawValue { return Colors.forestGreen }
+    func getGameColor( ) -> Color {
+        
+        if let winnerID = winners.first {
+            if let profile = EcheveriaProfile.getProfileObject(from: winnerID) {
+                return profile.getColor()
+            }
+        }
         return .gray
     }
     
     
     subscript (key: String) -> String {
-        gameData.first { node in node.key == key }?.data ?? "No entry"
+        gameData.first { node in node.key == key }?.data ?? EcheveriaGame.emptyGameDataNodeTitle
     }
     
+//    This is used when you recieve a specific list of nodes (for instance a games specifc node data) and want to search for a piece of data by key
+//    It is not a general purpose accessor for getting a data node
+//    Echeveria has a similar method intended to get the gameDataNodes that represent user preferences
     static func getNodeData( from key: String, in values: [ GameDataNode ]) -> String {
-        values.first { node in node.key == key }?.data ?? "No entry"
+        values.first { node in node.key == key }?.data ?? EcheveriaGame.emptyGameDataNodeTitle
     }
     
     

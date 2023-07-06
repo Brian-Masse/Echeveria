@@ -21,7 +21,7 @@ struct GameView: View {
     
     var body: some View {
         AsyncLoader {
-            EcheveriaModel.shared.addActiveColor(with: EcheveriaGame.getGameColor(game.type) )
+            EcheveriaModel.shared.addActiveColor(with: game.getGameColor() )
             await game.updatePermissions(id: game._id.stringValue)
         } content: {
             
@@ -88,8 +88,11 @@ struct GameView: View {
                     
 
                         switch game.type {
-                        case EcheveriaGame.GameType.smash.rawValue:  Smash.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
-                        case EcheveriaGame.GameType.magic.rawValue: Magic.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                        case EcheveriaGame.GameType.smash.rawValue:     Smash.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                        case EcheveriaGame.GameType.magic.rawValue:     Magic.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                        case EcheveriaGame.GameType.spikeBall.rawValue: LawnGame.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                        case EcheveriaGame.GameType.bags.rawValue:      LawnGame.GameDisplay(players: Array(game.players), gameData: Array( game.gameData ))
+                            
                         default: EmptyView()
                         }
                         
@@ -108,7 +111,7 @@ struct GameView: View {
             .padding(.bottom, 30)
         }
         .padding(.top, 40)
-        .universalColoredBackground(EcheveriaGame.getGameColor(game.type) )
+        .universalColoredBackground( game.getGameColor() )
     }
 }
 

@@ -63,7 +63,10 @@ struct TransparentForm<C: View>: View {
 
 
 //MARK: Pickers
-struct MultiPicker<ListType:RandomAccessCollection>: View where ListType:RangeReplaceableCollection, ListType.Element: (Hashable) {
+struct MultiPicker<ListType:Collection>: View where ListType:RangeReplaceableCollection,
+                                                        ListType.Element: (Hashable),
+                                                        ListType.Indices: RandomAccessCollection,
+                                                        ListType.Index: Hashable {
     
     let title: String
     
@@ -94,12 +97,12 @@ struct MultiPicker<ListType:RandomAccessCollection>: View where ListType:RangeRe
             UniversalText(title, size: Constants.UIDefaultTextSize, lighter: true)
             Spacer()
             Menu {
-                ForEach(sources, id: \.self) { source in
+                ForEach(sources.indices, id: \.self) { i in
                     Button {
-                        toggleSource(source)
+                        toggleSource(sources[i])
                     } label: {
-                        let name = sourceName(source)
-                        if selectedSources.contains(where: { id in id == source }) { Image(systemName: "checkmark") }
+                        let name = sourceName(sources[i])
+                        if selectedSources.contains(where: { id in id == sources[i] }) { Image(systemName: "checkmark") }
                         Text( name == nil ? "?" : name! ).tag(name)
                     }
                 }

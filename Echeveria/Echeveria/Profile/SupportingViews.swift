@@ -119,7 +119,7 @@ struct ProfileViews {
                         switch activePreferences {
                         case .smash:   Smash.PreferencesForm(preferences: $preferences)
                         case .magic:   Magic.PreferencesForm(preferences: $preferences)
-                        default: EmptyView()
+                        default: LargeFormRoundedButton(label: "No preferences for this game", icon: "camera.metering.unknown", action: {})
                         }
                         
                         Spacer()
