@@ -42,7 +42,7 @@ struct ProfileMainView: View {
                     if profile.favoriteGroups.count != 0 {
                         UniversalText("Favorite Groups", size: Constants.UIHeaderTextSize, true).transition(.opacity)
                         ListView(title: "", collection: profile.favoriteGroups, geo: geo) { _ in true } contentBuilder: { groupID in
-                            if let group = EcheveriaGroup.getGroupObject(from: groupID) {
+                            if let group = EcheveriaGroup.getGroupObject(with: groupID) {
                                 GroupPreviewView(group: group, geo: geo)
                             }
                         }.transition(.opacity)

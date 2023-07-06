@@ -79,8 +79,10 @@ class EcheveriaProfile: Object, Identifiable {
     
 //        A collection of all the groupIDs of each group you are a part of
     func getGroupIDs(_ groups: [EcheveriaGroup]? = nil) -> [ObjectId] {
-        if let passedGroups = groups { return passedGroups.reduce([]) { partialResult, group in partialResult + [group._id] } }
-        return self.groups.reduce([]) { partialResult, group in partialResult + [group._id] }
+        DispatchQueue.main.sync {
+            if let passedGroups = groups { return passedGroups.reduce([]) { partialResult, group in partialResult + [group._id] } }
+            return self.groups.reduce([]) { partialResult, group in partialResult + [group._id] }
+        }
     }
     
     func getColor() -> Color {
@@ -132,6 +134,7 @@ class EcheveriaProfile: Object, Identifiable {
         }
     }
     
+    //    MARK: Group Functions
     func joinGroup(_ groupID: ObjectId) {
         guard let group = EcheveriaGroup.getGroupObject(from: groupID) else { return }
         EcheveriaModel.updateObject(self) { thawed in
@@ -142,12 +145,18 @@ class EcheveriaProfile: Object, Identifiable {
     
     func leaveGroup(_ group: EcheveriaGroup) {
         EcheveriaModel.updateObject(self) { thawed in
-            if let index = thawed.groups.firstIndex(of: group) {
-                thawed.groups.remove(at: index)
+            if let groupIndex = thawed.groups.firstIndex(of: group) { thawed.groups.remove(at: groupIndex) }
+            
+            unfavoriteGroup(group)
+            
+            for gameID in thawed.favoriteGames {
+                if let game = EcheveriaGame.getGameObject(from: gameID) {
+                    if game.groupID.stringValue == group._id.stringValue { unfavoriteGame(game) }
+                }
             }
         }
     }
-    
+
     func favoriteGroup( _ group: EcheveriaGroup ) {
         if self.favoriteGroups.contains(where: { str in str == group._id.stringValue }) { return }
         EcheveriaModel.updateObject(self) { thawed in
@@ -284,6 +293,26 @@ class EcheveriaProfile: Object, Identifiable {
             await realmManager.groupQuery.removeQuery(ownerID + QuerySubKey.groups.rawValue)
             await realmManager.gamesQuery.removeQuery(ownerID + QuerySubKey.games.rawValue)
         }
+    }
+    
+    func refreshGamePermissions(id: String, groups: [EcheveriaGroup]) async {
+        
+        let realmManager = EcheveriaModel.shared.realmManager
+        let totalGroupIDs = self.getGroupIDs(groups)
+        let queryKey = id + QuerySubKey.games.rawValue
+        
+//        create a temp subscription
+        await realmManager.gamesQuery.addQuery("temp") { query in
+            query.groupID.in(totalGroupIDs) && query.players.contains( self.ownerID )
+        }
+        await realmManager.gamesQuery.removeQuery(queryKey)
+        
+//        create the real subscription
+        await realmManager.gamesQuery.addQuery(queryKey) { query in
+            query.groupID.in(totalGroupIDs) && query.players.contains( self.ownerID )
+        }
+        await realmManager.gamesQuery.removeQuery("temp")
+        
     }
     
     func getAllowedGames(from games: Results<EcheveriaGame>) -> [EcheveriaGame] {

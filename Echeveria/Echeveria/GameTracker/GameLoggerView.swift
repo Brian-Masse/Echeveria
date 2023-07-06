@@ -21,7 +21,7 @@ struct GameLoggerView: View  {
     @State var date: Date = .now
     
     var players: [String]? {
-        guard let group = EcheveriaGroup.getGroupObject(from: group) else { return nil }
+        guard let group = EcheveriaGroup.getGroupObject(with: group) else { return nil }
         return group.members.map { string in return string }
     }
     
@@ -96,7 +96,7 @@ struct GameLoggerView: View  {
                             }
                             
                             BasicPicker(title: "Group", noSeletion: "No Group", sources: groupIDs, selection: $group) { groupID in
-                                if let group = EcheveriaGroup.getGroupObject(from: groupID) { Text(group.name) }
+                                if let group = EcheveriaGroup.getGroupObject(with: groupID) { Text(group.name) }
                             }
                             
                             DatePicker(selection: $date) {
@@ -106,7 +106,7 @@ struct GameLoggerView: View  {
                         
                         if group != "" {
                             AsyncLoader {
-                                if let group = EcheveriaGroup.getGroupObject(from: self.group) { await group.updatePermissionsForGameLogger() }
+                                if let group = EcheveriaGroup.getGroupObject(with: self.group) { await group.updatePermissionsForGameLogger() }
                             } content: {
                                 TransparentForm("Game Information") {
                                     MultiPicker(title: "Players", selectedSources: $selectedPlayers, sources: players!) { playerID in

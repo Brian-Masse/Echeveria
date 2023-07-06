@@ -44,8 +44,11 @@ class EcheveriaModel: ObservableObject {
     
     //MARK: Convience Functions
     static func writeToRealm(_ block: () -> Void ) {
-        do { try EcheveriaModel.shared.realmManager.realm.write { block() }}
-        catch { print(error.localizedDescription) }
+        do {
+            if EcheveriaModel.shared.realmManager.realm.isInWriteTransaction { block() }
+            else { try EcheveriaModel.shared.realmManager.realm.write(block) }
+            
+        } catch { print(error.localizedDescription) }
     }
     
     static func updateObject<T: Object>(_ object: T, _ block: (T) -> Void, needsThawing: Bool = true) {
@@ -56,6 +59,7 @@ class EcheveriaModel: ObservableObject {
             }
             block(thawed)
         }
+        
         
     }
     

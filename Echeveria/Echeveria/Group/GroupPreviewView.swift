@@ -47,8 +47,11 @@ struct GroupPreviewView: View {
                         group.addMember(memberID)
                     }
                 } else {
-                    RoundedButton(label: "leave", icon: "shippingbox.and.arrow.backward") {
+                    AsyncRoundedButton(label: "leave", icon: "shippingbox.and.arrow.backward") {
                         group.removeMember(memberID)
+                        if let profile = EcheveriaProfile.getProfileObject(from: memberID) {
+                            await profile.refreshGamePermissions(id: memberID, groups: Array( profile.groups ))
+                        }
                     }
                 }
             }
