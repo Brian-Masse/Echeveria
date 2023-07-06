@@ -278,10 +278,12 @@ class EcheveriaProfile: Object, Identifiable {
             EcheveriaModel.shared.removeActiveColor()
         }
         
-        let realmManager = EcheveriaModel.shared.realmManager
-        await realmManager.profileQuery.removeQuery(ownerID + QuerySubKey.account.rawValue)
-        await realmManager.groupQuery.removeQuery(ownerID + QuerySubKey.groups.rawValue)
-        await realmManager.gamesQuery.removeQuery(ownerID + QuerySubKey.games.rawValue)
+        if ownerID != EcheveriaModel.shared.activeID {
+            let realmManager = EcheveriaModel.shared.realmManager
+            await realmManager.profileQuery.removeQuery(ownerID + QuerySubKey.account.rawValue)
+            await realmManager.groupQuery.removeQuery(ownerID + QuerySubKey.groups.rawValue)
+            await realmManager.gamesQuery.removeQuery(ownerID + QuerySubKey.games.rawValue)
+        }
     }
     
     func getAllowedGames(from games: Results<EcheveriaGame>) -> [EcheveriaGame] {
@@ -304,7 +306,9 @@ class EcheveriaProfile: Object, Identifiable {
         var data: [ WinDataPoint ] = []
         
         for content in EcheveriaGame.GameType.allCases {
-            let counts = games.countAllThatSatisfy { game in game.type == content.rawValue } subQuery: { game in game.winners.contains(where: {str in str == self.ownerID }) }
+            let counts = games.countAllThatSatisfy { game in game.type.strip() == content.rawValue.strip() } subQuery: {
+                game in game.winners.contains(where: {str in str.strip() == self.ownerID.strip() })
+            }
             data.append( .init(winCount: counts.1, totalCount: counts.0, game: content) )
         }
         return data 

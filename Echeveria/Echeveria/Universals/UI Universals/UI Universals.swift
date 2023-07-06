@@ -215,6 +215,7 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                         BarMark(
                             x: .value(XAxisTitle, XAxis( data ) ),
                             y: .value(YAxisTitle, YAxis( data ) )
+//                            width: .fixed(10)
                         ).foregroundStyle(primaryColor)
                     }
                 }.universalChart()
@@ -224,6 +225,7 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                         BarMark(
                             x: .value(XAxisTitle, XAxis( data ) ),
                             y: .value(YAxisTitle, YAxis( data ) )
+//                            width: .fixed(10)
                         ).foregroundStyle(by: .value(styleTitle!, Style!( data ) ) )
                     }
                 }

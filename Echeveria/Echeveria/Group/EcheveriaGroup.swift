@@ -94,7 +94,6 @@ class EcheveriaGroup: Object, Identifiable {
     }
     
 //    MARK: Class Methods
-    
     func addToRealm() {
         let id = EcheveriaModel.shared.profile.ownerID
         self.owner = id
@@ -160,102 +159,5 @@ class EcheveriaGroup: Object, Identifiable {
         await realmManager.profileQuery.removeQuery(id + QuerySubKey.account.rawValue)
         await realmManager.gamesQuery.removeQuery(id + QuerySubKey.games.rawValue)
         await realmManager.gameDataNodesQuery.removeAllNonBaseQueries()
-    }
-    
-//    MARK: Graphing Helper Functions
-    
-    struct WinnerHistoryNode: Hashable {
-        let winCount: Int
-        let date: Date
-        let player: EcheveriaProfile
-    }
-    
-    func getWinnerHistory(games: [ EcheveriaGame ]) -> [ WinnerHistoryNode ] {
-        var runningCounts: Dictionary<String, Int> = Dictionary()
-        var history: [WinnerHistoryNode] = []
-        
-        for game in games {
-            let winners = game.winners
-            
-            for winner in winners {
-                if let _ = runningCounts[ winner ] { runningCounts[ winner ]! += 1 }
-                else { runningCounts[ winner ] = 1 }
-            }
-            
-            for memberID in self.members {
-                let count = runningCounts[memberID]
-                if let player = EcheveriaProfile.getProfileObject(from: memberID) {
-                    let node = WinnerHistoryNode(winCount: count == nil ? 0 : count!, date: game.date, player: player)
-                    history.append(node)
-                }
-            }
-        }
-        return history
-    }
-    
-    struct GameCountHistoryNode: Hashable {
-        let count: Int
-        let date: Date
-        let type: String
-    }
-    
-    func getGameCountHistory(games: [ EcheveriaGame ]) -> [ GameCountHistoryNode ] {
-        var runningCounts: Dictionary<String, Int> = Dictionary()
-        var history: [GameCountHistoryNode] = []
-        
-        for game in games {
-            
-            if let _ = runningCounts[ game.type ] { runningCounts[ game.type ]! += 1 }
-            else { runningCounts[ game.type ] = 1 }
-            
-            for type in EcheveriaGame.GameType.allCases {
-                let count = runningCounts[type.rawValue]
-                let node = GameCountHistoryNode(count: count == nil ? 0 : count!, date: game.date, type: type.rawValue)
-                history.append(node)
-            }
-        }
-        return history
-    }
-    
-    struct GameCountNode: Hashable {
-        let count: Int
-        let type: String
-        let styleData: String
-    }
-    
-    func getGameCount(games: [EcheveriaGame], filterByPlayer: Bool = true) -> [ GameCountNode ] {
-        var runningCounts: Dictionary<String, Int> = Dictionary()
-        var history: [GameCountNode] = []
-        
-        for game in games {
-            for winner in game.winners {
-                if let profile = EcheveriaProfile.getProfileObject(from: winner) {
-                    let key = filterByPlayer ? game.type + profile.firstName : game.type + game.experieince
-                    if let _ = runningCounts[ key ] { runningCounts[ key ]! += 1 }
-                    else { runningCounts[ key ] = 1 }
-                }
-            }
-        }
-        
-        for type in EcheveriaGame.GameType.allCases {
-            if !filterByPlayer {
-                for experience in EcheveriaGame.GameExperience.allCases {
-                    let count = runningCounts[type.rawValue + experience.rawValue]
-                    let node = GameCountNode(count: count == nil ? 0 : count!, type: type.rawValue, styleData: experience.rawValue)
-                    history.append(node)
-                }
-            } else {
-                for memberID in self.members {
-                    if let profile = EcheveriaProfile.getProfileObject(from: memberID) {
-                        let count = runningCounts[type.rawValue + profile.firstName]
-                        let node = GameCountNode(count: count == nil ? 0 : count!, type: type.rawValue, styleData: profile.firstName)
-                        history.append(node)
-                    }
-                }
-            }
-        }
-        
-        
-        return history
     }
 }

@@ -53,7 +53,7 @@ struct TimeByPlayerAndTypeChart<Graph: View>: View {
                     Menu {
                         ForEach( EcheveriaGame.GameType.allCases.indices, id: \.self ) { i in
                             Button { withAnimation {filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue ) } } label: {
-                                let selected = !filteredGames.contains { str in str == EcheveriaGame.GameType.allCases[i].rawValue }
+                                let selected = !filteredGames.contains { str in str.strip() == EcheveriaGame.GameType.allCases[i].rawValue.strip() }
                                 if selected { Image(systemName: "checkmark") }
                                 Text(EcheveriaGame.GameType.allCases[i].rawValue)
                             }
@@ -85,8 +85,8 @@ struct TimeByTypeChart<Graph: View>: View {
                 Spacer()
                 Menu {
                     ForEach( EcheveriaGame.GameType.allCases.indices, id: \.self ) { i in
-                        Button { withAnimation {filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue ) } } label: {
-                            let selected = !filteredGames.contains { str in str == EcheveriaGame.GameType.allCases[i].rawValue }
+                        Button { withAnimation {filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue.strip() ) } } label: {
+                            let selected = !filteredGames.contains { str in str.strip() == EcheveriaGame.GameType.allCases[i].rawValue.strip() }
                             if selected { Image(systemName: "checkmark") }
                             Text(EcheveriaGame.GameType.allCases[i].rawValue)
                         }

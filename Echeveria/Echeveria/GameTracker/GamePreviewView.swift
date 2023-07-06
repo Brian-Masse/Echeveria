@@ -11,7 +11,7 @@ import RealmSwift
 
 struct GamePreviewView: View {
     
-    @ObservedRealmObject var game: EcheveriaGame
+    let gameID: String
     
     @State var showingGameView: Bool = false
 
@@ -20,25 +20,27 @@ struct GamePreviewView: View {
     
     var body: some View {
     
-        VStack(alignment: .leading) {
-            HStack {
-                UniversalText(game.type, size: Constants.UIHeaderTextSize - 5, true).textCase(.uppercase)
+        if let game = EcheveriaGame.getGameObject(from: gameID) {
+            
+            VStack(alignment: .leading) {
+                HStack {
+                    UniversalText(game.type, size: Constants.UIHeaderTextSize - 5, true).textCase(.uppercase)
+                }
+                
+                UniversalText("\(group.name)", size: Constants.UIDefaultTextSize, lighter: true, true)
+                UniversalText(game.date.formatted(date: .numeric, time: .omitted), size: Constants.UIDefaultTextSize, lighter: true )
+                
             }
-            
-            UniversalText("\(group.name)", size: Constants.UIDefaultTextSize, lighter: true, true)
-            UniversalText(game.date.formatted(date: .numeric, time: .omitted), size: Constants.UIDefaultTextSize, lighter: true )
-            
-        }
-        .padding()
-        .frame(width: geo.size.width / 2.5, height: geo.size.width / 5)
-        .background(Rectangle()
-            .cornerRadius(20)
-            .universalForeground()
-            .onTapGesture { showingGameView = true }
-        )
-        .fullScreenCover(isPresented: $showingGameView) {
-            GameView(game: game)
-            
+            .padding()
+            .frame(width: geo.size.width / 2.5, height: geo.size.width / 5)
+            .background(Rectangle()
+                .cornerRadius(20)
+                .universalForeground()
+                .onTapGesture { showingGameView = true }
+            )
+            .fullScreenCover(isPresented: $showingGameView) {
+                GameView(gameID: gameID)       
+            }
         }
     }
     

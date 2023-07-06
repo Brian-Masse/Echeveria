@@ -24,7 +24,7 @@ struct GameScrollerView: View {
     
     let filterable: Bool 
     let geo: GeometryProxy
-    let games: [EcheveriaGame]
+    let games: [String]
     
     var body: some View {
         VStack {
@@ -46,14 +46,14 @@ struct GameScrollerView: View {
             
             if filter == .gameType {
                 ForEach( EcheveriaGame.GameType.allCases, id: \.self ) { type in
-                    GameListView(games: games, title: type.rawValue, geo: geo) { game in
-                        game.type == type.rawValue
+                    GameListView(games: games, title: type.rawValue, geo: geo) { gameID in
+                        if let game = EcheveriaGame.getGameObject(from: gameID) { return game.type.strip() == type.rawValue.strip() } ; return false
                     }
                 }
             } else if filter == .groupType {
                 ForEach( EcheveriaModel.shared.profile.groups, id: \.self ) { group in
-                    GameListView(games: games, title: group.name, geo: geo) { game in
-                        game.groupID == group._id
+                    GameListView(games: games, title: group.name, geo: geo) { gameID in
+                        if let game = EcheveriaGame.getGameObject(from: gameID) { return game.groupID == group._id }; return false
                     }
                 }
             } else if filter == .winnerType {
@@ -61,10 +61,13 @@ struct GameScrollerView: View {
                 
                 ForEach( winners, id: \.self ) { winner in
                     let profile = EcheveriaProfile.getProfileObject(from: winner)
-                    GameListView(games: games, title: profile!.firstName, geo: geo) { game in
-                        game.winners.contains { winnerID in
-                            winnerID == winner
+                    GameListView(games: games, title: profile!.firstName, geo: geo) { gameID in
+                        if let game = EcheveriaGame.getGameObject(from: gameID) {
+                            return game.winners.contains { winnerID in
+                                winnerID == winner
+                            }
                         }
+                        return false
                     }
                 }
             }
@@ -73,11 +76,11 @@ struct GameScrollerView: View {
     
     struct GameListView: View {
         
-        let games: [EcheveriaGame]
+        let games: [String]
         let title: String
         
         let geo: GeometryProxy
-        let query: (EcheveriaGame) -> Bool
+        let query: (String) -> Bool
         
         var body: some View {
             let filtered = Array(games.filter { game in query(game) })
@@ -88,9 +91,11 @@ struct GameScrollerView: View {
                 }
                 ScrollView(.horizontal) {
                     LazyHStack {
-                        ForEach( filtered, id: \.self ) { game in
-                            if let group = EcheveriaGroup.getGroupObject(from: game.groupID) {
-                                GamePreviewView(game: game, group: group, geo: geo)
+                        ForEach( filtered, id: \.self ) { gameID in
+                            if let game = EcheveriaGame.getGameObject(from: gameID) {
+                                if let group = EcheveriaGroup.getGroupObject(from: game.groupID) {
+                                    GamePreviewView(gameID: gameID, group: group, geo: geo)
+                                }
                             }
                         }
                     }

@@ -15,7 +15,7 @@ struct WinHistoryChart: View {
         let sorted = EcheveriaGame.sort(games)
         return group.members.filter { id in !filteredMembers.contains(where: { str in str == id }) }.flatMap { memberID in
             return sorted.flatMap { game in
-                let count = sorted.filter { g in g.date <= game.date && g.winners.contains{ str in str == memberID} && !filteredGames.contains(where: { str in str == g.type })}.count
+                let count = sorted.filter { g in g.date <= game.date && g.winners.contains{ str in str == memberID} && !filteredGames.contains(where: { str in str.strip() == g.type.strip() })}.count
                 return [ DataNode(id: memberID, wins: count, date: game.date, type: "") ]
             }
         }
@@ -72,9 +72,9 @@ struct WinHistoryChart: View {
 struct TotalWinHistoryChart: View {
     private func makeTotalWinData() -> [DataNode] {
         return group.members.filter { id in !filteredMembers.contains(where: { str in str == id }) }.flatMap { memberID in
-            return EcheveriaGame.GameType.allCases.filter { type in !filteredGames.contains { str in str == type.rawValue } }.compactMap { type in
+            return EcheveriaGame.GameType.allCases.filter { type in !filteredGames.contains { str in str.strip() == type.rawValue.strip() } }.compactMap { type in
                 let count = games.reduce(0) { partialResult, game in
-                    (game.type == type.rawValue && game.winners.contains {str in str == memberID}) ? partialResult + 1 : partialResult }
+                    (game.type.strip() == type.rawValue.strip() && game.winners.contains {str in str == memberID}) ? partialResult + 1 : partialResult }
                 return DataNode(id: memberID, wins: count, date: .now, type: type.rawValue )
             }
         }
@@ -186,7 +186,7 @@ struct GameCountHistoryGraph: View {
         var date: Date = group.createdDate
         
         while date < .now {
-            let filtered = games.filter { game in !filteredGames.contains { str in str == game.type } }
+            let filtered = games.filter { game in !filteredGames.contains { str in str.strip() == game.type.strip() } }
             let count = filtered.filter { game in Calendar.current.isDate(game.date, equalTo: date, toGranularity: .day) }.count
             let totalCount = filtered.filter { game in game.date <= date }.count
             list.append( DataNode(count: count, totalCount: totalCount, date: date ) )
@@ -206,7 +206,7 @@ struct GameCountHistoryGraph: View {
                 Menu {
                     ForEach( EcheveriaGame.GameType.allCases.indices, id: \.self ) { i in
                         Button { withAnimation { filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue ) }} label: {
-                            let selected = !filteredGames.contains { str in str == EcheveriaGame.GameType.allCases[i].rawValue }
+                            let selected = !filteredGames.contains { str in str.strip() == EcheveriaGame.GameType.allCases[i].rawValue.strip() }
                             if selected { Image(systemName: "checkmark") }
                             Text(EcheveriaGame.GameType.allCases[i].rawValue)
                         }

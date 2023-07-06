@@ -24,7 +24,7 @@ struct ProfileMainView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-        
+            
             ProfilePageTitle(profile: profile, text: "\(profile.firstName) \(profile.lastName)", size: Constants.UITitleTextSize)
 
             ScrollView(.vertical) {
@@ -51,7 +51,9 @@ struct ProfileMainView: View {
                     if profile.favoriteGames.count != 0 {
                         ZStack(alignment: .topLeading) {
                             UniversalText("Favorite Games", size: Constants.UIHeaderTextSize, true)
-                            GameScrollerView(filter: .none, filterable: true, geo: geo, games: profile.getFavoriteGames(from: allGames))
+                            
+                            let games = EcheveriaGame.reduceIntoStrings(from: profile.getFavoriteGames(from: allGames))
+                            GameScrollerView(filter: .none, filterable: true, geo: geo, games: games)
                         }
                     }
                     

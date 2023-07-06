@@ -73,7 +73,17 @@ struct MainView: View {
             }.frame(width: geo.size.width)
         }
         .ignoresSafeArea()
-        .sheet(isPresented: $logging) { GameLoggerView() }
+        .sheet(isPresented: $logging) {
+            GameLoggerView(editing: false,
+                           gameID: nil,
+                           gameType: .smash,
+                           group: "",
+                           selectedPlayers: [],
+                           selectedWinners: [],
+                           gameExperieince: .good,
+                           gameComments: "",
+                           gameValues: Dictionary())
+             }
     }
     
     struct TabBarButton: View {

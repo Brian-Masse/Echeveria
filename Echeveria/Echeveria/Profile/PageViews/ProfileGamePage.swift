@@ -16,8 +16,6 @@ struct ProfileGameView: View {
     @ObservedObject var profile: EcheveriaProfile
     var allGames: Results<EcheveriaGame>
     
-    @State var logging: Bool = false
-    
     let geo: GeometryProxy
     var mainUser: Bool { profile.ownerID == EcheveriaModel.shared.profile.ownerID }
     
@@ -57,14 +55,13 @@ struct ProfileGameView: View {
                     }.padding(.bottom)
 
                     ZStack(alignment: .topLeading) {
-                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: games)
+                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaGame.reduceIntoStrings(from: games))
                         UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
                     }.padding(.bottom, 80)
                 }
                 Spacer()
             }
         }
-        .sheet(isPresented: $logging) { GameLoggerView() }
     }
     
 //    MARK: Charts

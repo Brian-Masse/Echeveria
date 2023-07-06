@@ -180,7 +180,6 @@ class RealmManager: ObservableObject {
 
         await self.removeAllNonBaseSubscriptions()
         
-//        Add subscriptions to donwload any groups that youre a part of
         let _:EcheveriaGroup? = await self.addGenericSubcriptions(name: QuerySubKey.groups.rawValue, query: groupQuery.baseQuery)
         let _:EcheveriaGame? = await self.addGenericSubcriptions(name: QuerySubKey.games.rawValue, query: gamesQuery.baseQuery)
         let _:GameDataNode? = await self.addGenericSubcriptions(name: QuerySubKey.gameDataNodes.rawValue, query: gameDataNodesQuery.baseQuery)

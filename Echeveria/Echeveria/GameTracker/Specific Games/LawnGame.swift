@@ -115,7 +115,7 @@ class LawnGame {
                     .padding(.bottom, 5)
                     
                     UniversalText("Members", size: Constants.UISubHeaderTextSize, true)
-                    ForEach( players, id: \.self ) { profileID in
+                    ForEach( names, id: \.self ) { profileID in
                         ProfilePreviewView(profileID: profileID)
                     }
                 }

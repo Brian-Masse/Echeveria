@@ -13,8 +13,11 @@ struct GameLoggerView: View  {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @State var gameType: EcheveriaGame.GameType = .smash
-    @State var group: String = ""
+    let editing: Bool
+    let gameID: String?
+    
+    @State var gameType: EcheveriaGame.GameType
+    @State var group: String
     @State var date: Date = .now
     
     var players: [String]? {
@@ -22,12 +25,12 @@ struct GameLoggerView: View  {
         return group.members.map { string in return string }
     }
     
-    @State var selectedPlayers: [String] = []
-    @State var selectedWinners: [String] = []
-    @State var gameExperieince: EcheveriaGame.GameExperience = .good
-    @State var gameComments: String = ""
+    @State var selectedPlayers: [String]
+    @State var selectedWinners: [String]
+    @State var gameExperieince: EcheveriaGame.GameExperience
+    @State var gameComments: String
     
-    @State var gameValues: Dictionary<String, String> = Dictionary()
+    @State var gameValues: Dictionary<String, String>
     
     @ObservedResults(EcheveriaGroup.self) var groups
     
@@ -45,6 +48,36 @@ struct GameLoggerView: View  {
         return list
     }
     
+    private func submit() {
+        if !checkCompletion() { return }
+        
+        if !editing {
+            let _ = EcheveriaGame(EcheveriaModel.shared.profile.ownerID,
+                                  type: gameType,
+                                  group: group,
+                                  date: date,
+                                  players: ArrayToRealmList(selectedPlayers),
+                                  winners: ArrayToRealmList(selectedWinners),
+                                  experience: gameExperieince,
+                                  comments: gameComments,
+                                  gameData: gameValues)
+            
+        } else {
+            if let game = EcheveriaGame.getGameObject(from: gameID ?? "") {
+                game.update(type: gameType,
+                             group: group,
+                             date: game.date,
+                             players: ArrayToRealmList(selectedPlayers),
+                             winners: ArrayToRealmList(selectedWinners),
+                             experience: gameExperieince,
+                             comments: gameComments,
+                             gameData: gameValues)
+            }
+        }
+        
+        presentationMode.wrappedValue.dismiss()
+    }
+    
     var body: some View {
         
         let groupIDs: [String] = groups.map { group in group._id.stringValue }
@@ -53,7 +86,7 @@ struct GameLoggerView: View  {
             ZStack(alignment: .bottom) {
                 VStack(alignment: .leading) {
                     
-                    UniversalText("Log Game", size: Constants.UITitleTextSize, true)
+                    UniversalText(editing ? "Edit Game" : "Log Game", size: Constants.UITitleTextSize, true)
                         .padding(.bottom)
                     
                     ScrollView(.vertical) {
@@ -94,8 +127,8 @@ struct GameLoggerView: View  {
                                     
                                     HStack {
                                         TextField("Comments", text: $gameComments)
-                                            .frame(width: geo.size.width - 50 )
-                                            .fixedSize(horizontal: true, vertical: false)
+//                                            .frame(width: geo.size.width - 50 )
+//                                            .fixedSize(horizontal: true, vertical: false)
                                         Spacer()
                                     }
                                 }
@@ -114,23 +147,10 @@ struct GameLoggerView: View  {
                     }
                 }
                 
-                RoundedButton(label: "Submit", icon: "checkmark.seal") {
-                    if !checkCompletion() { return }
-                    
-                    let _ = EcheveriaGame(EcheveriaModel.shared.profile.ownerID,
-                                          type: gameType,
-                                          group: group,
-                                          date: date,
-                                          players: ArrayToRealmList(selectedPlayers),
-                                          winners: ArrayToRealmList(selectedWinners),
-                                          experience: gameExperieince,
-                                          comments: gameComments,
-                                          gameData: gameValues)
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .padding()
-                .shadow(radius: 5)
-                .padding(.bottom, Constants.UIHoverButtonBottonPadding)
+                RoundedButton(label: "Submit", icon: "checkmark.seal") { submit() }
+                    .padding()
+                    .shadow(radius: 5)
+                    .padding(.bottom, Constants.UIHoverButtonBottonPadding)
             }
         }
         .padding()

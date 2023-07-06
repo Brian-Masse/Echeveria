@@ -135,7 +135,7 @@ struct ChartsGroupViewPage: View {
                     
                     
                     ZStack(alignment: .topLeading) {
-                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: Array(games))
+                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaGame.reduceIntoStrings(from: Array(games)))
                         UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
                     }.padding(.bottom, 80)
                 } else {

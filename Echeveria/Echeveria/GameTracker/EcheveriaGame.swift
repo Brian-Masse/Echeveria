@@ -78,7 +78,6 @@ class EcheveriaGame: Object, Identifiable {
     
     convenience init( _ ownerID: String, type: GameType, group: String, date: Date, players: RealmSwift.List<String>, winners: RealmSwift.List<String>, experience: GameExperience, comments: String, gameData: Dictionary<String, String> ) {
         self.init()
-        
         self.ownerID = ownerID
         
         self.typeEnum = type
@@ -100,6 +99,29 @@ class EcheveriaGame: Object, Identifiable {
         EcheveriaModel.addObject(self)
     }
     
+    func update( type: GameType, group: String, date: Date, players: RealmSwift.List<String>, winners: RealmSwift.List<String>, experience: GameExperience, comments: String, gameData: Dictionary<String, String>  ) {
+        
+        let gameDataArry: [GameDataNode] = gameData.map { (key: String, value: String) in
+            let node = GameDataNode(ownerID: self.ownerID, gameOwnerID: self._id.stringValue, key: key, data: value)
+            EcheveriaModel.addObject( node )
+            return node
+        }
+        
+        EcheveriaModel.updateObject(self) { thawed in
+            thawed.typeEnum = type
+            thawed.groupID = try! ObjectId(string: group)
+            thawed.date = date
+            
+            thawed.players = players
+            thawed.winners = winners
+            thawed.experienceEnum = experience
+            thawed.comments = comments
+            
+            thawed.gameData.append(objectsIn: gameDataArry)
+        }
+        
+    }
+    
 //    MARK: Permissions
     func updatePermissions(id: String ) async {
         let realmManager = EcheveriaModel.shared.realmManager
@@ -109,7 +131,7 @@ class EcheveriaGame: Object, Identifiable {
         
         await realmManager.gameDataNodesQuery.removeAllNonBaseQueries()
         await realmManager.gameDataNodesQuery.addQuery { query in
-            query.ownerID == self._id.stringValue
+            query.ownerID == self.ownerID
         }
     }
     
@@ -124,8 +146,9 @@ class EcheveriaGame: Object, Identifiable {
     
 //    MARK: Convenience Functions
     static func getGameObject(from id: String) -> EcheveriaGame? {
+        let objID = try! ObjectId(string: id)
         let results: Results<EcheveriaGame> = EcheveriaModel.retrieveObject { query in
-            query.ownerID == id
+            query._id == objID
         }
         guard let game = results.first else { print( "No game exists with the given id: \(id)" ); return nil }
         return game
@@ -135,8 +158,7 @@ class EcheveriaGame: Object, Identifiable {
         games.sorted { game1, game2 in game2.date > game1.date }
     }
     
-    func getGameColor( ) -> Color {
-        
+    func getColor( ) -> Color {
         if let winnerID = winners.first {
             if let profile = EcheveriaProfile.getProfileObject(from: winnerID) {
                 return profile.getColor()
@@ -155,6 +177,34 @@ class EcheveriaGame: Object, Identifiable {
 //    Echeveria has a similar method intended to get the gameDataNodes that represent user preferences
     static func getNodeData( from key: String, in values: [ GameDataNode ]) -> String {
         values.first { node in node.key == key }?.data ?? EcheveriaGame.emptyGameDataNodeTitle
+    }
+    
+//    These functions are for editing taking the stored properties and converting them into those recievable by the loggerView for editing the game
+    func getType() -> GameType {
+        GameType.allCases.first { type in
+            type.rawValue.strip() == self.type.strip()
+        } ?? .smash
+    }
+    
+    func getExperience() -> GameExperience {
+        GameExperience.allCases.first { type in
+            type.rawValue.strip() == self.type.strip()
+        } ?? .good
+    }
+    
+    func getGameDataAsDictionary() -> Dictionary<String, String> {
+        var dic = Dictionary<String, String>.init()
+        for node in gameData {
+            dic[ node.key ] = node.data
+        }
+        return dic
+    }
+    
+//    Not sure why, but for some reason, to avoid the UI losing a valid reference of a game and dismissing all current views, its safer to instead pass around
+//    game IDs and retrieve the game object only when its neccessary
+//    This function takes a list of real references, converts them into strings and then returns
+    static func reduceIntoStrings(from list: [EcheveriaGame]) -> [String] {
+        list.map { game in game._id.stringValue }
     }
     
     

@@ -21,8 +21,11 @@ class EcheveriaModel: ObservableObject {
     private(set) var profile: EcheveriaProfile!
     private(set) var activeColors: [Color] = []
     
+    private(set) var activeID: String!
+    
     func setProfile(with profile: EcheveriaProfile) {
         self.profile = profile
+        self.activeID = profile.ownerID
         self.activeColors.append(profile.getColor())
     }
     

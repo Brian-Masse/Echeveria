@@ -14,7 +14,7 @@ struct ProfileWinHistoryChart: View {
     private func makeNodes() -> [DataNode] {
         let sorted = EcheveriaGame.sort(games)
         return sorted.flatMap { game in
-            let count = sorted.filter { g in g.date <= game.date && g.winners.contains{ str in str == ownerID } && !filteredGames.contains(where: { str in str == g.type })}.count
+            let count = sorted.filter { g in g.date <= game.date && g.winners.contains{ str in str == ownerID } && !filteredGames.contains(where: { str in str.strip() == g.type.strip() })}.count
             return [ DataNode(id: ownerID, wins: count, date: game.date, type: "") ]
         }
     }
@@ -112,98 +112,3 @@ struct ProfileWinStreakHistoryChart: View {
     }
 }
 
-//
-////MARK: GameCountHistoryGraph
-//struct GameCountHistoryGraph: View {
-//
-//    let group: EcheveriaGroup
-//    let games: [EcheveriaGame]
-//
-//    struct DataNode {
-//        let count: Int
-//        let totalCount: Int
-//        let date: Date
-//    }
-//
-//    @State var filteredGames: [String] = []
-//
-//    private func getData() -> [DataNode] {
-//        var list: [DataNode] = []
-//        var date: Date = group.createdDate
-//
-//        while date < .now {
-//            let filtered = games.filter { game in !filteredGames.contains { str in str == game.type } }
-//            let count = filtered.filter { game in Calendar.current.isDate(game.date, equalTo: date, toGranularity: .day) }.count
-//            let totalCount = filtered.filter { game in game.date <= date }.count
-//            list.append( DataNode(count: count, totalCount: totalCount, date: date ) )
-//            date += Constants.DayTime
-//        }
-//        return list
-//    }
-//
-//    var body: some View {
-//
-//        let data = getData()
-//
-//        VStack {
-//            HStack {
-//                UniversalText("Games Played", size: Constants.UISubHeaderTextSize, true)
-//                Spacer()
-//                Menu {
-//                    ForEach( EcheveriaGame.GameType.allCases.indices, id: \.self ) { i in
-//                        Button { withAnimation { filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue ) }} label: {
-//                            let selected = !filteredGames.contains { str in str == EcheveriaGame.GameType.allCases[i].rawValue }
-//                            if selected { Image(systemName: "checkmark") }
-//                            Text(EcheveriaGame.GameType.allCases[i].rawValue)
-//                        }
-//                    }
-//                } label: { FilterButton() }.menuActionDismissBehavior(.disabled)
-//            }
-//
-//            Chart {
-//                ForEach(data.indices) { i in
-//                    BarMark(x: .value("X", data[i].date),
-//                            y: .value("Y", data[i].count) )
-//                    .foregroundStyle(Colors.colorOptions[group.colorIndex])
-//                }
-//            }
-//            .chartXAxis {
-//                AxisMarks(values: .stride(by: .day)){ value in
-//                    if let date = value.as(Date.self) {
-//                        AxisValueLabel( date.formatted(date: .abbreviated, time: .omitted)  )
-//                    }
-//                    AxisTick()
-//                }
-//            }
-//            .opaqueRectangularBackground()
-//            .padding(.bottom)
-//
-//
-//            Chart {
-//                ForEach(data.indices) { i in
-//                    LineMark(x: .value("X", data[i].date),
-//                             y: .value("Y", data[i].totalCount))
-//                    .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 10]))
-//                    .foregroundStyle(Colors.colorOptions[group.colorIndex])
-//
-//                    AreaMark(x: .value("X", data[i].date),
-//                             y: .value("Y", data[i].totalCount))
-//                    .foregroundStyle(Colors.colorOptions[group.colorIndex]).opacity(0.3)
-//                }
-//            }
-//            .chartXAxis {
-//                AxisMarks(values: .stride(by: .day)){ value in
-//                    if let date = value.as(Date.self) {
-//                        AxisValueLabel( date.formatted(date: .abbreviated, time: .omitted)  )
-//                    }
-//
-//                    AxisTick()
-//                }
-//            }
-//        }
-//        .padding()
-//        .universalTextStyle()
-//        .rectangularBackgorund()
-//    }
-//}
-//
