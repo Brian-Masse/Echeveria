@@ -130,7 +130,7 @@ struct GameLoggerView: View  {
                 }
                 .padding()
                 .shadow(radius: 5)
-                .padding(.bottom, 20)
+                .padding(.bottom, Constants.UIHoverButtonBottonPadding)
             }
         }
         .padding()

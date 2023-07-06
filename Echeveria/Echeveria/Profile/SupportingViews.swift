@@ -61,23 +61,45 @@ struct ProfileViews {
         
         @EnvironmentObject var profile: EcheveriaProfile
         
-        @State var firstName: String = ""
-        @State var lastName: String = ""
-        @State var userName: String = ""
-        @State var icon: String = ""
-        @State var color: Color = .red
+        @State var creatingProfile: Bool
+        
+        @State var firstName: String
+        @State var lastName: String
+        @State var userName: String
+        @State var icon: String
+        @State var color: Color
         
         @State var activePreferences: EcheveriaGame.GameType = .smash
         @State var preferences: Dictionary<String, String>
         
         @State var showingPicker: Bool = false
         
+        private func submit() async {
+            if creatingProfile {
+                //TODO: need to checks that all fields are filled in and that they are a minimum length
+                let profile = EcheveriaProfile(ownerID: "", firstName: firstName, lastName: lastName, userName: userName, icon: icon, color: .blue)
+                await EcheveriaModel.shared.realmManager.addProfile(profile: profile)
+            }else {
+                profile.updateInformation(firstName: firstName,
+                                          lastName: lastName,
+                                          userName: userName,
+                                          icon: icon,
+                                          color: color,
+                                          preferences: preferences
+                )
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
+        
+        
         var body: some View {
             GeometryReader { geo in
                 ZStack(alignment: .bottom) {
                     VStack(alignment: .leading) {
                         
-                        UniversalText("Edit Profile", size: Constants.UITitleTextSize, true)
+                        let title = creatingProfile ? "Create Profile" : "Edit Profile"
+                        
+                        UniversalText(title, size: Constants.UITitleTextSize, true)
                             .padding(.bottom)
                         
                         TransparentForm("Basic Information") {
@@ -87,59 +109,39 @@ struct ProfileViews {
                         }
                         
                         TransparentForm("Personalization") {
-                            HStack {
-                                UniversalText("\(icon)", size: Constants.UIDefaultTextSize)
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                            }
-                            .onTapGesture { showingPicker = true }
-                            .sheet(isPresented: $showingPicker) { SymbolPicker(symbol: $icon) }
-                            
+                            IconPicker(icon: $icon)
                             UniqueColorPicker(selectedColor: $color)
                         }
-                        .onAppear {
-                            firstName = profile.firstName
-                            lastName = profile.lastName
-                            userName = profile.userName
-                            icon = profile.icon
-                        }
                         
-                        
-                        HStack {
-                            UniversalText("Preferences", size: Constants.UIHeaderTextSize, true)
-                            Spacer()
+                        if !creatingProfile {
+                            HStack {
+                                UniversalText("Preferences", size: Constants.UIHeaderTextSize, true)
+                                Spacer()
+                                
+                                Picker("Game", selection: $activePreferences) {
+                                    ForEach(EcheveriaGame.GameType.allCases, id: \.self) { content in
+                                        Text( content.rawValue )
+                                    }
+                                }.tint(Colors.tint)
+                            }
                             
-                            Picker("Game", selection: $activePreferences) {
-                                ForEach(EcheveriaGame.GameType.allCases, id: \.self) { content in
-                                    Text( content.rawValue )
-                                }
-                            }.tint(Colors.tint)
-                        }
-                        
-                        switch activePreferences {
-                        case .smash:   Smash.PreferencesForm(preferences: $preferences)
-                        case .magic:   Magic.PreferencesForm(preferences: $preferences)
-                        default: LargeFormRoundedButton(label: "No preferences for this game", icon: "camera.metering.unknown", action: {})
+                            switch activePreferences {
+                            case .smash:   Smash.PreferencesForm(preferences: $preferences)
+                            case .magic:   Magic.PreferencesForm(preferences: $preferences)
+                            default: LargeFormRoundedButton(label: "No preferences for this game", icon: "camera.metering.unknown", action: {})
+                            }
                         }
                         
                         Spacer()
                     }
                     
-                    RoundedButton(label: "Done", icon: "checkmark.seal") {
-                        profile.updateInformation(firstName: firstName,
-                                                  lastName: lastName,
-                                                  userName: userName,
-                                                  icon: icon,
-                                                  color: color,
-                                                  preferences: preferences
-                        )
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    AsyncRoundedButton(label: "Done", icon: "checkmark.seal") { await submit() }
                     .padding()
                     .shadow(radius: 5)
-                    .padding(.bottom, 20)
+                    .padding(.bottom, creatingProfile ? Constants.UIFullScreenTopPadding :  Constants.UIHoverButtonBottonPadding)
                 }
                 .frame(height: geo.size.height)
+                .padding(.top, creatingProfile ? Constants.UIFullScreenTopPadding : 0 )
             }
             .padding()
             .universalColoredBackground(Colors.tint)

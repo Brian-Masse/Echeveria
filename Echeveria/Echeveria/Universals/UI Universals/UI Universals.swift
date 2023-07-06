@@ -51,56 +51,6 @@ struct NamedButton: View {
     }
 }
 
-//MARK: Color Picker
-struct ColorPickerOption: View {
-    
-    let color: Color
-    @Binding var selectedColor: Color
-    
-    let size: CGFloat = 20
-    
-    var body: some View {
-        
-        if color == selectedColor {
-            Circle()
-                .foregroundColor(color)
-                .onTapGesture { selectedColor = color }
-                .frame(width: size, height: size)
-                .padding(7)
-                .rectangularBackgorund()
-        } else {
-            Circle()
-                .foregroundColor(color)
-                .frame(width: size, height: size)
-                .padding(7)
-                .onTapGesture { selectedColor = color }
-        }
-    }
-}
-
-struct UniqueColorPicker: View {
-    
-    @Binding var selectedColor: Color
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            UniversalText("Accent Color", size: Constants.UIDefaultTextSize)
-            HStack {
-                Spacer()
-                ColorPickerOption(color: .red, selectedColor: $selectedColor )
-                Spacer()
-                ColorPickerOption(color: .blue, selectedColor: $selectedColor )
-                Spacer()
-                ColorPickerOption(color: Colors.forestGreen, selectedColor: $selectedColor )
-                Spacer()
-            }
-            ColorPicker(selection: $selectedColor, supportsOpacity: false) {
-                UniversalText("All Colors", size: Constants.UIDefaultTextSize)
-            }
-        }
-    }
-}
-
 //MARK: List View
 struct ListView<C: Collection, T: Identifiable, Content: View>: View where C.Element == T  {
     let title: String

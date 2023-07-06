@@ -25,7 +25,13 @@ struct EcheveriaView: View {
                     .environment(\.realmConfiguration, realmManager.configuration)
                 
             } else if !realmManager.hasProfile {
-                ProfileCreationView()
+                ProfileViews.EditingProfileView(creatingProfile: true,
+                                                firstName: "",
+                                                lastName: "",
+                                                userName: "",
+                                                icon: "globe.europe.africa",
+                                                color: Colors.main,
+                                                preferences: Dictionary())
                     .transition( .push(from: .trailing) )
                     .environment(\.realmConfiguration, realmManager.configuration)
             }

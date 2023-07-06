@@ -16,13 +16,12 @@ struct LoginView: View {
     @ObservedObject var loginModel: LoginModel = LoginModel.shared
     
     @State var signinMethod: LoginModel.LoginMethod = .email
-    @State var signingIn: Bool = false
     @State var devMode: Bool = false
     
     @ViewBuilder
     func form(geo: GeometryProxy) -> some View {
         VStack(alignment: .leading) {
-            EmailView(signingIn: $signingIn)
+            EmailView()
                 .padding(.bottom, 20)
             
             Toggle(isOn: $devMode) {
@@ -30,11 +29,14 @@ struct LoginView: View {
             }.tint(Colors.tint)
             
             if devMode {
-                APIView(signingIn: $signingIn)
+                APIView()
                     .padding(.bottom)
                 
                 UniversalText("Anonymous", size: Constants.UISubHeaderTextSize, lighter: true, true)
-                RoundedButton(label: "Login Anonymously", icon: "person.badge.clock") { self.signingIn = true; loginModel.AnonymousSignIn() }
+                AsyncRoundedButton(label: "Login Anonymously", icon: "person.badge.clock") {
+                    loginModel.AnonymousSignIn()
+                    let _ = await loginModel.authenticateUser()
+                }
                 UniversalText( "An anonymous account has the same permissions as a regular user, but is deleted when logging out. Do not sign in anonymously for long term use.", size: Constants.UIDefaultTextSize, wrap: true, lighter: true )
                     .frame(width: geo.size.width - 65)
                     .fixedSize()
@@ -42,7 +44,6 @@ struct LoginView: View {
         }
         .animation(.default, value: devMode)
         .padding()
-//        .universalTextStyle()
         .rectangularBackgorund()
         .padding(.horizontal, 15)
         .padding(.vertical, 20)

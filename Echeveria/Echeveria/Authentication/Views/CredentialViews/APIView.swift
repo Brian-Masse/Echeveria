@@ -15,8 +15,6 @@ struct APIView: View {
     
     @State var remove: String = "LpOlH5uMKGInzmMFQ7EBqf3Nj4VOd6RY3ztoPqnjsLnY0S40NWRhoH6qJQS1TH6u"
     
-    @Binding var signingIn: Bool
-    
     var body: some View {
         
         VStack(alignment: .leading) {

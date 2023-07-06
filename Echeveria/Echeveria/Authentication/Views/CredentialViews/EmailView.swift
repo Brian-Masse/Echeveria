@@ -19,8 +19,6 @@ struct EmailView: View {
     @State var email: String = ""
     @State var password: String = ""
     
-    @Binding var signingIn: Bool
-    
     @State var error: Error?
     @State var failedToRegisterUser: Bool = false
     

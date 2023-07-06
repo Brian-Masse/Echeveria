@@ -67,46 +67,58 @@ struct GroupCreationView: View {
     
     @Environment(\.presentationMode) var presentaitonMode
     
+    let title: String
+    
     let group: EcheveriaGroup?
     
     @State var name: String
     @State var icon: String
     @State var description: String
-    @State var colorIndex: Int
+    @State var color: Color
     
     let editing: Bool
     
+    private func submit() {
+        if !editing {
+            let group = EcheveriaGroup(name: name, icon: icon, description: description, color: color)
+            group.addToRealm()
+        } else { group!.updateInformation(name: name, icon: icon, description: description, color: color) }
+        presentaitonMode.wrappedValue.dismiss()
+    }
+    
     var body: some View {
         
-        VStack {
-            Form {
-                Section("Basic Information") {
-                    TextField("Group Name", text: $name)
-                    TextField("Group Description", text: $description)
-                    TextField("Icon", text: $icon)
+        let accent = group?.getColor() ?? Colors.groupMain
+        
+        GeometryReader { geo in
+            ZStack(alignment: .bottom) {
+                VStack(alignment: .leading) {
                     
-                    Picker(selection: $colorIndex) {
-                        ForEach(Colors.colorOptions.indices, id: \.self) { i in
-                            Text( Colors.colorOptions[i].description ).tag( i )
-                        }
-                    } label: {
-                        Text("Group Color")
+                    UniversalText(title, size: Constants.UITitleTextSize, true)
+                        .padding(.bottom)
+                    
+                    TransparentForm("Basic Info") {
+                        TextField("Group Name", text: $name)
+                        TextField("Group Description", text: $description)
                     }
-
+                        
+                    TransparentForm("Preferences") {
+                        IconPicker(icon: $icon)
+                        UniqueColorPicker(selectedColor: $color)
+                    }
                     
-                }.universalFormSection()
-            }.universalForm()
-            
-            RoundedButton(label: "Submit", icon: "checkmark.seal") {
-                if !editing {
-                    let group = EcheveriaGroup(name: name, icon: icon, description: description, colorIndex: colorIndex)
-                    group.addToRealm()
-                }else {
-                    group!.updateInformation(name: name, icon: icon, description: description, colorIndex: colorIndex)
+                    Spacer()
                 }
-                presentaitonMode.wrappedValue.dismiss()
+                
+                RoundedButton(label: "Submit", icon: "checkmark.seal") { submit() }
+                    .padding()
+                    .shadow(radius: 5)
+                    .padding(.bottom, Constants.UIHoverButtonBottonPadding)
             }
+            .frame(height: geo.size.height)
         }
-        .universalBackground()
+        .padding()
+        .universalColoredBackground( accent )
+
     }
 }

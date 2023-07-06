@@ -123,17 +123,20 @@ struct RecentGamesView: View {
     var body: some View {
         
         let count = games.count - 1
-        let recentGames = games.sorted { game1, game2 in game1.date < game2.date }[ max( count - 5, 0 )...count ]
-    
-        VStack(alignment: .leading) {
-            UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
-            if recentGames.count == 0 {
-                
-                LargeFormRoundedButton(label: "Log your First Game", icon: "plus", action: {})
-                
-            } else {
-                GameScrollerView(filter: .none, filterable: false, geo: geo, games: Array(recentGames).reversed() )
-                    .padding(.bottom)
+        
+        if count > 0 {
+            let recentGames = games.sorted { game1, game2 in game1.date < game2.date }[ max( count - 5, 0 )...count ]
+            
+            VStack(alignment: .leading) {
+                UniversalText("Recent Games", size: Constants.UIHeaderTextSize, true)
+                if recentGames.count == 0 {
+                    
+                    LargeFormRoundedButton(label: "Log your First Game", icon: "plus", action: {})
+                    
+                } else {
+                    GameScrollerView(filter: .none, filterable: false, geo: geo, games: Array(recentGames).reversed() )
+                        .padding(.bottom)
+                }
             }
         }
     }

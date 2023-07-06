@@ -28,14 +28,17 @@ struct GroupView: View {
             
             AsyncLoader {
                 await group.updatePermissionsForGroupView(id: group._id.stringValue)
-                EcheveriaModel.shared.addActiveColor(with: Colors.colorOptions[group.colorIndex])
+                EcheveriaModel.shared.addActiveColor(with: group.getColor() )
             } content: { if !dismissing {
                 ZStack(alignment: .topTrailing) {
                     VStack(alignment: .leading) {
                         HStack {
                             UniversalText(group.name, size: Constants.UITitleTextSize, wrap: false, true)
                             Spacer()
-                            ProfileViews.DismissView { EcheveriaModel.shared.removeActiveColor() } action: {
+                            ProfileViews.DismissView {
+                                EcheveriaModel.shared.removeActiveColor()
+                                
+                            } action: {
                                 dismissing = true
                                 await group.closePermissions(id: group._id.stringValue)
                             }
@@ -48,12 +51,12 @@ struct GroupView: View {
                         }
                     }
                 }
-                .padding(.top, 45)
+                .padding(.top, Constants.UIFullScreenTopPadding)
                 .padding(.bottom, 30)
             } }
         }
         .padding()
-        .universalColoredBackground( Colors.colorOptions[ group.colorIndex ] )
+        .universalColoredBackground( group.getColor() )
     }
     
 

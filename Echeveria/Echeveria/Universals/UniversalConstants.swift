@@ -11,6 +11,7 @@ import SwiftUI
 class Colors {
     static var tint: Color { EcheveriaModel.shared.activeColors.last ?? main }
     static var main: Color { forestGreen }
+    static var groupMain: Color { .gray }
     
     static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
     static let darkGrey = Color(red: 0.1, green: 0.1, blue: 0.1).opacity(0.9)
@@ -78,6 +79,9 @@ class Constants {
     
     static let UIDefaultCornerRadius: CGFloat = 15
     static let UIFormSpacing        : CGFloat = 10
+    static let UIFullScreenTopPadding: CGFloat = 45
+    static let UIHoverButtonBottonPadding: CGFloat = 20
+    
     
     static let HourTime: Double = 3600
     static let DayTime: Double = 86400

@@ -34,7 +34,6 @@
 		C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */; };
 		C939B6EB2A3A8644008C6906 /* EcheveriaGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6EA2A3A8644008C6906 /* EcheveriaGroup.swift */; };
 		C939B6ED2A3A8951008C6906 /* EcheveriaProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6EC2A3A8951008C6906 /* EcheveriaProfile.swift */; };
-		C939B6F12A3AC40B008C6906 /* ProfileCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */; };
 		C939B6F92A3EB21F008C6906 /* ProfileMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6F82A3EB21F008C6906 /* ProfileMainPage.swift */; };
 		C939B6FB2A3FBB1A008C6906 /* GroupPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6FA2A3FBB1A008C6906 /* GroupPreviewView.swift */; };
 		C967C8A52A3FDD8D00217ECB /* GroupPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967C8A42A3FDD8D00217ECB /* GroupPageView.swift */; };
@@ -99,7 +98,6 @@
 		C939B6E82A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFlexibleSyncRealmView.swift; sourceTree = "<group>"; };
 		C939B6EA2A3A8644008C6906 /* EcheveriaGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaGroup.swift; sourceTree = "<group>"; };
 		C939B6EC2A3A8951008C6906 /* EcheveriaProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcheveriaProfile.swift; sourceTree = "<group>"; };
-		C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCreationView.swift; sourceTree = "<group>"; };
 		C939B6F82A3EB21F008C6906 /* ProfileMainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMainPage.swift; sourceTree = "<group>"; };
 		C939B6FA2A3FBB1A008C6906 /* GroupPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPreviewView.swift; sourceTree = "<group>"; };
 		C967C8A42A3FDD8D00217ECB /* GroupPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPageView.swift; sourceTree = "<group>"; };
@@ -215,7 +213,6 @@
 				C9143CF62A4D5045009ED03F /* Charts */,
 				C90F91152A46135D0062B493 /* PageViews */,
 				C900BA9F2A3FE11800388B37 /* ProfilePreviewView.swift */,
-				C939B6F02A3AC40B008C6906 /* ProfileCreationView.swift */,
 				C939B6EC2A3A8951008C6906 /* EcheveriaProfile.swift */,
 			);
 			path = Profile;
@@ -519,7 +516,6 @@
 				C939B6E92A3A7B12008C6906 /* OpenFlexibleSyncRealmView.swift in Sources */,
 				C9218E1E2A559EE400751FBE /* LawnGame.swift in Sources */,
 				C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */,
-				C939B6F12A3AC40B008C6906 /* ProfileCreationView.swift in Sources */,
 				C997140B2A3902CA00090429 /* EcheveriaApp.swift in Sources */,
 				C900BAA72A40EEDB00388B37 /* GameView.swift in Sources */,
 				C9218E1C2A558B1100751FBE /* Magic.swift in Sources */,

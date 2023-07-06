@@ -46,7 +46,7 @@ struct WinHistoryChart: View {
                     }
                 }
             }
-            .coloredChart( group.members.map { id in EcheveriaProfile.getName(from: id) } , color: Colors.colorOptions[ group.colorIndex ])
+            .coloredChart( group.members.map { id in EcheveriaProfile.getName(from: id) } , color: group.getColor() )
             .opaqueRectangularBackground()
             .frame(height: 200)
             
@@ -98,7 +98,7 @@ struct TotalWinHistoryChart: View {
                     
                 }
             }
-            .coloredChart( EcheveriaGame.GameType.allCases.map { type in type.rawValue}, color: Colors.colorOptions[ group.colorIndex ])
+            .coloredChart( EcheveriaGame.GameType.allCases.map { type in type.rawValue}, color: group.getColor() )
             .frame(height: 100)
         }
     }
@@ -137,14 +137,14 @@ struct WinStreakHistoryChart: View {
                 }
             }
             .opaqueRectangularBackground()
-            .coloredChart( group.members.map { id in EcheveriaProfile.getName(from: id) } , color: Colors.colorOptions[ group.colorIndex ])
+            .coloredChart( group.members.map { id in EcheveriaProfile.getName(from: id) } , color: group.getColor() )
             .frame(height: 150)
             
             Chart {
                 ForEach( group.members ) { memberID in
                     BarMark(x: .value("X", EcheveriaProfile.getName(from: memberID)),
                             y: .value("Y", data.filter{ node in node.id == memberID }.sorted{ node1, node2 in node1.wins > node2.wins }.first?.wins ?? 0 ))
-                    .foregroundStyle(Colors.colorOptions[ group.colorIndex ])
+                    .foregroundStyle(group.getColor())
                 }
             }.frame(height: 100)
             
@@ -218,7 +218,7 @@ struct GameCountHistoryGraph: View {
                 ForEach(data.indices) { i in
                     BarMark(x: .value("X", data[i].date),
                             y: .value("Y", data[i].count) )
-                    .foregroundStyle(Colors.colorOptions[group.colorIndex])
+                    .foregroundStyle( group.getColor() )
                 }
             }
             .chartXAxis {
@@ -238,11 +238,11 @@ struct GameCountHistoryGraph: View {
                     LineMark(x: .value("X", data[i].date),
                              y: .value("Y", data[i].totalCount))
                     .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 10]))
-                    .foregroundStyle(Colors.colorOptions[group.colorIndex])
+                    .foregroundStyle(group.getColor())
                     
                     AreaMark(x: .value("X", data[i].date),
                              y: .value("Y", data[i].totalCount))
-                    .foregroundStyle(Colors.colorOptions[group.colorIndex]).opacity(0.3)
+                    .foregroundStyle(group.getColor()).opacity(0.3)
                 }
             }
             .chartXAxis {

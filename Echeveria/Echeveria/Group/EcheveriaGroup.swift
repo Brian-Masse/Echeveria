@@ -22,28 +22,35 @@ class EcheveriaGroup: Object, Identifiable {
     @Persisted var name: String = ""
     @Persisted var icon: String = ""
     @Persisted var groupDescription: String = ""
-    @Persisted var colorIndex: Int = 0
+//    @Persisted var colorIndex: Int = 0
+    
+    @Persisted var r: Double = 0
+    @Persisted var g: Double = 0
+    @Persisted var b: Double = 0
     
     @Persisted var createdDate: Date = .now
     
     var id: String { self._id.stringValue }
     
-    convenience init( name: String, icon: String, description: String, colorIndex: Int ) {
+    convenience init( name: String, icon: String, description: String, color: Color ) {
         self.init()
         self.name = name
         self.icon = icon
         self.groupDescription = description
         self.createdDate = .now
         
-        self.colorIndex = colorIndex
+        self.setColor(color)
+        
     }
     
-    func updateInformation(name: String, icon: String, description: String, colorIndex: Int) {
+    func updateInformation(name: String, icon: String, description: String, color: Color) {
         EcheveriaModel.updateObject(self) { thawed in
             thawed.name = name
             thawed.icon = icon
             thawed.groupDescription = description
-            thawed.colorIndex = colorIndex
+//            thawed.colorIndex = colorIndex
+            
+            thawed.setColor(color)
         }
     }
     
@@ -76,8 +83,14 @@ class EcheveriaGroup: Object, Identifiable {
     }
     
     func getColor() -> Color {
-        return Colors.colorOptions[self.colorIndex]
-        
+        Color(red: self.r, green: self.g, blue: self.b)
+    }
+    
+    func setColor(_ color: Color) {
+        let comps = color.components
+        self.r = comps.red
+        self.g = comps.green
+        self.b = comps.blue
     }
     
 //    MARK: Class Methods

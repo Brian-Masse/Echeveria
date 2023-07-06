@@ -33,12 +33,12 @@ struct ProfilePageView: View {
                 EcheveriaModel.shared.addActiveColor(with: profile.getColor())
             } content: { if !dismissing {
                 ZStack(alignment: .topTrailing) {
-                    ShapeBackgrond(page: $page, geo: geo,
+                    ShapeBackgrond(color: profile.getColor(), page: $page, geo: geo,
                                    sizePath: [ .init(width: 150, height: 225), .init(width: 225, height: 337.5), .init(width: 225, height: 337.5) ],
                                    posPath: [ .init(x: -geo.size.width + 80, y: geo.size.height - 180), .init(x: -geo.size.width / 2, y: 50), .init(x: 100, y: 0) ],
                                    rotPath: [ -CGFloat.pi / 2.5, CGFloat.pi / 1.2, CGFloat.pi / 6 ])
                     
-                    ShapeBackgrond(page: $page, geo: geo,
+                    ShapeBackgrond(color: profile.getColor(), page: $page, geo: geo,
                                    sizePath: [ .init(width: 300, height: 450), .init(width: 225, height: 337.5), .init(width: 225, height: 337.5) ],
                                    posPath: [ .init(x: 70, y: 20), .init(x: 20, y: geo.size.height / 2), .init(x: -geo.size.width + 100, y: geo.size.height / 1.5) ],
                                    rotPath: [ 0, CGFloat.pi / 5, CGFloat.pi / 4.5 ])
@@ -65,6 +65,8 @@ struct ProfilePageView: View {
     
     struct ShapeBackgrond: View {
         
+        let color: Color
+        
         @Environment(\.colorScheme) var colorScheme
         @Binding var page: MainView.ProfilePage
         let geo: GeometryProxy
@@ -85,7 +87,7 @@ struct ProfilePageView: View {
         var body: some View {
             
             Polygon()
-                .foregroundColor( Colors.tint )
+                .foregroundColor( color )
                 .opacity(colorScheme == .light ? 0.4 : 0.2)
                 .rotationEffect(Angle(radians: rotPath[getI()]), anchor: .center)
                 .frame(width: sizePath[getI()].width, height: sizePath[getI()].height)

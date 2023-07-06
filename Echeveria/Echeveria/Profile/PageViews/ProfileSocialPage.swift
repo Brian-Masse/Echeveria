@@ -52,21 +52,29 @@ struct ProfileSocialPage: View {
                 contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
                 
                 if groups.count != 0 {
-                    ShortRoundedButton("add", icon: "plus") { showingGroupCreationView = true }
+                    ShortRoundedButton("add", icon: "plus") {
+                        EcheveriaModel.shared.addActiveColor(with: Colors.groupMain)
+                        showingGroupCreationView = true
+                    }
                         .offset(y: -5)
                 }
                     
             }
             .padding(.bottom)
-            .sheet(isPresented: $showingGroupCreationView) { GroupCreationView(group: nil,
-                                                                               name: "", icon:
-                                                                                "rectangle.3.group",
-                                                                               description: "",
-                                                                               colorIndex: 0,
-                                                                               editing: false) }
+            .sheet(isPresented: $showingGroupCreationView, onDismiss: { EcheveriaModel.shared.removeActiveColor() }) {
+                GroupCreationView(title: "Create Group",
+                                       group: nil,
+                                       name: "",
+                                       icon: "rectangle.3.group",
+                                       description: "",
+                                       color: Colors.groupMain,
+                                       editing: false) }
             
             if groups.count == 0 {
-                LargeFormRoundedButton(label: "Add or Join Group", icon: "plus") { showingGroupCreationView = true }
+                LargeFormRoundedButton(label: "Add or Join Group", icon: "plus") {
+                    EcheveriaModel.shared.addActiveColor(with: Colors.groupMain)
+                    showingGroupCreationView = true
+                }
             }
             
             ListView(title: "Joined Groups", collection: groups, geo: geo) { group in

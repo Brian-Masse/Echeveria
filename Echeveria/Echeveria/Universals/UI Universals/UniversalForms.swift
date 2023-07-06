@@ -7,28 +7,9 @@
 
 import Foundation
 import SwiftUI
+import SymbolPicker
 
-//MARK: BASIC
-struct FormButton<C1: View, C2: View>: View {
-    
-    let leftContent: C1?
-    let rightContent: C2?
-    
-    init( @ViewBuilder c1Builder: () -> C1? = {nil}, @ViewBuilder c2Builder: () -> C2? = {nil} ) {
-        self.leftContent = c1Builder()
-        self.rightContent = c2Builder()
-    }
-    
-    var body: some View {
-        HStack {
-            if leftContent != nil { leftContent }
-            else { EmptyView() }
-            Spacer()
-            if rightContent != nil { rightContent }
-            else { EmptyView() }
-        }
-    }
-}
+//MARK: Basic
 
 struct FormHeader: View {
     let title: String
@@ -57,6 +38,76 @@ struct TransparentForm<C: View>: View {
             VStack(alignment: .leading, spacing: Constants.UIFormSpacing) {
                 content
             }.universalFormSection()
+        }
+    }
+}
+
+//MARK: Icon Picker
+
+struct IconPicker: View {
+    
+    @Binding var icon: String
+    @State var showingPicker: Bool = false
+    
+    var body: some View {
+        HStack {
+            UniversalText("Icon", size: Constants.UIDefaultTextSize)
+            Image(systemName: icon)
+            Spacer()
+            Image(systemName: "chevron.right")
+        }
+        .onTapGesture { showingPicker = true }
+        .sheet(isPresented: $showingPicker) { SymbolPicker(symbol: $icon) }
+    }
+    
+}
+
+//MARK: Color Picker
+struct ColorPickerOption: View {
+    
+    let color: Color
+    @Binding var selectedColor: Color
+    
+    let size: CGFloat = 20
+    
+    var body: some View {
+        
+        if color == selectedColor {
+            Circle()
+                .foregroundColor(color)
+                .onTapGesture { selectedColor = color }
+                .frame(width: size, height: size)
+                .padding(7)
+                .rectangularBackgorund()
+        } else {
+            Circle()
+                .foregroundColor(color)
+                .frame(width: size, height: size)
+                .padding(7)
+                .onTapGesture { selectedColor = color }
+        }
+    }
+}
+
+struct UniqueColorPicker: View {
+    
+    @Binding var selectedColor: Color
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            UniversalText("Accent Color", size: Constants.UIDefaultTextSize)
+            HStack {
+                Spacer()
+                ColorPickerOption(color: .red, selectedColor: $selectedColor )
+                Spacer()
+                ColorPickerOption(color: .blue, selectedColor: $selectedColor )
+                Spacer()
+                ColorPickerOption(color: Colors.forestGreen, selectedColor: $selectedColor )
+                Spacer()
+            }
+            ColorPicker(selection: $selectedColor, supportsOpacity: false) {
+                UniversalText("All Colors", size: Constants.UIDefaultTextSize)
+            }
         }
     }
 }

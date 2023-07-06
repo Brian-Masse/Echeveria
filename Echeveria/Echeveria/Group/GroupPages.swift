@@ -48,12 +48,23 @@ struct MainGroupViewPage: View {
                 }
                     
                 if owner {
-                    RoundedButton(label: "Edit Group", icon: "pencil.line") { editing = true }
+                    RoundedButton(label: "Edit Group", icon: "pencil.line") {
+                        EcheveriaModel.shared.addActiveColor(with: group.getColor())
+                        editing = true
+                    }
                     RoundedButton(label: "Delete Group", icon: "x.square") { group.deleteGroup() }
                 }
             }
-        }.sheet(isPresented: $editing) {
-            GroupCreationView(group: group, name: group.name, icon: group.icon, description: group.groupDescription, colorIndex: group.colorIndex, editing: true)
+        }.sheet(isPresented: $editing, onDismiss: {
+            EcheveriaModel.shared.removeActiveColor()
+        }) {
+            GroupCreationView(title: "Edit Group",
+                              group: group,
+                              name: group.name,
+                              icon: group.icon,
+                              description: group.groupDescription,
+                              color: group.getColor(),
+                              editing: true)
         }
     }
     
