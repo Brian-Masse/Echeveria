@@ -107,15 +107,6 @@ struct TimeByTypeChart<Graph: View>: View {
                     
             }
             chartBuilder($filteredGames)
-                .chartYAxis {
-                    AxisMarks() { value in
-                        AxisValueLabel {
-                            if let num =  value.as(Double.self) {
-                                UniversalText("\(num)", size: Constants.UIDefaultTextSize, fixed: true)
-                            }
-                        }
-                    }
-                }
         }
         .padding()
         .universalTextStyle()

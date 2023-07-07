@@ -239,15 +239,6 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                         }
                     }
                 }
-                .chartYAxis {
-                    AxisMarks() { value in
-                        AxisValueLabel {
-                            if let num =  value.as(Double.self) {
-                                UniversalText("\(num)", size: Constants.UIDefaultTextSize, fixed: true)
-                            }
-                        }
-                    }
-                }
                 .padding(.bottom, 5)
                 .universalChart()
                 .onAppear {

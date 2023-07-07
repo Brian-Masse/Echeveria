@@ -48,7 +48,7 @@ class EcheveriaModel: ObservableObject {
             if EcheveriaModel.shared.realmManager.realm.isInWriteTransaction { block() }
             else { try EcheveriaModel.shared.realmManager.realm.write(block) }
             
-        } catch { print(error.localizedDescription) }
+        } catch { print("ERROR WRITING TO REALM:" + error.localizedDescription) }
     }
     
     static func updateObject<T: Object>(_ object: T, _ block: (T) -> Void, needsThawing: Bool = true) {
@@ -73,12 +73,12 @@ class EcheveriaModel: ObservableObject {
         
     }
     
-    static func deleteObject<T: RealmSwiftObject>( _ object: T, where query: @escaping (Query<T>) -> Query<Bool> ) where T: Identifiable {
+    static func deleteObject<T: RealmSwiftObject>( _ object: T, where query: @escaping (T) -> Bool ) where T: Identifiable {
         
-        let sourceObjects: Results<T> = EcheveriaModel.retrieveObject(where: query)
-        
-        if let obj = sourceObjects.first {
-            self.writeToRealm { EcheveriaModel.shared.realmManager.realm.delete(obj) }
+        if let obj = EcheveriaModel.shared.realmManager.realm.objects(T.self).filter( query ).first {
+            self.writeToRealm {
+                EcheveriaModel.shared.realmManager.realm.delete(obj)
+            }
         }
     }
 

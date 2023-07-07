@@ -32,6 +32,8 @@ struct GameLoggerView: View  {
     
     @State var gameValues: Dictionary<String, String>
     
+    @State var showingAlert: Bool = false
+    
     @ObservedResults(EcheveriaGroup.self) var groups
     
     private func refreshGroup() {
@@ -39,7 +41,7 @@ struct GameLoggerView: View  {
     }
     
     private func checkCompletion() -> Bool {
-        group != ""
+        !gameType.rawValue.strip().isEmpty && !group.isEmpty && selectedPlayers.count != 0 && selectedWinners.count != 0
     }
     
     private func ArrayToRealmList<T>(_ array: [T]) -> RealmSwift.List<T> {
@@ -49,7 +51,7 @@ struct GameLoggerView: View  {
     }
     
     private func submit() {
-        if !checkCompletion() { return }
+        if !checkCompletion() { showingAlert = true; return }
         
         if !editing {
             let _ = EcheveriaGame(EcheveriaModel.shared.profile.ownerID,
@@ -155,5 +157,8 @@ struct GameLoggerView: View  {
         }
         .padding()
         .universalColoredBackground( Colors.tint )
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text( "Form Incomplete" ).bold(true), message: Text( "Please check that you selected a group, game type, players, and a winner." ))
+        }
     }   
 }

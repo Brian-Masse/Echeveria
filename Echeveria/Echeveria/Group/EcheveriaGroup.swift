@@ -134,8 +134,8 @@ class EcheveriaGroup: Object, Identifiable {
             self.removeMember(member)
         }
         
-        EcheveriaModel.deleteObject( self ) { group in
-            group._id == self._id
+        EcheveriaModel.deleteObject(  EcheveriaGroup.getGroupObject(from: self._id)!  ) { group in
+            group._id.stringValue.strip() == self._id.stringValue.strip()
         }
     }
     

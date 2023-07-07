@@ -48,6 +48,7 @@ struct MainView: View {
                     }
                     .padding()
                     .padding(.horizontal, 5)
+                    .padding(.bottom, 7)
                     .universalTextStyle()
                     .background(.ultraThickMaterial)
                     .cornerRadius(100)

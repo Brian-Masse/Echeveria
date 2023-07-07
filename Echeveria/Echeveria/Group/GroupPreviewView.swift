@@ -80,8 +80,12 @@ struct GroupCreationView: View {
     @State var color: Color
     
     let editing: Bool
+    @State var showingAlert: Bool = false
     
     private func submit() {
+        
+        if name.strip().isEmpty || icon.strip().isEmpty { showingAlert = true; return }
+        
         if !editing {
             let group = EcheveriaGroup(name: name, icon: icon, description: description, color: color)
             group.addToRealm()
@@ -125,6 +129,9 @@ struct GroupCreationView: View {
         }
         .padding()
         .universalColoredBackground( color )
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text( "Form Incomplete" ).bold(true), message: Text( "Double check you have provided a group name and icon" ))
+        }
 
     }
 }
