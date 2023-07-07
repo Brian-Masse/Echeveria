@@ -24,6 +24,8 @@ struct RoundedButton: View {
             Spacer()
             Image(systemName: icon)
             Text(label)
+                .fixedSize()
+                .lineLimit(1)
             Spacer()
         }
         
@@ -82,7 +84,11 @@ struct ShortRoundedButton: View {
         let completedIcon: String = (self.completed() || tempCompletion ) ? completedIcon : icon
         
         HStack {
-            if label != "" { Text(label) }
+            if label != "" {
+                Text(label)
+                    .minimumScaleFactor(0.7)
+                    .lineLimit(1)
+            }
 //            UniversalText(label, size: Constants.UIDefaultTextSize, true)
             Image(systemName: completedIcon)
         }

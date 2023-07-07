@@ -160,7 +160,7 @@ struct RecentGamesView: View {
                     
                 } else {
                     let games = EcheveriaGame.reduceIntoStrings(from: Array(recentGames))
-                    GameScrollerView(filter: .none, filterable: false, geo: geo, games: games.reversed() )
+                    GameScrollerView(title: "", filter: .none, filterable: false, geo: geo, games: games.reversed() )
                         .padding(.bottom)
                 }
             }

@@ -82,28 +82,33 @@ struct ListView<C: Collection, T: Identifiable, Content: View>: View where C.Ele
 
 //MARK: UniversalText
 struct UniversalText: View {
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    
     let text: String
     let size: CGFloat
     let bold: Bool
     let wrap: Bool
     let lighter: Bool
+    let fixed: Bool
     
-    init(_ text: String, size: CGFloat, wrap: Bool = true, lighter: Bool = false, _ bold: Bool = false) {
+    init(_ text: String, size: CGFloat, wrap: Bool = true, lighter: Bool = false, _ bold: Bool = false, fixed: Bool = false) {
         self.text = text
         self.size = size
         self.bold = bold
         self.wrap = wrap
         self.lighter = lighter
+        self.fixed = fixed
     }
     
     var body: some View {
         
         Text(text)
-//            .universalTextStyle()
-//            .fixedSize()
+            .dynamicTypeSize( ...DynamicTypeSize.accessibility1 )
+    
+            .lineSpacing(5)
             .minimumScaleFactor(wrap ? 1 : 0.5)
             .lineLimit(wrap ? 5 : 1)
-            .font(Font.custom("Helvetica", size: size) )
+            .font( fixed ? Font.custom("Helvetica", fixedSize: size) : Font.custom("Helvetica", size: size) )
             .bold(bold)
             .opacity(lighter ? 0.8 : 1)
     }
@@ -218,19 +223,33 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
 //                            width: .fixed(10)
                         ).foregroundStyle(primaryColor)
                     }
-                }.universalChart()
-            } else {
-                Chart {
-                    ForEach(data, id: \.self) { data in
-                        BarMark(
-                            x: .value(XAxisTitle, XAxis( data ) ),
-                            y: .value(YAxisTitle, YAxis( data ) )
-//                            width: .fixed(10)
-                        ).foregroundStyle(by: .value(styleTitle!, Style!( data ) ) )
+                }
+                .chartXAxis {
+                    AxisMarks(preset: .aligned) { value in
+                        AxisValueLabel {
+                            if let str = value.as(String.self) {
+                                UniversalText(str, size: Constants.UIDefaultTextSize, fixed: true)
+                                    .lineLimit(1)
+                                    .padding()
+                                    .padding(.trailing, 25)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                    .rotationEffect(Angle(degrees: 60) )
+                                    .offset(x: 14, y: CGFloat( str.count * 2 )  )
+                            }
+                        }
                     }
                 }
+                .chartYAxis {
+                    AxisMarks() { value in
+                        AxisValueLabel {
+                            if let num =  value.as(Double.self) {
+                                UniversalText("\(num)", size: Constants.UIDefaultTextSize, fixed: true)
+                            }
+                        }
+                    }
+                }
+                .padding(.bottom, 5)
                 .universalChart()
-                .chartForegroundStyleScale { (value: C1) in dictionary[value] ?? .red }
                 .onAppear {
                     var dic: Dictionary<C1, Color> = Dictionary()
                     for i in 0..<styleCount  {
@@ -240,9 +259,9 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                     self.dictionary = dic
                 }
             }
-            
+
             HStack {
-                UniversalText(title, size: Constants.UIDefaultTextSize, true)
+                UniversalText(title, size: Constants.UIDefaultTextSize,wrap: false, true)
                 Spacer()
             
                 if filter != nil {
@@ -252,8 +271,9 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                         }
                     } label: { FilterButton() }
                 }
-            }.padding(.horizontal)
-                .padding(.vertical, 5)
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 5)
         }
     }
 }

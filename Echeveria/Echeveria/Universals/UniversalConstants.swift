@@ -94,6 +94,10 @@ class Constants {
     static let HourTime: Double = 3600
     static let DayTime: Double = 86400
     
+    static let isiOS164: Bool = {
+        guard #available(iOS 16.4, *) else { return false }
+        return true
+    }()
 }
 
 //MARK: Extensions

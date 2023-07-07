@@ -38,7 +38,7 @@ struct GroupPreviewView: View {
             
             if owner  { UniversalText("owner", size: Constants.UIDefaultTextSize ) }
             
-            UniversalText( group.groupDescription, size: Constants.UIDefaultTextSize, lighter: true )
+            UniversalText( group.groupDescription, size: Constants.UIDefaultTextSize, wrap: true, lighter: true )
             
         
             if !owner {

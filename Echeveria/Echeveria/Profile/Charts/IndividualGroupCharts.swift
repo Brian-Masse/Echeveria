@@ -203,7 +203,7 @@ struct GameCountHistoryGraph: View {
             HStack {
                 UniversalText("Games Played", size: Constants.UISubHeaderTextSize, true)
                 Spacer()
-                Menu {
+                let menu = Menu {
                     ForEach( EcheveriaGame.GameType.allCases.indices, id: \.self ) { i in
                         Button { withAnimation { filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue ) }} label: {
                             let selected = !filteredGames.contains { str in str.strip() == EcheveriaGame.GameType.allCases[i].rawValue.strip() }
@@ -211,7 +211,10 @@ struct GameCountHistoryGraph: View {
                             Text(EcheveriaGame.GameType.allCases[i].rawValue)
                         }
                     }
-                } label: { FilterButton() }.menuActionDismissBehavior(.disabled)
+                } label: { FilterButton() }
+                if #available(iOS 16.4, *) {
+                    menu.menuActionDismissBehavior(.disabled)
+                }
             }
             
             Chart {

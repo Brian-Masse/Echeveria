@@ -42,8 +42,8 @@ struct MainView: View {
                     HStack {
                         ResizeableIcon(icon: "signpost.and.arrowtriangle.up", size: Constants.UISubHeaderTextSize)
                         VStack(alignment: .leading) {
-                            UniversalText("Log", size: Constants.UIDefaultTextSize, true)
-                            UniversalText("Game", size: Constants.UIDefaultTextSize, true)
+                            UniversalText("Log", size: Constants.UIDefaultTextSize, true, fixed: true)
+                            UniversalText("Game", size: Constants.UIDefaultTextSize, true, fixed: true)
                         }
                     }
                     .padding()
@@ -52,6 +52,7 @@ struct MainView: View {
                     .background(.ultraThickMaterial)
                     .cornerRadius(100)
                     .padding(.leading, 15)
+                    .frame(width: geo.size.width * (1/3))
                     .shadow(radius: 7)
                     .onTapGesture { logging = true }
                     
@@ -63,13 +64,16 @@ struct MainView: View {
                         TabBarButton(icon: "magnifyingglass", test: mainView, geo: geo, activePage: $page, page: .search)
                             .padding(.trailing, 15)
                     }
-                        
                 }
                 .frame(width: geo.size.width)
                 .padding(.vertical, 15)
-                .padding(.bottom)
-                .rectangularBackgorund(radius: 45)
+                .padding(.bottom, 7)
+                .background(.thinMaterial)
+                .foregroundColor(  ( Colors.tint ).opacity(0.6))
+                .foregroundStyle(.ultraThickMaterial)
+                .cornerRadius(45, corners: [.topLeft, .topRight])
                 .shadow(color: .black.opacity(0.4), radius: 15, x: 0, y: 0)
+                
             }.frame(width: geo.size.width)
         }
         .ignoresSafeArea()
@@ -97,24 +101,20 @@ struct MainView: View {
         let page: ProfilePage
         
         var body: some View {
-            
-            ZStack {
-                
-                if activePage == page {
-                    Rectangle()
-                        .frame(width: (50 / 414) * geo.size.width, height: (50 / 414) * geo.size.width)
-                        .foregroundStyle(.ultraThickMaterial)
-                        .cornerRadius(Constants.UIDefaultCornerRadius)
-                        .rotationEffect(Angle(radians: CGFloat.pi / 4))
-                        .matchedGeometryEffect(id: "highlight", in: test)
+            ResizeableIcon(icon: icon, size: geo.size.width / 26)
+                .onTapGesture { withAnimation { activePage = page }}
+                .padding(13)
+                .universalTextStyle()
+                .background {
+                    if activePage == page {
+                        Rectangle()
+                            .frame(width: (50 / 414) * geo.size.width, height: (50 / 414) * geo.size.width)
+                            .foregroundStyle(.ultraThickMaterial)
+                            .cornerRadius(Constants.UIDefaultCornerRadius)
+                            .rotationEffect(Angle(radians: CGFloat.pi / 4))
+                            .matchedGeometryEffect(id: "highlight", in: test)
+                    }
                 }
-                
-                Image(systemName: icon)
-                    .onTapGesture { withAnimation { activePage = page }}
-                    .padding(13)
-                    .universalTextStyle()
-                
-            }
         }
     }
 }

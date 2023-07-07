@@ -144,10 +144,11 @@ struct ChartsGroupViewPage: View {
                         .padding(.bottom)
                     
                     
-                    ZStack(alignment: .topLeading) {
-                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaGame.reduceIntoStrings(from: Array(games)))
-                        UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
-                    }.padding(.bottom, 80)
+//                    ZStack(alignment: .topLeading) {
+                    GameScrollerView(title: "All Games", filter: .gameType, filterable: true, geo: geo, games: EcheveriaGame.reduceIntoStrings(from: Array(games)))
+//                        UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
+//                    }
+                    .padding(.bottom, 80)
                 } else {
                     LargeFormRoundedButton(label: "Log Games to View Data", icon: "signpost.and.arrowtriangle.up") {}
                 }

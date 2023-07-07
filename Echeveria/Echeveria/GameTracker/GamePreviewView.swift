@@ -32,7 +32,7 @@ struct GamePreviewView: View {
                 
             }
             .padding()
-            .frame(width: geo.size.width / 2.5, height: geo.size.width / 5)
+            .frame(maxWidth: geo.size.width / 2.5, minHeight: geo.size.width / 5)
             .background(Rectangle()
                 .cornerRadius(20)
                 .universalForeground()

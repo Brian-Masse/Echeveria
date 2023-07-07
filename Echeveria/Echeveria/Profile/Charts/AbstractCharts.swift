@@ -39,7 +39,7 @@ struct TimeByPlayerAndTypeChart<Graph: View>: View {
             HStack {
                 UniversalText(title, size: Constants.UISubHeaderTextSize, true)
                 Spacer()
-                Menu {
+                let menu = Menu {
                     Menu {
                         ForEach( group.members ) { id in
                             Button { withAnimation { filteredMembers.toggleValue(id) }} label: {
@@ -59,7 +59,16 @@ struct TimeByPlayerAndTypeChart<Graph: View>: View {
                             }
                         }
                     } label: { Text("Games") }
-                } label: { FilterButton() }.menuActionDismissBehavior(.disabled)
+                } label: { FilterButton() }
+
+                if #available(iOS 16.4, *) {
+                    menu
+                        .menuActionDismissBehavior(.disabled)
+                } else {
+                    menu
+                }
+                
+                    
             }
             chartBuilder($filteredGames, $filteredMembers)
         }
@@ -83,7 +92,7 @@ struct TimeByTypeChart<Graph: View>: View {
             HStack {
                 UniversalText(title, size: Constants.UISubHeaderTextSize, true)
                 Spacer()
-                Menu {
+                let menu = Menu {
                     ForEach( EcheveriaGame.GameType.allCases.indices, id: \.self ) { i in
                         Button { withAnimation {filteredGames.toggleValue( EcheveriaGame.GameType.allCases[i].rawValue.strip() ) } } label: {
                             let selected = !filteredGames.contains { str in str.strip() == EcheveriaGame.GameType.allCases[i].rawValue.strip() }
@@ -91,9 +100,22 @@ struct TimeByTypeChart<Graph: View>: View {
                             Text(EcheveriaGame.GameType.allCases[i].rawValue)
                         }
                     }
-                } label: { FilterButton() }.menuActionDismissBehavior(.disabled)
+                } label: { FilterButton() }
+                if #available(iOS 16.4, *) {
+                    menu.menuActionDismissBehavior(.disabled)
+                }
+                    
             }
             chartBuilder($filteredGames)
+                .chartYAxis {
+                    AxisMarks() { value in
+                        AxisValueLabel {
+                            if let num =  value.as(Double.self) {
+                                UniversalText("\(num)", size: Constants.UIDefaultTextSize, fixed: true)
+                            }
+                        }
+                    }
+                }
         }
         .padding()
         .universalTextStyle()

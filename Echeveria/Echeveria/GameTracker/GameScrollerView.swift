@@ -19,9 +19,11 @@ struct GameScrollerView: View {
         
         var id: String { self.rawValue }
     }
+
+    let title: String
     
     @State var filter: Filter
-    
+
     let filterable: Bool 
     let geo: GeometryProxy
     let games: [String]
@@ -30,6 +32,7 @@ struct GameScrollerView: View {
         VStack {
             if filterable {
                 HStack {
+                    UniversalText(title, size: Constants.UISubHeaderTextSize, true)
                     Spacer()
                     Menu {
                         Text("Filter")

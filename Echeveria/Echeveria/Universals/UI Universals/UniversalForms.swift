@@ -151,7 +151,7 @@ struct MultiPicker<ListType:Collection>: View where ListType:RangeReplaceableCol
         HStack {
             UniversalText(title, size: Constants.UIDefaultTextSize, lighter: true)
             Spacer()
-            Menu {
+            let menu = Menu {
                 ForEach(sources.indices, id: \.self) { i in
                     Button {
                         toggleSource(sources[i])
@@ -166,7 +166,11 @@ struct MultiPicker<ListType:Collection>: View where ListType:RangeReplaceableCol
                 ResizeableIcon(icon: "chevron.up.chevron.down", size: Constants.UIDefaultTextSize)
             }
             .foregroundColor(Colors.tint)
-            .menuActionDismissBehavior(.disabled)
+            
+            if #available(iOS 16.4, *) {
+                menu.menuActionDismissBehavior(.disabled)
+            }
+            
         }.padding(.vertical, 3)
     }
 }

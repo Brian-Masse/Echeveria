@@ -94,7 +94,7 @@ struct ProfileWinStreakHistoryChart: View {
             .opaqueRectangularBackground()
             .frame(height: 150)
 
-            HStack {
+            HStack(alignment: .top) {
                 UniversalText("Longest Winstreak", size: Constants.UISubHeaderTextSize, true)
                 Spacer()
 
@@ -105,6 +105,7 @@ struct ProfileWinStreakHistoryChart: View {
                         let startDate = sorted.filter { node in node.date < longest.date && node.id == longest.id }.last { node in node.wins == 0 }?.date ?? .now
 
                         UniversalText( "\(startDate.formatted(date: .abbreviated, time: .omitted)) - \(longest.date.formatted(date: .abbreviated, time: .omitted))", size: Constants.UIDefaultTextSize, lighter: true )
+                            .multilineTextAlignment(.trailing)
                     }
                 }
             }

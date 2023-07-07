@@ -64,7 +64,9 @@ private struct UniversalForm: ViewModifier {
             .ignoresSafeArea()
             .tint(Colors.tint)
             .background(.ultraThinMaterial)
-            .scrollContentBackground(.hidden)
+        
+        
+//            .scrollContentBackground(.hidden)
     }
 }
 
@@ -78,7 +80,7 @@ private struct UniversalFormSection: ViewModifier {
             .tint(model.activeColors.last ?? Colors.main)
             .universalTextStyle()
             .rectangularBackgorund()
-            .scrollContentBackground(.hidden)
+//            .scrollContentBackground(.hidden)
             .padding(.bottom)
     }
 }
@@ -151,6 +153,16 @@ private struct OpaqueRectangularBackground: ViewModifier {
     }
 }
 
+private struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+
 private struct BecomingVisible: ViewModifier {
     @State var action: (() -> Void)?
 
@@ -201,6 +213,10 @@ extension View {
     
     func opaqueRectangularBackground() -> some View {
         modifier(OpaqueRectangularBackground())
+    }
+    
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
     
     func universalForm() -> some View {

@@ -51,13 +51,14 @@ struct ProfileGameView: View {
                     UniversalText("All Data", size: Constants.UIHeaderTextSize, true)
                     TimeByTypeChart(title: "Win Streaks", games: games) { fgames in
                         ProfileWinStreakHistoryChart(profile: profile, games: games, filteredGames: fgames)
-                        GameChart(profile: profile, games: games )
+//                        GameChart(profile: profile, games: games )
                     }.padding(.bottom)
 
-                    ZStack(alignment: .topLeading) {
-                        GameScrollerView(filter: .gameType, filterable: true, geo: geo, games: EcheveriaGame.reduceIntoStrings(from: games))
-                        UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
-                    }.padding(.bottom, 80)
+//                    ZStack(alignment: .topLeading) {
+                    GameScrollerView(title: "All Games", filter: .gameType, filterable: true, geo: geo, games: EcheveriaGame.reduceIntoStrings(from: games))
+//                        UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
+//                    }
+                .padding(.bottom, 80)
                 }
                 Spacer()
             }

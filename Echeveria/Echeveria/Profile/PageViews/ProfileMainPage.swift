@@ -49,12 +49,12 @@ struct ProfileMainView: View {
                     }
                 
                     if profile.favoriteGames.count != 0 {
-                        ZStack(alignment: .topLeading) {
-                            UniversalText("Favorite Games", size: Constants.UIHeaderTextSize, true)
-                            
+//                        ZStack(alignment: .topLeading) {
+//                            UniversalText("Favorite Games", size: Constants.UIHeaderTextSize, true)
+//
                             let games = EcheveriaGame.reduceIntoStrings(from: profile.getFavoriteGames(from: allGames))
-                            GameScrollerView(filter: .none, filterable: true, geo: geo, games: games)
-                        }
+                            GameScrollerView(title: "Favorite Games", filter: .none, filterable: true, geo: geo, games: games)
+//                        }
                     }
                     
                     RecentGamesView(games: profile.getAllowedGames(from: allGames), geo: geo)
