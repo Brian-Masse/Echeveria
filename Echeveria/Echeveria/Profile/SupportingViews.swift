@@ -60,6 +60,7 @@ struct ProfileViews {
         @Environment(\.presentationMode) var presentationMode
         
         @EnvironmentObject var profile: EcheveriaProfile
+        @ObservedObject var model = EcheveriaModel.shared
         
         @State var creatingProfile: Bool
         
@@ -95,44 +96,46 @@ struct ProfileViews {
         var body: some View {
             GeometryReader { geo in
                 ZStack(alignment: .bottom) {
-                    VStack(alignment: .leading) {
-                        
-                        let title = creatingProfile ? "Create Profile" : "Edit Profile"
-                        
-                        UniversalText(title, size: Constants.UITitleTextSize, true)
-                            .padding(.bottom)
-                        
-                        TransparentForm("Basic Information") {
-                            TextField( "First Name", text: $firstName )
-                            TextField( "Last Name", text: $lastName )
-                            TextField( "User Name", text: $userName )
-                        }
-                        
-                        TransparentForm("Personalization") {
-                            IconPicker(icon: $icon)
-                            UniqueColorPicker(selectedColor: $color)
-                        }
-                        
-                        if !creatingProfile {
-                            HStack {
-                                UniversalText("Preferences", size: Constants.UIHeaderTextSize, true)
-                                Spacer()
-                                
-                                Picker("Game", selection: $activePreferences) {
-                                    ForEach(EcheveriaGame.GameType.allCases, id: \.self) { content in
-                                        Text( content.rawValue )
-                                    }
-                                }.tint(Colors.tint)
+                    ScrollView(.vertical) {
+                        VStack(alignment: .leading) {
+                            
+                            let title = creatingProfile ? "Create Profile" : "Edit Profile"
+                            
+                            UniversalText(title, size: Constants.UITitleTextSize, true)
+                                .padding(.bottom)
+                            
+                            TransparentForm("Basic Information") {
+                                TextField( "First Name", text: $firstName )
+                                TextField( "Last Name", text: $lastName )
+                                TextField( "User Name", text: $userName )
                             }
                             
-                            switch activePreferences {
-                            case .smash:   Smash.PreferencesForm(preferences: $preferences)
-                            case .magic:   Magic.PreferencesForm(preferences: $preferences)
-                            default: LargeFormRoundedButton(label: "No preferences for this game", icon: "camera.metering.unknown", action: {})
+                            TransparentForm("Personalization") {
+                                IconPicker(icon: $icon)
+                                UniqueColorPicker(selectedColor: $color)
+                            }
+                            
+                            if !creatingProfile {
+                                HStack {
+                                    UniversalText("Preferences", size: Constants.UIHeaderTextSize, true)
+                                    Spacer()
+                                    
+                                    BasicPicker(title: "", noSeletion: "No Selecton", sources: EcheveriaGame.GameType.allCases, selection: $activePreferences) { content in
+                                        Text( content.rawValue )
+                                    }
+                                }
+                                
+                                VStack {
+                                    switch activePreferences {
+                                    case .smash:   Smash.PreferencesForm(preferences: $preferences)
+                                    case .magic:   Magic.PreferencesForm(preferences: $preferences)
+                                    default: LargeFormRoundedButton(label: "No preferences for this game", icon: "camera.metering.unknown", action: {})
+                                    }
+                                }
+                                .padding(.bottom, 80)
+                                Spacer()
                             }
                         }
-                        
-                        Spacer()
                     }
                     
                     AsyncRoundedButton(label: "Done", icon: "checkmark.seal") { await submit() }
@@ -144,7 +147,7 @@ struct ProfileViews {
                 .padding(.top, creatingProfile ? Constants.UIFullScreenTopPadding : 0 )
             }
             .padding()
-            .universalColoredBackground(Colors.tint)
+            .universalColoredBackground( color )
         }
     }
 }

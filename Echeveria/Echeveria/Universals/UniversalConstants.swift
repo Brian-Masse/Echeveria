@@ -10,14 +10,22 @@ import SwiftUI
 
 class Colors {
     static var tint: Color { EcheveriaModel.shared.activeColors.last ?? main }
+    
+    
     static var main: Color { forestGreen }
     static var groupMain: Color { .gray }
     
     static let lightGrey = Color(red: 0.95, green: 0.95, blue: 0.95)
     static let darkGrey = Color(red: 0.1, green: 0.1, blue: 0.1).opacity(0.9)
     static let forestGreen = makeColor(80, 120, 87)
+    static let deepPurple = makeColor( 91, 45, 234 )
+    static let roseGold =  makeColor( 223, 143, 133 )
+    static let orange   =  makeColor(239, 140, 86)
+    static let oceanBlue = makeColor( 61, 79, 110 )
+    static let beige    = makeColor( 122, 104, 89 )
+    static let sunnDelight = makeColor( 196, 188, 126 )
     
-    static let colorOptions: [Color] = [ .red, forestGreen ]
+    static let colorOptions: [Color] = [ forestGreen, .blue, oceanBlue, deepPurple, roseGold, orange, .red, beige, .gray ]
     
     private static let reds: [Color] = [ .red, makeColor(255, 129, 120), makeColor(161, 47, 47), makeColor(230, 119, 132), makeColor(163, 82, 82)]
     private static let greens: [Color] = [ forestGreen, makeColor(47, 82, 52), makeColor(143, 161, 146), makeColor(189, 178, 128), makeColor(85, 153, 75)]

@@ -67,9 +67,7 @@ struct MainGroupViewPage: View {
                     }
                 }
             }
-        }.sheet(isPresented: $editing, onDismiss: {
-            EcheveriaModel.shared.removeActiveColor()
-        }) {
+        }.sheet(isPresented: $editing, onDismiss: { EcheveriaModel.shared.removeActiveColor() }) {
             GroupCreationView(title: "Edit Group",
                               group: group,
                               name: group.name,

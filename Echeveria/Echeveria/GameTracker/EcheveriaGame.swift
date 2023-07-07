@@ -119,7 +119,6 @@ class EcheveriaGame: Object, Identifiable {
             
             thawed.gameData.append(objectsIn: gameDataArry)
         }
-        
     }
     
 //    MARK: Permissions

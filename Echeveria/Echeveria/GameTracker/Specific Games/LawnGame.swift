@@ -42,6 +42,14 @@ class LawnGame {
                     let key = teamKey + "\(i)"
                     values[key] = newValues[i]
                 }
+                var value: String? = ""
+                var iterator = newValues.count
+                while value != nil {
+                    let key = teamKey + "\(iterator)"
+                    value = values[key]
+                    values[key] = nil
+                    iterator += 1
+                }
             }
         }
         

@@ -73,7 +73,9 @@ struct ProfileMainView: View {
                 }
             }
         }
-        .sheet(isPresented: $editing) {
+        .sheet(isPresented: $editing, onDismiss: {
+            if EcheveriaModel.shared.activeColors.last != profile.getColor() { EcheveriaModel.shared.removeActiveColor() }
+        }) {
             ProfileViews.EditingProfileView(creatingProfile: false,
                                             firstName: profile.firstName,
                                             lastName: profile.lastName,

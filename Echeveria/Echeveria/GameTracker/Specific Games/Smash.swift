@@ -20,6 +20,8 @@ class Smash {
     
     struct PreferencesForm: View {
         
+        @Environment(\.colorScheme) var colorScheme
+        
         func createBinding(forKey key: String, defaultValue: String = "") -> Binding<String> {
             Binding { preferences[key] ?? defaultValue
             } set: { newValue in preferences[key] = newValue }
@@ -39,7 +41,7 @@ class Smash {
                         
                         let binding: Binding<String> = createBinding(forKey: key, defaultValue: value)
                         BasicPicker(title: "Main \(i + 1)", noSeletion: "No Selection", sources: Smash.smashPlayers, selection: binding ) { obj in Text( obj ) }
-                        
+//                            .tint( colorScheme == .light ? .black : .white )
                     }
                         
                 }

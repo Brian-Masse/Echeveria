@@ -91,8 +91,6 @@ struct GroupCreationView: View {
     
     var body: some View {
         
-        let accent = group?.getColor() ?? Colors.groupMain
-        
         GeometryReader { geo in
             ZStack(alignment: .bottom) {
                 VStack(alignment: .leading) {
@@ -121,7 +119,7 @@ struct GroupCreationView: View {
             .frame(height: geo.size.height)
         }
         .padding()
-        .universalColoredBackground( accent )
+        .universalColoredBackground( color )
 
     }
 }

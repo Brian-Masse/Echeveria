@@ -72,20 +72,21 @@ struct ColorPickerOption: View {
     
     var body: some View {
         
-        if color == selectedColor {
-            Circle()
-                .foregroundColor(color)
-                .onTapGesture { selectedColor = color }
-                .frame(width: size, height: size)
-                .padding(7)
-                .rectangularBackgorund()
-        } else {
-            Circle()
-                .foregroundColor(color)
-                .frame(width: size, height: size)
-                .padding(7)
-                .onTapGesture { selectedColor = color }
+        ZStack {
+            if color == selectedColor {
+                Circle()
+                    .foregroundColor(color)
+                    .frame(width: size, height: size)
+                    .padding(7)
+                    .rectangularBackgorund()
+            } else {
+                Circle()
+                    .foregroundColor(color)
+                    .frame(width: size, height: size)
+                    .padding(7)
+            }
         }
+        .onTapGesture { selectedColor = color }
     }
 }
 
@@ -96,18 +97,21 @@ struct UniqueColorPicker: View {
     var body: some View {
         VStack(alignment: .leading) {
             UniversalText("Accent Color", size: Constants.UIDefaultTextSize)
-            HStack {
-                Spacer()
-                ColorPickerOption(color: .red, selectedColor: $selectedColor )
-                Spacer()
-                ColorPickerOption(color: .blue, selectedColor: $selectedColor )
-                Spacer()
-                ColorPickerOption(color: Colors.forestGreen, selectedColor: $selectedColor )
-                Spacer()
+            ScrollView(.horizontal) {
+                HStack {
+                    Spacer()
+                    ForEach(Colors.colorOptions.indices, id: \.self) { i in
+                        ColorPickerOption(color: Colors.colorOptions[i], selectedColor: $selectedColor)
+                    }
+                    Spacer()
+                }
             }
             ColorPicker(selection: $selectedColor, supportsOpacity: false) {
                 UniversalText("All Colors", size: Constants.UIDefaultTextSize)
             }
+        }.onChange(of: selectedColor) { newValue in
+            EcheveriaModel.shared.removeActiveColor()
+            EcheveriaModel.shared.addActiveColor(with: newValue)
         }
     }
 }
@@ -169,6 +173,8 @@ struct MultiPicker<ListType:Collection>: View where ListType:RangeReplaceableCol
 
 struct BasicPicker<ListType:RandomAccessCollection, Content: View>: View where ListType.Element: (Hashable & Identifiable)  {
     
+    @ObservedObject var model = EcheveriaModel.shared
+    
     let title: String
     let noSeletion: String
     let sources: ListType
@@ -182,12 +188,37 @@ struct BasicPicker<ListType:RandomAccessCollection, Content: View>: View where L
         HStack {
             UniversalText(title, size: Constants.UIDefaultTextSize, lighter: true)
             Spacer()
-            Picker(selection: $selection) {
+            
+            Menu {
                 Text(noSeletion).tag("")
-                ForEach( sources, id: \.id) { source in
-                    contentBuilder( source ).tag(source)
+                ForEach( sources, id: \.id ) { source in
+                    
+                    Button { selection = source } label: {
+                        contentBuilder(source)
+                    }.tag(source)
                 }
-            } label: { Text("") }
+                
+            } label: {
+                HStack {
+                    if let str = selection as? String {
+                        if str == "" { Text(noSeletion) }
+                        else { contentBuilder( selection ) }
+                            
+                    } else {
+                        contentBuilder( selection )
+                    }
+                    Image(systemName: "chevron.up.chevron.down")
+                }
+                .foregroundColor(model.activeColors.last ?? Colors.main)
+            }
+
+            
+//            Picker(selection: $selection) {
+//                Text(noSeletion).tag("")
+//                ForEach( sources, id: \.id) { source in
+//                    contentBuilder( source ).tag(source)
+//                }
+//            } label: { Text("") }
         }
     }
 }

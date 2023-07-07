@@ -17,9 +17,9 @@ class EcheveriaModel: ObservableObject {
     let realmManager = RealmManager()
     
     @Published var triggerReload: Bool = false
-    
+
     private(set) var profile: EcheveriaProfile!
-    private(set) var activeColors: [Color] = []
+    @Published private(set) var activeColors: [Color] = []
     
     private(set) var activeID: String!
     

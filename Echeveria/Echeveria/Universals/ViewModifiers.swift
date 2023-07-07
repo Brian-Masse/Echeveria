@@ -70,10 +70,12 @@ private struct UniversalForm: ViewModifier {
 
 private struct UniversalFormSection: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
+    @ObservedObject var model = EcheveriaModel.shared
+    
     func body(content: Content) -> some View {
         content
             .padding()
-            .tint(Colors.tint)
+            .tint(model.activeColors.last ?? Colors.main)
             .universalTextStyle()
             .rectangularBackgorund()
             .scrollContentBackground(.hidden)
@@ -118,6 +120,7 @@ private struct ColoredChart: ViewModifier {
 
 private struct RectangularBackground: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
+    @ObservedObject var model = EcheveriaModel.shared
     
     let rounded: Bool
     let radius: CGFloat?
@@ -130,7 +133,7 @@ private struct RectangularBackground: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(.thinMaterial)
-            .foregroundColor(Colors.tint.opacity(0.6))
+            .foregroundColor(  ( model.activeColors.last ?? Colors.main ).opacity(0.6))
             .foregroundStyle(.ultraThickMaterial)
             .cornerRadius(getRadius())
     }

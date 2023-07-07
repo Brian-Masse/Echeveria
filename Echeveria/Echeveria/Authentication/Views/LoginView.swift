@@ -32,7 +32,7 @@ struct LoginView: View {
                 APIView()
                     .padding(.bottom)
                 
-                UniversalText("Anonymous", size: Constants.UISubHeaderTextSize, lighter: true, true)
+                UniversalText("Anonymous", size: Constants.UISubHeaderTextSize, lighter: true)
                 AsyncRoundedButton(label: "Login Anonymously", icon: "person.badge.clock") {
                     loginModel.AnonymousSignIn()
                     let _ = await loginModel.authenticateUser()
