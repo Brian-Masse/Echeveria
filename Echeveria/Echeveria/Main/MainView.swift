@@ -48,7 +48,6 @@ struct MainView: View {
                     }
                     .padding()
                     .padding(.horizontal, 5)
-                    .padding(.bottom, 7)
                     .universalTextStyle()
                     .background(.ultraThickMaterial)
                     .cornerRadius(100)
@@ -68,7 +67,7 @@ struct MainView: View {
                 }
                 .frame(width: geo.size.width)
                 .padding(.vertical, 15)
-                .padding(.bottom, 7)
+                .padding(.bottom, 13)
                 .background(.thinMaterial)
                 .foregroundColor(  ( Colors.tint ).opacity(0.6))
                 .foregroundStyle(.ultraThickMaterial)
