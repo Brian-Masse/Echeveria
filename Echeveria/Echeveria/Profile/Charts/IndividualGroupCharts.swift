@@ -136,6 +136,7 @@ struct WinStreakHistoryChart: View {
                     .foregroundStyle(by: .value("series", data[i].name ))
                 }
             }
+            
             .opaqueRectangularBackground()
             .coloredChart( group.members.map { id in EcheveriaProfile.getName(from: id) } , color: group.getColor() )
             .frame(height: 150)
@@ -146,7 +147,8 @@ struct WinStreakHistoryChart: View {
                             y: .value("Y", data.filter{ node in node.id == memberID }.sorted{ node1, node2 in node1.wins > node2.wins }.first?.wins ?? 0 ))
                     .foregroundStyle(group.getColor())
                 }
-            }.frame(height: 100)
+            }
+            .frame(height: 100)
             
             HStack {
                 UniversalText("Longest Winstreak", size: Constants.UISubHeaderTextSize, true)
@@ -224,14 +226,6 @@ struct GameCountHistoryGraph: View {
                     .foregroundStyle( group.getColor() )
                 }
             }
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .day)){ value in
-                    if let date = value.as(Date.self) {
-                        AxisValueLabel( date.formatted(date: .abbreviated, time: .omitted)  )
-                    }
-                    AxisTick()
-                }
-            }
             .opaqueRectangularBackground()
             .padding(.bottom)
             
@@ -246,15 +240,6 @@ struct GameCountHistoryGraph: View {
                     AreaMark(x: .value("X", data[i].date),
                              y: .value("Y", data[i].totalCount))
                     .foregroundStyle(group.getColor()).opacity(0.3)
-                }
-            }
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .day)){ value in
-                    if let date = value.as(Date.self) {
-                        AxisValueLabel( date.formatted(date: .abbreviated, time: .omitted)  )
-                    }
-                    
-                    AxisTick()
                 }
             }
         }

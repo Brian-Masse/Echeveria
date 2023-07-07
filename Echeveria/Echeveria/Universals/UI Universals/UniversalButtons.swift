@@ -17,6 +17,14 @@ struct RoundedButton: View {
     let label:  String
     let icon:   String
     let action: ()->Void
+    let shrink: Bool
+    
+    init(label: String, icon: String, action: @escaping ()->Void, shrink: Bool = false) {
+        self.label = label
+        self.icon = icon
+        self.action = action
+        self.shrink = shrink
+    }
     
     var body: some View {
         
@@ -24,7 +32,8 @@ struct RoundedButton: View {
             Spacer()
             Image(systemName: icon)
             Text(label)
-                .fixedSize()
+//                .fixedSize()
+//                .minimumScaleFactor( shrink ? 0.5 : 1 )
                 .lineLimit(1)
             Spacer()
         }

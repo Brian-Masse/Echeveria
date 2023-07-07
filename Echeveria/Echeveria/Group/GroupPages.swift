@@ -38,30 +38,30 @@ struct MainGroupViewPage: View {
                 
                 MembersView(group: group)
                     .padding(.bottom)
-                
+//
                 if games.count != 0 {
                     UniversalText("Highlights", size: Constants.UIHeaderTextSize, true)
                     TimeByPlayerAndTypeChart(title: "Win History", group: group, games: Array(games)) { fgames, fmembers in
                         WinHistoryChart(group: group, games: Array(games), filteredMembers: fmembers, filteredGames: fgames)
                     }
-                    
-                    
+
+
                 } else {
                     LargeFormRoundedButton(label: "Log Games to View Data", icon: "signpost.and.arrowtriangle.up") {}
                 }
-                    
+//
                 if owner {
                     RoundedButton(label: "Edit Group", icon: "pencil.line") {
                         EcheveriaModel.shared.addActiveColor(with: group.getColor())
                         editing = true
                     }
                     AsyncRoundedButton(label: "Delete Group", icon: "x.square") {
-                        
+
                         deleting = true
-                        
+
                         EcheveriaModel.shared.removeActiveColor()
                         presentationMode.wrappedValue.dismiss()
-                        
+
                         await group.closePermissions(id: group._id.stringValue)
                         group.deleteGroup()
                     }

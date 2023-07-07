@@ -94,21 +94,26 @@ struct GroupCreationView: View {
         GeometryReader { geo in
             ZStack(alignment: .bottom) {
                 VStack(alignment: .leading) {
-                    
                     UniversalText(title, size: Constants.UITitleTextSize, true)
                         .padding(.bottom)
                     
-                    TransparentForm("Basic Info") {
-                        TextField("Group Name", text: $name)
-                        TextField("Group Description", text: $description)
-                    }
+                    ScrollView(.vertical) {
                         
-                    TransparentForm("Preferences") {
-                        IconPicker(icon: $icon)
-                        UniqueColorPicker(selectedColor: $color)
+                        VStack(alignment: .leading) {
+                            TransparentForm("Basic Info") {
+                                TextField("Group Name", text: $name)
+                                TextField("Group Description", text: $description)
+                            }
+                            
+                            TransparentForm("Preferences") {
+                                IconPicker(icon: $icon)
+                                UniqueColorPicker(selectedColor: $color)
+                            }
+                            .padding(.bottom, Constants.UIHoverButtonBottonPadding * 4)
+                            
+                            Spacer()
+                        }
                     }
-                    
-                    Spacer()
                 }
                 
                 RoundedButton(label: "Submit", icon: "checkmark.seal") { submit() }

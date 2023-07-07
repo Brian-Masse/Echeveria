@@ -92,9 +92,9 @@ struct OpenFlexibleSyncRealmView: View {
                             }
                     }
                     
-                    RoundedButton(label: "cancel", icon: "chevron.left", action: dismissScreen)
+                    RoundedButton(label: "cancel", icon: "chevron.left", action: dismissScreen, shrink: true)
                         .padding(.top)
-                        .minimumScaleFactor(0.5)
+                        .frame(width: (geo.size.width / 3) - 20)
                 }
                 .frame(width: geo.size.width / 3)
                 .padding()

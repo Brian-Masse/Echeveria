@@ -51,6 +51,7 @@ struct GroupView: View {
                         }
                     }
                 }
+                .frame(width: geo.size.width)
                 .padding(.top, Constants.UIFullScreenTopPadding)
                 .padding(.bottom, 30)
             } }
