@@ -69,7 +69,7 @@ struct SearchPageView: View {
                         let search = searchQuery.strip()
                         
                         let filteredGroups = groups.filter { group in
-                            search.contains(group.name.strip())
+                            group.name.strip().contains(search) || search.contains(group.name.strip())
                         }
                         
                         ListView(title: "Groups", collection: Array(filteredGroups), geo: geo) { group in !group.hasMember(EcheveriaModel.shared.profile.ownerID) }

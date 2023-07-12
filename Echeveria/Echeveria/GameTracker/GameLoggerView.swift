@@ -184,6 +184,7 @@ struct GameLoggerView: View  {
         .alert(isPresented: $showingAlert) {
             Alert(title: Text( "Form Incomplete" ).bold(true), message: Text( "Please check that you selected a group, game type, players, and a winner." ))
         }
+        .onTapGesture { self.hideKeyboard() }
     }   
 }
 
