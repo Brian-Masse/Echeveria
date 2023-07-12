@@ -73,7 +73,7 @@ struct SearchPageView: View {
                         }
                         
                         ListView(title: "Groups", collection: Array(filteredGroups), geo: geo) { group in !group.hasMember(EcheveriaModel.shared.profile.ownerID) }
-                    contentBuilder: { group in GroupPreviewView( group: group, geo: geo ) }
+                    contentBuilder: { group in GroupPreviewView( group: group, geo: geo, profileID: EcheveriaModel.shared.profile.ownerID ) }
                         
                         
                         let filtered = profiles.filter { profile in

@@ -51,9 +51,7 @@ class EcheveriaGroup: Object, Identifiable {
             
             thawed.setColor(color)
         }
-        
-//        idk even know bro...Im so tired and this color system makes 0 sense. 07/07/2023 2:27:27AM
-//        but this is like the last thing that I need to do so I'm done
+
         EcheveriaModel.shared.removeActiveColor()
         EcheveriaModel.shared.removeActiveColor()
         EcheveriaModel.shared.addActiveColor(with: color)

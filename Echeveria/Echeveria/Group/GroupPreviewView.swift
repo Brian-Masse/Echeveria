@@ -17,6 +17,7 @@ struct GroupPreviewView: View {
     @State var showingGroup: Bool = false
     
     let memberID = EcheveriaModel.shared.profile!.ownerID
+    let profileID: String
     var owner: Bool { group.owner == memberID }
     
     var isFavorite: Bool { EcheveriaModel.shared.profile.favoriteGroups.contains(where: { str in str == group._id.stringValue }) }
@@ -41,7 +42,7 @@ struct GroupPreviewView: View {
             UniversalText( group.groupDescription, size: Constants.UIDefaultTextSize, wrap: true, lighter: true )
             
         
-            if !owner {
+            if !owner && profileID == memberID {
                 if !group.hasMember(memberID) {
                     RoundedButton(label: "join", icon: "plus.square") {
                         group.addMember(memberID)
@@ -56,13 +57,9 @@ struct GroupPreviewView: View {
                 }
             }
         }
-        .padding()
-        .background(Rectangle()
-            .cornerRadius(15)
-            .universalForeground()
-            .onTapGesture { showingGroup = true }
-            .fullScreenCover(isPresented: $showingGroup) { GroupView(group: group, games: EcheveriaModel.retrieveObject { game in game.groupID == group._id } ) }
-        )
+        .opaqueRectangularBackground()
+        .onTapGesture { showingGroup = true }
+        .fullScreenCover(isPresented: $showingGroup) { GroupView(group: group, games: EcheveriaModel.retrieveObject { game in game.groupID == group._id } ) }
     }
 }
 
@@ -89,7 +86,9 @@ struct GroupCreationView: View {
         if !editing {
             let group = EcheveriaGroup(name: name, icon: icon, description: description, color: color)
             group.addToRealm()
+            EcheveriaModel.shared.removeActiveColor()
         } else { group!.updateInformation(name: name, icon: icon, description: description, color: color) }
+    
         presentaitonMode.wrappedValue.dismiss()
     }
     

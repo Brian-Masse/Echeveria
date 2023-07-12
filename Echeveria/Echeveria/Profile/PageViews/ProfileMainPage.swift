@@ -43,18 +43,14 @@ struct ProfileMainView: View {
                         UniversalText("Favorite Groups", size: Constants.UIHeaderTextSize, true).transition(.opacity)
                         ListView(title: "", collection: profile.favoriteGroups, geo: geo) { _ in true } contentBuilder: { groupID in
                             if let group = EcheveriaGroup.getGroupObject(with: groupID) {
-                                GroupPreviewView(group: group, geo: geo)
+                                GroupPreviewView(group: group, geo: geo, profileID: profile.ownerID)
                             }
                         }.transition(.opacity)
                     }
                 
                     if profile.favoriteGames.count != 0 {
-//                        ZStack(alignment: .topLeading) {
-//                            UniversalText("Favorite Games", size: Constants.UIHeaderTextSize, true)
-//
-                            let games = EcheveriaGame.reduceIntoStrings(from: profile.getFavoriteGames(from: allGames))
-                            GameScrollerView(title: "Favorite Games", filter: .none, filterable: true, geo: geo, games: games)
-//                        }
+                        let games = EcheveriaGame.reduceIntoStrings(from: profile.getFavoriteGames(from: allGames))
+                        GameScrollerView(title: "Favorite Games", filter: .none, filterable: true, geo: geo, games: games)
                     }
                     
                     RecentGamesView(games: profile.getAllowedGames(from: allGames), geo: geo)
@@ -73,9 +69,7 @@ struct ProfileMainView: View {
                 }
             }
         }
-        .sheet(isPresented: $editing, onDismiss: {
-            if EcheveriaModel.shared.activeColors.last != profile.getColor() { EcheveriaModel.shared.removeActiveColor() }
-        }) {
+        .presentableContent(.sheet, presenting: $editing, getColor: profile.getColor) {
             ProfileViews.EditingProfileView(creatingProfile: false,
                                             firstName: profile.firstName,
                                             lastName: profile.lastName,

@@ -190,6 +190,40 @@ private struct BecomingVisible: ViewModifier {
     }
 }
 
+enum PresentationType {
+    case sheet
+    case full
+}
+
+private struct PresentableContent<C: View>: ViewModifier {
+    
+    let presentationType: PresentationType
+    let presentationContent: C
+    
+    let color: Color
+    
+    @Binding var presenting: Bool
+    
+    init( presentationType: PresentationType, presenting: Binding<Bool>, getColor: ()-> Color, contentBuilder: ()->C ) {
+        self.presentationType = presentationType
+        self.presentationContent = contentBuilder()
+        self.color = getColor()
+        self._presenting = presenting
+    }
+    
+    func body(content: Content) -> some View {
+        if presentationType == .sheet {
+            content.sheet(isPresented: $presenting, onDismiss: { EcheveriaModel.shared.removeActiveColor() }) { presentationContent }
+                .onChange(of: presenting) { newValue in if newValue { EcheveriaModel.shared.addActiveColor(with: color) } }
+        }
+        if presentationType == .full {
+            content.fullScreenCover(isPresented: $presenting, onDismiss: { EcheveriaModel.shared.removeActiveColor() }) { presentationContent }
+                .onChange(of: presenting) { newValue in if newValue { EcheveriaModel.shared.addActiveColor(with: color) } }
+        }
+    }
+    
+}
+
 extension View {
     func universalBackground(padding: Bool = true) -> some View {
         modifier(UniversalBackground( padding: padding ))
@@ -237,5 +271,9 @@ extension View {
     
     func onBecomingVisible(perform action: @escaping () -> Void) -> some View {
         modifier(BecomingVisible(action: action))
+    }
+    
+    func presentableContent<C: View>( _ presentationType: PresentationType, presenting: Binding<Bool>, getColor: ()-> Color, contentBuilder: ()->C  ) -> some View {
+        modifier( PresentableContent(presentationType: presentationType, presenting: presenting, getColor: getColor, contentBuilder: contentBuilder) )
     }
 }

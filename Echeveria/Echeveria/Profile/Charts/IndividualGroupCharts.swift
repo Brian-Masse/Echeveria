@@ -243,6 +243,12 @@ struct GameCountHistoryGraph: View {
                     .foregroundStyle(group.getColor()).opacity(0.3)
                 }
             }
+            
+            HStack {
+                UniversalText("Total Games", size: Constants.UISubHeaderTextSize, true)
+                Spacer()
+                UniversalText("\(data.last!.totalCount)", size: Constants.UIDefaultTextSize)
+            }
         }
         .padding()
         .universalTextStyle()

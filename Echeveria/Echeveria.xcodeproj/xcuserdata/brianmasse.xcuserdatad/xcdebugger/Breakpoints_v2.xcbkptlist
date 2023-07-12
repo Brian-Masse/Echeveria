@@ -597,8 +597,8 @@
             filePath = "Echeveria/Group/EcheveriaGroup.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "updatePermissionsForGroupView(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1111,8 +1111,8 @@
             filePath = "Echeveria/Group/EcheveriaGroup.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "getGroupObject(from:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1280,22 +1280,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C186AB84-EFB0-469B-8B2E-144080EE2EA6"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Echeveria/Group/GroupPageView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "BBC92366-1647-4B47-9EC6-AB5688974367"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1319,8 +1303,8 @@
             filePath = "Echeveria/Profile/EcheveriaProfile.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "332"
+            endingLineNumber = "332"
             landmarkName = "getWins(in:games:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1351,8 +1335,8 @@
             filePath = "Echeveria/Group/EcheveriaGroup.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "deleteGroup()"
             landmarkType = "7">
             <Locations>
@@ -1403,85 +1387,6 @@
             endingLineNumber = "203"
             landmarkName = "body"
             landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "012D02E7-8563-4C6F-A106-0A2691BCC8C2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Echeveria/Profile/Charts/IndividualGroupCharts.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
-            landmarkName = "getData()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "012D02E7-8563-4C6F-A106-0A2691BCC8C2 - f59a205a0d806133"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Echeveria.GameCountHistoryGraph.getData() -&gt; Swift.Array&lt;Echeveria.GameCountHistoryGraph.DataNode&gt;"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/Charts/IndividualGroupCharts.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "190"
-                  endingLineNumber = "190"
-                  offsetFromSymbolStart = "376">
-               </Location>
-               <Location
-                  uuid = "012D02E7-8563-4C6F-A106-0A2691BCC8C2 - b9be2d45c6fa9d2e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Echeveria.EcheveriaGame) -&gt; Swift.Bool in Echeveria.GameCountHistoryGraph.getData() -&gt; Swift.Array&lt;Echeveria.GameCountHistoryGraph.DataNode&gt;"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/Charts/IndividualGroupCharts.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "190"
-                  endingLineNumber = "190"
-                  offsetFromSymbolStart = "125">
-               </Location>
-               <Location
-                  uuid = "012D02E7-8563-4C6F-A106-0A2691BCC8C2 - 6ecbcc14b08c5801"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.String) -&gt; Swift.Bool in closure #1 (Echeveria.EcheveriaGame) -&gt; Swift.Bool in Echeveria.GameCountHistoryGraph.getData() -&gt; Swift.Array&lt;Echeveria.GameCountHistoryGraph.DataNode&gt;"
-                  moduleName = "Echeveria"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/Charts/IndividualGroupCharts.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "190"
-                  endingLineNumber = "190"
-                  offsetFromSymbolStart = "54">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C1AC7B97-6123-4400-B7EC-FE288E1F3ED5"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Echeveria/Profile/Charts/IndividualGroupCharts.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "getData()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

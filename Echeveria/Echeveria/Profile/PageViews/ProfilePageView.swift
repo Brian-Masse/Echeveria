@@ -49,7 +49,7 @@ struct ProfilePageView: View {
                             ProfileMainView(profile:  $profile.wrappedValue, allGames: $games.wrappedValue, geo: geo).padding().tag( MainView.ProfilePage.main )
                             ProfileGameView(profile:  $profile.wrappedValue, allGames: $games.wrappedValue,     geo: geo).padding().tag(  MainView.ProfilePage.games )
                             ProfileSocialPage(profile:$profile.wrappedValue, allGroups: $groups.wrappedValue,   geo: geo).padding().tag(  MainView.ProfilePage.social )
-                            SearchPageView(geo: geo).padding().tag(  MainView.ProfilePage.search )
+                            if mainUser { SearchPageView(geo: geo).padding().tag(  MainView.ProfilePage.search ) }
                         }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
                     }
                     
@@ -60,7 +60,8 @@ struct ProfilePageView: View {
                     .padding(.top, 50)
                 }
             }}
-        }.universalColoredBackground( profile.getColor() )
+        }
+        .universalColoredBackground( profile.getColor() )
     }
     
     struct ShapeBackgrond: View {

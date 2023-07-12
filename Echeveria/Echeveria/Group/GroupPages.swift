@@ -51,12 +51,8 @@ struct MainGroupViewPage: View {
                 }
 //
                 if owner {
-                    RoundedButton(label: "Edit Group", icon: "pencil.line") {
-                        EcheveriaModel.shared.addActiveColor(with: group.getColor())
-                        editing = true
-                    }
+                    RoundedButton(label: "Edit Group", icon: "pencil.line") { editing = true }
                     AsyncRoundedButton(label: "Delete Group", icon: "x.square") {
-
                         deleting = true
 
                         EcheveriaModel.shared.removeActiveColor()
@@ -67,7 +63,8 @@ struct MainGroupViewPage: View {
                     }
                 }
             }
-        }.sheet(isPresented: $editing, onDismiss: { EcheveriaModel.shared.removeActiveColor() }) {
+        }
+        .presentableContent(.sheet, presenting: $editing, getColor: group.getColor) {
             GroupCreationView(title: "Edit Group",
                               group: group,
                               name: group.name,

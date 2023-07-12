@@ -48,38 +48,36 @@ struct ProfileSocialPage: View {
             let groups = profile.getAllowedGroups(from: allGroups)
             ZStack(alignment: .topTrailing) {
                 
-                ListView(title: "My Groups", collection: groups, geo: geo) { group in group.owner == profile.ownerID }
-                contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
+                ListView(title: "My Groups", collection: groups, geo: geo) { group in group.owner == profile.ownerID } contentBuilder: {
+                    group in GroupPreviewView(group: group, geo: geo, profileID: profile.ownerID)
+                }
                 
                 if groups.count != 0 {
-                    ShortRoundedButton("add", icon: "plus") {
-                        EcheveriaModel.shared.addActiveColor(with: Colors.groupMain)
-                        showingGroupCreationView = true
-                    }
+                    ShortRoundedButton("add", icon: "plus") { showingGroupCreationView = true }
                         .offset(y: -5)
                 }
                     
             }
             .padding(.bottom)
-            .sheet(isPresented: $showingGroupCreationView, onDismiss: { EcheveriaModel.shared.removeActiveColor() }) {
+            .presentableContent(.sheet, presenting: $showingGroupCreationView, getColor: {Colors.groupMain}) {
                 GroupCreationView(title: "Create Group",
-                                       group: nil,
-                                       name: "",
-                                       icon: "rectangle.3.group",
-                                       description: "",
-                                       color: Colors.groupMain,
-                                       editing: false) }
+                                  group: nil,
+                                  name: "",
+                                  icon: "rectangle.3.group",
+                                  description: "",
+                                  color: Colors.groupMain,
+                                  editing: false)
+            }
+        
+                
             
             if groups.count == 0 {
-                LargeFormRoundedButton(label: "Add or Join Group", icon: "plus") {
-                    EcheveriaModel.shared.addActiveColor(with: Colors.groupMain)
-                    showingGroupCreationView = true
-                }
+                LargeFormRoundedButton(label: "Add or Join Group", icon: "plus") { showingGroupCreationView = true }
             }
             
             ListView(title: "Joined Groups", collection: groups, geo: geo) { group in
                 group.owner != profile.ownerID && group.members.contains(where: { str in str == profile.ownerID })
-            } contentBuilder: { group in GroupPreviewView(group: group, geo: geo) }
+            } contentBuilder: { group in GroupPreviewView(group: group, geo: geo, profileID: profile.ownerID) }
                 .padding(.bottom, 80)
                 
         }

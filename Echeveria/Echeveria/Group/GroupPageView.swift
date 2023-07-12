@@ -35,10 +35,7 @@ struct GroupView: View {
                         HStack {
                             UniversalText(group.name, size: Constants.UITitleTextSize, wrap: false, true)
                             Spacer()
-                            ProfileViews.DismissView {
-                                EcheveriaModel.shared.removeActiveColor()
-                                
-                            } action: {
+                            ProfileViews.DismissView { EcheveriaModel.shared.removeActiveColor() } action: {
                                 dismissing = true
                                 await group.closePermissions(id: group._id.stringValue)
                             }
