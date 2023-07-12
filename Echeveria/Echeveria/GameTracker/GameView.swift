@@ -119,9 +119,7 @@ struct GameView: View {
                     }
                 }
                 .padding()
-                .padding(.bottom, 30)
             }
-            .padding(.top, 40)
             .universalColoredBackground( game.getColor() )
             .sheet(isPresented: $editing) {
                 if let gameCopy = EcheveriaGame.getGameObject(from: gameID) {

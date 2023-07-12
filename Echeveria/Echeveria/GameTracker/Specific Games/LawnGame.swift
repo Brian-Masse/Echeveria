@@ -66,8 +66,8 @@ class LawnGame {
                 if let profile = EcheveriaProfile.getProfileObject(from: profileID) { return "\(profile.firstName) \(profile.lastName)" }; return nil
             }
 
-        
             TextField("score", text: createBinding(forKey: scoreKey))
+                .keyboardType(.decimalPad)
         }
         
         var body: some View {

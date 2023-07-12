@@ -122,7 +122,6 @@ struct GroupCreationView: View {
                 RoundedButton(label: "Submit", icon: "checkmark.seal") { submit() }
                     .padding()
                     .shadow(radius: 5)
-                    .padding(.bottom, Constants.UIHoverButtonBottonPadding)
             }
             .frame(height: geo.size.height)
         }

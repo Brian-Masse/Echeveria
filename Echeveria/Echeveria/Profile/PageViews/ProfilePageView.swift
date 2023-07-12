@@ -57,7 +57,6 @@ struct ProfilePageView: View {
                         await profile.closePermission(ownerID: profile.ownerID)
                     }
                     .padding(.top)
-                    .padding(.top, 50)
                 }
             }}
         }

@@ -8,9 +8,19 @@
 
 ## **Change log for 1.1.0**
 
+### **New Features**
+
+- Added an 'auto fill from last log' to make the game logging process easier
+
 ### **Changes**
 
 - can no longer view the search page when viewing other user's profiles
+
+- any member in a group can edit it
+
+- certain text field only bring up a number pad keyboard
+
+- All textfields now dynamically respond to the keyboard, making them visible when entering text
 
 ### **Fixes**
 

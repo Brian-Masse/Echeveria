@@ -50,6 +50,7 @@ struct OpenFlexibleSyncRealmView: View {
                         .offset(x: -80, y: 40)
                         .foregroundColor(Colors.main)
                         .opacity(0.7)
+                        .ignoresSafeArea(.keyboard)
                 }
                 
                 VStack {

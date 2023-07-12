@@ -49,9 +49,12 @@ struct MainGroupViewPage: View {
                 } else {
                     LargeFormRoundedButton(label: "Log Games to View Data", icon: "signpost.and.arrowtriangle.up") {}
                 }
-//
-                if owner {
+
+                if group.members.contains(where: { str in str == EcheveriaModel.shared.profile.ownerID }) {
                     RoundedButton(label: "Edit Group", icon: "pencil.line") { editing = true }
+                }
+                
+                if owner {
                     AsyncRoundedButton(label: "Delete Group", icon: "x.square") {
                         deleting = true
 
@@ -62,7 +65,7 @@ struct MainGroupViewPage: View {
                         group.deleteGroup()
                     }
                 }
-            }
+            }.padding(.bottom, 20)
         }
         .presentableContent(.sheet, presenting: $editing, getColor: group.getColor) {
             GroupCreationView(title: "Edit Group",

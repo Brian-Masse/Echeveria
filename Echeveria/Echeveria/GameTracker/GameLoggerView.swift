@@ -11,6 +11,8 @@ import RealmSwift
 
 struct GameLoggerView: View  {
     
+    static var autoFillGameLogger: AutoFillGameLogger? = nil
+    
     @Environment(\.presentationMode) var presentationMode
     
     let editing: Bool
@@ -77,7 +79,23 @@ struct GameLoggerView: View  {
             }
         }
         
+        GameLoggerView.autoFillGameLogger = AutoFillGameLogger(gameType: gameType,
+                                                               gameExperience: gameExperieince,
+                                                               groupID: group,
+                                                               players: selectedPlayers,
+                                                               winners: selectedWinners,
+                                                               gameData: gameValues)
+        
         presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func autoFill() {
+        self.gameType           = GameLoggerView.autoFillGameLogger!.gameType
+        self.gameExperieince    = GameLoggerView.autoFillGameLogger!.gameExperience
+        self.group              = GameLoggerView.autoFillGameLogger!.groupID
+        self.selectedPlayers    = GameLoggerView.autoFillGameLogger!.players
+        self.selectedWinners    = GameLoggerView.autoFillGameLogger!.winners
+        self.gameValues         = GameLoggerView.autoFillGameLogger!.gameData
     }
     
     var body: some View {
@@ -92,6 +110,12 @@ struct GameLoggerView: View  {
                         .padding(.bottom)
                     
                     ScrollView(.vertical) {
+                        
+                        if GameLoggerView.autoFillGameLogger != nil {
+                            RoundedButton(label: "Autofill from last log", icon: "arrowshape.bounce.right") { autoFill() }
+                                .padding(.bottom, 5)
+                        }
+                        
                         TransparentForm("Basic Information") {
                             BasicPicker(title: "Game Type", noSeletion: "No Selection", sources: EcheveriaGame.GameType.allCases, selection: $gameType) { gameType in
                                 Text(gameType.rawValue)
@@ -148,11 +172,11 @@ struct GameLoggerView: View  {
                         }
                     }
                 }
+            
                 
                 RoundedButton(label: "Submit", icon: "checkmark.seal") { submit() }
                     .padding()
                     .shadow(radius: 5)
-                    .padding(.bottom, Constants.UIHoverButtonBottonPadding)
             }
         }
         .padding()
@@ -161,4 +185,17 @@ struct GameLoggerView: View  {
             Alert(title: Text( "Form Incomplete" ).bold(true), message: Text( "Please check that you selected a group, game type, players, and a winner." ))
         }
     }   
+}
+
+struct AutoFillGameLogger {
+    
+    let gameType: EcheveriaGame.GameType
+    let gameExperience: EcheveriaGame.GameExperience
+    
+    let groupID: String
+    let players: [String]
+    let winners: [String]
+    
+    let gameData: Dictionary<String, String>
+    
 }

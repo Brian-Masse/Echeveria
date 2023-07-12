@@ -110,8 +110,10 @@ class Smash {
                             }
                             
                             TextField(text: createBinding(forKey:  playerID + Smash.DataKey.damage.rawValue)) { Text( "Damage %" ) }
+                                .keyboardType(.decimalPad)
 
                             TextField(text: createBinding(forKey:  playerID + Smash.DataKey.KOs.rawValue)) { Text( "KOs" ) }
+                                .keyboardType(.decimalPad)
                         }
                     }
                 }

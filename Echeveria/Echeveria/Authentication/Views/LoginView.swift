@@ -65,12 +65,11 @@ struct LoginView: View {
                     .offset(x: -120, y: 50)
                     .foregroundColor(Colors.main)
                     .opacity(0.7)
-            }
+            }.ignoresSafeArea(.keyboard)
             
             VStack(alignment: .leading) {
                 UniversalText("Choose Sign in Method", size: Constants.UITitleTextSize, true)
                     .padding(.horizontal, 15)
-                    .padding(.top, 60)
                 
                 if devMode { ScrollView(.vertical) {
                     form(geo: geo)

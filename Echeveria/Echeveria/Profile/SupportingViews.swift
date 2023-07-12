@@ -139,12 +139,10 @@ struct ProfileViews {
                     }
                     
                     AsyncRoundedButton(label: "Done", icon: "checkmark.seal") { await submit() }
-                    .padding()
-                    .shadow(radius: 5)
-                    .padding(.bottom, creatingProfile ? Constants.UIFullScreenTopPadding :  Constants.UIHoverButtonBottonPadding)
+                        .padding()
+                        .shadow(radius: 5)
                 }
                 .frame(height: geo.size.height)
-                .padding(.top, creatingProfile ? Constants.UIFullScreenTopPadding : 0 )
             }
             .padding()
             .universalColoredBackground( color )

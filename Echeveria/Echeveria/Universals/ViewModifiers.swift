@@ -25,19 +25,25 @@ private struct UniversalColoredBackground: ViewModifier {
     let color: Color
     
     func body(content: Content) -> some View {
-        ZStack(alignment: colorScheme == .light ? .top : .bottom) {
-            if colorScheme == .light {
-                LinearGradient(colors: [color.opacity(0.8), .clear], startPoint: .top, endPoint: .bottom )
-                    .frame(maxHeight: 800)
-            } else {
-                LinearGradient(colors: [color.opacity(0.4), .clear], startPoint: .bottom, endPoint: .top )
-                    .frame(maxHeight: 800)
-            }
-        
-            content
-        }
-        .universalBackground(padding: false)
-        .ignoresSafeArea()
+        content
+            .background(
+                GeometryReader { geo in
+                    VStack {
+                        if colorScheme == .light {
+                            LinearGradient(colors: [color.opacity(0.8), .clear], startPoint: .top, endPoint: .bottom )
+                                .frame(maxHeight: 800)
+                            Spacer()
+                        }
+                        else if colorScheme == .dark {
+                            Spacer()
+                            LinearGradient(colors: [color.opacity(0.4), .clear], startPoint: .bottom, endPoint: .top )
+                                .frame(maxHeight: 800)
+                        }
+                    }
+                }
+                    .universalBackground(padding: false)
+                    .ignoresSafeArea()
+            )
     }
 }
 
