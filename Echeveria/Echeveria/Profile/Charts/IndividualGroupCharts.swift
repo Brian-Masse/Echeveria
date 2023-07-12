@@ -110,7 +110,7 @@ struct WinStreakHistoryChart: View {
         let sorted = EcheveriaGame.sort(games)
         return group.members.filter { id in !filteredMembers.contains(where: { str in str == id }) }.flatMap { memberID in
             return sorted.compactMap { game in
-                let filtered = sorted.filter { g in g.date <= game.date }
+                let filtered = sorted.filter { g in g.date <= game.date && g.players.contains { str in str == memberID } }
                 let last = filtered.lastIndex { g in !g.winners.contains { str in str == memberID } && g.players.contains { str in str == memberID } } ?? filtered.count - 1
                 return DataNode(id: memberID, wins: filtered.count - last - 1, date: game.date, type: "")
             }
@@ -187,8 +187,9 @@ struct GameCountHistoryGraph: View {
         var list: [DataNode] = []
         var date: Date = group.createdDate
         
-        while date < .now {
-            let filtered = games.filter { game in !filteredGames.contains { str in str.strip() == game.type.strip() } }
+        let filtered = games.filter { game in !filteredGames.contains { str in str.strip() == game.type.strip() } }
+        
+        while date < .now + Constants.DayTime {
             let count = filtered.filter { game in Calendar.current.isDate(game.date, equalTo: date, toGranularity: .day) }.count
             let totalCount = filtered.filter { game in game.date <= date }.count
             list.append( DataNode(count: count, totalCount: totalCount, date: date ) )

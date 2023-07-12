@@ -19,10 +19,7 @@
 		C90F91172A4613CD0062B493 /* ProfileSocialPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F91162A4613CD0062B493 /* ProfileSocialPage.swift */; };
 		C90F911A2A4616300062B493 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F91192A4616300062B493 /* ViewModifiers.swift */; };
 		C90F911C2A4616720062B493 /* UniversalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90F911B2A4616720062B493 /* UniversalConstants.swift */; };
-		C90F911F2A4658170062B493 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C90F911E2A4658170062B493 /* Realm */; };
-		C90F91212A4658170062B493 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C90F91202A4658170062B493 /* RealmSwift */; };
 		C90FEC952A43FD8300E7E6CE /* ProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90FEC942A43FD8300E7E6CE /* ProfilePageView.swift */; };
-		C9143CF52A4D02D9009ED03F /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = C9143CF42A4D02D9009ED03F /* SymbolPicker */; };
 		C9143CF82A4D5067009ED03F /* AbstractCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF72A4D5067009ED03F /* AbstractCharts.swift */; };
 		C9143CFA2A4E200E009ED03F /* IndividualGroupCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CF92A4E200E009ED03F /* IndividualGroupCharts.swift */; };
 		C9143CFC2A4E3F42009ED03F /* IndividualProfileCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9143CFB2A4E3F42009ED03F /* IndividualProfileCharts.swift */; };
@@ -36,6 +33,9 @@
 		C939B6ED2A3A8951008C6906 /* EcheveriaProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6EC2A3A8951008C6906 /* EcheveriaProfile.swift */; };
 		C939B6F92A3EB21F008C6906 /* ProfileMainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6F82A3EB21F008C6906 /* ProfileMainPage.swift */; };
 		C939B6FB2A3FBB1A008C6906 /* GroupPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C939B6FA2A3FBB1A008C6906 /* GroupPreviewView.swift */; };
+		C95B0A982A5F00960094B30E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C95B0A972A5F00960094B30E /* Realm */; };
+		C95B0A9A2A5F00960094B30E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C95B0A992A5F00960094B30E /* RealmSwift */; };
+		C95B0A9D2A5F00AC0094B30E /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = C95B0A9C2A5F00AC0094B30E /* SymbolPicker */; };
 		C967C8A52A3FDD8D00217ECB /* GroupPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C967C8A42A3FDD8D00217ECB /* GroupPageView.swift */; };
 		C976A93B2A396C6500C48C6A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93A2A396C6500C48C6A /* LoginView.swift */; };
 		C976A93E2A396E5800C48C6A /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C976A93D2A396E5800C48C6A /* LoginModel.swift */; };
@@ -129,9 +129,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C90F91212A4658170062B493 /* RealmSwift in Frameworks */,
-				C90F911F2A4658170062B493 /* Realm in Frameworks */,
-				C9143CF52A4D02D9009ED03F /* SymbolPicker in Frameworks */,
+				C95B0A9A2A5F00960094B30E /* RealmSwift in Frameworks */,
+				C95B0A982A5F00960094B30E /* Realm in Frameworks */,
+				C95B0A9D2A5F00AC0094B30E /* SymbolPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,9 +359,9 @@
 			);
 			name = Echeveria;
 			packageProductDependencies = (
-				C90F911E2A4658170062B493 /* Realm */,
-				C90F91202A4658170062B493 /* RealmSwift */,
-				C9143CF42A4D02D9009ED03F /* SymbolPicker */,
+				C95B0A972A5F00960094B30E /* Realm */,
+				C95B0A992A5F00960094B30E /* RealmSwift */,
+				C95B0A9C2A5F00AC0094B30E /* SymbolPicker */,
 			);
 			productName = Echeveria;
 			productReference = C99714072A3902CA00090429 /* Echeveria.app */;
@@ -436,8 +436,8 @@
 			);
 			mainGroup = C99713FE2A3902CA00090429;
 			packageReferences = (
-				C90F911D2A4658170062B493 /* XCRemoteSwiftPackageReference "realm-swift" */,
-				C9143CF32A4D02D9009ED03F /* XCRemoteSwiftPackageReference "SymbolPicker" */,
+				C95B0A962A5F00960094B30E /* XCRemoteSwiftPackageReference "realm-swift" */,
+				C95B0A9B2A5F00AC0094B30E /* XCRemoteSwiftPackageReference "SymbolPicker" */,
 			);
 			productRefGroup = C99714082A3902CA00090429 /* Products */;
 			projectDirPath = "";
@@ -885,7 +885,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C90F911D2A4658170062B493 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		C95B0A962A5F00960094B30E /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift";
 			requirement = {
@@ -893,7 +893,7 @@
 				kind = branch;
 			};
 		};
-		C9143CF32A4D02D9009ED03F /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
+		C95B0A9B2A5F00AC0094B30E /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/xnth97/SymbolPicker.git";
 			requirement = {
@@ -904,19 +904,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C90F911E2A4658170062B493 /* Realm */ = {
+		C95B0A972A5F00960094B30E /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C90F911D2A4658170062B493 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = C95B0A962A5F00960094B30E /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = Realm;
 		};
-		C90F91202A4658170062B493 /* RealmSwift */ = {
+		C95B0A992A5F00960094B30E /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C90F911D2A4658170062B493 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = C95B0A962A5F00960094B30E /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
-		C9143CF42A4D02D9009ED03F /* SymbolPicker */ = {
+		C95B0A9C2A5F00AC0094B30E /* SymbolPicker */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C9143CF32A4D02D9009ED03F /* XCRemoteSwiftPackageReference "SymbolPicker" */;
+			package = C95B0A9B2A5F00AC0094B30E /* XCRemoteSwiftPackageReference "SymbolPicker" */;
 			productName = SymbolPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
