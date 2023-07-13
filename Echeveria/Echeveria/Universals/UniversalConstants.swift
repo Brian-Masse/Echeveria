@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 class Colors {
     static var tint: Color { EcheveriaModel.shared.activeColors.last ?? main }
@@ -61,9 +62,18 @@ class ColorPallette {
         self.baseColor = baseColor
     }
     
-    subscript(_ index: Int) -> Color {
+    private func getColorScheme() -> UIUserInterfaceStyle {
+        let viewController = UIViewController()
+        return viewController.traitCollection.userInterfaceStyle
+    }
+    
+    subscript(_ index: Int, total: Int) -> Color {
         if index < self.mainColors.count { return mainColors[index] }
-        let colorPerc = CGFloat.random(in: -1...1)
+        
+        let fullRange: CGFloat = 1.5 // This excludes straight blacks and straight whites, which are often hard to read in the UI
+        let perc = CGFloat( index ) / CGFloat(total)
+        
+        let colorPerc = (perc * fullRange) - (fullRange * ( getColorScheme() == .light ? 1.5 : 1) / 3  )
         
         let dr = abs( colorPerc > 0 ? 1 - baseColor.components.red : baseColor.components.red )
         let r = baseColor.components.red + ( colorPerc * dr )

@@ -502,9 +502,9 @@
             filePath = "Echeveria/Universals/UniversalConstants.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "subscript(_:)"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "subscript(_:total:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -518,9 +518,9 @@
             filePath = "Echeveria/Universals/UniversalConstants.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "subscript(_:)"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "subscript(_:total:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1419,6 +1419,22 @@
                   offsetFromSymbolStart = "52">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5DE3024-806B-43CE-BC63-4B52476BE67F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/Universals/UniversalConstants.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "subscript(_:total:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

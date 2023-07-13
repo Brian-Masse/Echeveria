@@ -121,7 +121,7 @@ private struct ColoredChart: ViewModifier {
                 if series.count == 0 { return }
                 for i in 0..<series.count  {
                     let key: String =  series[i]
-                    dic[key] =  Colors.getPallette(from: primaryColor)[ i ]
+                    dic[key] =  Colors.getPallette(from: primaryColor)[ i, series.count - 1 ]
                 }
                 self.dictionary = dic
             }

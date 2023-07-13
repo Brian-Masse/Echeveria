@@ -245,7 +245,7 @@ struct StaticGameChart<T: Hashable, C1: Plottable, C2: Plottable, F: CaseIterabl
                     var dic: Dictionary<C1, Color> = Dictionary()
                     for i in 0..<styleCount  {
                         let key: C1 =  Style!( data[ i ] )
-                        dic[key] = Colors.getPallette(from: primaryColor)[ i ]
+                        dic[key] = Colors.getPallette(from: primaryColor)[ i, styleCount - 1 ]
                     }
                     self.dictionary = dic
                 }

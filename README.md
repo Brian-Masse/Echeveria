@@ -18,6 +18,8 @@
 
 - Added descriptions to Magic the Gathering Decks
 
+- Added a way to delete user preferences for specific games
+
 ### **Changes**
 
 - can no longer view the search page when viewing other user's profiles
@@ -31,6 +33,8 @@
 - any member in a group can edit it
 
 - Changed the name of 'Edit Profile' to 'Preferences'
+
+- Multi Colored Charts have more consistent contrast between colors
 
 ### **Fixes**
 

@@ -192,7 +192,7 @@ struct WinStreakHistoryChart: View {
             
             .opaqueRectangularBackground()
             .coloredChart( group.members.map { id in EcheveriaProfile.getName(from: id) } , color: group.getColor() )
-            .frame(height: 250)
+            .frame(height: 200)
             
             Chart {
                 ForEach( group.members ) { memberID in
@@ -304,6 +304,7 @@ struct GameCountHistoryGraph: View {
                         .foregroundStyle( by: .value("series", playerData[i].type.strip() ))
                     }
                 }
+                .opaqueRectangularBackground()
                 .coloredChart( EcheveriaGame.GameType.allCases.map { type in type.rawValue.strip() } , color: group.getColor() )
                 
                 Chart {
