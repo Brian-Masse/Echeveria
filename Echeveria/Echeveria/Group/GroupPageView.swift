@@ -40,7 +40,7 @@ struct GroupView: View {
                                 await group.closePermissions(id: group._id.stringValue)
                             }
                             
-                        }
+                        }.padding()
                         
                         TabView(selection: $page) {
                             MainGroupViewPage(group: group, games: games, geo: geo, deleting: $dismissing).tag(GroupPage.overview)
@@ -51,7 +51,6 @@ struct GroupView: View {
                 .frame(width: geo.size.width)
             } }
         }
-        .padding()
         .universalColoredBackground( group.getColor() )
     }
     

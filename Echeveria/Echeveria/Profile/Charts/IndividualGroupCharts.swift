@@ -67,6 +67,59 @@ struct WinHistoryChart: View {
     }
 }
 
+//MARK: WinRateChart
+struct WinRateChart: View {
+    
+    private func getData() -> [DataNode] {
+        return group.members.filter { str in !filteredMembers.contains(where: { id in id == str } ) }.compactMap { profileID in
+            let filtered = games.filter { game in
+                !filteredGames.contains { type in type.strip() == game.type.strip() } && game.players.contains { str in str == profileID }
+            }
+            let wins = filtered.filter { game in game.winners.contains { str in str == profileID } }
+            let rate = Double( wins.count ) / max(Double( filtered.count ), 1)
+            return DataNode(id: profileID, wins: Int(rate * 100 ), date: .now, type: "")
+        }
+    }
+    
+    let group: EcheveriaGroup
+    let games: [EcheveriaGame]
+    
+    @Binding var filteredMembers: [String]
+    @Binding var filteredGames: [String]
+    
+    var body: some View {
+        
+        VStack(alignment: .leading) {
+            let data = getData()
+            let sorted = data.sorted { node1, node2 in node1.wins < node2.wins }
+            
+            UniversalText("Win Rate", size: Constants.UISubHeaderTextSize, true)
+                .padding(.top)
+            
+            Chart {
+                ForEach(data.indices) { i in
+                    BarMark(x: .value("X", data[i].name),
+                            y: .value("Y", data[i].wins))
+                    .foregroundStyle( group.getColor() )
+                }
+            }
+            .frame(height: 100)
+            
+            HStack {
+                UniversalText("Best Player", size: Constants.UISubHeaderTextSize, true)
+                Spacer()
+                UniversalText("\(sorted.last?.name ?? "?") (\(sorted.last?.wins ?? 0) % win rate)", size: Constants.UIDefaultTextSize)
+            }
+            
+            HStack {
+                UniversalText("Worst Player", size: Constants.UISubHeaderTextSize, true)
+                Spacer()
+                UniversalText("\(sorted.first?.name ?? "?") (\(sorted.first?.wins ?? 0) % win rate)", size: Constants.UIDefaultTextSize)
+            }
+        }
+    }
+}
+
 
 //MARK: TotalWinChart
 struct TotalWinHistoryChart: View {

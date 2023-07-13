@@ -67,6 +67,7 @@ struct MainGroupViewPage: View {
                 }
             }.padding(.bottom, 20)
         }
+        .padding()
         .presentableContent(.sheet, presenting: $editing, getColor: group.getColor) {
             GroupCreationView(title: "Edit Group",
                               group: group,
@@ -128,8 +129,9 @@ struct ChartsGroupViewPage: View {
                     let games = Array(games)
                     
                     TimeByPlayerAndTypeChart(title: "Win History", group: group, games: games) { fgames, fmembers in
-                        WinHistoryChart(group: group, games: Array(games), filteredMembers: fmembers, filteredGames: fgames)
-                        TotalWinHistoryChart(group: group, games: Array(games), filteredMembers: fmembers, filteredGames: fgames)
+                        WinHistoryChart(        group: group, games: Array(games), filteredMembers: fmembers, filteredGames: fgames)
+                        TotalWinHistoryChart(   group: group, games: Array(games), filteredMembers: fmembers, filteredGames: fgames)
+                        WinRateChart(           group: group, games: Array(games), filteredMembers: fmembers, filteredGames: fgames)
                     }
                     
                     
@@ -143,16 +145,13 @@ struct ChartsGroupViewPage: View {
                     GameCountHistoryGraph(group: group, games: Array(games))
                         .padding(.bottom)
                     
-                    
-//                    ZStack(alignment: .topLeading) {
                     GameScrollerView(title: "All Games", filter: .gameType, filterable: true, geo: geo, games: EcheveriaGame.reduceIntoStrings(from: Array(games)))
-//                        UniversalText("All Games", size: Constants.UIHeaderTextSize, true)
-//                    }
-                    .padding(.bottom, 80)
+                        .padding(.bottom, 80)
                 } else {
                     LargeFormRoundedButton(label: "Log Games to View Data", icon: "signpost.and.arrowtriangle.up") {}
                 }
             }
         }
+        .padding()
     }
 }

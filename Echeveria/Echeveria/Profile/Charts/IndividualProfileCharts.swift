@@ -63,7 +63,8 @@ struct ProfileWinStreakHistoryChart: View {
         return sorted.compactMap { game in
             let filtered = sorted.filter { g in g.date <= game.date }
             let last = filtered.lastIndex { g in !g.winners.contains { str in str == ownerID } && g.players.contains { str in str == ownerID } } ?? filtered.count - 1
-            return DataNode(id: ownerID, wins: filtered.count - last - 1, date: game.date, type: "")
+            let number = filtered.count - last - 1
+            return DataNode(id: ownerID, wins: number, date: game.date, type: "")
         }
     }
     
