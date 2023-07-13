@@ -99,7 +99,7 @@ struct ProfileViews {
                     ScrollView(.vertical) {
                         VStack(alignment: .leading) {
                             
-                            let title = creatingProfile ? "Create Profile" : "Edit Profile"
+                            let title = creatingProfile ? "Create Profile" : "Preferences"
                             
                             UniversalText(title, size: Constants.UITitleTextSize, true)
                                 .padding(.bottom)

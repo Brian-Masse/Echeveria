@@ -105,7 +105,6 @@ class EcheveriaProfile: Object, Identifiable {
         return gamePreferences.first { node in
             node.key == key
         }
-        
     }
     
 //    MARK: Class Methods

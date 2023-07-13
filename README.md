@@ -20,13 +20,15 @@
 
 - can no longer view the search page when viewing other user's profiles
 
-- any member in a group can edit it
-
 - certain text field only bring up a number pad keyboard
 
 - All textfields now dynamically respond to the keyboard, making them visible when entering text
 
 - reorganized the group data page
+
+- any member in a group can edit it
+
+- Changed the name of 'Edit Profile' to 'Preferences'
 
 ### **Fixes**
 

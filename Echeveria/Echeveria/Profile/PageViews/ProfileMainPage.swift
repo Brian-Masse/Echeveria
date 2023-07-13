@@ -60,7 +60,7 @@ struct ProfileMainView: View {
                 
                 if mainUser {
                     VStack {
-                        RoundedButton(label: "Edit", icon: "pencil.line") { editing = true }
+                        RoundedButton(label: "Preferences", icon: "doc.richtext") { editing = true }
                         RoundedButton(label: "Signout", icon: "shippingbox.and.arrow.backward") { EcheveriaModel.shared.realmManager.logoutUser() }
                         UniversalText("id: \(profile.ownerID)", size: Constants.UIDefaultTextSize, lighter: true)
                             .padding(.horizontal, 5)

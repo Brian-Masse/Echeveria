@@ -973,8 +973,8 @@
             filePath = "Echeveria/Profile/EcheveriaProfile.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "269"
+            endingLineNumber = "269"
             landmarkName = "updatePermissions(groups:friendRequests:friends:id:)"
             landmarkType = "7">
             <Locations>
@@ -1303,8 +1303,8 @@
             filePath = "Echeveria/Profile/EcheveriaProfile.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
             landmarkName = "getWins(in:games:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1369,6 +1369,54 @@
                   startingLineNumber = "138"
                   endingLineNumber = "138"
                   offsetFromSymbolStart = "41">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0E5B2507-8C28-4992-8923-A23AACDAF5B0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Echeveria/Profile/EcheveriaProfile.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "getGameDataNode(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0E5B2507-8C28-4992-8923-A23AACDAF5B0 - 7690aa86553ab5ba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Echeveria.EcheveriaProfile.getGameDataNode(Swift.String) -&gt; Swift.Optional&lt;Echeveria.GameDataNode&gt;"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "52">
+               </Location>
+               <Location
+                  uuid = "0E5B2507-8C28-4992-8923-A23AACDAF5B0 - f8e3bbea2969866c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Echeveria.GameDataNode) -&gt; Swift.Bool in Echeveria.EcheveriaProfile.getGameDataNode(Swift.String) -&gt; Swift.Optional&lt;Echeveria.GameDataNode&gt;"
+                  moduleName = "Echeveria"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianmasse/Developer/Xcode%20/Echeveria/Echeveria/Echeveria/Profile/EcheveriaProfile.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "106"
+                  endingLineNumber = "106"
+                  offsetFromSymbolStart = "52">
                </Location>
             </Locations>
          </BreakpointContent>

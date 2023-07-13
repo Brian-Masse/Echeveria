@@ -14,6 +14,7 @@ class Magic {
     enum DataKey: String {
         case deckCount  = "deckCount"
         case deck       = "deck"
+        case deckDescription = "deckDescription"
     }
     
     struct PreferencesForm: View {
@@ -30,16 +31,21 @@ class Magic {
             let countKey    = EcheveriaModel.shared.profile.ownerID + Magic.DataKey.deckCount.rawValue
             let count       = Int(preferences[countKey] ?? "0") ?? 0
             
-            VStack {
+            VStack(alignment: .leading) {
                 
-                TransparentForm("Magic Preferences") {
+                ForEach(0...count, id: \.self) { i in
                     
-                    ForEach(0...count, id: \.self) { i in
-                        
-                        let deckKey = EcheveriaModel.shared.profile.ownerID + Magic.DataKey.deck.rawValue + "\(i)"
+                    let deckKey = EcheveriaModel.shared.profile.ownerID + Magic.DataKey.deck.rawValue + "\(i)"
+                    let descriptionKey = EcheveriaModel.shared.profile.ownerID + Magic.DataKey.deckDescription.rawValue + "\(i)"
+                    
+                    TransparentForm("\( preferences[deckKey] ?? "New Deck" )") {
                     
                         TextField(text: createBinding(forKey: deckKey)) {
                             UniversalText("Deck \( i + 1 )", size: Constants.UIDefaultTextSize, lighter: true )
+                        }
+                        
+                        TextField(text: createBinding(forKey: descriptionKey)) {
+                            UniversalText("Description", size: Constants.UIDefaultTextSize, lighter: true )
                         }
                     }
                 }
@@ -53,9 +59,19 @@ class Magic {
     
     struct InputForm: View {
      
-        func createBinding(forKey key: String, defaultValue: String = "") -> Binding<String> {
-            Binding { values[key] ?? defaultValue
-            } set: { newValue in values[key] = newValue }
+        func createBinding(for profile: EcheveriaProfile, defaultValue: String = "") -> Binding<String> {
+            Binding { values[profile.ownerID + Magic.DataKey.deck.rawValue] ?? defaultValue
+            } set: { newValue in
+                values[profile.ownerID + Magic.DataKey.deck.rawValue] = newValue
+                
+                if let preferenceNode = profile.gamePreferences.first(where: { node in node.data == newValue }) {
+                    let stripped = preferenceNode.key.replacingOccurrences(of: profile.ownerID, with: "")
+                    let index = stripped.filter("0123456789.".contains)
+                    if let node = profile.getGameDataNode(profile.ownerID + Magic.DataKey.deckDescription.rawValue + index ) {
+                        values[profile.ownerID + Magic.DataKey.deckDescription.rawValue] = node.data
+                    }
+                }
+            }
         }
         
         @Binding var values: Dictionary< String, String >
@@ -70,7 +86,6 @@ class Magic {
                         if let profile = EcheveriaProfile.getProfileObject(from: profileID) {
                             
                             let deckCountKey = profile.ownerID + Magic.DataKey.deckCount.rawValue
-                            let deckKey      = profile.ownerID + Magic.DataKey.deck.rawValue
                             
                             let count = Int( profile.getGameDataNode(deckCountKey)?.data ?? "0" ) ?? 0
                             
@@ -80,11 +95,11 @@ class Magic {
                                 
                                 if count == 0 { UniversalText( "No Decks", size: Constants.UIDefaultTextSize, lighter: true ) }
                                 
-                                Picker("Deck", selection: createBinding(forKey: deckKey, defaultValue: "No Selection")) {
+                                Picker("Deck", selection: createBinding(for: profile, defaultValue: "No Selection")) {
                                     ForEach( 0...count, id: \.self) { i in
                                         let key = profile.ownerID + Magic.DataKey.deck.rawValue + "\(i)"
                                         if let node = profile.getGameDataNode(key) {
-                                            Text( node.data ).tag( node.data )
+                                            Text(node.data).tag( node.data )
                                         }
                                     }
                                 }
@@ -108,11 +123,15 @@ class Magic {
                     if let profile = EcheveriaProfile.getProfileObject(from: profileID) {
                         
                         let deckKey = profileID + Magic.DataKey.deck.rawValue
+                        let descriptionKey = profileID + Magic.DataKey.deckDescription.rawValue
                         
                         HStack {
-                            UniversalText(profile.firstName, size: Constants.UIDefaultTextSize, true)
+                            UniversalText(profile.firstName, size: Constants.UISubHeaderTextSize, true)
                             Spacer()
-                            UniversalText( EcheveriaGame.getNodeData(from: deckKey, in: gameData), size: Constants.UIDefaultTextSize)
+                            VStack(alignment: .trailing) {
+                                UniversalText( EcheveriaGame.getNodeData(from: deckKey, in: gameData), size: Constants.UISubHeaderTextSize, true)
+                                UniversalText( EcheveriaGame.getNodeData(from: descriptionKey, in: gameData), size: Constants.UIDefaultTextSize)
+                            }.padding(.leading, 20)
                         }
                         .padding()
                         .universalTextStyle()
