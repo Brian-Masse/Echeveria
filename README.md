@@ -12,6 +12,8 @@
 
 - Added an 'auto fill from last log' to make the game logging process easier
 
+- Added a 'Win Rate' display in group data views
+
 ### **Changes**
 
 - can no longer view the search page when viewing other user's profiles
