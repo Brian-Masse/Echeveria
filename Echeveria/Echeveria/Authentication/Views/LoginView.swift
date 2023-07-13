@@ -46,7 +46,7 @@ struct LoginView: View {
                     
                     do {
                         let user  = try await EcheveriaModel.shared.realmManager.app.login(credentials: .anonymous)
-                        var configuration = user.flexibleSyncConfiguration()
+                        let configuration = user.flexibleSyncConfiguration()
                         _ = try Realm.deleteFiles(for: configuration)
                         
                     } catch { print(error.localizedDescription) }

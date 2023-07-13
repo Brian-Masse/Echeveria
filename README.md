@@ -38,6 +38,8 @@
 
 ### **Fixes**
 
+- fixed an issue that prevented users on versions before iOS 16.4 from seeing the player and winner drop down menus
+
 - fixed an issue that caused the realmManager to get stuck either connecting to or downloading objects from the realm, forcing users to re-download the app
 
 - fixed an issue that caused a player's winstreak to increase despite them not playing ina game

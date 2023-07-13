@@ -151,24 +151,27 @@ struct MultiPicker<ListType:Collection>: View where ListType:RangeReplaceableCol
         HStack {
             UniversalText(title, size: Constants.UIDefaultTextSize, lighter: true)
             Spacer()
+            
             let menu = Menu {
+                Text("No Selection").tag("No Selection")
                 ForEach(sources.indices, id: \.self) { i in
                     Button {
                         toggleSource(sources[i])
                     } label: {
                         let name = sourceName(sources[i])
                         if selectedSources.contains(where: { id in id == sources[i] }) { Image(systemName: "checkmark") }
-                        Text( name == nil ? "?" : name! ).tag(name)
+                        Text( name ?? "?" ).tag(name)
                     }
                 }
             } label: {
                 Text( retrieveSelectionPreview())
                 ResizeableIcon(icon: "chevron.up.chevron.down", size: Constants.UIDefaultTextSize)
-            }
-            .foregroundColor(Colors.tint)
-            
+            }.foregroundColor( Colors.tint )
+                
             if #available(iOS 16.4, *) {
                 menu.menuActionDismissBehavior(.disabled)
+            } else {
+                menu
             }
             
         }.padding(.vertical, 3)
@@ -194,9 +197,8 @@ struct BasicPicker<ListType:RandomAccessCollection, Content: View>: View where L
             Spacer()
             
             Menu {
-                Text(noSeletion).tag("")
+                Text(noSeletion).tag(noSeletion)
                 ForEach( sources, id: \.id ) { source in
-                    
                     Button { selection = source } label: {
                         contentBuilder(source)
                     }.tag(source)
@@ -215,14 +217,6 @@ struct BasicPicker<ListType:RandomAccessCollection, Content: View>: View where L
                 }
                 .foregroundColor(model.activeColors.last ?? Colors.main)
             }
-
-            
-//            Picker(selection: $selection) {
-//                Text(noSeletion).tag("")
-//                ForEach( sources, id: \.id) { source in
-//                    contentBuilder( source ).tag(source)
-//                }
-//            } label: { Text("") }
         }
     }
 }
