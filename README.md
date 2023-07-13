@@ -16,6 +16,8 @@
 
 - Added a 'Game Count by Player' display in group data views
 
+- Added descriptions to Magic the Gathering Decks
+
 ### **Changes**
 
 - can no longer view the search page when viewing other user's profiles

@@ -40,10 +40,18 @@ class Smash {
                         let value = preferences[ key ] ?? "No Selection"
                         
                         let binding: Binding<String> = createBinding(forKey: key, defaultValue: value)
-                        BasicPicker(title: "Main \(i + 1)", noSeletion: "No Selection", sources: Smash.smashPlayers, selection: binding ) { obj in Text( obj ) }
-//                            .tint( colorScheme == .light ? .black : .white )
-                    }
+                        HStack {
+                            BasicPicker(title: "Main \(i + 1)", noSeletion: "No Selection", sources: Smash.smashPlayers, selection: binding ) { obj in Text( obj ) }
+                            Spacer()
+                            ShortRoundedButton("delete", icon: "trash") {
+                                preferences[key] = nil
+                                preferences[EcheveriaModel.shared.profile.ownerID + Smash.DataKey.charachterCount.rawValue] =
+                                    "\(Int( preferences[EcheveriaModel.shared.profile.ownerID + Smash.DataKey.charachterCount.rawValue]  ?? "0" )! - 1)"
+                            }
+                        }
                         
+                        
+                    }
                 }
                 RoundedButton(label: "Add Another", icon: "plus") {
                     preferences[EcheveriaModel.shared.profile.ownerID + Smash.DataKey.charachterCount.rawValue] =

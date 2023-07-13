@@ -40,8 +40,16 @@ class Magic {
                     
                     TransparentForm("\( preferences[deckKey] ?? "New Deck" )") {
                     
-                        TextField(text: createBinding(forKey: deckKey)) {
-                            UniversalText("Deck \( i + 1 )", size: Constants.UIDefaultTextSize, lighter: true )
+                        HStack {
+                            TextField(text: createBinding(forKey: deckKey)) {
+                                UniversalText("Deck \( i + 1 )", size: Constants.UIDefaultTextSize, lighter: true )
+                            }
+                            Spacer()
+                            ShortRoundedButton("delete", icon: "trash") {
+                                preferences[deckKey] = nil
+                                preferences[descriptionKey] = nil
+                                preferences[ countKey ] = "\(count - 1)"
+                            }
                         }
                         
                         TextField(text: createBinding(forKey: descriptionKey)) {
