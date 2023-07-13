@@ -108,13 +108,13 @@ struct WinRateChart: View {
             HStack {
                 UniversalText("Best Player", size: Constants.UISubHeaderTextSize, true)
                 Spacer()
-                UniversalText("\(sorted.last?.name ?? "?") (\(sorted.last?.wins ?? 0) % win rate)", size: Constants.UIDefaultTextSize)
+                UniversalText("\(sorted.last?.name ?? "?") (\(sorted.last?.wins ?? 0)% win rate)", size: Constants.UIDefaultTextSize)
             }
             
             HStack {
                 UniversalText("Worst Player", size: Constants.UISubHeaderTextSize, true)
                 Spacer()
-                UniversalText("\(sorted.first?.name ?? "?") (\(sorted.first?.wins ?? 0) % win rate)", size: Constants.UIDefaultTextSize)
+                UniversalText("\(sorted.first?.name ?? "?") (\(sorted.first?.wins ?? 0)% win rate)", size: Constants.UIDefaultTextSize)
             }
         }
     }
@@ -192,7 +192,7 @@ struct WinStreakHistoryChart: View {
             
             .opaqueRectangularBackground()
             .coloredChart( group.members.map { id in EcheveriaProfile.getName(from: id) } , color: group.getColor() )
-            .frame(height: 150)
+            .frame(height: 250)
             
             Chart {
                 ForEach( group.members ) { memberID in
@@ -228,7 +228,7 @@ struct GameCountHistoryGraph: View {
     let group: EcheveriaGroup
     let games: [EcheveriaGame]
     
-    struct DataNode {
+    struct GameCountDataNode {
         let count: Int
         let totalCount: Int
         let date: Date
@@ -236,8 +236,8 @@ struct GameCountHistoryGraph: View {
     
     @State var filteredGames: [String] = []
     
-    private func getData() -> [DataNode] {
-        var list: [DataNode] = []
+    private func getData() -> [GameCountDataNode] {
+        var list: [GameCountDataNode] = []
         var date: Date = group.createdDate
         
         let filtered = games.filter { game in !filteredGames.contains { str in str.strip() == game.type.strip() } }
@@ -245,17 +245,35 @@ struct GameCountHistoryGraph: View {
         while date < .now + Constants.DayTime {
             let count = filtered.filter { game in Calendar.current.isDate(game.date, equalTo: date, toGranularity: .day) }.count
             let totalCount = filtered.filter { game in game.date <= date }.count
-            list.append( DataNode(count: count, totalCount: totalCount, date: date ) )
+            list.append( GameCountDataNode(count: count, totalCount: totalCount, date: date ) )
             date += Constants.DayTime
         }
         return list
     }
     
+    private func getPlayerCountData() -> [DataNode] {
+        group.members.reduce([]) { partialResult, profileID in
+            partialResult + EcheveriaGame.GameType.allCases.filter { type in !filteredGames.contains(where: { str in str.strip() == type.rawValue.strip() }) }.compactMap { type in
+                let count = games.filter { game in game.players.contains{ str in str == profileID } && game.type.strip() == type.rawValue.strip()  }.count
+                return DataNode(id: profileID, wins: count, date: .now, type: type.rawValue)
+            }
+        }
+    }
+    
+    private func getTotalPlayerCountData() -> [DataNode] {
+        group.members.compactMap { profileID in
+            let count = games.filter { game in game.players.contains { str in str == profileID } && !filteredGames.contains { type in type.strip() == game.type.strip() }  }.count
+            return DataNode(id: profileID, wins: count, date: .now, type: "")
+        }
+    }
+    
     var body: some View {
         
         let data = getData()
+        let totalGames: Float = Float(data.last!.totalCount)
         
-        VStack {
+        VStack(alignment: .leading) {
+            
             HStack {
                 UniversalText("Games Played", size: Constants.UISubHeaderTextSize, true)
                 Spacer()
@@ -273,6 +291,47 @@ struct GameCountHistoryGraph: View {
                 }
             }
             
+            VStack(alignment: .leading) {
+                let playerData = getPlayerCountData()
+                let total = getTotalPlayerCountData()
+                
+                UniversalText("By player", size: Constants.UISubHeaderTextSize, true)
+                
+                Chart {
+                    ForEach(playerData.indices) { i in
+                        BarMark(x: .value("X", playerData[i].name),
+                                y: .value("Y", playerData[i].wins) )
+                        .foregroundStyle( by: .value("series", playerData[i].type.strip() ))
+                    }
+                }
+                .coloredChart( EcheveriaGame.GameType.allCases.map { type in type.rawValue.strip() } , color: group.getColor() )
+                
+                Chart {
+                    ForEach(total.indices) { i in
+                        BarMark(x: .value("X", total[i].name),
+                                y: .value("Y", (Float(total[i].wins) / totalGames * 100 ) ) )
+                        .foregroundStyle( group.getColor() )
+                    }
+                }
+                
+                let sorted = total.sorted { node1, node2 in node1.wins < node2.wins }
+                
+                HStack {
+                    UniversalText("Most Played", size: Constants.UISubHeaderTextSize, true)
+                    Spacer()
+                    UniversalText( "\(sorted.last?.name ?? "?") (\( sorted.last?.wins ?? 0 ), \( (Float(sorted.last?.wins ?? 0) / totalGames * 100).rounded(.down))%)", size: Constants.UIDefaultTextSize, true )
+                }
+                
+                HStack {
+                    UniversalText("Least Played", size: Constants.UISubHeaderTextSize, true)
+                    Spacer()
+                    UniversalText( "\(sorted.first?.name ?? "?") (\( sorted.first?.wins ?? 0 ), \( (Float(sorted.first?.wins ?? 0) / totalGames * 100).rounded(.down))%)", size: Constants.UIDefaultTextSize, true )
+                }
+            }
+            .padding(.bottom)
+            
+            UniversalText("Over Time", size: Constants.UISubHeaderTextSize, true)
+            
             Chart {
                 ForEach(data.indices) { i in
                     BarMark(x: .value("X", data[i].date),
@@ -282,7 +341,6 @@ struct GameCountHistoryGraph: View {
             }
             .opaqueRectangularBackground()
             .padding(.bottom)
-            
             
             Chart {
                 ForEach(data.indices) { i in
@@ -300,8 +358,8 @@ struct GameCountHistoryGraph: View {
             HStack {
                 UniversalText("Total Games", size: Constants.UISubHeaderTextSize, true)
                 Spacer()
-                UniversalText("\(data.last!.totalCount)", size: Constants.UIDefaultTextSize)
-            }
+                UniversalText("\(totalGames)", size: Constants.UISubHeaderTextSize, true)
+            } .padding(.bottom)
         }
         .padding()
         .universalTextStyle()

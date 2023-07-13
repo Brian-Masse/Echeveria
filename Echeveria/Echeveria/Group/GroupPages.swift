@@ -137,12 +137,12 @@ struct ChartsGroupViewPage: View {
                     
                     RecentGamesView(games: games, geo: geo)
                     
+                    GameCountHistoryGraph(group: group, games: Array(games))
+                        .padding(.bottom)
+                    
                     TimeByPlayerAndTypeChart(title: "Win Streaks", group: group, games: games) { fgames, fmembers in
                         WinStreakHistoryChart(group: group, games: games, filteredMembers: fmembers, filteredGames: fgames)
                     }
-                        .padding(.bottom)
-                    
-                    GameCountHistoryGraph(group: group, games: Array(games))
                         .padding(.bottom)
                     
                     GameScrollerView(title: "All Games", filter: .gameType, filterable: true, geo: geo, games: EcheveriaGame.reduceIntoStrings(from: Array(games)))
