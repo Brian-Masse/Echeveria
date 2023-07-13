@@ -38,6 +38,8 @@
 
 ### **Fixes**
 
+- fixed an issue that caused the realmManager to get stuck either connecting to or downloading objects from the realm, forcing users to re-download the app
+
 - fixed an issue that caused a player's winstreak to increase despite them not playing ina game
 
 - fixed an issue that prevented games logged within the past 24HR day to display on the game count charts

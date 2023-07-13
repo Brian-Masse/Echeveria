@@ -15,7 +15,7 @@ struct OpenFlexibleSyncRealmView: View {
     @State var title: String = ""
     @State var alertMessage: String = ""
     
-    @AsyncOpen(appId: "application-0-qufwt", timeout: 4000) var asyncOpen
+    @AsyncOpen(appId: "application-0-qufwt", timeout: .min) var asyncOpen
     
     struct loadingCase: View {
         let icon: String
@@ -33,6 +33,23 @@ struct OpenFlexibleSyncRealmView: View {
         EcheveriaModel.shared.realmManager.realmLoaded = false
         EcheveriaModel.shared.realmManager.signedIn = false
         EcheveriaModel.shared.realmManager.hasProfile = false
+    }
+    
+    @ViewBuilder
+    private func createRefreshButton() -> some View {
+        
+        RoundedButton(label: "Refresh", icon: "arrow.clockwise", action: {
+            EcheveriaModel.shared.realmManager.realm = nil
+            
+            do { _ = try Realm.deleteFiles(for: EcheveriaModel.shared.realmManager.configuration)
+            } catch {
+                print(error.localizedDescription)
+                title = "Error Deleting Realm File"
+                alertMessage = error.localizedDescription
+                showingAlert = true
+            }
+        }, shrink: true)
+        
     }
     
     var body: some View {
@@ -61,6 +78,7 @@ struct OpenFlexibleSyncRealmView: View {
                             loadingCase(icon: "externaldrive.connected.to.line.below", title: "Connecting to Realm")
                             ProgressView()
                                 .statusBarHidden(false)
+                            createRefreshButton()
                         }
                     case .waitingForUser:
                         loadingCase(icon: "screwdriver", title: "Failed to log user into database")
@@ -71,11 +89,13 @@ struct OpenFlexibleSyncRealmView: View {
                             }
                         
                     case .open(let realm):
-                        loadingCase(icon: "shippingbox", title: "Loading Assests")
-                            .task {
-                                await EcheveriaModel.shared.realmManager.authRealm(realm: realm)
-                                await EcheveriaModel.shared.realmManager.checkProfile()
-                            }
+                        VStack {
+                            loadingCase(icon: "shippingbox", title: "Loading Assests")
+                                .task {
+                                    await EcheveriaModel.shared.realmManager.authRealm(realm: realm)
+                                    await EcheveriaModel.shared.realmManager.checkProfile()
+                                }
+                        }
                         
                     case .progress(let progress):
                         VStack {
@@ -94,8 +114,6 @@ struct OpenFlexibleSyncRealmView: View {
                     }
                     
                     RoundedButton(label: "cancel", icon: "chevron.left", action: dismissScreen, shrink: true)
-                        .padding(.top)
-//                        .frame(width: (geo.size.width / 3) - 20)
                 }
                 .frame(width: geo.size.width / 3)
                 .padding()

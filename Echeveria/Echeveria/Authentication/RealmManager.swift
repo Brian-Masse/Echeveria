@@ -38,18 +38,10 @@ class RealmManager: ObservableObject {
         self.checkLogin()
     }
     
-    private func setConfiguration() {
-        self.configuration = user!.flexibleSyncConfiguration()
-        self.configuration.schemaVersion = 1
-        
-        Realm.Configuration.defaultConfiguration = self.configuration
-    }
-    
 //    MARK: Authentication Functions
 //    If there is a user already signed in,skip the user authentication system
     func checkLogin() {
         if let user = app.currentUser {
-            
             self.user = user
             self.postAuthenticationInit(loggingin: true)
         }
@@ -70,6 +62,13 @@ class RealmManager: ObservableObject {
         self.setConfiguration()
         if !loggingin { DispatchQueue.main.sync { self.signedIn = true } }
         else { self.signedIn = true }
+    }
+    
+    private func setConfiguration() {
+        
+        self.configuration = user!.flexibleSyncConfiguration(clientResetMode: .discardUnsyncedChanges())
+//        self.configuration.schemaVersion = 1
+        Realm.Configuration.defaultConfiguration = self.configuration
     }
     
     static func stripEmail(_ email: String) -> String {

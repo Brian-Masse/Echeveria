@@ -40,6 +40,17 @@ struct LoginView: View {
                 UniversalText( "An anonymous account has the same permissions as a regular user, but is deleted when logging out. Do not sign in anonymously for long term use.", size: Constants.UIDefaultTextSize, wrap: true, lighter: true )
                     .frame(width: geo.size.width - 65)
                     .fixedSize()
+            
+                AsyncRoundedButton(label: "Refresh", icon: "arrow.clockwise") {
+                    EcheveriaModel.shared.realmManager.realm = nil
+                    
+                    do {
+                        let user  = try await EcheveriaModel.shared.realmManager.app.login(credentials: .anonymous)
+                        var configuration = user.flexibleSyncConfiguration()
+                        _ = try Realm.deleteFiles(for: configuration)
+                        
+                    } catch { print(error.localizedDescription) }
+                }
             }
         }
         .animation(.default, value: devMode)
