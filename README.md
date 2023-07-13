@@ -14,6 +14,8 @@
 
 - Added a 'Win Rate' display in group data views
 
+- Added a 'Game Count by Player' display in group data views
+
 ### **Changes**
 
 - can no longer view the search page when viewing other user's profiles
@@ -23,6 +25,8 @@
 - certain text field only bring up a number pad keyboard
 
 - All textfields now dynamically respond to the keyboard, making them visible when entering text
+
+- reorganized the group data page
 
 ### **Fixes**
 
@@ -35,6 +39,8 @@
 - fixed an issue that showed the 'leave group' button when viewing other user's profiles
 
 - fixed an issue that prevented all search results from displaying
+
+- fixed an issue that caused search results to persist after searching
 
 ## **Product Description**
 

@@ -36,7 +36,7 @@ struct GameLoggerView: View  {
     
     @State var showingAlert: Bool = false
     
-    @ObservedResults(EcheveriaGroup.self) var groups
+    @ObservedResults(EcheveriaGroup.self, where: { group in group.members.contains( EcheveriaModel.shared.profile.ownerID ) }) var groups
     
     private func refreshGroup() {
         selectedPlayers = []
