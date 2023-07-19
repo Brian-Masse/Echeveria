@@ -6,13 +6,11 @@
 
 [Privacy Policy Notice](https://doc-hosting.flycricket.io/echeveria-privacy-policy/76379ed8-adfc-4db1-bb39-53691e822eee/privacy)
 
-## **Change log for 1.1.1**
+## **Change log for 1.1.2**
 
 ### **Fixes**
 
-- Fixed an issue that caused the 'best players' and 'worst players' display to display the incorrect information
-
-- Fixed an issue that caused loading views to be rendered incorrectly
+- Fixed an issue that caused realm not to load, forcing users to reinstall the app
 
 ## **Product Description**
 
