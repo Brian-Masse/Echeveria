@@ -21,6 +21,13 @@ struct WinHistoryChart: View {
         }
     }
     
+    private func getWins() -> [DataNode] {
+        group.members.filter { id in !filteredMembers.contains { str in str == id } }.compactMap { profileID in
+            let count = games.filter { g in !filteredGames.contains { type in type.strip() == g.type.strip() } && g.winners.contains { str in str == profileID}}.count
+            return DataNode(id: profileID, wins: count, date: .now, type: "")
+        }
+    }
+    
     let group: EcheveriaGroup
     let games: [EcheveriaGame]
     
@@ -31,7 +38,7 @@ struct WinHistoryChart: View {
         
         VStack {
             let nodes = makeNodes()
-                let sortedWins = nodes.sorted{ node1, node2 in node1.date < node2.date }.returnLast(group.members.count - 1)!.sorted{ node1, node2 in node1.wins < node2.wins }
+            let totalWins = getWins().sorted { node1, node2 in node1.wins < node2.wins }
             
             Chart {
                 ForEach(nodes.indices) { i in
@@ -58,8 +65,8 @@ struct WinHistoryChart: View {
                 Spacer()
                 
                 VStack(alignment: .trailing) {
-                    UniversalText("\( sortedWins.last?.name ?? "?" ) (\(sortedWins.last?.wins ?? 0) wins)", size: Constants.UISubHeaderTextSize, true)
-                    UniversalText("\( sortedWins.first?.name ?? "?" ) (\(sortedWins.first?.wins ?? 0) wins)", size: Constants.UISubHeaderTextSize, true)
+                    UniversalText("\( totalWins.last?.name ?? "?" ) (\(totalWins.last?.wins ?? 0) wins)", size: Constants.UISubHeaderTextSize, true)
+                    UniversalText("\( totalWins.first?.name ?? "?" ) (\(totalWins.first?.wins ?? 0) wins)", size: Constants.UISubHeaderTextSize, true)
                 }
             }
             .padding(.vertical, 7)

@@ -156,11 +156,19 @@ struct AsyncLoader<Content>: View where Content: View {
     var body: some View {
         VStack{
             if loading {
-                ProgressView() .task {
-                        await block()
-                        loading = false
-                    model.triggerReload = false
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        ProgressView() .task {
+                            await block()
+                            loading = false
+                            model.triggerReload = false
+                        }
+                        Spacer()
                     }
+                    Spacer()
+                }
             } else if scenePhase != .background && scenePhase != .inactive { content }
         }
         .onBecomingVisible { loading = true }

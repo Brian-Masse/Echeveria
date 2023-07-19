@@ -6,53 +6,13 @@
 
 [Privacy Policy Notice](https://doc-hosting.flycricket.io/echeveria-privacy-policy/76379ed8-adfc-4db1-bb39-53691e822eee/privacy)
 
-## **Change log for 1.1.0**
-
-### **New Features**
-
-- Added an 'auto fill from last log' to make the game logging process easier
-
-- Added a 'Win Rate' display in group data views
-
-- Added a 'Game Count by Player' display in group data views
-
-- Added descriptions to Magic the Gathering Decks
-
-- Added a way to delete user preferences for specific games
-
-### **Changes**
-
-- can no longer view the search page when viewing other user's profiles
-
-- certain text field only bring up a number pad keyboard
-
-- All textfields now dynamically respond to the keyboard, making them visible when entering text
-
-- reorganized the group data page
-
-- any member in a group can edit it
-
-- Changed the name of 'Edit Profile' to 'Preferences'
-
-- Multi Colored Charts have more consistent contrast between colors
+## **Change log for 1.1.1**
 
 ### **Fixes**
 
-- fixed an issue that prevented users on versions before iOS 16.4 from seeing the player and winner drop down menus
+- Fixed an issue that caused the 'best players' and 'worst players' display to display the incorrect information
 
-- fixed an issue that caused the realmManager to get stuck either connecting to or downloading objects from the realm, forcing users to re-download the app
-
-- fixed an issue that caused a player's winstreak to increase despite them not playing ina game
-
-- fixed an issue that prevented games logged within the past 24HR day to display on the game count charts
-
-- fixed an issue with the accent color system that displayed the wrong accent across the UI
-
-- fixed an issue that showed the 'leave group' button when viewing other user's profiles
-
-- fixed an issue that prevented all search results from displaying
-
-- fixed an issue that caused search results to persist after searching
+- Fixed an issue that caused loading views to be rendered incorrectly
 
 ## **Product Description**
 

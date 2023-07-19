@@ -21,8 +21,8 @@ struct EcheveriaView: View {
                 
             } else if !realmManager.realmLoaded {
                 OpenFlexibleSyncRealmView()
-                    .transition( .push(from: .trailing) )
                     .environment(\.realmConfiguration, realmManager.configuration)
+                    .transition( .push(from: .trailing) )
                 
             } else if !realmManager.hasProfile {
                 ProfileViews.EditingProfileView(creatingProfile: true,

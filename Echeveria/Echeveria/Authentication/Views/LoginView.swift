@@ -41,16 +41,6 @@ struct LoginView: View {
                     .frame(width: geo.size.width - 65)
                     .fixedSize()
             
-                AsyncRoundedButton(label: "Refresh", icon: "arrow.clockwise") {
-                    EcheveriaModel.shared.realmManager.realm = nil
-                    
-                    do {
-                        let user  = try await EcheveriaModel.shared.realmManager.app.login(credentials: .anonymous)
-                        let configuration = user.flexibleSyncConfiguration()
-                        _ = try Realm.deleteFiles(for: configuration)
-                        
-                    } catch { print(error.localizedDescription) }
-                }
             }
         }
         .animation(.default, value: devMode)

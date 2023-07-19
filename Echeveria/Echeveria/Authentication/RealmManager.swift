@@ -65,8 +65,7 @@ class RealmManager: ObservableObject {
     }
     
     private func setConfiguration() {
-        
-        self.configuration = user!.flexibleSyncConfiguration(clientResetMode: .discardUnsyncedChanges())
+        self.configuration = user!.flexibleSyncConfiguration(clientResetMode: .discardUnsyncedChanges(), cancelAsyncOpenOnNonFatalErrors: true)
 //        self.configuration.schemaVersion = 1
         Realm.Configuration.defaultConfiguration = self.configuration
     }

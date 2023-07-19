@@ -11,6 +11,9 @@ import RealmSwift
 
 struct OpenFlexibleSyncRealmView: View {
     
+    private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    @State var performBypass: Bool = false
+    
     @State var showingAlert: Bool = false
     @State var title: String = ""
     @State var alertMessage: String = ""
@@ -35,21 +38,23 @@ struct OpenFlexibleSyncRealmView: View {
         EcheveriaModel.shared.realmManager.hasProfile = false
     }
     
-    @ViewBuilder
-    private func createRefreshButton() -> some View {
-        
-        RoundedButton(label: "Refresh", icon: "arrow.clockwise", action: {
-            EcheveriaModel.shared.realmManager.realm = nil
+    private func openNonSyncedRealm() async {
+        do {
+            let realm = try await Realm(configuration: EcheveriaModel.shared.realmManager.configuration)
             
-            do { _ = try Realm.deleteFiles(for: EcheveriaModel.shared.realmManager.configuration)
-            } catch {
-                print(error.localizedDescription)
-                title = "Error Deleting Realm File"
-                alertMessage = error.localizedDescription
-                showingAlert = true
-            }
-        }, shrink: true)
-        
+            await EcheveriaModel.shared.realmManager.authRealm(realm: realm)
+            await EcheveriaModel.shared.realmManager.checkProfile()
+        } catch {
+            print("unable to connect to local realm: \(error.localizedDescription)")
+            title = "Unable to Connect to Local Realm"
+            alertMessage = error.localizedDescription
+            showingAlert = true
+        }
+    }
+    
+    @ViewBuilder
+    private func createBypassButton() -> some View {
+        AsyncRoundedButton(label: "Bypass", icon: "arrowshape.bounce.forward") { await openNonSyncedRealm() }
     }
     
     var body: some View {
@@ -71,6 +76,15 @@ struct OpenFlexibleSyncRealmView: View {
                 }
                 
                 VStack {
+                    if performBypass {
+                        UniversalText( "Bypassing", size: Constants.UIDefaultTextSize )
+                            .rectangularBackgorund()
+                            .task {
+                                await openNonSyncedRealm()
+                                performBypass = false
+                            }
+                    }
+                    
                     switch asyncOpen {
                         
                     case .connecting:
@@ -78,7 +92,7 @@ struct OpenFlexibleSyncRealmView: View {
                             loadingCase(icon: "externaldrive.connected.to.line.below", title: "Connecting to Realm")
                             ProgressView()
                                 .statusBarHidden(false)
-                            createRefreshButton()
+                            createBypassButton()
                         }
                     case .waitingForUser:
                         loadingCase(icon: "screwdriver", title: "Failed to log user into database")
@@ -96,6 +110,8 @@ struct OpenFlexibleSyncRealmView: View {
                                     await EcheveriaModel.shared.realmManager.checkProfile()
                                 }
                         }
+                        .onAppear() { timer.upstream.connect().cancel() }
+                        //once you have connected to the realm, cancel the timeout timer
                         
                     case .progress(let progress):
                         VStack {
@@ -125,7 +141,9 @@ struct OpenFlexibleSyncRealmView: View {
                     message: Text(alertMessage),
                     dismissButton: .cancel { dismissScreen() })
                 }
-            }.frame(width: geo.size.width, height: geo.size.height)
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
+            .onReceive(timer) { time in performBypass = true }
             
         }.universalColoredBackground(Colors.main)
     }
